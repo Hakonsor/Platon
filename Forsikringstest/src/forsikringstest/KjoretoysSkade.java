@@ -9,6 +9,11 @@ package forsikringstest;
  *
  * @author Therese
  */
-public class kjoretoysSkade {
+public class KjoretoysSkade extends SkadeMelding{
+    
+   public KjoretoysSkade(String skadeBeskrivelse , int erstatt , Forsikringer forsikring){
+   super(skadeBeskrivelse ,  erstatt , forsikring);
+   
+   }
     
 }
