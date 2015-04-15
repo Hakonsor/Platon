@@ -7,10 +7,10 @@ package forsikringstest;
 
 /**
  *
- * @author Therese
+ * @author Therese, Håkon
  */
 public abstract class Kjoretoy extends Person{
-    String regNr , type , modell , arsModell;
+    private String regNr , type , modell , arsModell;
     
     public Kjoretoy( int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, String regNr , String type , String modell ,String arsModell ){
         super(  premie ,  egenandel,  tlf , forsikrBet, fornavn,  etternavn,  personNr, gateAdr, gateNr, postNr);
@@ -18,7 +18,21 @@ public abstract class Kjoretoy extends Person{
         this.type = type;
         this.modell = modell;
         this.arsModell = arsModell;
+    }
+    public String getRegNr(){
+     return regNr;
+    }
+    public String getType(){
+     return type;
+    }
+    public String getModell(){
+     return modell;
+    }
+    public String getArsModell(){
+     return arsModell;
+    }
     
-}
+    
+    
     
 }

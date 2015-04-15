@@ -12,7 +12,7 @@ package forsikringstest;
 public abstract class Person extends Forsikringer{
     private String fornavn, etternavn, personNr, gateAdr, gateNr, postNr;
     private int tlf;
-    public Person(int premie , int egenandel , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, int tlf){
+    public Person(int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
       super( premie , egenandel , forsikrBet );
       this.fornavn = fornavn;
       this.etternavn = etternavn;
