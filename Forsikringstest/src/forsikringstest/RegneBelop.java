@@ -12,36 +12,53 @@ package forsikringstest;
 public interface RegneBelop {
     
     class Utbetaling{
-      // beregner sum til utbetaling, dersom boligen er totalskadet, -1 hvis metoden ikke fører til noe beløp.
-      public double fullUtbetaling( double skadeBelop , double byggVerdi, int alder ){
+      // beregner sum til utbetaling, dersom boligen er totalskadet, 0 hvis metoden ikke fører til noe beløp.
+      public double utbetalingBolig( double skadeBelop , double verdi, int alder, double egenAndel ){
           // regler for utbetaling, summen som betales ut avhenger av disse reglene.
           double totalSkadeGrense = 0.75;
-          double aldersFradrag10Ar = 0.015;
-          double aldersFradrag5Ar = 0.01;
+          int femÅr= 5;
+          int tiår = 10;
           
+          double delta10 = 0.015;
+          double delta5 = 0.01;
+          double sum = 0;
+          double byggVerdi;
+          
+          // bestemmer byggets verdi
+             if (alder>=  tiÅr ){
+                 byggVerdi = verdi - alder*verdi*delta10;
+             }
+             else if(alder>=femÅr){
+                 byggVerdi = verdi - alder*verdi*delta5;
+             }
+             else{
+                 byggVerdi = verdi;
+             }
+             
+          // laveste skadegrense for totalskade her er det tatt hensyn til byggets alder:    
           double minTotal= byggVerdi* totalSkadeGrense;
-          if ( minTotal <= skadeBelop  && skadeBelop<= byggVerdi ){
-            double sum;
-               if(alder>= 10){
-                    sum = byggVerdi - byggVerdi*alder*aldersFradrag10Ar;
-                        return sum;
-                }
-                else if(alder>= 5){
-                    sum = byggVerdi - byggVerdi*alder*aldersFradrag5Ar;
-                        return sum;
-                }
-                else if(alder<5){
-                   sum = byggVerdi;
-                   return sum;
-                }
-               
+          
+          // sjekker om bygget er totalskadet, dvs skaden utgjør minst 75% av verdien til boligen.
+          if (skadeBelop< minTotal){
+              sum = skadeBelop - egenAndel;
           }
-          return -1;
+          else{
+              sum = byggVerdi - egenAndel;
+          }
+          
+          return sum;
+           
       }// end of method fullUtbetaling
+      
+      public double naturOgBrann( double skadebelop, double byggVerdi, int alder,  boolean FG){
+          
+      }
+      
     }
    
     
     class Egenandel{
+        
         
     }
     
