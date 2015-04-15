@@ -7,24 +7,43 @@ package forsikringstest;
 
 /**
  *
- * @author Therese
+ * @author Therese, Håkon
  */
-public abstract class Person {
-    private String kundeNr, fornavn, etternavn, personNr, gateAdr, gateNr, postNr;
-    
-    public Person(String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
+public abstract class Person extends Forsikringer{
+    private String fornavn, etternavn, personNr, gateAdr, gateNr, postNr;
+    private int tlf;
+    public Person(int premie , int egenandel , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, int tlf){
+      super( premie , egenandel , forsikrBet );
       this.fornavn = fornavn;
       this.etternavn = etternavn;
       this.personNr = personNr;
       this.gateAdr = gateAdr;
       this.gateNr = gateNr;
       this.postNr = postNr;  
+      this.tlf = tlf; 
+    }
+    public int getTlf(){
+       return tlf;
+    }
+    public String getFornavn(){
+       return fornavn;
+    }
+    public String getEtternavn(){
+       return etternavn;
+    }
+    public String getPersonNr(){
+       return personNr;
+    }
+    public String getGateAdr(){
+       return gateAdr;
+    }
+    public String getGateNr(){
+       return personNr;
+    }
+    public String getPostNr(){
+       return gateAdr;
     }
     
-
-    public void setKundeNr(String kundeNr){
-        this.kundeNr = kundeNr;
-    }
     
     
 }// end of class Person

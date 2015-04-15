@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forsikringstest;
+package forsikringstest ;
 
 /**
  *
  * @author Therese
  */
-public class ReiseForsikring {
+public class ReiseForsikring extends Person{
     
+    public ReiseForsikring(int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
+        super( premie , egenandel, tlf, forsikrBet, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
+    }
 }

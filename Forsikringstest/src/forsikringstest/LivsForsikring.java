@@ -7,11 +7,11 @@ package forsikringstest;
 
 /**
  *
- * @author Therese
+ * @author Therese, Håkon
  */
 public class LivsForsikring extends Person{  
-    public LivsForsikring(String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
-        super( fornavn , etternavn, personNr , gateAdr, gateNr, postNr );
+    public LivsForsikring(int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
+        super( premie , egenandel, tlf, forsikrBet, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
     }
     
     
