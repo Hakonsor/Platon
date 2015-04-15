@@ -7,13 +7,17 @@ package forsikringstest;
 
 /**
  *
- * @author Therese
+ * @author Therese, Håkon
  */
 public class FritidsBolig extends Bolig {
     boolean utleie;
     
-    public FritidsBolig( int poliseNr , int premie , int egenandel , String forsikrBet , boolean utleie ){
-        super(poliseNr , premie , egenandel , forsikrBet);
+    public FritidsBolig(  int premie , int egenandel , String forsikrBet,
+                  int kvadrat, String adresse, String boligType, String byggeår,
+                  String metriale, String standard, String byggSum, String inboSUm){
+        super(  premie , egenandel ,  forsikrBet,
+                  kvadrat, adresse, boligType, byggeår,
+                  metriale, standard, byggSum, inboSUm);
         this.utleie = utleie;
     }
     

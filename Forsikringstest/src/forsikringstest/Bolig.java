@@ -7,7 +7,7 @@ package forsikringstest;
 
 /**
  *
- * @author Therese
+ * @author Therese, Håkon
  */
 public abstract class Bolig extends Forsikringer {
     
@@ -20,18 +20,45 @@ public abstract class Bolig extends Forsikringer {
     private String byggSum;
     private String inboSUm;
     
-    public Bolig( int poliseNr , int premie , int egenandel , String forsikrBet,
+    public Bolig(  int premie , int egenandel , String forsikrBet,
                   int kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, String byggSum, String inboSUm){
-       super( poliseNr , premie , egenandel , forsikrBet );
-       this.kvadrat = kvadrat;
-       this.adresse = adresse;
-       this.boligType = boligType;
-       this.byggeår = byggeår;
-       this.inboSUm = byggSum;
-       
-       
-       
+        super( premie , egenandel , forsikrBet );
+        this.kvadrat = kvadrat;
+        this.adresse = adresse;
+        this.boligType = boligType;
+        this.byggeår = byggeår;
+        this.byggSum = byggSum;
+        this.inboSUm = inboSUm;
+        this.metriale = metriale;
+        this.standard = standard;
     }
+    
+        public int getKvadrat(){
+           return kvadrat;
+        }
+        public String adresse(){
+           return adresse;
+        }
+        public String boligType(){
+           return boligType;
+        }
+        public String byggeår(){
+           return byggeår;
+        }
+        public String byggSum(){
+           return byggSum;
+        }
+        public String inboSUm(){
+           return inboSUm;
+        }
+        public String metriale(){
+           return metriale;
+        }
+        public String standard(){
+           return standard;
+        }
+                
+        
     
 }// end of class Bolig.
