@@ -16,19 +16,19 @@ public interface RegneBelop {
       public double utbetalingBolig( double skadeBelop , double verdi, int alder, double egenAndel ){
           // regler for utbetaling, summen som betales ut avhenger av disse reglene.
           double totalSkadeGrense = 0.75;
-          int femÅr= 5;
-          int tiår = 10;
+          int femAar= 5;
+          int tiAar = 10;
           
           double delta10 = 0.015;
           double delta5 = 0.01;
-          double sum = 0;
+          double sum;
           double byggVerdi;
           
           // bestemmer byggets verdi
-             if (alder>=  tiÅr ){
+             if (alder>=  tiAar ){
                  byggVerdi = verdi - alder*verdi*delta10;
              }
-             else if(alder>=femÅr){
+             else if(alder>=femAar){
                  byggVerdi = verdi - alder*verdi*delta5;
              }
              else{
@@ -50,16 +50,40 @@ public interface RegneBelop {
            
       }// end of method fullUtbetaling
       
-      public double naturOgBrann( double skadebelop, double byggVerdi, int alder,  boolean FG){
-          
-      }
+      
       
     }
    
     
     class Egenandel{
+        public int egenandel(String skadeType, boolean fG ){
+            int egenandel = 4000;
+            int fGgodkjent = 4000;
+            
+            int brann= 3000;
+            int vann = 15000;
+            int ror = 25000;
+            
+            if(fG){
+                egenandel -= fGgodkjent;   
+            }
+            switch (skadeType) {
+                case "brann":
+                case "natur":
+                    egenandel += brann;
+                    break;
+                case "vann":
+                    egenandel += vann;
+                    break;  
+                case "rør":
+                    egenandel+= ror;
+                    break;
+            }
+           
         
-        
+            return egenandel;
+    
+        }// end of method egenandel
     }
     
     class Premie{
