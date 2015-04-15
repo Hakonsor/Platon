@@ -12,7 +12,7 @@ package forsikringstest;
 public class FritidsBolig extends Bolig {
     boolean utleie;
     
-    public FritidsBolig(  int premie , int egenandel , String forsikrBet,
+    public FritidsBolig(  boolean utleie, int premie , int egenandel , String forsikrBet,
                   int kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, String byggSum, String inboSUm){
         super(  premie , egenandel ,  forsikrBet,
