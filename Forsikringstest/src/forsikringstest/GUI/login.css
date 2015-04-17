@@ -1,0 +1,73 @@
+
+.root {
+    -fx-background-color: lightgrey;
+}
+
+.label {
+    -fx-font-size:12px;
+    -fx-font-weight: bold;
+}
+
+#velkommenTekst {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+}
+#velkommenTekst2 {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+}
+
+#logginn {
+    -fx-text-fill: black;
+    -fx-font-family: "Arial Black";
+    -fx-font-weigth: bold;
+    -fx-font-size:12px;
+}
+
+#logginn:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-text-fill: green;
+}
+
+#nykunde {
+    -fx-text-fill: black;
+    -fx-font-family: "Arial Black";
+    -fx-font-weigth: bold;
+    -fx-font-size:12px;
+}
+
+#nykunde:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-text-fill: green;
+}
+
+#logginn2 {
+    -fx-text-fill: black;
+    -fx-font-family: "Arial Black";
+    -fx-font-weigth: bold;
+    -fx-font-size:12px;
+}
+
+#logginn2:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-text-fill: green;
+}
+
+#nykonsulent {
+    -fx-text-fill: black;
+    -fx-font-family: "Arial Black";
+    -fx-font-weigth: bold;
+    -fx-font-size:12px;
+}
+
+#nykonsulent:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-text-fill: green;
+}
+
+
+
