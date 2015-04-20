@@ -14,4 +14,5 @@ public class BoligSkade extends SkadeMelding {
     public BoligSkade(String skadeBeskrivelse , int erstatt , Forsikringer forsikring){
         super( skadeBeskrivelse , erstatt , forsikring);
     }
+    
 }

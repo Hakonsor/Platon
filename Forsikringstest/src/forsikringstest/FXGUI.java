@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package forsikringstest;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,15 +14,11 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Therese
+ * @author hakon_000
  */
-public class Forsikringstest extends Application{
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-    //   Register r = new Register();
+public class FXGUI extends Application {
+    
+    public FXGUI(String[] args){
         launch(args);
     }
     
@@ -40,5 +35,4 @@ public class Forsikringstest extends Application{
         primaryStage.setScene(new Scene(root, 800, 640));
         primaryStage.show();
     }
-    
 }

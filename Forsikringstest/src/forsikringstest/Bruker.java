@@ -7,6 +7,7 @@
 package forsikringstest;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 
@@ -14,11 +15,9 @@ import java.util.LinkedList;
  *
  * @author hakon_000
  */
-public class Bruker {
-    
-
+ abstract public class Bruker {
     private String fornavn, etternavn, fakturaAdr, personNr;
-    private LinkedList<Forsikringer> ForsikringListe;// dette skal vel egentlig være liste over poliseNr.
+    private ArrayList<Integer> forsikringListe;// dette skal vel egentlig være liste over poliseNr.
     private Calendar opprettetDato;
     
     public Bruker(String fornavn, String etternavn,String fakturaAdr, String personNr){
@@ -28,9 +27,16 @@ public class Bruker {
         personNr = this.personNr;
         opprettetDato = Calendar.getInstance();
     }
-    public void setForsikring(){
-    return;
-    
+    public void addForsikring(int forsikring){
+        forsikringListe.add(forsikring);
     }
-
-}
+        /*
+    public int getForsikring(int polisnr){
+        
+           for(int i = 0; i < forsikringListe.size(); i++) 
+             if(forsikringListe.get(i) == polisnr)
+                return forsikringListe.get(i);
+        return -1;
+    }*/
+ 
+ }

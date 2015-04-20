@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:controller="forsikringstest.Controller" xmlns:fx="http://javafx.com/fxml" prefHeight="640" prefWidth="800" stylesheets="kundeside.css">
+
+    <top>
+        <GridPane alignment="CENTER" hgap="10" vgap="10" prefHeight="50" prefWidth="800">
+        <padding>
+            <Insets top="5" right="5" bottom="5" left="5"/>
+        </padding>
+
+        <Label fx:id="logginninfo" text="Ola Normann"
+                GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="LEFT"/>
+
+        <Button fx:id="loggut" text="Logg ut" onAction="#loggut"
+                GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
+
+        </GridPane>
+    </top>
+
+    <center>
+        <TabPane>
+            <tabs>
+                <Tab text="Info" fx:id="info" closable="false">
+                    <content>
+                        <BorderPane>
+                            <top>
+                                <GridPane alignment="CENTER" hgap="100" vgap="10" prefHeight="25" prefWidth="800">
+                                    <padding>
+                                        <Insets top="25" right="25" bottom="0" left="25"/>
+                                    </padding>
+
+                                    <Button fx:id="slett" text="Slett" prefHeight="25.0" prefWidth="80.0"
+                                            GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+
+                                    <Button fx:id="utbetalinger" text="Utbetalinger" prefHeight="25.0" prefWidth="160"
+                                            GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+
+                                    <Button fx:id="status" text="Status" prefHeight="25.0" prefWidth="120.0"
+                                            GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+                                </GridPane>
+                            </top>
+
+                            <center>
+                                <GridPane alignment="CENTER" hgap="10" vgap="10" prefHeight="50" prefWidth="800">
+
+                                <padding>
+                                    <Insets top="0" right="25" bottom="25" left="25"/>
+                                </padding>
+
+                                    <VBox xmlns:fx="http://javafx.com/fxml">
+                                        <ComboBox fx:id="velgforsikring" editable="false" value="Velg forsikring:" layoutX="396" layoutY="66" prefWidth="200.0" prefHeight="25.0"
+                                                  GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER">
+                                            <items>
+                                                <FXCollections fx:factory="observableArrayList">
+                                                    <String fx:value="Bilforsikring"/>
+                                                    <String fx:value="Reiseforsikring"/>
+                                                    <String fx:value="Båtforsikring"/>
+                                                    <String fx:value="Bolig"/>
+                                                    <String fx:value="Fri.bolig"/>
+                                                </FXCollections>
+                                            </items>
+                                        </ComboBox>
+                                    </VBox>
+
+                                    <ListView fx:id="listforsikringer" prefHeight="400.0" prefWidth="300.0"
+                                              GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="CENTER"/>
+
+                                    <TextArea editable="false" fx:id="forsikringsinfo" prefHeight="400.0" prefWidth="500.0"
+                                              GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER"/>
+
+                                </GridPane>
+
+                            </center>
+                        </BorderPane>
+                    </content>
+                </Tab>
+
+                <Tab text="Båt" fx:id="båt" closable="false">
+                    <content>
+                        <BorderPane>
+                            <top>
+                                <GridPane>
+                                    <padding>
+                                        <Insets top="25" right="25" bottom="10" left="25"/>
+                                    </padding>
+
+                                    <Label fx:id="blabla2" text="Her kommer Båtforsikringene"/>
+
+                                </GridPane>
+                            </top>
+                        </BorderPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+    <stylesheets>
+        <URL value="@kundeside.css" />
+    </stylesheets>
+
+</BorderPane>

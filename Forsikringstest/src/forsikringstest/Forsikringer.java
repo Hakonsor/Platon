@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public abstract class Forsikringer {
     private int poliseNr;
-    private int nestePolisNr = 100000;
+    private static int nestePolisNr = 100000;
     private int premie;
     private int egenandel;
     private String forsikrBet;
@@ -64,4 +64,12 @@ public abstract class Forsikringer {
     public Date getSluttDato(){
        return sluttDato;
    } 
+    
+    public String toString(){
+    return ""+poliseNr;
+    }
+    
+    public boolean equals(Forsikringer f){
+       return ( f.getPoliseNr() == ( poliseNr) );
+       }
  }// end of abstract class Forsikringer

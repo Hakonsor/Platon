@@ -23,5 +23,9 @@ public class Kunde {
         personNr = this.personNr;
     }
      
+    public String toString(){
+        
+    return "hee";
+    }
     
 }// end of class Kunde
