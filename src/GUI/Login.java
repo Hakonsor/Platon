@@ -1,20 +1,14 @@
 package GUI;
 
-import GUI.Registrer;
-import Kontroller.Kontroller;
-import Person.Bruker;
-import java.awt.*;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+
 import static javafx.geometry.Pos.*;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -28,7 +22,7 @@ import javafx.stage.Stage;
 /**
  * Created by Magnus on 18.04.15.
  */
-public class Login{
+public class Login {
     private String LoginBilde = "Bilder/user.png";
     
     private Button btnNyKunde;
@@ -60,7 +54,8 @@ public class Login{
         Scene scene = new Scene(tabs, 800, 640);
         primaryStage.setTitle("Logg inn");
         primaryStage.setScene(scene);
-        scene.getStylesheets().add(Login.class.getResource("CSS/login.css").toExternalForm());
+
+        scene.getStylesheets().add("CSS/login.css");
         primaryStage.show();
     }
    
@@ -111,10 +106,7 @@ public class Login{
         btnKundeLogginn.setId("btnlogginn");
         btnKundeLogginn.setMaxWidth(200);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
-      //  try{ btnLogginn.setOnAction(e -> Controller);
-        
 
-       
         
         btnNyKunde = new Button("Ny Kunde");
         btnNyKunde.setId("btNyKunde");

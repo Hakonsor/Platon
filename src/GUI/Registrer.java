@@ -1,7 +1,6 @@
 package GUI;
 
 
-import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import static javafx.geometry.Pos.TOP_CENTER;
@@ -9,12 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sun.applet.AppletListener;
-import sun.net.www.ApplicationLaunchException;
 
 
 /**
@@ -116,7 +111,7 @@ public class  Registrer {
         Scene scene = new Scene(grid, 300, 550);
         vindu.setTitle("Registrer");
         vindu.setScene(scene);
-        scene.getStylesheets().add(Login.class.getResource("CSS/registrer.css").toExternalForm());
+        scene.getStylesheets().add("CSS/registrer.css");
         vindu.show();
     }
 
