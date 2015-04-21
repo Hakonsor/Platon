@@ -5,13 +5,13 @@
  */
 package Forsikring;
 
-import Forsikring.Forsikringer;
+import java.io.Serializable;
 
 /**
  *
  * @author Therese, Håkon
  */
-public abstract class Bolig extends Forsikringer {
+public abstract class Bolig extends Forsikringer implements Serializable {
     
     private int kvadrat;
     private String adresse;
@@ -25,7 +25,7 @@ public abstract class Bolig extends Forsikringer {
     public Bolig(  int premie , int egenandel , String forsikrBet,
                   int kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, String byggSum, String inboSUm){
-        super( premie , egenandel , forsikrBet );
+        super( premie , egenandel );
         this.kvadrat = kvadrat;
         this.adresse = adresse;
         this.boligType = boligType;

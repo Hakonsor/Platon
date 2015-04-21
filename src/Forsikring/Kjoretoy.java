@@ -44,7 +44,7 @@ public abstract class Kjoretoy extends Person implements Serializable{
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());
-        sb.append("\nBilforsikring: ");
+        sb.append("\nKjøretøysforsikring: ");
         sb.append("\nBonus : ");
         sb.append(bonus*100);
         sb.append(" %");
