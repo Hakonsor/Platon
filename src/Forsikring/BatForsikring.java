@@ -13,8 +13,8 @@ public class BatForsikring extends Kjoretoy{
     private int lendgeFot, motorStyrke;
     private String motorType;
     
-    public BatForsikring( String motorType, int lendgeFot, int motorStyrke, int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, String regNr , String type , String modell ,String arsModell){
-    super(premie ,  egenandel,  tlf , forsikrBet, fornavn,  etternavn,  personNr, gateAdr, gateNr, postNr, regNr , type , modell , arsModell); 
+    public BatForsikring(String s, String motorType, int lendgeFot, int motorStyrke, int premie , int egenandel, int tlf , String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, String regNr , String type , String modell ,String arsModell){
+    super(s,  tlf , fornavn,  etternavn,  personNr, gateAdr, gateNr, postNr, regNr , type , modell , arsModell); 
     this.lendgeFot = lendgeFot;
     this.motorStyrke = motorStyrke;
     this.motorType = motorType;
