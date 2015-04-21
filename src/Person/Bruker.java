@@ -7,6 +7,7 @@
 package Person;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -15,7 +16,7 @@ import java.util.LinkedList;
  *
  * @author hakon_000
  */
- abstract public class Bruker {
+ abstract public class Bruker implements Serializable {
     private String fornavn, etternavn, fakturaAdr, personNr, passord;
     private ArrayList<Integer> forsikringListe;// dette skal vel egentlig være liste over poliseNr.
     private Calendar opprettetDato;

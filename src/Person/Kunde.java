@@ -6,13 +6,14 @@
 package Person;
 
 import Forsikring.Forsikringer;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Therese
  */
-public class Kunde extends Bruker {
+public class Kunde extends Bruker implements Serializable {
  
     private int kundeNr;
     private static int neseKundeNr;

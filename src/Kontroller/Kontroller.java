@@ -34,6 +34,9 @@ import javafx.stage.Stage;
     }
     public boolean sjekkPassord(String bruker, String  passord){
         Bruker sjekkBruker = finnBruker(bruker);
+        if(sjekkBruker == null) return false;
+        
+        
         return sjekkBruker.sjekkPassord(passord);
     }
     public void registrerKunde(){
