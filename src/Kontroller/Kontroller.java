@@ -6,6 +6,7 @@
 
 package Kontroller;
 
+import GUI.KundeSide;
 import GUI.Login;
 import GUI.Registrer;
 
@@ -35,30 +36,35 @@ import javafx.stage.Stage;
     public boolean sjekkPassord(String bruker, String  passord){
         Bruker sjekkBruker = finnBruker(bruker);
         if(sjekkBruker == null) return false;
-        
-        
         return sjekkBruker.sjekkPassord(passord);
     }
     public void registrerKunde(){
         //System.out.println("we");
-       Kunde b = Registrer.getKunde();
-       brukerRegister.put(b.getKundeNokkel(), b);
+       try{
+        Kunde b = Registrer.getKunde();
+        brukerRegister.put(b.getKundeNokkel(), b);
         System.out.println(b.toString());
+       }
+       catch (NullPointerException e){
+           
+       }
     } 
     
     
     @Override
     public void handle(ActionEvent event) {
+        /*
         if(event.getSource() == login.getKnappKundeLogginn()){
             boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
             System.out.println(godkjent);
-            //nyside
+            KundeSide.Display();
         }
         if(event.getSource() == login.getKnappKonsulentLogginn()){
             boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
             System.out.println(godkjent);
         }
        // if(event.getSource() == 
+                */
     }
     
 

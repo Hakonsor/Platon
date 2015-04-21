@@ -113,11 +113,16 @@ public class Login {
         btnKundeLogginn = new Button("Logg inn");
         btnKundeLogginn.setId("btnlogginn");
         btnKundeLogginn.setMaxWidth(200);
-        btnKundeLogginn.setOnAction(kontroll);
+        //btnKundeLogginn.setOnAction(kontroll);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
         try {btnKundeLogginn.setOnAction(e -> {
-            KundeSide.Display();
-            closeLogin();
+            if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
+                KundeSide.Display();
+                closeLogin();
+            }else{
+                System.out.println("hehe, tror du ja");
+            }
+             
 
         });}
         catch (Exception ex) {
