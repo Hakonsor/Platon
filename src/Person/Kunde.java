@@ -12,17 +12,17 @@ import java.util.List;
  *
  * @author Therese
  */
-public class Kunde {
-    private String fornavn, etternavn, fakturaAdr, personNr;
+public class Kunde extends Bruker {
+ 
     private int kundeNr;
+    private String passord;
     private Forsikringer liste;// dette skal vel egentlig være liste over poliseNr.
     
-    public Kunde(String fornavn, String etternavn,String fakturaAdr, String personNr){
-        fornavn = this.fornavn;
-        etternavn = this.etternavn;
-        fakturaAdr = this.fakturaAdr;
-        personNr = this.personNr;
+    public Kunde(String fornavn, String etternavn,String fakturaAdr, String personNr, String passord){
+        super( fornavn,  etternavn, fakturaAdr,  personNr, passord);
+        this.passord = passord; 
     }
+    
      
     public String toString(){
         

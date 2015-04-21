@@ -31,21 +31,25 @@ import javafx.stage.Stage;
         
     }
     
-    public Bruker finnKunde(String Bruker){
+    public Bruker finnBruker(String Bruker){
       return brukerRegister.get(Bruker);
     }
     public boolean sjekkPassord(String bruker, String  passord){
-      Bruker sjekkBruker = finnKunde(bruker);
-      
-    return false;
+      Bruker sjekkBruker = finnBruker(bruker);
+      return sjekkBruker.sjekkPassord(passord);
     }
     
     @Override
     public void handle(ActionEvent event) {
         if(event.getSource() == login.getKnappKundeLogginn()){
-           // sjekkPassord((login.getKunde());
+            boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
+            System.out.println(godkjent);
+            //nyside
         }
-        //if(event.getSource() == login.)
+        if(event.getSource() == login.getKnappKonsulentLogginn()){
+            boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
+            System.out.println(godkjent);
+        }
     }
     
 
