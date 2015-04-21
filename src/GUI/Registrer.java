@@ -116,7 +116,7 @@ public class  Registrer {
         Scene scene = new Scene(grid, 300, 550);
         vindu.setTitle("Registrer");
         vindu.setScene(scene);
-        scene.getStylesheets().add(Login.class.getResource("registrer.css").toExternalForm());
+        scene.getStylesheets().add(Login.class.getResource("CSS/registrer.css").toExternalForm());
         vindu.show();
     }
 

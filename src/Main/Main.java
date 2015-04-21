@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Programmutvikling;
+package Main;
 
 
 import GUI.Login;
@@ -19,15 +19,12 @@ public class Main extends Application {
 
     public static void main(String[] args) {
        launch( args);
-       //Controller controller = new Controller(args);     
-
+       //Controller controller = new Controller(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
             Kontroller c = new Kontroller( primaryStage );
-           
-            
     }
 
 }//End of class

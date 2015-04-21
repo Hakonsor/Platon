@@ -60,7 +60,7 @@ public class Login{
         Scene scene = new Scene(tabs, 800, 640);
         primaryStage.setTitle("Logg inn");
         primaryStage.setScene(scene);
-        scene.getStylesheets().add(Login.class.getResource("login.css").toExternalForm());
+        scene.getStylesheets().add(Login.class.getResource("CSS/login.css").toExternalForm());
         primaryStage.show();
     }
    
