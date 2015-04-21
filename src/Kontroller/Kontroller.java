@@ -23,24 +23,42 @@ import javafx.stage.Stage;
  */
 
     public class Kontroller implements EventHandler<ActionEvent>{
-       Map<String, Bruker> brukerRegister = new HashMap<>();
-       Login login;
-       
+        Map<String, Bruker> brukerRegister = new HashMap<>();
+        Login login;
+  
     public Kontroller(Stage primaryStage) throws Exception{
-       login = new Login(primaryStage);
+        login = new Login(primaryStage, this );
+    }
+    public Bruker finnBruker(String Bruker){
+        return brukerRegister.get(Bruker);
+    }
+    public boolean sjekkPassord(String bruker, String  passord){
+        Bruker sjekkBruker = finnBruker(bruker);
+        if(sjekkBruker == null) return false;
         
+        
+        return sjekkBruker.sjekkPassord(passord);
     }
+    public void registrerKunde(){
+        //System.out.println("we");
+       Kunde b = Registrer.getKunde();
+       brukerRegister.put(b.getKundeNokkel(), b);
+        System.out.println(b.toString());
+    } 
     
-    public static void nyKunde(Kunde k){
-      //  brukerRegister.put(k., null)
-    }
-    public Bruker sjekkPassord(String nøkkel){    
-    return brukerRegister.get(nøkkel);
-    }
     
     @Override
     public void handle(ActionEvent event) {
-       // if(event.getSource() == )
+        if(event.getSource() == login.getKnappKundeLogginn()){
+            boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
+            System.out.println(godkjent);
+            //nyside
+        }
+        if(event.getSource() == login.getKnappKonsulentLogginn()){
+            boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
+            System.out.println(godkjent);
+        }
+       // if(event.getSource() == 
     }
     
 
