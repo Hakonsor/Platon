@@ -5,7 +5,7 @@
 
 #kunde_velkommen_tekst {
     -fx-text-fill: black;
-    -fx-font-size: 40px;
+    -fx-font-size: 60px;
     -fx-font-family: Avenir Light;
 }
 #konsulent_velkommen_tekst {

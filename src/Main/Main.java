@@ -6,6 +6,7 @@
 package Main;
 
 
+import GUI.KundeSide;
 import GUI.Login;
 import GUI.Registrer;
 import Kontroller.Kontroller;
@@ -19,12 +20,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
        launch( args);
-       //Controller controller = new Controller(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-            Kontroller c = new Kontroller( primaryStage );
+        Kontroller c = new Kontroller( primaryStage );
     }
 
 }//End of class

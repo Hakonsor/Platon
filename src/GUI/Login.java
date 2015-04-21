@@ -4,11 +4,13 @@ package GUI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 
 import static javafx.geometry.Pos.*;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -24,7 +26,8 @@ import javafx.stage.Stage;
  */
 public class Login {
     private String LoginBilde = "Bilder/user.png";
-    
+
+    private Stage primaryStage;
     private Button btnNyKunde;
     private Button btnKonsulentLogginn;
     private Button btnKundeLogginn;
@@ -39,7 +42,10 @@ public class Login {
           
         
     public Login(Stage primaryStage) throws Exception {
+
+        this.primaryStage = primaryStage;
         TabPane tabs = new TabPane();
+
         Tab tabKunde = new Tab();
         tabKunde.setText("Kunde");
         tabKunde.setClosable(false);
@@ -58,6 +64,11 @@ public class Login {
         scene.getStylesheets().add("CSS/login.css");
         primaryStage.show();
     }
+
+    private void closeLogin(){
+        primaryStage.hide();
+    }
+
    
     private Pane kundeFane(){
 
@@ -106,6 +117,14 @@ public class Login {
         btnKundeLogginn.setId("btnlogginn");
         btnKundeLogginn.setMaxWidth(200);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
+        try {btnKundeLogginn.setOnAction(e -> {
+            KundeSide.Display();
+            closeLogin();
+
+        });}
+        catch (Exception ex) {
+            Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         
         btnNyKunde = new Button("Ny Kunde");
