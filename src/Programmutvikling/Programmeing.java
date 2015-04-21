@@ -1,0 +1,33 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Programmutvikling;
+
+
+import GUI.Login;
+import GUI.Registrer;
+import Kontroller.Kontroller;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+
+public class Programmeing extends Application {
+
+    public static void main(String[] args) {
+       launch( args);
+       //Controller controller = new Controller(args);     
+
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+            Kontroller c = new Kontroller( primaryStage );
+           
+            
+    }
+
+}//End of class

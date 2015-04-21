@@ -1,0 +1,45 @@
+.root {
+    -fx-background-image: url("loginnback.png");
+}
+
+
+#kunde_velkommen_tekst {
+    -fx-text-fill: black;
+    -fx-font-size: 40px;
+    -fx-font-family: Avenir Light;
+}
+#konsulent_velkommen_tekst {
+    -fx-text-fill: black;
+    -fx-font-size: 40px;
+    -fx-font-family: Avenir Light;
+}
+
+#logginn_info {
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
+    -fx-font-family: Avenir Light;
+}
+
+#logginnInfo {
+    -fx-text-fill: red;
+        -fx-font-size: 12px;
+        -fx-font-family: Avenir Light;
+}
+
+#tfkundenr, #tfkundenr:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#pfkundenr, #pfkundenr:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#tfbruknavn, #tfbrukernavn:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#pfbrukernavn, #pfkundenr:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+
