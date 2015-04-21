@@ -1,6 +1,9 @@
 package GUI;
 
 
+import Kontroller.Kontroller;
+import Person.Bruker;
+import Person.Kunde;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import static javafx.geometry.Pos.TOP_CENTER;
@@ -19,9 +22,75 @@ import javafx.stage.Stage;
 public class  Registrer {
     
     private static final String LoginBilde = "Bilder/add_user.png";
-    static Stage vindu = new Stage();
+    private static Stage vindu = new Stage();
     
-    public static void Display()  {
+    private static Button btnRegKunde;
+    private static Label nyKunde;
+    private static TextField fornavn;
+    private static TextField etternavn;
+    private static TextField personnr;
+    private static TextField telefon;
+    private static TextField epost;
+    private static TextField adresse;
+    private static PasswordField velgpassord;
+    private static PasswordField gjentapassord;
+
+  
+    
+    public Button getBtnRegKunde(){
+    return btnRegKunde;
+    }
+    public static Kunde getKunde(){
+        if(velgpassord.getText().equals(gjentapassord.getText())){
+            return new Kunde(fornavn.getText(), etternavn.getText(), adresse.getText(), personnr.getText(), telefon.getText(),  velgpassord.getText() );
+        } else {
+            System.out.println("Todo popommelding i register getbruker");
+        //pop opp melding hvis ordene ikke er like
+        }
+    return null;
+    
+    }
+    /*
+    public String getnyKunde(){
+        
+    return nyKunde;
+    } 
+    
+    public String getFornavn(){
+    return fornavn;
+    } 
+    
+    public String getEtternavn(){
+    return null;
+    } 
+    
+    public String getPersonnr(){
+    return null;
+    } 
+    
+    public String getTelefon(){
+    return null;
+    } 
+    
+    public String getEpost(){
+    return null;
+    } 
+    
+    public String getAdresse(){
+    return null;
+    } 
+    
+    public String getVelgpassord(){
+    return null;
+    } 
+    
+    public String getGjentapassord(){
+    return null;
+    } 
+      */      
+    
+    public static void Display(Kontroller kontroll)  {
+        
         
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
@@ -36,63 +105,63 @@ public class  Registrer {
         loginImg.setFitWidth(100);
         GridPane.setHalignment(loginImg, HPos.CENTER);
 
-        Label nyKunde = new Label();
+        nyKunde = new Label();
         nyKunde.setText("Ny Kunde");
         nyKunde.setId("nykunde");
         GridPane.setHalignment(nyKunde, HPos.CENTER);
 
-        TextField fornavn = new TextField();
+        fornavn = new TextField();
         fornavn.setPromptText("Fornavn");
         fornavn.setId("fornavn");
         fornavn.setMaxWidth(200);
         GridPane.setHalignment(fornavn, HPos.CENTER);
 
-        TextField etternavn = new TextField();
+        etternavn = new TextField();
         etternavn.setPromptText("Etternavn");
         etternavn.setId("etternavn");
         etternavn.setMaxWidth(200);
         GridPane.setHalignment(etternavn, HPos.CENTER);
 
-        TextField personnr = new TextField();
+        personnr = new TextField();
         personnr.setPromptText("Personnr");
         personnr.setId("personnr");
         personnr.setMaxWidth(200);
         GridPane.setHalignment(personnr, HPos.CENTER);
 
-        TextField telefon = new TextField();
+        telefon = new TextField();
         telefon.setPromptText("Telefon");
         telefon.setId("telefon");
         telefon.setMaxWidth(200);
         GridPane.setHalignment(telefon, HPos.CENTER);
 
-        TextField epost = new TextField();
+        epost = new TextField();
         epost.setPromptText("E-Post");
         epost.setId("epost");
         epost.setMaxWidth(200);
         GridPane.setHalignment(epost, HPos.CENTER);
 
-        TextField adresse = new TextField();
+        adresse = new TextField();
         adresse.setPromptText("Adresse");
         adresse.setId("adresse");
         adresse.setMaxWidth(200);
         GridPane.setHalignment(adresse, HPos.CENTER);
 
-        PasswordField velgpassord = new PasswordField();
+        velgpassord = new PasswordField();
         velgpassord.setPromptText("Velg Passord");
         velgpassord.setId("velgpassord");
         velgpassord.setMaxWidth(200);
         GridPane.setHalignment(velgpassord, HPos.CENTER);
 
-        PasswordField gjentapassord = new PasswordField();
+        gjentapassord = new PasswordField();
         gjentapassord.setPromptText("Gjenta Passord");
         gjentapassord.setId("gjentapassord");
         gjentapassord.setMaxWidth(200);
         GridPane.setHalignment(gjentapassord, HPos.CENTER);
 
-
-        Button btnRegKunde = new Button("Registrer Kunde");
+        btnRegKunde = new Button("Registrer Kunde");
         btnRegKunde.setId("btNyKunde");
         btnRegKunde.setMaxWidth(200);
+        btnRegKunde.setOnAction(e -> kontroll.registrerKunde());
         GridPane.setHalignment(btnRegKunde, HPos.CENTER);
 
         grid.add(loginImg, 0, 0);

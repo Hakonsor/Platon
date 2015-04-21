@@ -23,21 +23,26 @@ import javafx.stage.Stage;
  */
 
     public class Kontroller implements EventHandler<ActionEvent>{
-       Map<String, Bruker> brukerRegister = new HashMap<>();
-       Login login;
-       
+        Map<String, Bruker> brukerRegister = new HashMap<>();
+        Login login;
+  
     public Kontroller(Stage primaryStage) throws Exception{
-       login = new Login(primaryStage);
-        
+        login = new Login(primaryStage, this );
     }
-    
     public Bruker finnBruker(String Bruker){
-      return brukerRegister.get(Bruker);
+        return brukerRegister.get(Bruker);
     }
     public boolean sjekkPassord(String bruker, String  passord){
-      Bruker sjekkBruker = finnBruker(bruker);
-      return sjekkBruker.sjekkPassord(passord);
+        Bruker sjekkBruker = finnBruker(bruker);
+        return sjekkBruker.sjekkPassord(passord);
     }
+    public void registrerKunde(){
+        //System.out.println("we");
+       Kunde b = Registrer.getKunde();
+       brukerRegister.put(b.getKundeNokkel(), b);
+        System.out.println(b.toString());
+    } 
+    
     
     @Override
     public void handle(ActionEvent event) {
@@ -50,6 +55,7 @@ import javafx.stage.Stage;
             boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
             System.out.println(godkjent);
         }
+       // if(event.getSource() == 
     }
     
 

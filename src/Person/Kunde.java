@@ -15,18 +15,25 @@ import java.util.List;
 public class Kunde extends Bruker {
  
     private int kundeNr;
-    private String passord;
+    private static int neseKundeNr;
+    private String passord, telefon;
     private Forsikringer liste;// dette skal vel egentlig være liste over poliseNr.
     
-    public Kunde(String fornavn, String etternavn,String fakturaAdr, String personNr, String passord){
+    public Kunde(String fornavn, String etternavn,String fakturaAdr, String personNr, String telefon, String passord){
         super( fornavn,  etternavn, fakturaAdr,  personNr, passord);
         this.passord = passord; 
+        this.telefon = telefon;
+        kundeNr = ++neseKundeNr;
+    }
+
+    public String getKundeNokkel(){
+    return Integer.toString(kundeNr);
     }
     
      
     public String toString(){
         
-    return "hee";
+    return Integer.toString(kundeNr);
     }
     
 }// end of class Kunde

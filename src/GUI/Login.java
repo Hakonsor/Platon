@@ -1,9 +1,9 @@
 package GUI;
 
 
+import Kontroller.Kontroller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 
@@ -24,6 +24,7 @@ import javafx.stage.Stage;
  */
 public class Login {
     private String LoginBilde = "Bilder/user.png";
+    private Kontroller kontroll;
     
     private Button btnNyKunde;
     private Button btnKonsulentLogginn;
@@ -35,10 +36,10 @@ public class Login {
     TextField tfKonsulentBrukernavn;
     PasswordField pfKonsulentPassord; 
     
-           
-          
         
-    public Login(Stage primaryStage) throws Exception {
+    public Login(Stage primaryStage, Kontroller k) throws Exception {
+        
+        kontroll = k;
         TabPane tabs = new TabPane();
         Tab tabKunde = new Tab();
         tabKunde.setText("Kunde");
@@ -105,6 +106,7 @@ public class Login {
         btnKundeLogginn = new Button("Logg inn");
         btnKundeLogginn.setId("btnlogginn");
         btnKundeLogginn.setMaxWidth(200);
+        btnKundeLogginn.setOnAction(kontroll);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
 
         
@@ -112,7 +114,7 @@ public class Login {
         btnNyKunde.setId("btNyKunde");
         btnNyKunde.setMaxWidth(200);
         GridPane.setHalignment(btnNyKunde, HPos.CENTER);
-        try { btnNyKunde.setOnAction(e -> Registrer.Display());}
+        try { btnNyKunde.setOnAction(e -> Registrer.Display(kontroll));}
         catch (Exception ex) {
           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -187,7 +189,6 @@ public class Login {
         return grid;
     }
     
-
     public Button getKnappKonsulentLogginn(){
         return btnKonsulentLogginn;
     }
