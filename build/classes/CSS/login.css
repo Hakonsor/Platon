@@ -1,5 +1,5 @@
 .root {
-    -fx-background-image: url("loginnback.png");
+    -fx-background-image: url("Bilder/loginnback.png");
 }
 
 
@@ -30,7 +30,7 @@
     -fx-prompt-text-fill:darkgray;
 }
 
-#pfkundenr, #pfkundenr:focused {
+#pfKundePassord, #pfKundePassord:focused {
     -fx-prompt-text-fill:darkgray;
 }
 

@@ -117,8 +117,6 @@ public class Login {
           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-
-
         grid.add(loginImg, 0, 0);
         grid.add(velkommen, 0, 1);
         grid.add(info, 0, 2);
@@ -188,11 +186,31 @@ public class Login {
 
         return grid;
     }
-
-    public String getBruker(){
-    return null;
     
+
+    public Button getKnappKonsulentLogginn(){
+        return btnKonsulentLogginn;
     }
+    public Button getKnappKundeLogginn(){
+        return btnKundeLogginn;  
+    }
+    public Button getKnappNyKonsulent(){
+        return btnNyKonsulent;
+    }    
+    public String getKunde(){
+        return tfKundeBrukernavn.getText();
+    }
+    public String getPassordKunde(){
+        return pfKundePassord.getText();
+    } 
+    public String getKunsulent(){
+        return tfKonsulentBrukernavn.getText();
+    }
+    public String getKunsulentPassord(){
+        return pfKonsulentPassord.getText();
+    } 
+    
+    
 
 
 

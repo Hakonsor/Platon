@@ -31,16 +31,21 @@ import javafx.stage.Stage;
         
     }
     
-    public static void nyKunde(Kunde k){
-      //  brukerRegister.put(k., null)
+    public Bruker finnKunde(String Bruker){
+      return brukerRegister.get(Bruker);
     }
-    public Bruker sjekkPassord(String nøkkel){    
-    return brukerRegister.get(nøkkel);
+    public boolean sjekkPassord(String bruker, String  passord){
+      Bruker sjekkBruker = finnKunde(bruker);
+      
+    return false;
     }
     
     @Override
     public void handle(ActionEvent event) {
-       // if(event.getSource() == )
+        if(event.getSource() == login.getKnappKundeLogginn()){
+           // sjekkPassord((login.getKunde());
+        }
+        //if(event.getSource() == login.)
     }
     
 

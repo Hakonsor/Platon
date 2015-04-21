@@ -21,10 +21,10 @@ import java.util.LinkedList;
     private Calendar opprettetDato;
     
     public Bruker(String fornavn, String etternavn,String fakturaAdr, String personNr){
-        fornavn = this.fornavn;
-        etternavn = this.etternavn;
-        fakturaAdr = this.fakturaAdr;
-        personNr = this.personNr;
+        this.fornavn = fornavn;
+        this.etternavn = etternavn;
+        this.fakturaAdr = fakturaAdr;
+        this.personNr = personNr;
         opprettetDato = Calendar.getInstance();
     }
     public void addForsikring(int forsikring){
