@@ -4,17 +4,9 @@ package GUI;
 import Kontroller.Kontroller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-<<<<<<< HEAD
-
-import javafx.event.ActionEvent;
-=======
->>>>>>> origin/master
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-
 import static javafx.geometry.Pos.*;
-
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -30,13 +22,10 @@ import javafx.stage.Stage;
  */
 public class Login {
     private String LoginBilde = "Bilder/user.png";
-<<<<<<< HEAD
 
     private Stage primaryStage;
-=======
     private Kontroller kontroll;
-    
->>>>>>> origin/master
+
     private Button btnNyKunde;
     private Button btnKonsulentLogginn;
     private Button btnKundeLogginn;
@@ -46,17 +35,12 @@ public class Login {
     PasswordField pfKundePassord; 
     TextField tfKonsulentBrukernavn;
     PasswordField pfKonsulentPassord; 
-    
-        
-<<<<<<< HEAD
-    public Login(Stage primaryStage) throws Exception {
 
-        this.primaryStage = primaryStage;
-=======
     public Login(Stage primaryStage, Kontroller k) throws Exception {
-        
+
+            this.primaryStage = primaryStage;
+
         kontroll = k;
->>>>>>> origin/master
         TabPane tabs = new TabPane();
 
         Tab tabKunde = new Tab();
