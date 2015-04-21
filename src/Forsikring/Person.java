@@ -12,8 +12,21 @@ package Forsikring;
 public abstract class Person extends Forsikringer{
     private String fornavn, etternavn, personNr, gateAdr, gateNr, postNr;
     private int tlf;
-    public Person(int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
-      super( premie , egenandel , forsikrBet );
+    
+    // kostruktøren brukes når det opprettes bilforsikringsobjekter og båtforsikringsobjekter.
+    public Person( String s,int tlf, String fornavn, String  etternavn,String personNr,String gateAdr, String gateNr, String postNr){
+        super(s);
+        this.fornavn = fornavn;
+        this.etternavn = etternavn;
+        this.personNr = personNr;
+        this.gateAdr = gateAdr;
+        this.gateNr = gateNr;
+        this.postNr = postNr;  
+        this.tlf = tlf; 
+    }
+    
+    public Person(double premie,double egenandel, int tlf, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
+      super(premie, egenandel);
       this.fornavn = fornavn;
       this.etternavn = etternavn;
       this.personNr = personNr;
@@ -44,6 +57,24 @@ public abstract class Person extends Forsikringer{
        return gateAdr;
     }
     
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append("\nForsikringen er registrert på: \n Navn : ");
+        sb.append(etternavn);
+        sb.append(", ");
+        sb.append(fornavn);
+        sb.append("\nAdresse : ");
+        sb.append(gateAdr);
+        sb.append(", ");
+        sb.append(gateNr);
+        sb.append(", ");
+        sb.append(postNr);
+        sb.append(".");
+        return sb.toString();
+    }
+    
     
     
 }// end of class Person
+
