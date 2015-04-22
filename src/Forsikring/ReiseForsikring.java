@@ -13,8 +13,8 @@ import Forsikring.Person;
  */
 public class ReiseForsikring extends Person{
     
-    public ReiseForsikring(String s, int premie , int egenandel, int tlf , String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
-        super( s, tlf, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
+    public ReiseForsikring(int premie , int egenandel, int tlf , String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
+        super(tlf, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
     }
     
 }

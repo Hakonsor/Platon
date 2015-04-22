@@ -65,7 +65,7 @@ public class ForsikringsRegister implements Serializable {
           return s;
     } 
       
-      // finner liste
+      // finner liste, returnerer listen hvis den har innhold, hvis ikke så returnerer den null.
      public List finnListe(int i){
           if(i== 0){
                if(!bil.isEmpty()){
