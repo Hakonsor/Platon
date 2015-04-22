@@ -1,0 +1,46 @@
+.root {
+    -fx-background-image: url("Bilder/alu.jpg");
+}
+
+
+#nykunde {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial";
+}
+
+#konsulent_ny {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial";
+}
+
+#fornavn, #fornavn:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#etternavn, #etternavn:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#personnr, #personnr:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#telefon, #telefon:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#epost, #epost:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#adresse, #adresse:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#velgpassord, #velgpassord:focused {
+    -fx-prompt-text-fill:darkgray;
+}
+
+#gjentapassord, #gjentapassord:focused {
+    -fx-prompt-text-fill:darkgray;
+}
