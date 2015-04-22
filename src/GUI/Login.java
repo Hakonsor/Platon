@@ -38,7 +38,7 @@ public class Login {
 
     public Login(Stage primaryStage, Kontroller k) throws Exception {
 
-            this.primaryStage = primaryStage;
+        this.primaryStage = primaryStage;
 
         kontroll = k;
         TabPane tabs = new TabPane();
@@ -113,12 +113,15 @@ public class Login {
         btnKundeLogginn = new Button("Logg inn");
         btnKundeLogginn.setId("btnlogginn");
         btnKundeLogginn.setMaxWidth(200);
-        btnKundeLogginn.setOnAction(kontroll);
+        //btnKundeLogginn.setOnAction(kontroll);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
+        
         try {btnKundeLogginn.setOnAction(e -> {
-            KundeSide.Display();
-            closeLogin();
-
+            if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
+                kontroll.kundeSide(primaryStage);
+            }else{
+                System.out.println("TODO, pop opp box med som sier at passordened er ulike");
+            }
         });}
         catch (Exception ex) {
             Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,7 +132,7 @@ public class Login {
         btnNyKunde.setId("btNyKunde");
         btnNyKunde.setMaxWidth(200);
         GridPane.setHalignment(btnNyKunde, HPos.CENTER);
-        try { btnNyKunde.setOnAction(e -> Registrer.Display(kontroll));}
+        try { btnNyKunde.setOnAction(e -> kontroll.regVindu());}
         catch (Exception ex) {
           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
