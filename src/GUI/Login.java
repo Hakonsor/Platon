@@ -115,15 +115,14 @@ public class Login {
         btnKundeLogginn.setMaxWidth(200);
         //btnKundeLogginn.setOnAction(kontroll);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
+        
         try {btnKundeLogginn.setOnAction(e -> {
             if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
                 KundeSide.Display();
                 closeLogin();
             }else{
-                System.out.println("hehe, tror du ja");
+                System.out.println("TODO, pop opp box med som sier at passordened er ulike");
             }
-             
-
         });}
         catch (Exception ex) {
             Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
