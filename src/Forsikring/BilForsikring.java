@@ -13,16 +13,14 @@ import java.io.Serializable;
  */
 public class BilForsikring extends Kjoretoy implements Serializable {
     private int kjorelengde;
-    public BilForsikring(String s,  double egenandel, int tlf, int kjorelengde,String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, String regNr , String type , String modell ,String arsModell, int skadefriA){
-    super(s, tlf, fornavn,  etternavn, personNr, gateAdr, gateNr, postNr, regNr , type , modell , arsModell);
-    this.kjorelengde = kjorelengde;
-    
-    setBonus(bonusNyRegBil(skadefriA));// setter bonus
-    setPremie(premie(egenandel,getBonus() ));// premien
-    
+    public BilForsikring(int bonus, String s,  double egenandel, int tlf, int kjorelengde,String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, String regNr , String type , String modell ,String arsModell, int skadefriA){
+        super(s,bonus, tlf, fornavn,  etternavn, personNr, gateAdr, gateNr, postNr, regNr , type , modell , arsModell);
+        this.kjorelengde = kjorelengde;
+        setPremie(premie(egenandel,getBonus() ));// premien settes
     }
+    
     public int getKjorelengde(){
-     return kjorelengde;
+        return kjorelengde;
     }
     
      public double utbetal( int km , double kostnad, int egenandel){
@@ -63,7 +61,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
      
    }// end of method
         
-    // beregner premien på nyregisterte biler
+   /* // beregner premien på nyregisterte biler
     public double bonusNyRegBil(int skadeFrieAar){       
         double bonus = 0;
       
@@ -81,22 +79,22 @@ public class BilForsikring extends Kjoretoy implements Serializable {
        
     }// end of method 
 
-    
+    */
     // beregner bonusen etter skaden. parameteren angir hva bonusen var før skaden
-    public int bonusEtterSkade(int bonus){ 
-        if(bonus == 0){
-            bonus -= 0.4;
+    public double bonusEtterSkade(double boNus){ 
+        if(boNus == 0){
+            boNus -= 0.4;
         }
-        if(bonus >= 0.1 && bonus <= 0.6){
-            bonus -= 0.3;
+        if(boNus >= 0.1 && boNus <= 0.6){
+            boNus -= 0.3;
         }
-        if(bonus == 0.7){
-            bonus -= 0.3;
+        if(boNus == 0.7){
+            boNus -= 0.3;
         }
-        if(bonus == 0.75){
-            bonus -= 0.15;
+        if(boNus == 0.75){
+            boNus -= 0.15;
         }
-        return bonus;
+        return boNus;
     }// end of method
 
     // beregner premien basert på bonus etter en skade.
