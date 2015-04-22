@@ -39,7 +39,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
             else if( km > 200000 && km <= 300000 ){
                delta = 0.6;
             }
-            else if( km > 15000 && km <= 200000){
+            else if( km > 150000 && km <= 200000){
                delta = 0.3;   
             }
             else if( km > 100000 && km <= 150000 ){

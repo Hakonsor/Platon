@@ -76,11 +76,11 @@ public class KundesideBil {
         cbKjørelengde.setEditable(false);
         cbKjørelengde.setMinWidth(200);
         cbKjørelengde.getItems().addAll(
-                "Kjørelengde: 8 000 km",
-                "Kjørelengde: 15 000 km",
-                "Kjørelengde: 20 000 km",
-                "Kjørelengde: 30 000 km",
-                "Kjørelengde: Ubegrenset"
+                "Kjørelengde: < 100 000 km",
+                "Kjørelengde:   150 000 km",
+                "Kjørelengde:   200 000 km",
+                "Kjørelengde:   300 000 km",
+                "Kjørelengde: > 350 000 km"
         );
         cbKjørelengde.setValue("Velg Kjørelengde:");
 
