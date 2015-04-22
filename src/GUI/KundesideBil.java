@@ -2,12 +2,16 @@ package GUI;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-
 import static javafx.geometry.Pos.CENTER;
 import static javafx.geometry.Pos.TOP_CENTER;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 
 /**
  * Created by Magnus on 21.04.15.
@@ -15,8 +19,7 @@ import static javafx.geometry.Pos.TOP_CENTER;
 public class KundesideBil {
 
     public static Pane bilFane() {
-<<<<<<< Updated upstream
-=======
+
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
         HBox vb = new HBox();
@@ -31,18 +34,18 @@ public class KundesideBil {
 
         borderPane.setTop(vb);
 
->>>>>>> Stashed changes
+
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
         grid.setHgap(10);
-<<<<<<< Updated upstream
+
         grid.setVgap(10);
         grid.setPadding(new Insets(100));
 
         Label lb = new Label();
         lb.setText("Her kommer det Informasjon");
         GridPane.setHalignment(lb, HPos.CENTER);
-=======
+
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
         grid.setAlignment(TOP_CENTER);
@@ -131,7 +134,7 @@ public class KundesideBil {
         grid.add(regLabel, 0, 4);
 
 
->>>>>>> Stashed changes
+
 
         grid.add(lb, 0, 0);
 
