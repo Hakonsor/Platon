@@ -19,28 +19,27 @@ import javafx.stage.Stage;
  * Created by Magnus on 20.04.15.
  */
 
-public class  Registrer {
+public class Registrer {
     
-    private static final String LoginBilde = "Bilder/add_user.png";
-    private static Stage vindu = new Stage();
+    private final String LoginBilde = "Bilder/add_user.png";
     
-    private static Button btnRegKunde;
-    private static Label nyKunde;
-    private static TextField fornavn;
-    private static TextField etternavn;
-    private static TextField personnr;
-    private static TextField telefon;
-    private static TextField epost;
-    private static TextField adresse;
-    private static PasswordField velgpassord;
-    private static PasswordField gjentapassord;
-
+    private final Button btnRegKunde;
+    private final Label nyKunde;
+    private final TextField fornavn;
+    private final TextField etternavn;
+    private final TextField personnr;
+    private final TextField telefon;
+    private final TextField epost;
+    private final TextField adresse;
+    private final PasswordField velgpassord;
+    private final PasswordField gjentapassord;
+    private static Stage vindu;
   
     
     public Button getBtnRegKunde(){
     return btnRegKunde;
     }
-    public static Kunde getKunde(){
+    public Kunde getKunde(){
         if(velgpassord.getText().equals(gjentapassord.getText())){
             return new Kunde(fornavn.getText(), etternavn.getText(), adresse.getText(), personnr.getText(), telefon.getText(),  velgpassord.getText() );
         } else {
@@ -50,48 +49,9 @@ public class  Registrer {
     return null;
     
     }
-    /*
-    public String getnyKunde(){
-        
-    return nyKunde;
-    } 
-    
-    public String getFornavn(){
-    return fornavn;
-    } 
-    
-    public String getEtternavn(){
-    return null;
-    } 
-    
-    public String getPersonnr(){
-    return null;
-    } 
-    
-    public String getTelefon(){
-    return null;
-    } 
-    
-    public String getEpost(){
-    return null;
-    } 
-    
-    public String getAdresse(){
-    return null;
-    } 
-    
-    public String getVelgpassord(){
-    return null;
-    } 
-    
-    public String getGjentapassord(){
-    return null;
-    } 
-      */      
-    
-    public static void Display(Kontroller kontroll)  {
-        
-        
+    public Registrer(Stage vindu, Kontroller kontroll)  {
+        this.vindu = vindu;
+
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
         //grid.setGridLinesVisible(true);
@@ -161,7 +121,12 @@ public class  Registrer {
         btnRegKunde = new Button("Registrer Kunde");
         btnRegKunde.setId("btNyKunde");
         btnRegKunde.setMaxWidth(200);
-        btnRegKunde.setOnAction(e -> kontroll.registrerKunde());
+        btnRegKunde.setOnAction(e -> {
+            kontroll.registrerKunde(this.getKunde());
+            vindu.close();
+        });
+
+
         GridPane.setHalignment(btnRegKunde, HPos.CENTER);
 
         grid.add(loginImg, 0, 0);
@@ -183,7 +148,44 @@ public class  Registrer {
         scene.getStylesheets().add("CSS/registrer.css");
         vindu.show();
     }
-
+/*
+    public String getnyKunde(){
+        
+    return nyKunde;
+    } 
+    
+    public String getFornavn(){
+    return fornavn;
+    } 
+    
+    public String getEtternavn(){
+    return null;
+    } 
+    
+    public String getPersonnr(){
+    return null;
+    } 
+    
+    public String getTelefon(){
+    return null;
+    } 
+    
+    public String getEpost(){
+    return null;
+    } 
+    
+    public String getAdresse(){
+    return null;
+    } 
+    
+    public String getVelgpassord(){
+    return null;
+    } 
+    
+    public String getGjentapassord(){
+    return null;
+    } 
+      */
 
 
 }//End of class
