@@ -5,8 +5,13 @@
  */
 package Person;
 
+import Forsikring.BatForsikring;
+import Forsikring.BilForsikring;
+import Forsikring.BoligForsikring;
 import Forsikring.Forsikringer;
 import Forsikring.ForsikringsRegister;
+import Forsikring.FritidsBolig;
+import Forsikring.ReiseForsikring;
 import java.io.Serializable;
 
 /**
@@ -33,6 +38,29 @@ public class Kunde extends Bruker implements Serializable {
     return Integer.toString(kundeNr);
     }
     
+    // viser en liste over gyldige forsikringer av en bestemt type
+    public String visForsikring(int i){
+        return register.visListe(i);
+    }
+    
+    public void settInn(Forsikringer f){
+        if (f instanceof BilForsikring){
+            register.settInn((BilForsikring)f);
+        }
+        if (f instanceof BatForsikring){
+            register.settInn((BatForsikring)f);
+        }
+        if (f instanceof BoligForsikring){
+            register.settInn((BoligForsikring)f);
+        }
+        if (f instanceof ReiseForsikring){
+            register.settInn((ReiseForsikring)f);
+        }
+        if (f instanceof FritidsBolig){
+            register.settInn((FritidsBolig)f);
+        }
+    }// end of method settInn
+
      
     public String toString(){
         
