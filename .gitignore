@@ -3,4 +3,5 @@
 /Forsikringstest/dist/
 /dist/
 /build/
-/nbproject/private/
+/nbproject/private//nbproject/private/
+*.class
