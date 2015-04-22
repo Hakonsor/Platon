@@ -8,7 +8,7 @@ package Kontroller;
 
 import GUI.Login;
 import GUI.Registrer;
-
+import GUI.KundeSide;
 import Person.Bruker;
 import Person.Kunde;
 import java.util.HashMap;
@@ -38,22 +38,29 @@ import javafx.stage.Stage;
         return sjekkBruker.sjekkPassord(passord);
     }
     public void registrerKunde(){
-        //System.out.println("we");
+        try{
+        Kunde b = Registrer.getKunde();
+        brukerRegister.put(b.getKundeNokkel(), b);
         System.out.println(b.toString());
+       }
+       catch (NullPointerException e){
+           
+       }
     } 
     
     
     @Override
     public void handle(ActionEvent event) {
-        /*
+       /*
         if(event.getSource() == login.getKnappKundeLogginn()){
             boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
             System.out.println(godkjent);
+            KundeSide.Display();
         }
         if(event.getSource() == login.getKnappKonsulentLogginn()){
             boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());
             System.out.println(godkjent);
-        }
+        }*/
        // if(event.getSource() == 
     }
     
