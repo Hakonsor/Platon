@@ -5,17 +5,19 @@
  */
 package Forsikring;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Therese, Håkon
  */
-public abstract class Person extends Forsikringer{
+public abstract class Person extends Forsikringer implements Serializable{
     private String fornavn, etternavn, personNr, gateAdr, gateNr, postNr;
     private int tlf;
     
     // kostruktøren brukes når det opprettes bilforsikringsobjekter og båtforsikringsobjekter.
-    public Person( String s,int tlf, String fornavn, String  etternavn,String personNr,String gateAdr, String gateNr, String postNr){
-        super(s);
+    public Person(int tlf, String fornavn, String  etternavn,String personNr,String gateAdr, String gateNr, String postNr){
+        super(0,0);
         this.fornavn = fornavn;
         this.etternavn = etternavn;
         this.personNr = personNr;

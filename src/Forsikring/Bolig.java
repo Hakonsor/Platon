@@ -24,9 +24,9 @@ public abstract class Bolig extends Forsikringer implements Serializable {
     private String standard;
     
     
-    public Bolig(String s, double kvadrat, String adresse, String boligType, String byggeår,
+    public Bolig(double kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, double byggSum, double inboSUm){
-        super(s);
+        super(0,0);
         this.kvadrat = kvadrat;
         this.adresse = adresse;
         this.boligType = boligType;
@@ -131,6 +131,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
           return sum;
            
       }// end of method fullUtbetaling  
+       
         
       public double premie(double kvadrat, double byggSum, double innboSum){
           double prisPerKvadrat = 0.1;
