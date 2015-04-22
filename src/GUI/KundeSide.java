@@ -1,5 +1,6 @@
 package GUI;
 
+import Kontroller.Kontroller;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,9 +15,12 @@ import javafx.scene.layout.*;
 
 public class KundeSide {
 
-    static Stage vindu = new Stage();
-    KundesideInfo info;
-    public static void Display() {
+    private Kontroller kontroll;
+    //static Stage vindu = new Stage();
+   // KundesideInfo info;
+
+    public KundeSide(Stage primaryStage, Kontroller k){
+        this.kontroll = k;
 
         Group root = new Group();
         Scene scene = new Scene(root, 800, 640);
@@ -28,7 +32,7 @@ public class KundeSide {
         MenuItem left = new MenuItem("Logg ut");
         menu.getItems().addAll(left);
         left.setOnAction(e -> {
-            vindu.hide();
+            kontroll.loginVindu(primaryStage);
         });
 
 
@@ -92,10 +96,10 @@ public class KundeSide {
 
         root.getChildren().add(borderPane);
 
-        vindu.setTitle("Kundeside");
-        vindu.setScene(scene);
+        primaryStage.setTitle("Kundeside");
+        primaryStage.setScene(scene);
         scene.getStylesheets().add("CSS/kundeside.css");
-        vindu.show();
+        primaryStage.show();
     }
 
 

@@ -9,6 +9,9 @@ package Forsikring;
  *
  * @author Therese, Håkon
  */
+
+/*
+
 public class FritidsBolig extends Bolig {
     boolean utleie;
     
@@ -25,3 +28,5 @@ public class FritidsBolig extends Bolig {
     }
     
 }
+
+*/

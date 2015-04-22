@@ -11,6 +11,8 @@ import Forsikring.Person;
  *
  * @author Therese, Håkon
  */
+/*
+
 public class ReiseForsikring extends Person{
     
     public ReiseForsikring(int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
@@ -20,3 +22,5 @@ public class ReiseForsikring extends Person{
     }
     
 }
+
+*/

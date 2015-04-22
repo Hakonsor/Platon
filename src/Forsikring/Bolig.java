@@ -11,6 +11,7 @@ import java.io.Serializable;
  *
  * @author Therese, Håkon
  */
+/*
 public abstract class Bolig extends Forsikringer implements Serializable {
     
     private int kvadrat;
@@ -37,7 +38,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
         this.boligType = boligType;
         this.byggeår = byggeår;
         this.byggSum = byggSum;
-        this.inboSUm = inboSUm;
+        this.innboSum = inboSUm;
         this.innboSum = inboSUm;
         this.metriale = metriale;
         this.standard = standard;
@@ -62,7 +63,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
            return byggSum;
         }
         public String inboSUm(){
-           return inboSUm;
+           return inboSum;
         public double inboSum(){
            return innboSum;
         }
@@ -155,4 +156,5 @@ public abstract class Bolig extends Forsikringer implements Serializable {
       }
         
     
-}// end of class Bolig.
+} // end of class Bolig
+*/
