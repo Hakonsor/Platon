@@ -26,9 +26,9 @@ import javafx.stage.Stage;
         public static Map<String, Bruker> brukerRegister = new HashMap<>();
         Login login;
   
-    public Kontroller(Stage primaryStage) throws Exception{
-        loginVindu(primaryStage);
-    }
+        public Kontroller(Stage primaryStage) throws Exception{
+            loginVindu(primaryStage);
+            }
         public void loginVindu(Stage primaryStage) {
             try {
                 login = new Login(primaryStage, this );
@@ -37,39 +37,31 @@ import javafx.stage.Stage;
                 System.out.println("Klarte ikke å åpne logginn vindu!");
             }
         }
-
         public void regVindu(){
             Registrer regVindu = new Registrer(new Stage(), this);
         }
-
         public void kundeSide(Stage primaryStage){
            KundeSide nyside = new KundeSide(primaryStage, this);
         }
-
-
-
-    public Bruker finnBruker(String Bruker){
-        return brukerRegister.get(Bruker);
-    }
-    public boolean sjekkPassord(String bruker, String  passord){
-        Bruker sjekkBruker = finnBruker(bruker);
-        if(sjekkBruker == null) return false;
-        return sjekkBruker.sjekkPassord(passord);
-    }
-    public void registrerKunde(Registrer regVindu){
-        try{
-        Kunde b = regVindu.getKunde();
-        brukerRegister.put(b.getKundeNokkel(), b);
-        System.out.println(b.toString());
-       }
-       catch (NullPointerException e){
-           
-       }
+        public Bruker finnBruker(String Bruker){
+         return brukerRegister.get(Bruker);
+        }
+        public boolean sjekkPassord(String bruker, String  passord){
+           Bruker sjekkBruker = finnBruker(bruker);
+           if(sjekkBruker == null) return false;
+           return sjekkBruker.sjekkPassord(passord);
+        }
+        public void nyKunde( Kunde b){
+            brukerRegister.put(b.getKundeNokkel(), b);
+        }
+        public void registrerKunde(Kunde b){
+                brukerRegister.put(b.getKundeNokkel(), b);
+                System.out.println(b.toString());
     } 
     
     
-    @Override
-    public void handle(ActionEvent event) {
+        @Override
+        public void handle(ActionEvent event) {
        /*
         if(event.getSource() == login.getKnappKundeLogginn()){
             boolean godkjent = sjekkPassord(login.getKunde(), login.getPassordKunde());

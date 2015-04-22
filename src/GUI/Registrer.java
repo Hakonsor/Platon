@@ -23,17 +23,17 @@ public class Registrer {
     
     private final String LoginBilde = "Bilder/add_user.png";
     
-    private Button btnRegKunde;
-    private Label nyKunde;
-    private TextField fornavn;
-    private TextField etternavn;
-    private TextField personnr;
-    private TextField telefon;
-    private TextField epost;
-    private TextField adresse;
-    private PasswordField velgpassord;
-    private PasswordField gjentapassord;
-
+    private final Button btnRegKunde;
+    private final Label nyKunde;
+    private final TextField fornavn;
+    private final TextField etternavn;
+    private final TextField personnr;
+    private final TextField telefon;
+    private final TextField epost;
+    private final TextField adresse;
+    private final PasswordField velgpassord;
+    private final PasswordField gjentapassord;
+    private static Stage vindu;
   
     
     public Button getBtnRegKunde(){
@@ -49,47 +49,6 @@ public class Registrer {
     return null;
     
     }
-    /*
-    public String getnyKunde(){
-        
-    return nyKunde;
-    } 
-    
-    public String getFornavn(){
-    return fornavn;
-    } 
-    
-    public String getEtternavn(){
-    return null;
-    } 
-    
-    public String getPersonnr(){
-    return null;
-    } 
-    
-    public String getTelefon(){
-    return null;
-    } 
-    
-    public String getEpost(){
-    return null;
-    } 
-    
-    public String getAdresse(){
-    return null;
-    } 
-    
-    public String getVelgpassord(){
-    return null;
-    } 
-    
-    public String getGjentapassord(){
-    return null;
-    } 
-      */
-
-    static Stage vindu;
-    
     public Registrer(Stage vindu, Kontroller kontroll)  {
         this.vindu = vindu;
 
@@ -163,7 +122,7 @@ public class Registrer {
         btnRegKunde.setId("btNyKunde");
         btnRegKunde.setMaxWidth(200);
         btnRegKunde.setOnAction(e -> {
-            kontroll.registrerKunde(this);
+            kontroll.registrerKunde(this.getKunde());
             vindu.close();
         });
 
@@ -189,7 +148,44 @@ public class Registrer {
         scene.getStylesheets().add("CSS/registrer.css");
         vindu.show();
     }
-
+/*
+    public String getnyKunde(){
+        
+    return nyKunde;
+    } 
+    
+    public String getFornavn(){
+    return fornavn;
+    } 
+    
+    public String getEtternavn(){
+    return null;
+    } 
+    
+    public String getPersonnr(){
+    return null;
+    } 
+    
+    public String getTelefon(){
+    return null;
+    } 
+    
+    public String getEpost(){
+    return null;
+    } 
+    
+    public String getAdresse(){
+    return null;
+    } 
+    
+    public String getVelgpassord(){
+    return null;
+    } 
+    
+    public String getGjentapassord(){
+    return null;
+    } 
+      */
 
 
 }//End of class
