@@ -82,7 +82,3 @@ public class KundesideInfo {
         return borderPane;
     }
 }
-
-/*
-
- */

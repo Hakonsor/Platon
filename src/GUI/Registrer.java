@@ -19,28 +19,27 @@ import javafx.stage.Stage;
  * Created by Magnus on 20.04.15.
  */
 
-public class  Registrer {
+public class Registrer {
     
-    private static final String LoginBilde = "Bilder/add_user.png";
-    private static Stage vindu = new Stage();
+    private final String LoginBilde = "Bilder/add_user.png";
     
-    private static Button btnRegKunde;
-    private static Label nyKunde;
-    private static TextField fornavn;
-    private static TextField etternavn;
-    private static TextField personnr;
-    private static TextField telefon;
-    private static TextField epost;
-    private static TextField adresse;
-    private static PasswordField velgpassord;
-    private static PasswordField gjentapassord;
+    private Button btnRegKunde;
+    private Label nyKunde;
+    private TextField fornavn;
+    private TextField etternavn;
+    private TextField personnr;
+    private TextField telefon;
+    private TextField epost;
+    private TextField adresse;
+    private PasswordField velgpassord;
+    private PasswordField gjentapassord;
 
   
     
     public Button getBtnRegKunde(){
     return btnRegKunde;
     }
-    public static Kunde getKunde(){
+    public Kunde getKunde(){
         if(velgpassord.getText().equals(gjentapassord.getText())){
             return new Kunde(fornavn.getText(), etternavn.getText(), adresse.getText(), personnr.getText(), telefon.getText(),  velgpassord.getText() );
         } else {
@@ -87,11 +86,13 @@ public class  Registrer {
     public String getGjentapassord(){
     return null;
     } 
-      */      
+      */
+
+    static Stage vindu;
     
-    public static void Display(Kontroller kontroll)  {
-        
-        
+    public Registrer(Stage vindu, Kontroller kontroll)  {
+        this.vindu = vindu;
+
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
         //grid.setGridLinesVisible(true);
@@ -161,7 +162,12 @@ public class  Registrer {
         btnRegKunde = new Button("Registrer Kunde");
         btnRegKunde.setId("btNyKunde");
         btnRegKunde.setMaxWidth(200);
-        btnRegKunde.setOnAction(e -> kontroll.registrerKunde());
+        btnRegKunde.setOnAction(e -> {
+            kontroll.registrerKunde(this);
+            vindu.close();
+        });
+
+
         GridPane.setHalignment(btnRegKunde, HPos.CENTER);
 
         grid.add(loginImg, 0, 0);

@@ -23,12 +23,31 @@ import javafx.stage.Stage;
  */
 
     public class Kontroller implements EventHandler<ActionEvent>{
-        Map<String, Bruker> brukerRegister = new HashMap<>();
+        public static Map<String, Bruker> brukerRegister = new HashMap<>();
         Login login;
   
     public Kontroller(Stage primaryStage) throws Exception{
-        login = new Login(primaryStage, this );
+        loginVindu(primaryStage);
     }
+        public void loginVindu(Stage primaryStage) {
+            try {
+                login = new Login(primaryStage, this );
+            }
+            catch (java.lang.Exception jle){
+                System.out.println("Klarte ikke å åpne logginn vindu!");
+            }
+        }
+
+        public void regVindu(){
+            Registrer regVindu = new Registrer(new Stage(), this);
+        }
+
+        public void kundeSide(Stage primaryStage){
+           KundeSide nyside = new KundeSide(primaryStage, this);
+        }
+
+
+
     public Bruker finnBruker(String Bruker){
         return brukerRegister.get(Bruker);
     }
@@ -37,9 +56,9 @@ import javafx.stage.Stage;
         if(sjekkBruker == null) return false;
         return sjekkBruker.sjekkPassord(passord);
     }
-    public void registrerKunde(){
+    public void registrerKunde(Registrer regVindu){
         try{
-        Kunde b = Registrer.getKunde();
+        Kunde b = regVindu.getKunde();
         brukerRegister.put(b.getKundeNokkel(), b);
         System.out.println(b.toString());
        }

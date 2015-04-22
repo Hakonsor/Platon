@@ -11,6 +11,9 @@ import java.io.Serializable;
  *
  * @author Therese
  */
+
+/*
+
 public class BoligForsikring extends Bolig {
 public class BoligForsikring extends Bolig implements Serializable {
     
@@ -29,3 +32,5 @@ public class BoligForsikring extends Bolig implements Serializable {
     }
     
 }
+
+*/
