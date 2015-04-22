@@ -14,29 +14,38 @@ import java.io.Serializable;
 public abstract class Bolig extends Forsikringer implements Serializable {
     
     private int kvadrat;
+    private double kvadrat;
+    private double byggSum;
+    private double innboSum;
+    private int egenAndel = 4000;
     private String adresse;
     private String boligType ;
     private String byggeår ;
     private String metriale;
     private String standard;
-    private String byggSum;
-    private String inboSUm;
     
     public Bolig(  int premie , int egenandel , String forsikrBet,
                   int kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, String byggSum, String inboSUm){
         super( premie , egenandel );
+    
+    public Bolig(String s, double kvadrat, String adresse, String boligType, String byggeår,
+                  String metriale, String standard, double byggSum, double inboSUm){
+        super(s);
         this.kvadrat = kvadrat;
         this.adresse = adresse;
         this.boligType = boligType;
         this.byggeår = byggeår;
         this.byggSum = byggSum;
         this.inboSUm = inboSUm;
+        this.innboSum = inboSUm;
         this.metriale = metriale;
         this.standard = standard;
+        setPremie(premie(kvadrat, byggSum, innboSum));
     }
     
         public int getKvadrat(){
+        public double getKvadrat(){
            return kvadrat;
         }
         public String adresse(){
@@ -49,10 +58,13 @@ public abstract class Bolig extends Forsikringer implements Serializable {
            return byggeår;
         }
         public String byggSum(){
+        public double byggSum(){
            return byggSum;
         }
         public String inboSUm(){
            return inboSUm;
+        public double inboSum(){
+           return innboSum;
         }
         public String metriale(){
            return metriale;
@@ -61,6 +73,86 @@ public abstract class Bolig extends Forsikringer implements Serializable {
            return standard;
         }
                 
+       
+       
+        // beregner skaden avhengig av skadetype, og om boligen er fg godkjent.
+        public int egenandel(String skadeType, boolean fG ){
+            int fGgodkjent = 4000;
+            
+            int brann= 3000;
+            int vann = 15000;
+            int ror = 25000;
+            
+            if(fG){
+                egenAndel -= fGgodkjent;   
+            }
+            switch (skadeType) {
+                case "brann":
+                case "natur":
+                    egenAndel += brann;
+                    break;
+                case "vann":
+                    egenAndel += vann;
+                    break;  
+                case "rør":
+                    egenAndel+= ror;
+                    break;
+            }
+           
+        
+            return egenAndel;
+    
+        }// end of method egenandel
+        
+        // utbetaling av forsikringssum, med regler.
+        public double utbetalingBolig( double skadeBelop , double verdi, int alder, double egenAndel ){
+          double totalSkadeGrense = 0.75;
+          int femAar= 5;
+          int tiAar = 10;
+          
+          double delta10 = 0.015;
+          double delta5 = 0.01;
+          double sum;
+          double byggVerdi;
+          
+          // bestemmer byggets verdi
+          
+          
+             if (alder>=  tiAar ){
+                 byggVerdi = verdi - alder*verdi*delta10;
+             }
+             else if(alder>=femAar){
+                 byggVerdi = verdi - alder*verdi*delta5;
+             }
+             else{
+                 byggVerdi = verdi;
+             }
+             
+          // laveste skadegrense for totalskade her er det tatt hensyn til byggets alder:    
+          double minTotal= byggVerdi* totalSkadeGrense;
+          
+          // sjekker om bygget er totalskadet, dvs skaden utgjør minst 75% av verdien til boligen.
+          if (skadeBelop< minTotal){
+              sum = skadeBelop - egenAndel;
+          }
+          else{
+              sum = byggVerdi - egenAndel;
+          }
+          
+          return sum;
+           
+      }// end of method fullUtbetaling  
+        
+      public double premie(double kvadrat, double byggSum, double innboSum){
+          double prisPerKvadrat = 0.1;
+          double prisPerByggVerdi = 0.0007;
+          double prisPerInnbo= 0.003;
+          double premium= 0;
+          
+          premium = prisPerKvadrat*kvadrat + prisPerByggVerdi*byggSum + prisPerInnbo* innboSum;
+          
+          return premium;
+      }
         
     
 }// end of class Bolig.

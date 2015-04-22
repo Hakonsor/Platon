@@ -5,6 +5,8 @@
  */
 package Forsikring;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Therese, Håkon
@@ -12,6 +14,9 @@ package Forsikring;
 public class LivsForsikring extends Person{  
     public LivsForsikring(int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
         super( premie , egenandel, tlf, forsikrBet, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
+public class LivsForsikring extends Person implements Serializable{  
+    public LivsForsikring(String s,int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
+        super( s, tlf, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
     }
     
     

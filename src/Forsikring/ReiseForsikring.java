@@ -15,6 +15,8 @@ public class ReiseForsikring extends Person{
     
     public ReiseForsikring(int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
         super( premie , egenandel, tlf, forsikrBet, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
+    public ReiseForsikring(String s, int premie , int egenandel, int tlf , String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
+        super( s, tlf, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
     }
     
 }

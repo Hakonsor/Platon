@@ -13,9 +13,12 @@ public class FritidsBolig extends Bolig {
     boolean utleie;
     
     public FritidsBolig(  boolean utleie, int premie , int egenandel , String forsikrBet,
+    public FritidsBolig(  String s,boolean utleie,
                   int kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, String byggSum, String inboSUm){
         super(  premie , egenandel ,  forsikrBet,
+                  String metriale, String standard, double byggSum, double inboSUm){
+        super( s,
                   kvadrat, adresse, boligType, byggeår,
                   metriale, standard, byggSum, inboSUm);
         this.utleie = utleie;
