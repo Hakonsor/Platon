@@ -116,14 +116,18 @@ public class Login {
         //btnKundeLogginn.setOnAction(kontroll);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
         
-        try {btnKundeLogginn.setOnAction(e -> {
-            if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
+        try {
+            btnKundeLogginn.setOnAction(e -> {
+                if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
                 kontroll.kundeSide(primaryStage);
-            }else{
-                System.out.println("TODO, pop opp box med som sier at passordened er ulike");
-            }
-        });}
-        catch (Exception ex) {
+                kontroll.setInnloggetBruker(tfKundeBrukernavn.getText() );
+                
+                
+                }else{
+                    System.out.println("TODO, pop opp box med som sier at passordened er ulike");
+                }
+            });
+        }catch (Exception ex) {
             Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -132,8 +136,9 @@ public class Login {
         btnNyKunde.setId("btNyKunde");
         btnNyKunde.setMaxWidth(200);
         GridPane.setHalignment(btnNyKunde, HPos.CENTER);
-        try { btnNyKunde.setOnAction(e -> kontroll.regVindu());}
-        catch (Exception ex) {
+        try { 
+            btnNyKunde.setOnAction(e -> kontroll.regVindu());
+        }catch (Exception ex) {
           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
