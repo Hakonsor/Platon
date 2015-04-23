@@ -28,6 +28,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         return kjorelengde;
     }
         // km angir hvor langt bilen kan kjøre per år
+    
 
 
      public double utbetal( int km , double kostnad, int egenandel){

@@ -6,6 +6,7 @@
 
 package Kontroller;
 
+
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
 import GUI.KundeSide;
@@ -13,6 +14,13 @@ import GUI.Login;
 import GUI.Registrer;
 import Person.Bruker;
 import Person.Kunde;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.event.ActionEvent;
@@ -26,15 +34,20 @@ import javafx.stage.Stage;
 
     public class Kontroller implements EventHandler<ActionEvent>{
         
-        
         public static Map<String, Bruker> brukerRegister = new HashMap<>();
         private Bruker innLoggetBruker = null;
-  
-            public Kontroller(Stage primaryStage) throws Exception{
+        
+        public Kontroller(Stage primaryStage) throws Exception{
+                primaryStage.setOnCloseRequest(e -> skrivTilFil());
+                lesFil();
                 loginVindu(primaryStage);
-                }
-            // GUI
-            public void loginVindu(Stage primaryStage) {
+               
+            }
+        //GUI
+        public void skrivInn(){
+            
+            }
+        public void loginVindu(Stage primaryStage) {
                 innLoggetBruker = null;
                 try {
                    Login login = new Login(primaryStage, this );
@@ -43,17 +56,17 @@ import javafx.stage.Stage;
                     System.out.println("Klarte ikke å åpne logginn vindu!");
                 }
             }
-            public void kundeSide(Stage primaryStage){
+        public void kundeSide(Stage primaryStage){
                 KundeSide nyside = new KundeSide(primaryStage, this);
             }            
-            public void regVindu(){
+        public void regVindu(){
                 Registrer regVindu = new Registrer(new Stage(), this);
             }
-            //forsikring
-            public void setForsikring(int bonusIndex, int egenandelIndex, 
-                    String telefonnummerString, int kjorelengdeIndex, String fornavn, 
-                    String tfEtternavn, String tfPersonnr, String postNr, String regNr, 
-                    String arsmodell,  String type, String tfKmstand){
+        //Forsikring
+        public void setForsikring(int bonusIndex, int egenandelIndex, 
+            String telefonnummerString, int kjorelengdeIndex, String fornavn, 
+            String tfEtternavn, String tfPersonnr, String postNr, String regNr, 
+            String arsmodell,  String type, String tfKmstand){
                 int telefonnummer = 0;
                 int kmStand = 0;
                 
@@ -134,41 +147,62 @@ import javafx.stage.Stage;
                 
           //  k.addForsikring(new BilForsikring());
             }
-            //bruker
-            public void setInnloggetBruker(String nokkel){
+        //Bruker
+        public void setInnloggetBruker(String nokkel){
                 innLoggetBruker = brukerRegister.get(nokkel);
             }
-            public Bruker getInnloggetBruker(){
+        public Bruker getInnloggetBruker(){
             return innLoggetBruker;
             }
-            public Bruker finnBruker(String Bruker){
+        public Bruker finnBruker(String Bruker){
                 return brukerRegister.get(Bruker);
             }
-            public boolean sjekkPassord(String bruker, String  passord){
+        public boolean sjekkPassord(String bruker, String  passord){
                 Bruker sjekkBruker = finnBruker(bruker);
                 if(sjekkBruker == null) return false;
                 return sjekkBruker.sjekkPassord(passord);
             }
-            
-            //Kunde
-            public void nyKunde( Kunde b){
+        //Kunde
+        public void nyKunde( Kunde b){
                 brukerRegister.put(b.getKundeNokkel(), b);
             }
-            public void registrerKunde(Kunde b){
+        public void registrerKunde(Kunde b){
                 brukerRegister.put(b.getKundeNokkel(), b);
                 System.out.println(b.toString());
             }
-            
-            public void addforsikring(Kunde kunde, String cbBonus, String cbEgenandel, String cbKjørelengde){
+        public void addforsikring(Kunde kunde, String cbBonus, String cbEgenandel, String cbKjørelengde){
             if(cbBonus.matches("")){}
             }
-    
-    
-    
+        //Filskriving
+        private void lesFil(){
+            try (ObjectInputStream innfil = new ObjectInputStream(
+                new FileInputStream( "src/Fil/forsikring.data" ))){
+                    brukerRegister = (HashMap) innfil.readObject();
+            }catch(ClassNotFoundException cnfe){
+                System.out.println("Opprette tomt map");
+                brukerRegister = new HashMap<>();
+            }catch(FileNotFoundException fne){
+                System.out.println("Finner ikke datafil. Oppretter ny fil.\n");
+                brukerRegister  = new HashMap<>();
+            }catch(IOException ioe){
+                System.out.println("Innlesingsfeil. Oppretter ny fil.\n");
+                brukerRegister = new HashMap<>();
+        }
+    }
+        public void skrivTilFil() {
+            try (ObjectOutputStream utfil = new ObjectOutputStream(
+                new FileOutputStream("src/Fil/forsikring.data" ))){
+                utfil.writeObject(brukerRegister);
+            }catch( NotSerializableException nse ){
+                System.out.println("Objektet er ikke serialisert!");
+            }catch( IOException ioe ){
+                System.out.println("Problem med utskrift til fil.");
+            }
+        }
         @Override
         public void handle(ActionEvent event) {
-            // Vi tar i bruk lambda uttrykk istedenfor istedenfor
-            // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
+        // Vi tar i bruk lambda uttrykk istedenfor istedenfor
+        // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
         }
     }
     
