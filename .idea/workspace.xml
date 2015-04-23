@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a3db8b4a-8c29-43ac-b253-5cbfe7c69c4a" name="Default" comment="Båt GUI">
+    <list default="true" id="a3db8b4a-8c29-43ac-b253-5cbfe7c69c4a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Platon.iws" />
@@ -626,7 +626,13 @@
       <option name="project" value="LOCAL" />
       <updated>1429808012804</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Båt GUI">
+      <created>1429808232496</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1429808232496</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
