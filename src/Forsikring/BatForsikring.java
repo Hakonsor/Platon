@@ -5,11 +5,13 @@
  */
 package Forsikring;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Therese, Håkon
  */
-public class BatForsikring extends Kjoretoy{
+public class BatForsikring extends Kjoretoy implements Serializable{
     private int lendgeFot, motorStyrke;
     private String motorType;
     

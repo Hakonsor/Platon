@@ -131,7 +131,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
           return sum;
            
       }// end of method fullUtbetaling  
-        
+       
       public double premie(double kvadrat, double byggSum, double innboSum){
           double prisPerKvadrat = 0.1;
           double prisPerByggVerdi = 0.0007;

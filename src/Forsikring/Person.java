@@ -5,11 +5,13 @@
  */
 package Forsikring;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Therese, Håkon
  */
-public abstract class Person extends Forsikringer{
+public abstract class Person extends Forsikringer implements Serializable{
     private String fornavn, etternavn, personNr, gateAdr, gateNr, postNr;
     private int tlf;
     

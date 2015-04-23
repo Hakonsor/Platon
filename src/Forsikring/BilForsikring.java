@@ -23,26 +23,26 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     public int getKjorelengde(){
         return kjorelengde;
     }
-    
+        // km angir hvor langt bilen har kjørt 
      public double utbetal( int km , double kostnad, int egenandel){
-          double delta = 0; // angir hvor mye av skaden som dekkes
+          double delta = 0; // angir hvor stor andel av skaden som dekkes
           double belop;
           double utbetales = 0;
            
           if ( km > 350000 ){
-               delta = 0.8;            
+               delta = 0.2;            
           }
           else if( km > 300000 && km <=350000 ){
-               delta = 0.7; 
+               delta = 0.3; 
             }
             else if( km > 200000 && km <= 300000 ){
-               delta = 0.6;
+               delta = 0.4;
             }
             else if( km > 150000 && km <= 200000){
-               delta = 0.3;   
+               delta = 0.6;   
             }
             else if( km > 100000 && km <= 150000 ){
-               delta = 0.2;
+               delta = 0.8;
             }
             else if(km <= 100000){
                 delta = 0;

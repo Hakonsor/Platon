@@ -6,6 +6,7 @@
 package Forsikring;
 
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * @author Therese
  */
-public class ForsikringsRegister {
+public class ForsikringsRegister implements Serializable {
     
     private List <BilForsikring> bil;
     private List <BatForsikring> bat;
@@ -64,7 +65,7 @@ public class ForsikringsRegister {
           return s;
     } 
       
-      // finner liste
+      // finner liste, returnerer listen hvis den har innhold, hvis ikke så returnerer den null.
      public List finnListe(int i){
           if(i== 0){
                if(!bil.isEmpty()){
