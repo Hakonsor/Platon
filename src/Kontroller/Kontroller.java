@@ -6,6 +6,7 @@
 
 package Kontroller;
 
+
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
 import GUI.KundeSide;
@@ -13,6 +14,13 @@ import GUI.Login;
 import GUI.Registrer;
 import Person.Bruker;
 import Person.Kunde;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.event.ActionEvent;
@@ -31,9 +39,15 @@ import javafx.stage.Stage;
         private Bruker innLoggetBruker = null;
   
             public Kontroller(Stage primaryStage) throws Exception{
+                primaryStage.setOnCloseRequest(e -> skrivTilFil());
+                lesFil();
                 loginVindu(primaryStage);
-                }
-            // GUI
+               
+            }
+            //GUI
+            public void skrivInn(){
+            
+            }
             public void loginVindu(Stage primaryStage) {
                 innLoggetBruker = null;
                 try {
@@ -49,7 +63,7 @@ import javafx.stage.Stage;
             public void regVindu(){
                 Registrer regVindu = new Registrer(new Stage(), this);
             }
-            //forsikring
+            //Forsikring
             public void setForsikring(int bonusIndex, int egenandelIndex, 
                     String telefonnummerString, int kjorelengdeIndex, String fornavn, 
                     String tfEtternavn, String tfPersonnr, String postNr, String regNr, 
@@ -134,7 +148,7 @@ import javafx.stage.Stage;
                 
           //  k.addForsikring(new BilForsikring());
             }
-            //bruker
+            //Bruker
             public void setInnloggetBruker(String nokkel){
                 innLoggetBruker = brukerRegister.get(nokkel);
             }
@@ -149,7 +163,6 @@ import javafx.stage.Stage;
                 if(sjekkBruker == null) return false;
                 return sjekkBruker.sjekkPassord(passord);
             }
-            
             //Kunde
             public void nyKunde( Kunde b){
                 brukerRegister.put(b.getKundeNokkel(), b);
@@ -158,17 +171,39 @@ import javafx.stage.Stage;
                 brukerRegister.put(b.getKundeNokkel(), b);
                 System.out.println(b.toString());
             }
-            
             public void addforsikring(Kunde kunde, String cbBonus, String cbEgenandel, String cbKjørelengde){
             if(cbBonus.matches("")){}
             }
-    
-    
-    
-        @Override
-        public void handle(ActionEvent event) {
-            // Vi tar i bruk lambda uttrykk istedenfor istedenfor
-            // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
+            //Filskriving
+            private void lesFil(){
+            try (ObjectInputStream innfil = new ObjectInputStream(
+                new FileInputStream( "src/Fil/forsikring.data" ))){
+                    brukerRegister = (HashMap) innfil.readObject();
+            }catch(ClassNotFoundException cnfe){
+                System.out.println("Opprette tomt map");
+                brukerRegister = new HashMap<>();
+            }catch(FileNotFoundException fne){
+                System.out.println("Finner ikke datafil. Oppretter ny fil.\n");
+                brukerRegister  = new HashMap<>();
+            }catch(IOException ioe){
+                System.out.println("Innlesingsfeil. Oppretter ny fil.\n");
+                brukerRegister = new HashMap<>();
         }
     }
+            public void skrivTilFil() {
+            try (ObjectOutputStream utfil = new ObjectOutputStream(
+                new FileOutputStream("src/Fil/forsikring.data" ))){
+                utfil.writeObject(brukerRegister);
+            }catch( NotSerializableException nse ){
+                System.out.println("Objektet er ikke serialisert!");
+            }catch( IOException ioe ){
+                System.out.println("Problem med utskrift til fil.");
+            }
+        }
+            @Override
+            public void handle(ActionEvent event) {
+                // Vi tar i bruk lambda uttrykk istedenfor istedenfor
+                // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
+            }
+        }
     
