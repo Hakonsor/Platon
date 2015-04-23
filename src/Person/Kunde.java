@@ -19,7 +19,7 @@ import java.io.Serializable;
  * @author Therese
  */
 public class Kunde extends Bruker implements Serializable {
- 
+    
     private int kundeNr;
     private static int nesteKundeNr;
     private String passord, telefon;
