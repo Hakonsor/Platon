@@ -13,9 +13,10 @@ public abstract class Person extends Forsikringer{
     private String fornavn, etternavn, personNr, gateAdr, gateNr, postNr;
     private int tlf;
     
+    
     // kostruktøren brukes når det opprettes bilforsikringsobjekter og båtforsikringsobjekter.
-    public Person( String s,int tlf, String fornavn, String  etternavn,String personNr,String gateAdr, String gateNr, String postNr){
-        super(s);
+    public Person( int tlf, String fornavn, String  etternavn,String personNr,String gateAdr, String gateNr, String postNr){
+        super( ); // settes etterpå
         this.fornavn = fornavn;
         this.etternavn = etternavn;
         this.personNr = personNr;

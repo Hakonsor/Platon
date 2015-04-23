@@ -24,9 +24,9 @@ public abstract class Bolig extends Forsikringer implements Serializable {
     private String standard;
     
     
-    public Bolig(String s, double kvadrat, String adresse, String boligType, String byggeår,
+    public Bolig( double kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, double byggSum, double inboSUm){
-        super(s);
+        super();
         this.kvadrat = kvadrat;
         this.adresse = adresse;
         this.boligType = boligType;

@@ -21,7 +21,7 @@ public abstract class Forsikringer implements Serializable{
     private Date startDato;
     private Date sluttDato;
 
-    private Forsikringer() {
+    public Forsikringer() {
         poliseNr = ++nestePolisNr;
         aktiv =true;
     }
@@ -29,9 +29,10 @@ public abstract class Forsikringer implements Serializable{
     
     // brukes når det registreres kjøretøy.
    
-    public Forsikringer( String s){
+    /*public Forsikringer( String s){
         
     }
+    */
     public Forsikringer( double premie, double egenandel ){
        this();
        this.premie = premie;

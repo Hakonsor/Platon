@@ -13,11 +13,12 @@ import java.io.Serializable;
  */
 public class BilForsikring extends Kjoretoy implements Serializable {
     private int kjorelengde;
-    public BilForsikring(int bonus, String s,  double egenandel, int tlf, int kjorelengde,String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, String regNr , String type , String modell ,String arsModell, int skadefriA){
-        super(s,bonus, tlf, fornavn,  etternavn, personNr, gateAdr, gateNr, postNr, regNr , type , modell , arsModell);
+    public BilForsikring(double bonus, double egenandel, int tlf, int kjorelengde,String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, String regNr , String type , String modell ,String arsModell, int skadefriA){
+        super(bonus, tlf, fornavn,  etternavn, personNr, gateAdr, gateNr, postNr, regNr , type , modell , arsModell);
         this.kjorelengde = kjorelengde;
         setPremie(premie(egenandel,getBonus() ));// premien settes
     }
+
     
     public int getKjorelengde(){
         return kjorelengde;

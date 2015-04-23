@@ -12,10 +12,10 @@ package Forsikring;
 public class FritidsBolig extends Bolig {
     boolean utleie;
     
-    public FritidsBolig(  String s,boolean utleie,
+    public FritidsBolig( boolean utleie,
                   int kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, double byggSum, double inboSUm){
-        super( s,
+        super( 
                   kvadrat, adresse, boligType, byggeår,
                   metriale, standard, byggSum, inboSUm);
         this.utleie = utleie;
