@@ -168,7 +168,13 @@ public class KundesideBil {
             int integer = 0;
             //kontroll.setForsikring(indexBonus, indexEgenandel, 0/*tlf*/, indexKjorelengde, null/*fornavn*/, null /*etternavn*/, null/*personnummer*/, null /*gateadr*/, tfRegnr.getText(), tfBiltype.getText(), tfÅrsmodell.getText(),/*int Skadefri?*/ 0  );
             //work in progress
-            kontroll.setForsikring(indexBonus, indexEgenandel, indexKjorelengde, tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText() );
+            kontroll.setForsikring(indexBonus, indexEgenandel, 
+                    tfTelefon.getText(), indexKjorelengde, 
+                    tfFornavn.getText(), tfEtternavn.getText(), 
+                    tfPersonnr.getText(), tfPostnr.getText(), 
+                    tfRegnr.getText(), tfÅrsmodell.getText(), 
+                    tfBiltype.getText(), tfKmstand.getText() );
+            
             regLabel.setText("Bilforsikring Registrert!");
         });
 

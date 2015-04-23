@@ -50,41 +50,59 @@ import javafx.stage.Stage;
                 Registrer regVindu = new Registrer(new Stage(), this);
             }
             //forsikring
-            public void setForsikring(int bonusIndex, int egenandelIndex, int kjorelengdeIndex, String regNr, String type, String modell, String arsmodell){
+            public void setForsikring(int bonusIndex, int egenandelIndex, 
+                    String telefonnummerString, int kjorelengdeIndex, String fornavn, 
+                    String tfEtternavn, String tfPersonnr, String postNr, String regNr, 
+                    String arsmodell,  String type, String tfKmstand){
+                int telefonnummer = 0;
+                int kmStand = 0;
+                
+                try{
+                    telefonnummer = Integer.parseInt(telefonnummerString);
+                }catch(NumberFormatException nfe){
+                    System.out.println("Skriv inn kun helltall som telefonnummer");
+                    return;
+                }
+                try{
+                    kmStand = Integer.parseInt(tfKmstand);
+                }catch(NumberFormatException nfe){
+                    System.out.println("Skriv inn kun helltall i kilometer stand");
+                    return;
+                }
                 double bonus;
                 switch (bonusIndex) {
-                    case 1:  bonus = -20.0;
+                    case 0:  bonus = -20.0;
                         break;
-                    case 2:  bonus = -10.0;
+                    case 1:  bonus = -10.0;
                         break;
-                    case 3:  bonus = 0.0;
+                    case 2:  bonus = 0.0;
                         break;
-                    case 4:  bonus = 10.0;
+                    case 3:  bonus = 10.0;
                         break;
-                    case 5:  bonus = 20.0;
+                    case 4:  bonus = 20.0;
                         break;
-                    case 6:  bonus = 30.0;
+                    case 5:  bonus = 30.0;
                         break;
-                    case 7:  bonus = 40.0;
+                    case 6:  bonus = 40.0;
                         break;
-                    case 8:  bonus = 50.0;
+                    case 7:  bonus = 50.0;
                         break;
-                    case 9:  bonus = 60.0;
+                    case 8:  bonus = 60.0;
                         break;
-                    case 10:  bonus = 70.0;
+                    case 9:  bonus = 70.0;
                         break;
-                    case 11:  bonus = 75.0;
+                    case 10:  bonus = 75.0;
                         break;              
                     default: System.out.println("Har ikke valgt bonus");
                         return;
                 }
                 double egenandel;
                 switch(egenandelIndex){
-                    case 1:  egenandel = 4000.0;
+                    case 0:  egenandel = 4000.0;
                         break;
-                    case 2:  egenandel = 6000.0;
+                    case 1:  egenandel = 6000.0;
                         break;
-                    case 3:  egenandel = 10000.0;
+                    case 2:  egenandel = 10000.0;
                         break;
                     default: System.out.println("har ikke valgt egenandel");
                              System.out.println(egenandelIndex);
@@ -92,35 +110,27 @@ import javafx.stage.Stage;
                 }
                 int kjorelengde;
                 switch(kjorelengdeIndex){
-                    case 1:  kjorelengde = 100000;
+                    case 0:  kjorelengde = 100000;
                         break;
-                    case 2:  kjorelengde = 150000;
+                    case 1:  kjorelengde = 150000;
                         break;
-                    case 3:  kjorelengde = 200000;
+                    case 2:  kjorelengde = 200000;
                         break;
-                    case 4:  kjorelengde = 300000;
+                    case 3:  kjorelengde = 300000;
                         break;
-                    case 5:  kjorelengde = 350000;
+                    case 4:  kjorelengde = 350000;
                         break;
                     default: System.out.println("har ikke valgt egenandel");
                         return;
                 }
                 try{
                     Kunde k = (Kunde) innLoggetBruker;
-                    k.settInn(new BilForsikring( bonus, egenandel, 0 , kjorelengde, null, null, null, null, null, null, regNr, type, modell, arsmodell) );
+                    k.settInn(new BilForsikring( bonus, egenandel, telefonnummer, 
+                            kjorelengde, fornavn, tfEtternavn, tfPersonnr, postNr, 
+                            regNr, type, regNr, type, arsmodell, kmStand) );
                 }catch(ClassCastException cce) {
                     System.out.println(" Innlogget kunde er ikke av type kunde"); 
                 }
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 
           //  k.addForsikring(new BilForsikring());
