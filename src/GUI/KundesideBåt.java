@@ -34,7 +34,7 @@ public class KundesideBåt {
 
 
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.BOTTOM_CENTER);
+        grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
 
         grid.setVgap(10);

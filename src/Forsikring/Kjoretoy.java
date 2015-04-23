@@ -51,7 +51,7 @@ public abstract class Kjoretoy extends Person implements Serializable{
         sb.append(super.toString());
         sb.append("\nKjøretøysforsikring: ");
         sb.append("\nBonus : ");
-        sb.append(bonus*100);
+        sb.append(bonus);
         sb.append(" %");
         sb.append("\n");
         sb.append("Registreringsnummer: ");
