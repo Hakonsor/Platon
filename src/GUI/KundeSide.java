@@ -32,6 +32,7 @@ public class KundeSide {
         MenuItem left = new MenuItem("Logg ut");
         menu.getItems().addAll(left);
         left.setOnAction(e -> {
+            
             primaryStage.close();
             kontroll.loginVindu(primaryStage);
         });

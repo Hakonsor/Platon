@@ -110,7 +110,7 @@ public class KundesideBil {
         );
         cbKjørelengde.setValue("Velg Kjørelengde:");
 
-        ComboBox<String> cbBonus = new ComboBox<String>();
+        ComboBox<String> cbBonus = new ComboBox<>();
         cbBonus.setEditable(false);
         cbBonus.setMinWidth(200);
         cbBonus.getItems().addAll(
@@ -128,7 +128,7 @@ public class KundesideBil {
         );
         cbBonus.setValue("Velg Bonus:");
 
-        ComboBox<String> cbEgenandel = new ComboBox<String>();
+        ComboBox<String> cbEgenandel = new ComboBox<>();
         cbEgenandel.setEditable(false);
         cbEgenandel.setMinWidth(200);
         cbEgenandel.getItems().addAll(
@@ -163,11 +163,12 @@ public class KundesideBil {
             tfBiltype.getText();
             tfKmstand.getText();
             int indexBonus = cbBonus.getItems().indexOf(cbBonus.getValue());
-            int indexEgenandel = cbBonus.getItems().indexOf(cbBonus.getValue());
-            int indexKjorelengde = cbBonus.getItems().indexOf(cbBonus.getValue());
+            int indexEgenandel = cbEgenandel.getItems().indexOf(cbEgenandel.getValue());
+            int indexKjorelengde = cbKjørelengde.getItems().indexOf(cbKjørelengde.getValue());
             int integer = 0;
-            // kontroll.setForsikring(indexBonus, indexEgenandel, 0/*tlf*/, indexKjorelengde, null/*fornavn*/, null /*etternavn*/, null/*personnummer*/, null /*gateadr*/, tfRegnr.getText(), tfBiltype.getText(), tfÅrsmodell.getText(),/*int Skadefri?*/ 0  );
+            //kontroll.setForsikring(indexBonus, indexEgenandel, 0/*tlf*/, indexKjorelengde, null/*fornavn*/, null /*etternavn*/, null/*personnummer*/, null /*gateadr*/, tfRegnr.getText(), tfBiltype.getText(), tfÅrsmodell.getText(),/*int Skadefri?*/ 0  );
             //work in progress
+            kontroll.setForsikring(indexBonus, indexEgenandel, indexKjorelengde, tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText() );
             regLabel.setText("Bilforsikring Registrert!");
         });
 
