@@ -50,7 +50,7 @@ import javafx.stage.Stage;
                 Registrer regVindu = new Registrer(new Stage(), this);
             }
             //forsikring
-            public void setForsikring(int bonusIndex, int egenandelIndex, int kjorelengdeIndex){
+            public void setForsikring(int bonusIndex, int egenandelIndex, int kjorelengdeIndex, String regNr, String type, String modell, String arsmodell){
                 double bonus;
                 switch (bonusIndex) {
                     case 1:  bonus = -20.0;
@@ -87,26 +87,27 @@ import javafx.stage.Stage;
                     case 3:  egenandel = 10000.0;
                         break;
                     default: System.out.println("har ikke valgt egenandel");
+                             System.out.println(egenandelIndex);
                         return;
                 }
-                double kjorelengde;
+                int kjorelengde;
                 switch(kjorelengdeIndex){
-                    case 1:  kjorelengde = 100000.0;
+                    case 1:  kjorelengde = 100000;
                         break;
-                    case 2:  kjorelengde = 150000.0;
+                    case 2:  kjorelengde = 150000;
                         break;
-                    case 3:  kjorelengde = 200000.0;
+                    case 3:  kjorelengde = 200000;
                         break;
-                    case 4:  kjorelengde = 300000.0;
+                    case 4:  kjorelengde = 300000;
                         break;
-                    case 5:  kjorelengde = 350000.0;
+                    case 5:  kjorelengde = 350000;
                         break;
                     default: System.out.println("har ikke valgt egenandel");
                         return;
                 }
                 try{
                     Kunde k = (Kunde) innLoggetBruker;
-                  //  k.settInn(new BilForsikring( bonus, egenandel, 0 , kjorelengde, null, null, null, null, null, null, regNr, type, modell, arsmodell, 0)    );
+                    k.settInn(new BilForsikring( bonus, egenandel, 0 , kjorelengde, null, null, null, null, null, null, regNr, type, modell, arsmodell) );
                 }catch(ClassCastException cce) {
                     System.out.println(" Innlogget kunde er ikke av type kunde"); 
                 }
