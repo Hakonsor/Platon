@@ -46,7 +46,7 @@ public class Kunde extends Bruker implements Serializable {
     public void settInn(Forsikringer f){
         if (f instanceof BilForsikring){
             register.settInn((BilForsikring)f);
-            System.out.println(":)");
+            System.out.println(f.toString());
         }
         if (f instanceof BatForsikring){
             register.settInn((BatForsikring)f);

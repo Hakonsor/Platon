@@ -15,7 +15,11 @@ public abstract class Kjoretoy extends Person implements Serializable{
     private String regNr , type , modell , arsModell;
     private double bonus;
     
-    public Kjoretoy( double bonus, int tlf, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr, String regNr , String type , String modell ,String arsModell ){
+    public Kjoretoy( double bonus, int tlf, 
+            String fornavn, String etternavn, 
+            String personNr, String gateAdr, 
+            String gateNr, String postNr, String regNr , 
+            String type, String arsModell ){
         super(tlf, fornavn,  etternavn,  personNr, gateAdr, gateNr, postNr);
         this.bonus= bonus;
         this.regNr = regNr;
