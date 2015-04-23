@@ -23,7 +23,7 @@ public class KundeSide {
         this.kontroll = k;
 
         Group root = new Group();
-        Scene scene = new Scene(root, 800, 640);
+        Scene scene = new Scene(root, 1024, 768);
 
         MenuBar menuBar = new MenuBar();
 
@@ -61,7 +61,7 @@ public class KundeSide {
         tabBåt.setText("Båtforsikring");
         tabBåt.setClosable(false);
         KundesideBåt båt = new KundesideBåt();
-        tabBåt.setContent(båt.båtFane());
+        tabBåt.setContent(båt.båtFane(kontroll));
 
         //Reiseforsikring
         Tab tabReise = new Tab();

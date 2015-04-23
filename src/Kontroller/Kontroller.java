@@ -87,7 +87,6 @@ import javafx.stage.Stage;
                     case 3:  egenandel = 10000.0;
                         break;
                     default: System.out.println("har ikke valgt egenandel");
-                             System.out.println(egenandelIndex);
                         return;
                 }
                 int kjorelengde;
@@ -102,7 +101,7 @@ import javafx.stage.Stage;
                         break;
                     case 5:  kjorelengde = 350000;
                         break;
-                    default: System.out.println("har ikke valgt egenandel");
+                    default: System.out.println("har ikke valgt kjørelengde");
                         return;
                 }
                 try{

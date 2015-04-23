@@ -54,7 +54,7 @@ public class Login {
         tabKonsulent.setContent(konsulentFane());
         tabs.getTabs().addAll(tabKunde, tabKonsulent);
 
-        Scene scene = new Scene(tabs, 800, 640);
+        Scene scene = new Scene(tabs, 1024, 768);
         primaryStage.setTitle("Logg inn");
         primaryStage.setScene(scene);
 

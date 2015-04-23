@@ -142,7 +142,7 @@ public class Registrer {
         grid.add(btnRegKunde, 0, 10);
 
 
-        Scene scene = new Scene(grid, 300, 550);
+        Scene scene = new Scene(grid, 300, 650);
         vindu.setTitle("Registrer");
         vindu.setScene(scene);
         scene.getStylesheets().add("CSS/registrer.css");

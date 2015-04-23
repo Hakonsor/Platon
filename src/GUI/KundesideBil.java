@@ -98,7 +98,7 @@ public class KundesideBil {
         tfKmstand.setPromptText("Km-stand");
         tfKmstand.setMinWidth(200);
 
-        ComboBox<String> cbKjørelengde = new ComboBox<String>();
+        ComboBox<String> cbKjørelengde = new ComboBox<>();
         cbKjørelengde.setEditable(false);
         cbKjørelengde.setMinWidth(200);
         cbKjørelengde.getItems().addAll(
