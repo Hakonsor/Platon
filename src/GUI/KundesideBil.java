@@ -1,5 +1,6 @@
 package GUI;
 
+import Kontroller.Kontroller;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import static javafx.geometry.Pos.CENTER;
@@ -18,7 +19,7 @@ import javafx.scene.layout.Pane;
  */
 public class KundesideBil {
 
-    public static Pane bilFane() {
+    public static Pane bilFane(Kontroller kontroll) {
 
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
@@ -98,12 +99,7 @@ public class KundesideBil {
                 "Bonus: 50%",
                 "Bonus: 60%",
                 "Bonus: 70%",
-                "Bonus: 75%",
-                "Bonus: 75% + 1år",
-                "Bonus: 75% + 2år",
-                "Bonus: 75% + 3år",
-                "Bonus: 75% + 4år",
-                "Bonus: 75% + 5år"
+                "Bonus: 75%"
         );
         cbBonus.setValue("Velg Bonus:");
 
@@ -111,10 +107,9 @@ public class KundesideBil {
         cbEgenandel.setEditable(false);
         cbEgenandel.setMinWidth(200);
         cbEgenandel.getItems().addAll(
-                "Egenandel:  5 000,-",
-                "Egenandel:  7 000,-",
-                "Egenandel: 10 000,-",
-                "Egenandel: 15 000,-"
+                "Egenandel:  4 000,-",
+                "Egenandel:  6 000,-",
+                "Egenandel: 10 000,-"
         );
         cbEgenandel.setValue("Velg Egenandel:");
 
@@ -123,15 +118,24 @@ public class KundesideBil {
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
-            System.out.println("Venter på en KODE!!! :D");
+            tfRegnr.getText();
+            tfÅrsmodell.getText();
+            tfBiltype.getText();
+            tfKmstand.getText();
+            int indexBonus = cbBonus.getItems().indexOf(cbBonus.getValue());
+            int indexEgenandel = cbBonus.getItems().indexOf(cbBonus.getValue());
+            int indexKjorelengde = cbBonus.getItems().indexOf(cbBonus.getValue());
+            int integer = 0;
+           // kontroll.setForsikring(indexBonus, indexEgenandel, 0/*tlf*/, indexKjorelengde, null/*fornavn*/, null /*etternavn*/, null/*personnummer*/, null /*gateadr*/, tfRegnr.getText(), tfBiltype.getText(), tfÅrsmodell.getText(),/*int Skadefri?*/ 0  );
+            //work in progress
             regLabel.setText("Bilforsikring Registrert!");
         });
 
-        grid.add(tfRegnr, 0, 0); grid.add(cbKjørelengde, 1, 0);
-        grid.add(tfÅrsmodell, 0, 1); grid.add(cbBonus, 1, 1);
-        grid.add(tfBiltype, 0, 2); grid.add(cbEgenandel, 1, 2);
-        grid.add(tfKmstand, 0, 3); grid.add(btnRegBilforsikring, 1, 3);
-        grid.add(regLabel, 0, 4);
+        grid.add(tfRegnr, 0, 1); grid.add(cbKjørelengde, 1, 1);
+        grid.add(tfÅrsmodell, 0, 2); grid.add(cbBonus, 1, 2);
+        grid.add(tfBiltype, 0, 3); grid.add(cbEgenandel, 1, 3);
+        grid.add(tfKmstand, 0, 4); grid.add(btnRegBilforsikring, 1, 4);
+        grid.add(regLabel, 0, 5);
 
 
 

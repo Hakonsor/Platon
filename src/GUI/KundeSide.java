@@ -73,7 +73,7 @@ public class KundeSide {
         tabBil.setText("Bilforsikring");
         tabBil.setClosable(false);
         KundesideBil bil = new KundesideBil();
-        tabBil.setContent(bil.bilFane());
+        tabBil.setContent(bil.bilFane(kontroll));
 
         //Boligforsikring
         Tab tabBolig = new Tab();
