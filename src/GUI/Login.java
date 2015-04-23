@@ -118,6 +118,7 @@ public class Login {
         
         try {btnKundeLogginn.setOnAction(e -> {
             if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
+                primaryStage.close();
                 kontroll.kundeSide(primaryStage);
             }else{
                 System.out.println("TODO, pop opp box med som sier at passordened er ulike");

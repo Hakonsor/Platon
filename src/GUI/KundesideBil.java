@@ -1,10 +1,8 @@
 package GUI;
 
 import Kontroller.Kontroller;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import static javafx.geometry.Pos.CENTER;
-import static javafx.geometry.Pos.TOP_CENTER;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -24,33 +22,65 @@ public class KundesideBil {
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
         HBox vb = new HBox();
-        vb.setPadding(new Insets(25, 25, 25, 25));
+        vb.setPadding(new Insets(25, 25, 0, 25));
         vb.setSpacing(100);
-        vb.setAlignment(CENTER);
+        vb.setAlignment(Pos.CENTER);
 
         Label overskrift = new Label();
         overskrift.setText("Her registrerer du bilforsikring");
         overskrift.setId("overskrift");
         vb.getChildren().addAll(overskrift);
 
-        borderPane.setTop(vb);
+        borderPane.setTop(vb); //TOP
 
 
         GridPane grid = new GridPane();
-        grid.setAlignment(TOP_CENTER);
+        grid.setAlignment(Pos.BOTTOM_CENTER);
         grid.setHgap(10);
 
         grid.setVgap(10);
         grid.setPadding(new Insets(100));
 
-        Label lb = new Label();
-        lb.setText("Her kommer det Informasjon");
-        GridPane.setHalignment(lb, HPos.CENTER);
-
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
-        grid.setAlignment(TOP_CENTER);
 
+
+        //Person
+
+        Label lbPerson = new Label();
+        lbPerson.setText("Bileier innformasjon");
+        lbPerson.setAlignment(Pos.CENTER);
+
+        TextField tfFornavn = new TextField();
+        tfFornavn.setPromptText("Fornavn");
+        tfFornavn.setMinWidth(200);
+
+        TextField tfEtternavn = new TextField();
+        tfEtternavn.setPromptText("Etternavn");
+        tfEtternavn.setMinWidth(200);
+
+        TextField tfPersonnr = new TextField();
+        tfPersonnr.setPromptText("PersonNr");
+        tfPersonnr.setMinWidth(200);
+
+        TextField tfAdresse = new TextField();
+        tfAdresse.setPromptText("Adresse");
+        tfAdresse.setMinWidth(200);
+
+        TextField tfPostnr = new TextField();
+        tfPostnr.setPromptText("PostNr");
+        tfPostnr.setMinWidth(200);
+
+        TextField tfTelefon = new TextField();
+        tfTelefon.setPromptText("Telefon");
+        tfTelefon.setMinWidth(200);
+
+
+        //Bil
+
+        Label lbBil = new Label();
+        lbBil.setText("Bil innformasjon");
+        lbBil.setAlignment(Pos.CENTER);
 
         TextField tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr");
@@ -68,20 +98,15 @@ public class KundesideBil {
         tfKmstand.setPromptText("Km-stand");
         tfKmstand.setMinWidth(200);
 
-        Label regLabel = new Label();
-        regLabel.setText("");
-        regLabel.setId("regLabel");
-        regLabel.setMinWidth(300);
-
         ComboBox<String> cbKjørelengde = new ComboBox<String>();
         cbKjørelengde.setEditable(false);
         cbKjørelengde.setMinWidth(200);
         cbKjørelengde.getItems().addAll(
-                "Kjørelengde: < 100 000 km",
-                "Kjørelengde:   150 000 km",
-                "Kjørelengde:   200 000 km",
-                "Kjørelengde:   300 000 km",
-                "Kjørelengde: > 350 000 km"
+                "Kjørelengde:  5 000 km",
+                "Kjørelengde: 10 000 km",
+                "Kjørelengde: 20 000 km",
+                "Kjørelengde: 30 000 km",
+                "Kjørelengde: Ubegrenset"
         );
         cbKjørelengde.setValue("Velg Kjørelengde:");
 
@@ -113,6 +138,21 @@ public class KundesideBil {
         );
         cbEgenandel.setValue("Velg Egenandel:");
 
+        //Registrer knapp & Label
+
+        Label regLabel = new Label();
+        regLabel.setText("");
+        regLabel.setId("regLabel");
+        regLabel.setAlignment(Pos.CENTER);
+
+        Button btnSjekkpris = new Button();
+        btnSjekkpris.setText("Sjekk Pris");
+        btnSjekkpris.setId("btnSjekkpris");
+        btnSjekkpris.setMinWidth(200);
+        btnSjekkpris.setOnAction(e -> {
+            regLabel.setText("Prisen er: " + "getPris()");
+        });
+
         Button btnRegBilforsikring = new Button();
         btnRegBilforsikring.setText("Registrer Bilforsikring");
         btnRegBilforsikring.setId("btnRegBilforsikring");
@@ -126,22 +166,45 @@ public class KundesideBil {
             int indexEgenandel = cbBonus.getItems().indexOf(cbBonus.getValue());
             int indexKjorelengde = cbBonus.getItems().indexOf(cbBonus.getValue());
             int integer = 0;
-           // kontroll.setForsikring(indexBonus, indexEgenandel, 0/*tlf*/, indexKjorelengde, null/*fornavn*/, null /*etternavn*/, null/*personnummer*/, null /*gateadr*/, tfRegnr.getText(), tfBiltype.getText(), tfÅrsmodell.getText(),/*int Skadefri?*/ 0  );
+            // kontroll.setForsikring(indexBonus, indexEgenandel, 0/*tlf*/, indexKjorelengde, null/*fornavn*/, null /*etternavn*/, null/*personnummer*/, null /*gateadr*/, tfRegnr.getText(), tfBiltype.getText(), tfÅrsmodell.getText(),/*int Skadefri?*/ 0  );
             //work in progress
             regLabel.setText("Bilforsikring Registrert!");
         });
 
-        grid.add(tfRegnr, 0, 1); grid.add(cbKjørelengde, 1, 1);
-        grid.add(tfÅrsmodell, 0, 2); grid.add(cbBonus, 1, 2);
-        grid.add(tfBiltype, 0, 3); grid.add(cbEgenandel, 1, 3);
-        grid.add(tfKmstand, 0, 4); grid.add(btnRegBilforsikring, 1, 4);
-        grid.add(regLabel, 0, 5);
+        grid.add(lbBil, 0, 0);
+        grid.add(lbPerson, 2, 0);
+
+        grid.add(tfRegnr, 0, 1);
+        grid.add(tfFornavn, 2, 1);
+
+        grid.add(tfÅrsmodell, 0, 2);
+        grid.add(tfEtternavn, 2, 2);
+
+        grid.add(tfBiltype, 0, 3);
+        grid.add(tfPersonnr, 2, 3);
+
+        grid.add(tfKmstand, 0, 4);
+        grid.add(tfTelefon, 2, 4);
+
+        grid.add(cbBonus, 0, 5);
+        grid.add(tfAdresse, 2, 5);
+
+        grid.add(cbEgenandel, 0, 6);
+        grid.add(tfPostnr, 2, 6);
+
+        grid.add(cbKjørelengde, 0, 7);
+
+
+        grid.add(btnSjekkpris, 1, 9);
+        grid.add(btnRegBilforsikring, 1, 10);
+
+        grid.add(regLabel, 1, 11);
 
 
 
 
-        grid.add(lb, 0, 0);
+        borderPane.setCenter(grid); // CENTER
 
-        return grid;
+        return borderPane;
     }
 }
