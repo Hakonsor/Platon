@@ -7,6 +7,7 @@
 package Person;
 
 
+import Forsikring.Person;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,22 +17,20 @@ import java.util.LinkedList;
  *
  * @author hakon_000
  */
- abstract public class Bruker implements Serializable {
-    private String fornavn, etternavn, fakturaAdr, personNr, passord;
-    private ArrayList<Integer> forsikringListe;// dette skal vel egentlig være liste over poliseNr.
-    private Calendar opprettetDato;
+ abstract public class Bruker extends Person implements Serializable {
+    private String fornavn, etternavn, fakturaAdr, personNr, 
+            passord;
+   // private ArrayList<Integer> forsikringListe;// dette skal vel egentlig være liste over poliseNr.
+    //private Calendar opprettetDato;
     
-    public Bruker(String fornavn, String etternavn,String fakturaAdr, String personNr, String passord){
-        this.fornavn = fornavn;
-        this.etternavn = etternavn;
-        this.fakturaAdr = fakturaAdr;
-        this.personNr = personNr;
+    public Bruker(int tlf, String fornavn, String etternavn,String personNr,String gateAdr, String postNr, String passord){
+      super(tlf,  fornavn, etternavn, personNr, gateAdr, postNr);
         this.passord = passord;
-        opprettetDato = Calendar.getInstance();
+       // opprettetDato = Calendar.getInstance();
     }
-    public void addForsikring(int forsikring){
-        forsikringListe.add(forsikring);
-    }
+  //  public void addForsikring(int forsikring){
+        //forsikringListe.add(forsikring);
+    
     public boolean sjekkPassord(String passord){
     return (this.passord.equals(passord));
     }
