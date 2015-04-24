@@ -13,6 +13,7 @@ import Forsikring.ForsikringsRegister;
 import Forsikring.FritidsBolig;
 import Forsikring.ReiseForsikring;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -46,7 +47,7 @@ public class Kunde extends Bruker implements Serializable {
     public void settInn(Forsikringer f){
         if (f instanceof BilForsikring){
             register.settInn((BilForsikring)f);
-            System.out.println(f.toString());
+            System.out.println(register.visListe(2));
         }
         if (f instanceof BatForsikring){
             register.settInn((BatForsikring)f);
@@ -61,11 +62,18 @@ public class Kunde extends Bruker implements Serializable {
             register.settInn((FritidsBolig)f);
         }
     }// end of method settInn
+        public List getForsikringsListe(int index) {
+            return register.finnListe(index);
+        }
+        
+        public String toString(){
+            return Integer.toString(kundeNr);
+        }
+
+        
+    
 
      
-    public String toString(){
-        
-    return Integer.toString(kundeNr);
-    }
+    
     
 }// end of class Kunde

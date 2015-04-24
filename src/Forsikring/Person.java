@@ -18,7 +18,7 @@ public abstract class Person extends Forsikringer implements Serializable{
     
     // kostruktøren brukes når det opprettes bilforsikringsobjekter og båtforsikringsobjekter.
     public Person( int tlf, String fornavn, String  etternavn,String personNr,String gateAdr, String gateNr, String postNr){
-        super( ); // settes etterpå
+        super(  ); // settes etterpå
         this.fornavn = fornavn;
         this.etternavn = etternavn;
         this.personNr = personNr;

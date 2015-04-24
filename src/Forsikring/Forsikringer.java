@@ -24,6 +24,7 @@ public abstract class Forsikringer implements Serializable{
     public Forsikringer() {
         poliseNr = ++nestePolisNr;
         aktiv =true;
+        
     }
     
     

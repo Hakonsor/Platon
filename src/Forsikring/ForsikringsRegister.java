@@ -7,6 +7,7 @@ package Forsikring;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,6 +38,8 @@ public class ForsikringsRegister implements Serializable {
      // legger til et objekt i listen, ikke testet
      public void settInn(BilForsikring b){
          bil.add(b);
+         System.out.println(bil.toString());
+         System.out.println("Jodaaa");
      }
      
      public void settInn(BatForsikring b){
@@ -58,7 +61,8 @@ public class ForsikringsRegister implements Serializable {
      // viser en spesifikk liste 
      public <T extends Forsikringer> String visListe(int i){
           List l = finnListe(i);
-          if(l.isEmpty()){
+          System.out.println(i);
+          if(l == null || l.isEmpty()){
               return "Ingen forsikringer er registert på deg. ";
           }
           String s = hentString(l);
@@ -67,15 +71,8 @@ public class ForsikringsRegister implements Serializable {
       
       // finner liste, returnerer listen hvis den har innhold, hvis ikke så returnerer den null.
      public List finnListe(int i){
-          if(i== 0){
-               if(!bil.isEmpty()){
-                    return bil;
-               }
-               else{
-                    return null;
-               }
-          }
-          else if(i== 1){
+          
+          if(i== 1){
                if(!bat.isEmpty()){
                     return bat;
                }
@@ -83,7 +80,15 @@ public class ForsikringsRegister implements Serializable {
                     return null;
                }   
           }
-          else if(i == 2){
+          else if(i== 2){
+               if(!bil.isEmpty()){
+                    return bil;
+               }
+               else{
+                    return null;
+               }
+          }
+          else if(i == 3){
                if(!reise.isEmpty()){
                    return reise;
                }
@@ -91,7 +96,7 @@ public class ForsikringsRegister implements Serializable {
                     return null;
                }
           }
-          else if (i == 3){
+          else if (i == 4){
                if(!bolig.isEmpty()){
                     return bolig;
                }
@@ -99,7 +104,7 @@ public class ForsikringsRegister implements Serializable {
                     return null;
                }
           }
-          else if(i == 4){
+          else if(i == 5){
                if(!fritid.isEmpty()){
                return fritid;
                }
@@ -121,10 +126,10 @@ public class ForsikringsRegister implements Serializable {
           }
           
           return sb.toString();
+          
    
      }// end of method hentString. 
-      
-   
+
     
 }// end of class ForsikringsRegister
 

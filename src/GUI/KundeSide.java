@@ -54,7 +54,7 @@ public class KundeSide {
         tabInfo.setText("Informasjon");
         tabInfo.setClosable(false);
         KundesideInfo info = new KundesideInfo();
-        tabInfo.setContent(info.infoFane());
+        tabInfo.setContent(info.infoFane(kontroll));
 
         //Båtforsikring
         Tab tabBåt = new Tab();

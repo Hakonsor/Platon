@@ -1,25 +1,24 @@
 package GUI;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
+import Forsikring.Forsikringer;
+import Kontroller.Kontroller;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.*;
 
-import static javafx.geometry.Pos.TOP_CENTER;
 
 /**
  * Created by Magnus on 21.04.15.
  */
 public class KundesideInfo {
 
-    public static Pane infoFane() {
+    public static Pane infoFane(Kontroller kontroll) {
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
         HBox vb = new HBox();
@@ -51,20 +50,34 @@ public class KundesideInfo {
         grid.setHgap(10);
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
-
-        ComboBox<String> forsikringComboBox = new ComboBox<String>();
-        forsikringComboBox.setEditable(false);
-        forsikringComboBox.getItems().addAll("Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
-        forsikringComboBox.setValue("Velg Forsikring:");
-
+        
         ObservableList<String> navn = FXCollections.observableArrayList();
         ObservableList<String> data = FXCollections.observableArrayList();
 
-        ListView<String> listView = new ListView<String>(data);
+        ComboBox<String> forsikringComboBox = new ComboBox<>();
+        forsikringComboBox.setEditable(false);
+        forsikringComboBox.getItems().addAll("Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
+        forsikringComboBox.setValue("Velg Forsikring:");
+        forsikringComboBox.setOnAction(e -> {
+                
+                
+                ArrayList<String> forsikringliste = kontroll.
+                        getInfoForsikringListe(forsikringComboBox.getItems().
+                                indexOf(forsikringComboBox.getValue()));
+                if(forsikringliste == null){
+                    navn.clear();
+                    navn.add("Ingen "+forsikringComboBox.getValue()+"er registrert");
+                }else
+                    navn.setAll(forsikringliste);
+                  
+                
+            });
+        
+        ListView<String> listView = new ListView<>(data);
         listView.setPrefSize(300, 600);
         listView.setEditable(false);
 
-        navn.addAll("Honda CRV", "Ferrari Enzo", "VW Golf");
+        //navn.addAll("Honda CRV", "Ferrari Enzo", "VW Golf");
         data.addAll("Dobbel klikk for å velge:");
 
         listView.setItems(navn);

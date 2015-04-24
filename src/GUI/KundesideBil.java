@@ -158,6 +158,7 @@ public class KundesideBil {
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
+            
             tfRegnr.getText();
             tfÅrsmodell.getText();
             tfBiltype.getText();

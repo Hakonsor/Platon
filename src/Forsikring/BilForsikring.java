@@ -138,4 +138,6 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         return sb.toString();
         
     }
+
+
 }// end of class BilForsikring.

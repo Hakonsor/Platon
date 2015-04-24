@@ -7,6 +7,7 @@
 package Person;
 
 
+import Forsikring.Forsikringer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,5 +45,9 @@ import java.util.LinkedList;
                 return forsikringListe.get(i);
         return -1;
     }*/
+
+
+
+
  
  }

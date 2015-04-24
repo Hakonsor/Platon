@@ -21,7 +21,10 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,30 +41,22 @@ import javafx.stage.Stage;
         private Bruker innLoggetBruker = null;
         
         public Kontroller(Stage primaryStage) throws Exception{
-                primaryStage.setOnCloseRequest(e -> skrivTilFil());
-                lesFil();
-                loginVindu(primaryStage);
-               
-            }
+        }
         //GUI
-        public void skrivInn(){
-            
-            }
         public void loginVindu(Stage primaryStage) {
-                innLoggetBruker = null;
-                try {
-                   Login login = new Login(primaryStage, this );
-                }
-                catch (java.lang.Exception jle){
+            innLoggetBruker = null;
+            try {
+                Login login = new Login(primaryStage, this );
+            }catch (java.lang.Exception jle){
                     System.out.println("Klarte ikke å åpne logginn vindu!");
                 }
             }
         public void kundeSide(Stage primaryStage){
                 KundeSide nyside = new KundeSide(primaryStage, this);
-            }            
+        }            
         public void regVindu(){
                 Registrer regVindu = new Registrer(new Stage(), this);
-            }
+        }
         //Forsikring
         public void setForsikring(int bonusIndex, int egenandelIndex, 
             String telefonnummerString, int kjorelengdeIndex, String fornavn, 
@@ -150,10 +145,10 @@ import javafx.stage.Stage;
         //Bruker
         public void setInnloggetBruker(String nokkel){
                 innLoggetBruker = brukerRegister.get(nokkel);
-            }
+        }
         public Bruker getInnloggetBruker(){
             return innLoggetBruker;
-            }
+        }
         public Bruker finnBruker(String Bruker){
                 return brukerRegister.get(Bruker);
             }
@@ -170,11 +165,9 @@ import javafx.stage.Stage;
                 brukerRegister.put(b.getKundeNokkel(), b);
                 System.out.println(b.toString());
             }
-        public void addforsikring(Kunde kunde, String cbBonus, String cbEgenandel, String cbKjørelengde){
-            if(cbBonus.matches("")){}
-            }
+
         //Filskriving
-        private void lesFil(){
+        public void lesFil(){
             try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream( "src/Fil/forsikring.data" ))){
                     brukerRegister = (HashMap) innfil.readObject();
@@ -203,6 +196,34 @@ import javafx.stage.Stage;
         public void handle(ActionEvent event) {
         // Vi tar i bruk lambda uttrykk istedenfor istedenfor
         // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
+        }        
+        public ArrayList<Forsikringer> finnForsikringListe(int i) {
+            Kunde k = (Kunde) innLoggetBruker;
+            List a = k.getForsikringsListe(i);
+            if(a == null)
+                return null;
+            System.out.println(a);
+            return new ArrayList<> (k.getForsikringsListe(i));
+        }
+        public ArrayList<String> getInfoForsikringListe(int i) {
+            Kunde k = (Kunde) innLoggetBruker;
+            List a = k.getForsikringsListe(i);
+            if(a == null)
+                return null;
+            ArrayList<String> liste = new ArrayList<>();
+            Iterator<BilForsikring> iterator = a.iterator();
+            if(a.get(0) instanceof BilForsikring){
+                while (iterator.hasNext()){
+                    liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                    //iterator.next().getRegNr()
+                }
+                return liste;
+            }else{
+                while (iterator.hasNext()){
+                    liste.add(  Integer.toString(iterator.next().getPoliseNr()) );
+                }
+            }
+        return liste;
         }
     }
     
