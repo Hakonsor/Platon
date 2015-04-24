@@ -11,16 +11,12 @@ import java.io.Serializable;
  *
  * @author Therese, Håkon
  */
-public abstract class Kjoretoy extends Person implements Serializable{
+public abstract class Kjoretoy extends Forsikringer implements Serializable{
     private String regNr , type , modell , arsModell;
     private double bonus;
     
-    public Kjoretoy( double bonus, int tlf, 
-            String fornavn, String etternavn, 
-            String personNr, String gateAdr, 
-            String gateNr, String postNr, String regNr , 
-            String type, String arsModell ){
-        super(tlf, fornavn,  etternavn,  personNr, gateAdr, gateNr, postNr);
+    public Kjoretoy( double bonus, String regNr , String type,String modell, String arsModell ){
+        super(0,0);
         this.bonus= bonus;
         this.regNr = regNr;
         this.type = type;

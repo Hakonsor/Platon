@@ -26,8 +26,8 @@ public class Kunde extends Bruker implements Serializable {
     private Forsikringer liste;// dette skal vel egentlig vÃ¦re liste over poliseNr.
     private ForsikringsRegister register;
     
-    public Kunde(String fornavn, String etternavn,String fakturaAdr, String personNr, String telefon, String passord){
-        super( fornavn,  etternavn, fakturaAdr,  personNr, passord);
+    public Kunde(int tlf, String fornavn, String etternavn,String adr, String postNr,String personNr, String telefon, String passord){
+        super(tlf,fornavn,etternavn,personNr,adr, postNr, passord);
         this.passord = passord; 
         this.telefon = telefon;
         kundeNr = ++nesteKundeNr;
