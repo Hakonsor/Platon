@@ -106,7 +106,7 @@ public class Login {
         GridPane.setHalignment(pfKundePassord, HPos.CENTER);
 
         Label logginnInfo = new Label();
-        logginnInfo.setText("feil passord!");
+        logginnInfo.setText("");
         logginnInfo.setId("logginnInfo");
         GridPane.setHalignment(logginnInfo, HPos.CENTER);
 
@@ -119,12 +119,13 @@ public class Login {
         try {
             btnKundeLogginn.setOnAction(e -> {
                 if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
+                primaryStage.close();
                 kontroll.kundeSide(primaryStage);
-                kontroll.setInnloggetBruker(tfKundeBrukernavn.getText() );
+                kontroll.setInnloggetBruker(tfKundeBrukernavn.getText());
                 
                 
                 }else{
-                    System.out.println("TODO, pop opp box med som sier at passordened er ulike");
+                    logginnInfo.setText("Feil Kundenr eller Passord!");
                 }
             });
         }catch (Exception ex) {

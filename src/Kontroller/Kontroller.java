@@ -8,7 +8,6 @@ package Kontroller;
 
 
 import Forsikring.BilForsikring;
-import Forsikring.Forsikringer;
 import GUI.KundeSide;
 import GUI.Login;
 import GUI.Registrer;
@@ -28,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /*
@@ -41,7 +41,11 @@ import javafx.stage.Stage;
         private Bruker innLoggetBruker = null;
         
         public Kontroller(Stage primaryStage) throws Exception{
-        }
+                primaryStage.setOnCloseRequest(e -> skrivTilFil());
+                primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
+                lesFil();
+                loginVindu(primaryStage);
+            }
         //GUI
         public void loginVindu(Stage primaryStage) {
             innLoggetBruker = null;

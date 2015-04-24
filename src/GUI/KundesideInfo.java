@@ -1,9 +1,8 @@
 package GUI;
 
-
-import Forsikring.Forsikringer;
 import Kontroller.Kontroller;
-import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -18,7 +17,7 @@ import javafx.scene.layout.*;
  */
 public class KundesideInfo {
 
-    public static Pane infoFane(Kontroller kontroll) {
+    public static Pane infoFane(Kontroller kontroller) {
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
         HBox vb = new HBox();
