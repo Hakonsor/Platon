@@ -11,9 +11,9 @@ import java.io.Serializable;
  *
  * @author Therese, Håkon
  */
-public class LivsForsikring extends Person implements Serializable{  
+public class LivsForsikring extends Forsikringer implements Serializable{  
     public LivsForsikring( int premie , int egenandel, int tlf , String forsikrBet, String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
-        super( tlf, fornavn, etternavn, personNr, gateAdr, gateNr, postNr);
+        super( premie, egenandel);
     }
     
     
