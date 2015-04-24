@@ -22,9 +22,10 @@ public abstract class Bolig extends Forsikringer implements Serializable {
     private String byggeår ;
     private String metriale;
     private String standard;
+    private boolean utleie;
     
     
-    public Bolig( double kvadrat, String adresse, String boligType, String byggeår,
+    public Bolig( boolean utleie, double kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, double byggSum, double inboSUm){
         super();
         this.kvadrat = kvadrat;
@@ -35,6 +36,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
         this.innboSum = inboSUm;
         this.metriale = metriale;
         this.standard = standard;
+        this.utleie = utleie;
         setPremie(premie(kvadrat, byggSum, innboSum));
     }
     
@@ -94,7 +96,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
         }// end of method egenandel
         
         // utbetaling av forsikringssum, med regler.
-        public double utbetalingBolig( double skadeBelop , double verdi, int alder, double egenAndel ){
+        public int utbetaling( double skadeBelop , double verdi, int alder, double egenAndel ){
           double totalSkadeGrense = 0.75;
           int femAar= 5;
           int tiAar = 10;
@@ -128,11 +130,11 @@ public abstract class Bolig extends Forsikringer implements Serializable {
               sum = byggVerdi - egenAndel;
           }
           
-          return sum;
+          return (int)sum;
            
       }// end of method fullUtbetaling  
        
-      public double premie(double kvadrat, double byggSum, double innboSum){
+      public int premie(double kvadrat, double byggSum, double innboSum){
           double prisPerKvadrat = 0.1;
           double prisPerByggVerdi = 0.0007;
           double prisPerInnbo= 0.003;
@@ -140,7 +142,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
           
           premium = prisPerKvadrat*kvadrat + prisPerByggVerdi*byggSum + prisPerInnbo* innboSum;
           
-          return premium;
+          return(int) premium;
       }
         
     

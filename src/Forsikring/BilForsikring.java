@@ -27,7 +27,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     
 
 
-     public double utbetal( int km , double kostnad, int egenandel){
+     public int utbetal( int km , double kostnad, int egenandel){
           double delta = 0; // angir hvor stor andel av skaden som dekkes
           double belop;
           double utbetales = 0;
@@ -61,7 +61,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
                   utbetales = belop;
             }
         
-      return utbetales;
+      return (int)utbetales;
      
    }// end of method
         
@@ -132,6 +132,5 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         sb.append(kjorelengde);
         
         return sb.toString();
-        
-    }
+     }// end of toString()
 }// end of class BilForsikring.

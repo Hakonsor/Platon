@@ -14,8 +14,8 @@ import java.io.Serializable;
  */
 public class ReiseForsikring extends Forsikringer implements Serializable{
     
-    public ReiseForsikring(int premie , int egenandel, int tlf , String fornavn, String etternavn, String personNr, String gateAdr, String gateNr, String postNr){
-        super(premie, egenandel);
+    public ReiseForsikring(){
+        super(0, 0);
     }
    
 }// end of class ForsikringsPremie.
