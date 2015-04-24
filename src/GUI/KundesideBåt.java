@@ -38,7 +38,7 @@ public class KundesideBåt {
         grid.setHgap(10);
 
         grid.setVgap(10);
-        grid.setPadding(new Insets(100));
+        grid.setPadding(new Insets(10));
 
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
