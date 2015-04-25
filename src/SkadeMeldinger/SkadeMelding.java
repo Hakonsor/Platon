@@ -15,32 +15,45 @@ import java.util.Calendar;
 public abstract class SkadeMelding {
     private String skadeBeskrivelse;
     private Calendar datoSkade;  // når skaden inntraff.
-    private Calendar datoSkadeRegistert;
+    private Calendar datoSkadeRegistert;// må genereres når skademeldingen opprettes
     private int skadeNr;
-    private int erstatt;// beløpet skaden påløper
+    private int skadeSum;
+    private int utbetal;// beløpet skaden påløper
     private Forsikringer forsikring;// usikker om vi skal legge inn forsikring eller forsikringstype
     private String forsikringsType;
     private static int nesteSkadeNr = 100000;
     private Object skadeBilde; 
     
-    private SkadeMelding(){
+    // tom konstruktør for å opprette objektet i fabrikk
+    public SkadeMelding(){
+        
+    }
+    /*private SkadeMelding(){
     skadeNr = (++nesteSkadeNr);
-    } 
+    } */
     
-    public SkadeMelding(String skadeBeskrivelse , int erstatt , Forsikringer forsikring){
-    this(); 
+    // mottar skadebeløpet, mens utbetalingen settes av konsulenten
+    public SkadeMelding(String skadeBeskrivelse , int skadeSum){
+    //this(); 
     this.skadeBeskrivelse = skadeBeskrivelse;
-    this.erstatt = erstatt;
-    this.forsikring = forsikring;
+    this.skadeSum = skadeSum;
     datoSkadeRegistert = Calendar.getInstance();
     }
+   
     
-    public String getSkadeBeskrivelse(){
+   // utbetalingen settes av konsulenten.
+    public void setUtbetal( int utbetaling){
+        this.utbetal = utbetaling;
+    }
+   public int getUtbetalingsSum(){
+        return utbetal;
+   }
+   
+  
+  public String getSkadeBeskrivelse(){ 
         return skadeBeskrivelse;
     }
-    public Calendar getDatoSkadeRegistert(){
-        return datoSkadeRegistert;
-    }
+    
     public Calendar getdatoSkade(){
         return datoSkade;
     }
@@ -49,12 +62,6 @@ public abstract class SkadeMelding {
     }
     public int getSkadeNr(){
         return skadeNr;
-    }
-    public int getErstatt(){
-        return erstatt;
-    }
-    public void setErsatt( int erstattingSum){
-        this.erstatt = erstattingSum;
     }
     public Forsikringer getForsikring(){
         return forsikring;
@@ -72,7 +79,7 @@ public abstract class SkadeMelding {
         this.skadeBilde = skadeBilde;
     }
     public int getForsikringsSum(){
-        return erstatt;
+        return utbetal;
     }
     public int getskadeNr(){
         return skadeNr;
