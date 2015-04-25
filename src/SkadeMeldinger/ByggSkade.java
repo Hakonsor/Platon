@@ -5,11 +5,13 @@
  */
 package SkadeMeldinger;
 
+import java.io.Serializable;
+
 /**
  *klassen gjelder forsikring på både bolig og fritidsbolig
  * @author Therese
  */
-public class ByggSkade extends SkadeMelding {
+public class ByggSkade extends SkadeMelding implements Serializable {
     
     ByggSkade(){
         

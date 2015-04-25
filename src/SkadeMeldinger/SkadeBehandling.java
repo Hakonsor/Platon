@@ -11,6 +11,9 @@ import java.io.Serializable;
 /**
  *
  * @author Therese
+ * 
+ * Klassen skal brukes av konsulenten når han behandler skademeldinger
+ * inneholder metoder for å godkjenne og sette utbetalinger, og legge de i registeret.
  */
 public class SkadeBehandling implements Serializable {
     
