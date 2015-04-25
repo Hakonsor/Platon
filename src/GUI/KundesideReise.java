@@ -1,5 +1,6 @@
 package GUI;
 
+import Kontroller.Kontroller;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -12,7 +13,7 @@ import static javafx.geometry.Pos.TOP_CENTER;
  */
 public class KundesideReise {
 
-    public static Pane reiseFane() {
+    public static Pane reiseFane(Kontroller kontroller) {
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
         grid.setHgap(10);

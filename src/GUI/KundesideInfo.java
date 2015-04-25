@@ -1,5 +1,6 @@
 package GUI;
 
+import Kontroller.Kontroller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,7 +20,7 @@ import static javafx.geometry.Pos.TOP_CENTER;
  */
 public class KundesideInfo {
 
-    public static Pane infoFane() {
+    public static Pane infoFane(Kontroller kontroller) {
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
         HBox vb = new HBox();

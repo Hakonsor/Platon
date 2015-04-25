@@ -8,7 +8,6 @@ package Kontroller;
 
 
 import Forsikring.BilForsikring;
-import Forsikring.Forsikringer;
 import GUI.KundeSide;
 import GUI.Login;
 import GUI.Registrer;
@@ -25,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /*
@@ -39,9 +39,9 @@ import javafx.stage.Stage;
         
         public Kontroller(Stage primaryStage) throws Exception{
                 primaryStage.setOnCloseRequest(e -> skrivTilFil());
+                primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
                 lesFil();
                 loginVindu(primaryStage);
-               
             }
         //GUI
         public void skrivInn(){
@@ -58,10 +58,12 @@ import javafx.stage.Stage;
             }
         public void kundeSide(Stage primaryStage){
                 KundeSide nyside = new KundeSide(primaryStage, this);
-            }            
+            }
+
         public void regVindu(){
                 Registrer regVindu = new Registrer(new Stage(), this);
             }
+
         //Forsikring
         public void setForsikring(int bonusIndex, int egenandelIndex, 
             String telefonnummerString, int kjorelengdeIndex, String fornavn, 

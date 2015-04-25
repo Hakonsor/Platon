@@ -3,10 +3,7 @@ package GUI;
 import Kontroller.Kontroller;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -34,15 +31,30 @@ public class KundesideBil {
         borderPane.setTop(vb); //TOP
 
 
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.TOP_CENTER);
-        grid.setHgap(10);
+        GridPane gridleft = new GridPane();
+        gridleft.setAlignment(Pos.TOP_CENTER);
+        gridleft.setHgap(10);
+        gridleft.setVgap(10);
+        gridleft.setPadding(new Insets(10));
+        gridleft.setPrefHeight(50);
+        gridleft.setPrefWidth(400);
 
-        grid.setVgap(10);
-        grid.setPadding(new Insets(100));
+        GridPane gridright = new GridPane();
+        gridright.setAlignment(Pos.TOP_CENTER);
+        gridright.setHgap(10);
+        gridright.setVgap(10);
+        gridright.setPadding(new Insets(10));
+        gridright.setPrefHeight(50);
+        gridright.setPrefWidth(400);
 
-        grid.setPrefHeight(50);
-        grid.setPrefWidth(800);
+        GridPane gridcenter = new GridPane();
+        gridcenter.setAlignment(Pos.CENTER);
+        gridcenter.setHgap(10);
+        gridcenter.setVgap(10);
+        gridcenter.setPadding(new Insets(10));
+        gridcenter.setPrefHeight(50);
+        gridcenter.setPrefWidth(200);
+
 
 
         //Person
@@ -138,7 +150,30 @@ public class KundesideBil {
         );
         cbEgenandel.setValue("Velg Egenandel:");
 
-        //Registrer knapp & Label
+        //Registrer knapp & Label & Toggle
+
+        Label lbvelgEier = new Label();
+        lbvelgEier.setText("Ny eier av bilen?");
+        lbvelgEier.setId("velgeier");
+        lbvelgEier.setAlignment(Pos.CENTER);
+
+        ToggleGroup eiere = new ToggleGroup();
+
+        RadioButton rbtJa = new RadioButton("JA");
+        rbtJa.setToggleGroup(eiere);
+        rbtJa.setSelected(true);
+        rbtJa.setOnAction(e -> {
+            borderPane.setRight(gridright);
+            System.out.println("Du har valgt Ja! =D");
+        });
+
+        RadioButton rbtNei = new RadioButton("NEI");
+        rbtNei.setToggleGroup(eiere);
+        rbtNei.setSelected(true);
+        rbtNei.setOnAction(e -> {
+            borderPane.setRight(null);
+            System.out.println("Du har valgt Nei");
+        });
 
         Label regLabel = new Label();
         regLabel.setText("");
@@ -168,49 +203,47 @@ public class KundesideBil {
             int integer = 0;
             //kontroll.setForsikring(indexBonus, indexEgenandel, 0/*tlf*/, indexKjorelengde, null/*fornavn*/, null /*etternavn*/, null/*personnummer*/, null /*gateadr*/, tfRegnr.getText(), tfBiltype.getText(), tfÅrsmodell.getText(),/*int Skadefri?*/ 0  );
             //work in progress
-            kontroll.setForsikring(indexBonus, indexEgenandel, 
-                    tfTelefon.getText(), indexKjorelengde, 
-                    tfFornavn.getText(), tfEtternavn.getText(), 
-                    tfPersonnr.getText(), tfPostnr.getText(), 
-                    tfRegnr.getText(), tfÅrsmodell.getText(), 
-                    tfBiltype.getText(), tfKmstand.getText() );
-            
+            kontroll.setForsikring(indexBonus, indexEgenandel,
+                    tfTelefon.getText(), indexKjorelengde,
+                    tfFornavn.getText(), tfEtternavn.getText(),
+                    tfPersonnr.getText(), tfPostnr.getText(),
+                    tfRegnr.getText(), tfÅrsmodell.getText(),
+                    tfBiltype.getText(), tfKmstand.getText());
+
             regLabel.setText("Bilforsikring Registrert!");
         });
 
-        grid.add(lbBil, 0, 0);
-        grid.add(lbPerson, 2, 0);
-
-        grid.add(tfRegnr, 0, 1);
-        grid.add(tfFornavn, 2, 1);
-
-        grid.add(tfÅrsmodell, 0, 2);
-        grid.add(tfEtternavn, 2, 2);
-
-        grid.add(tfBiltype, 0, 3);
-        grid.add(tfPersonnr, 2, 3);
-
-        grid.add(tfKmstand, 0, 4);
-        grid.add(tfTelefon, 2, 4);
-
-        grid.add(cbBonus, 0, 5);
-        grid.add(tfAdresse, 2, 5);
-
-        grid.add(cbEgenandel, 0, 6);
-        grid.add(tfPostnr, 2, 6);
-
-        grid.add(cbKjørelengde, 0, 7);
+        gridleft.add(lbBil, 0, 0);
+        gridleft.add(tfRegnr, 0, 1);
+        gridleft.add(tfÅrsmodell, 0, 2);
+        gridleft.add(tfBiltype, 0, 3);
+        gridleft.add(tfKmstand, 0, 4);
+        gridleft.add(cbBonus, 0, 5);
+        gridleft.add(cbEgenandel, 0, 6);
+        gridleft.add(cbKjørelengde, 0, 7);
+        gridleft.add(lbvelgEier, 0, 8);
+        gridleft.add(rbtJa, 0, 9);
+        gridleft.add(rbtNei, 0, 10);
 
 
-        grid.add(btnSjekkpris, 1, 9);
-        grid.add(btnRegBilforsikring, 1, 10);
+        gridright.add(lbPerson, 0, 0);
+        gridright.add(tfFornavn, 0, 1);
+        gridright.add(tfEtternavn, 0, 2);
+        gridright.add(tfPersonnr, 0, 3);
+        gridright.add(tfTelefon, 0, 4);
+        gridright.add(tfAdresse, 0, 5);
+        gridright.add(tfPostnr, 0, 6);
 
-        grid.add(regLabel, 1, 11);
 
+        gridcenter.add(btnSjekkpris, 0, 11);
+        gridcenter.add(btnRegBilforsikring, 0, 12);
+        gridcenter.add(regLabel, 0, 13);
 
+        borderPane.setLeft(gridleft); // Left
 
+        borderPane.setCenter(gridcenter); //Center
 
-        borderPane.setCenter(grid); // CENTER
+        //borderPane.setRight(gridright); //Right
 
         return borderPane;
     }

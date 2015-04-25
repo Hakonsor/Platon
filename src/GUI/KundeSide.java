@@ -54,7 +54,7 @@ public class KundeSide {
         tabInfo.setText("Informasjon");
         tabInfo.setClosable(false);
         KundesideInfo info = new KundesideInfo();
-        tabInfo.setContent(info.infoFane());
+        tabInfo.setContent(info.infoFane(kontroll));
 
         //Båtforsikring
         Tab tabBåt = new Tab();
@@ -68,7 +68,7 @@ public class KundeSide {
         tabReise.setText("Reiseforsikring");
         tabReise.setClosable(false);
         KundesideReise reise = new KundesideReise();
-        tabReise.setContent(reise.reiseFane());
+        tabReise.setContent(reise.reiseFane(kontroll));
 
         //Bilforsikring
         Tab tabBil = new Tab();
@@ -82,17 +82,24 @@ public class KundeSide {
         tabBolig.setText("Boligforsikring");
         tabBolig.setClosable(false);
         KundesideBolig bolig = new KundesideBolig();
-        tabBolig.setContent(bolig.boligFane());
+        tabBolig.setContent(bolig.boligFane(kontroll));
 
         //Fri.Boligforsikring
         Tab tabFriBolig = new Tab();
         tabFriBolig.setText("Fritids-boligforsikring");
         tabFriBolig.setClosable(false);
         KundesideFribolig fribolig = new KundesideFribolig();
-        tabFriBolig.setContent(fribolig.friboligFane());
+        tabFriBolig.setContent(fribolig.friboligFane(kontroll));
+
+        //SkadeMelding
+        Tab tabSkade = new Tab();
+        tabSkade.setText("Skademelding");
+        tabSkade.setClosable(false);
+        KundesideSkade skade = new KundesideSkade();
+        tabSkade.setContent(skade.skadeFane(kontroll));
 
 
-        tabPane.getTabs().addAll(tabInfo, tabBåt, tabReise, tabBil, tabBolig, tabFriBolig);
+        tabPane.getTabs().addAll(tabInfo, tabBåt, tabReise, tabBil, tabBolig, tabFriBolig, tabSkade);
 
         borderPane.setCenter(tabPane);
 
