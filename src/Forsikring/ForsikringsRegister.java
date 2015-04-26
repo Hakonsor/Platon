@@ -30,26 +30,18 @@ public class ForsikringsRegister implements Serializable {
         reise = new LinkedList();
         bolig = new LinkedList();
         fritid = new LinkedList();
-    
-        
-       
      }
 
      // legger til et objekt i listen, ikke testet
      public void settInn(BilForsikring b){
          bil.add(b);
-         System.out.println(bil.toString());
-         System.out.println("Jodaaa");
      }
-     
      public void settInn(BatForsikring b){
          bat.add(b);
      }
-     
      public void settInn(ReiseForsikring b){
          reise.add(b);
      }
-     
      public void settInn(BoligForsikring b){
          bolig.add(b);
      }
@@ -68,7 +60,6 @@ public class ForsikringsRegister implements Serializable {
           String s = hentString(l);
           return s;
     } 
-      
       // finner liste, returnerer listen hvis den har innhold, hvis ikke så returnerer den null.
      public List finnListe(int i){
           
@@ -114,7 +105,6 @@ public class ForsikringsRegister implements Serializable {
           }
           return null;
       }// end of method finnListe
-      
      // gjennomløper listen og returnerer objektenes toString() i en String.
      public <T extends Forsikringer> String hentString(List<T> register){
           Iterator<T> iter = register.iterator();

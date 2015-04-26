@@ -1,6 +1,10 @@
 package GUI;
 
+import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
+import Person.Person;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -8,13 +12,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import project.Postregister;
 
 /**
  * Created by Magnus on 21.04.15.
  */
-public class KundesideBil {
+public class KundesideBil implements ComboBoxConverter{
 
-    public static Pane bilFane(Kontroller kontroll) {
+    public Pane bilFane(Kontroller kontroll) {
 
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
@@ -86,6 +91,26 @@ public class KundesideBil {
         TextField tfTelefon = new TextField();
         tfTelefon.setPromptText("Telefon");
         tfTelefon.setMinWidth(200);
+        
+        TextField postSted = new TextField();
+        postSted.setPromptText("PostSted");
+        postSted.setEditable(false);
+        postSted.setMinWidth(200);
+        
+        
+      
+        tfPostnr.textProperty().addListener(new ChangeListener<String>(){
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Postregister register = new Postregister();
+                String poststed = register.getPoststed(tfPostnr.getText());
+                if(poststed == null){
+                    poststed = "FInnes faen ikke";
+                }
+                postSted.setText(poststed);
+            }
+        });
 
 
         //Bil
@@ -193,24 +218,17 @@ public class KundesideBil {
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
+            double bonus = indexBonusConverterer( cbBonus.getItems().indexOf(cbBonus.getValue()) );
+            double index = indexEgenandelConverterer( cbEgenandel.getItems().indexOf(cbEgenandel.getValue()) );
+            int kjorelengde = indexKjoreLengdeConverterer( cbEgenandel.getItems().indexOf(cbEgenandel.getValue()) ); 
             
-            tfRegnr.getText();
-            tfÅrsmodell.getText();
-            tfBiltype.getText();
-            tfKmstand.getText();
-            int indexBonus = cbBonus.getItems().indexOf(cbBonus.getValue());
-            int indexEgenandel = cbEgenandel.getItems().indexOf(cbEgenandel.getValue());
-            int indexKjorelengde = cbKjørelengde.getItems().indexOf(cbKjørelengde.getValue());
-            int integer = 0;
-            //kontroll.setForsikring(indexBonus, indexEgenandel, 0/*tlf*/, indexKjorelengde, null/*fornavn*/, null /*etternavn*/, null/*personnummer*/, null /*gateadr*/, tfRegnr.getText(), tfBiltype.getText(), tfÅrsmodell.getText(),/*int Skadefri?*/ 0  );
-            //work in progress
-            kontroll.setForsikring(indexBonus, indexEgenandel,
-                    tfTelefon.getText(), indexKjorelengde,
-                    tfFornavn.getText(), tfEtternavn.getText(),
-                    tfPersonnr.getText(), tfPostnr.getText(),
-                    tfRegnr.getText(), tfÅrsmodell.getText(),
-                    tfBiltype.getText(), tfKmstand.getText());
-
+            Person person = null;
+            if(rbtJa.selectedProperty().getValue())
+                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
+            else
+                person = null;
+            
+            kontroll.setForsikring(bonus, index, kjorelengde, tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), person);
             regLabel.setText("Bilforsikring Registrert!");
         });
 
@@ -234,6 +252,7 @@ public class KundesideBil {
         gridright.add(tfTelefon, 0, 4);
         gridright.add(tfAdresse, 0, 5);
         gridright.add(tfPostnr, 0, 6);
+        gridright.add(postSted, 0, 7);
 
 
         gridcenter.add(btnSjekkpris, 0, 11);

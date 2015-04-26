@@ -1,6 +1,7 @@
 package GUI;
 
 import Kontroller.Kontroller;
+import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -60,7 +61,7 @@ public class KundesideInfo {
         forsikringComboBox.setOnAction(e -> {
                 
                 
-                ArrayList<String> forsikringliste = kontroll.
+                ArrayList<String> forsikringliste = kontroller.
                         getInfoForsikringListe(forsikringComboBox.getItems().
                                 indexOf(forsikringComboBox.getValue()));
                 if(forsikringliste == null){

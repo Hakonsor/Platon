@@ -12,20 +12,20 @@ import java.io.Serializable;
  * @author Therese, Håkon
  */
 public class Person implements Serializable{
-    private String fornavn, etternavn, personNr, gateAdr, postNr;
-    private int tlf;
+    private String fornavn, etternavn, personNr, gateAdr, postNr, telefon;
+ 
     
     
-    public Person(int tlf, String fornavn, String etternavn, String personNr, String gateAdr, String postNr){
+    public Person( String fornavn, String etternavn, String personNr, String gateAdr, String postNr, String telefon ){
         this.fornavn = fornavn;
         this.etternavn = etternavn;
         this.personNr = personNr;
         this.gateAdr = gateAdr;
         this.postNr = postNr;  
-        this.tlf = tlf; 
+        this.telefon = telefon; 
     }
-    public int getTlf(){
-       return tlf;
+    public String getTlf(){
+       return telefon;
     }
     public String getFornavn(){
        return fornavn;

@@ -122,8 +122,7 @@ public class Login {
                 primaryStage.close();
                 kontroll.kundeSide(primaryStage);
                 kontroll.setInnloggetBruker(tfKundeBrukernavn.getText());
-                
-                
+
                 }else{
                     logginnInfo.setText("Feil Kundenr eller Passord!");
                 }

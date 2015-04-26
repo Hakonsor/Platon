@@ -11,7 +11,7 @@ package Forsikring;
  */
 public class ForsikringsFabrikk {
   
-    
+   /*
     public static Forsikringer lagForsikring(double bonus, double egenandel,
                 int tlf, int kjorelengde,String regNr , String type ,String modell, String arsModell,  int kmStand){
                 
@@ -22,9 +22,9 @@ public class ForsikringsFabrikk {
      public static Forsikringer lagForsikring(double bonus, String motorType, int lendgeFot, int motorStyrke,String regNr , String type,String modell, String arsModell){
     
          return new BatForsikring(bonus,motorType,lendgeFot,motorStyrke,regNr ,type,modell,arsModell);
-       
+     
   }
-    
+    */
     // returnerer enten vanlig boligforsikring eller fritidsBoligForsikring avhengig av hva første parameter er.
     // returnerer null hvis det ikke er laget noen forsikring.
     public static Forsikringer lagForsikring(String bolig, boolean utleie, double kvadrat, String adresse, String boligType, String byggeår,

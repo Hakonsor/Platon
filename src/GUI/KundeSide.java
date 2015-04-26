@@ -32,7 +32,6 @@ public class KundeSide {
         MenuItem left = new MenuItem("Logg ut");
         menu.getItems().addAll(left);
         left.setOnAction(e -> {
-            
             primaryStage.close();
             kontroll.loginVindu(primaryStage);
         });
@@ -69,6 +68,7 @@ public class KundeSide {
         tabReise.setClosable(false);
         KundesideReise reise = new KundesideReise();
         tabReise.setContent(reise.reiseFane(kontroll));
+        tabReise.setOnSelectionChanged(e -> kontroll.handle(null));
 
         //Bilforsikring
         Tab tabBil = new Tab();

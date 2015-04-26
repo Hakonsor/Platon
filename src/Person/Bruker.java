@@ -22,8 +22,8 @@ import java.util.LinkedList;
    // private ArrayList<Integer> forsikringListe;// dette skal vel egentlig være liste over poliseNr.
     //private Calendar opprettetDato;
     
-    public Bruker(int tlf, String fornavn, String etternavn,String personNr,String gateAdr, String postNr, String passord){
-      super(tlf,  fornavn, etternavn, personNr, gateAdr, postNr);
+    public Bruker( String fornavn, String etternavn,String personNr,String gateAdr, String postNr, String passord, String telefon){
+      super(fornavn, etternavn, personNr, gateAdr, postNr, telefon);
         this.passord = passord;
        // opprettetDato = Calendar.getInstance();
     }

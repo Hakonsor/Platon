@@ -8,11 +8,13 @@ package Kontroller;
 
 
 import Forsikring.BilForsikring;
+import Forsikring.Forsikringer;
 import GUI.KundeSide;
 import GUI.Login;
 import GUI.Registrer;
 import Person.Bruker;
 import Person.Kunde;
+import Person.Person;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -40,12 +42,11 @@ import javafx.stage.Stage;
         public static Map<String, Bruker> brukerRegister = new HashMap<>();
         private Bruker innLoggetBruker = null;
         
+        
         public Kontroller(Stage primaryStage) throws Exception{
-                primaryStage.setOnCloseRequest(e -> skrivTilFil());
-                primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
-                lesFil();
-                loginVindu(primaryStage);
+                primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png")); 
             }
+        
         //GUI
         public void loginVindu(Stage primaryStage) {
             innLoggetBruker = null;
@@ -62,26 +63,63 @@ import javafx.stage.Stage;
                 Registrer regVindu = new Registrer(new Stage(), this);
         }
         //Forsikring
-        public void setForsikring(int bonusIndex, int egenandelIndex, 
-            String telefonnummerString, int kjorelengdeIndex, String fornavn, 
-            String tfEtternavn, String tfPersonnr, String postNr, String regNr, 
-            String arsmodell,  String type, String tfKmstand){
-                int telefonnummer = 0;
-                int kmStand = 0;
+        public void setForsikring(double bonus, double egenandel, int kjorelengde,  
+            String regNr, String arsmodell,  String type, String tfKmstand, Person person){
+            int kmStand = 0; 
+            if(person == null)  
+                person = innLoggetBruker;
+            
+            try{
+                kmStand = Integer.parseInt(tfKmstand);
+            }catch(NumberFormatException nfe){
+                System.out.println("Skriv inn kun helltall i kilometer stand");
+                return;
+            }
+            try{
+                Kunde k = (Kunde) innLoggetBruker;
                 
-                try{
-                    telefonnummer = Integer.parseInt(telefonnummerString);
-                }catch(NumberFormatException nfe){
-                    System.out.println("Skriv inn kun helltall som telefonnummer");
-                    return;
+                k.settInn(new BilForsikring( bonus, egenandel, kjorelengde, regNr, type, arsmodell, kmStand, person));
+            }catch(ClassCastException cce) {
+                System.out.println(" Innlogget kunde er ikke av type kunde"); 
+            }
+        }
+        
+        public double indexEgenandel(int indexEgenandel){
+                double egenandel;
+                switch(indexEgenandel){
+                    case 0:  egenandel = 4000.0;
+                        break;
+                    case 1:  egenandel = 6000.0;
+                        break;
+                    case 2:  egenandel = 10000.0;
+                        break;
+                    default: System.out.println("har ikke valgt egenandel");
+                            egenandel = 0;
+                    }
+                return egenandel;
+        
                 }
-                try{
-                    kmStand = Integer.parseInt(tfKmstand);
-                }catch(NumberFormatException nfe){
-                    System.out.println("Skriv inn kun helltall i kilometer stand");
-                    return;
+        public int indexKjoreLengde(int kjorelengdeIndex){
+                int kjorelengde;
+                switch(kjorelengdeIndex){
+                    case 0:  kjorelengde = 100000;
+                        break;
+                    case 1:  kjorelengde = 150000;
+                        break;
+                    case 2:  kjorelengde = 200000;
+                        break;
+                    case 3:  kjorelengde = 300000;
+                        break;
+                    case 4:  kjorelengde = 350000;
+                        break;
+                    default: System.out.println("har ikke valgt kjørelengde");
+                        kjorelengde = 0;    
                 }
-                double bonus;
+                return kjorelengde;
+    
+        }
+        public double indexBonus(int bonusIndex){
+            double bonus;
                 switch (bonusIndex) {
                     case 0:  bonus = -20.0;
                         break;
@@ -106,46 +144,10 @@ import javafx.stage.Stage;
                     case 10:  bonus = 75.0;
                         break;              
                     default: System.out.println("Har ikke valgt bonus");
-                        return;
+                        bonus = 0;
                 }
-                double egenandel;
-                switch(egenandelIndex){
-                    case 0:  egenandel = 4000.0;
-                        break;
-                    case 1:  egenandel = 6000.0;
-                        break;
-                    case 2:  egenandel = 10000.0;
-                        break;
-                    default: System.out.println("har ikke valgt egenandel");
-                        return;
-                }
-                int kjorelengde;
-                switch(kjorelengdeIndex){
-                    case 0:  kjorelengde = 100000;
-                        break;
-                    case 1:  kjorelengde = 150000;
-                        break;
-                    case 2:  kjorelengde = 200000;
-                        break;
-                    case 3:  kjorelengde = 300000;
-                        break;
-                    case 4:  kjorelengde = 350000;
-                        break;
-                    default: System.out.println("har ikke valgt kjørelengde");
-                        return;
-                }
-                try{
-                    Kunde k = (Kunde) innLoggetBruker;
-                    k.settInn(new BilForsikring( bonus, egenandel, telefonnummer, 
-                            kjorelengde, fornavn, tfEtternavn, tfPersonnr, postNr, 
-                            regNr, type, regNr, type, arsmodell, kmStand) );
-                }catch(ClassCastException cce) {
-                    System.out.println(" Innlogget kunde er ikke av type kunde"); 
-                }
-                
-                
-          //  k.addForsikring(new BilForsikring());
-            }
+                return bonus;
+        }
         //Bruker
         public void setInnloggetBruker(String nokkel){
                 innLoggetBruker = brukerRegister.get(nokkel);
@@ -196,11 +198,13 @@ import javafx.stage.Stage;
                 System.out.println("Problem med utskrift til fil.");
             }
         }
+        
         @Override
         public void handle(ActionEvent event) {
         // Vi tar i bruk lambda uttrykk istedenfor istedenfor
         // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
-        }        
+        } 
+        //infosiden
         public ArrayList<Forsikringer> finnForsikringListe(int i) {
             Kunde k = (Kunde) innLoggetBruker;
             List a = k.getForsikringsListe(i);
