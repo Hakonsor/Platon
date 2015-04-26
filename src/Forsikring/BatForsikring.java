@@ -32,6 +32,10 @@ public class BatForsikring extends Kjoretoy implements Serializable{
      return motorStyrke;
     }
     public String getMotorType(){
-     return "Motortype: " + motorType;
+     return motorType;
+    }
+    
+    public String toString(){
+        return "s";
     }
 }
