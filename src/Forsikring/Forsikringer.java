@@ -23,10 +23,8 @@ public abstract class Forsikringer implements Serializable{
 
     public Forsikringer() {
         poliseNr = ++nestePolisNr;
-        aktiv =true;
+        aktiv =true;   
     }
-    
-    
     // brukes når det registreres kjøretøy.
    
     /*public Forsikringer( String s){

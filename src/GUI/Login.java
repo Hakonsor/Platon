@@ -122,8 +122,7 @@ public class Login {
                 primaryStage.close();
                 kontroll.kundeSide(primaryStage);
                 kontroll.setInnloggetBruker(tfKundeBrukernavn.getText());
-                
-                
+
                 }else{
                     logginnInfo.setText("Feil Kundenr eller Passord!");
                 }
@@ -195,6 +194,10 @@ public class Login {
         btnKonsulentLogginn.setId("btnlogginn");
         btnKonsulentLogginn.setMaxWidth(200);
         GridPane.setHalignment(btnKonsulentLogginn, HPos.CENTER);
+        btnKonsulentLogginn.setOnAction(e -> {
+            primaryStage.close();
+            kontroll.konsulentSide(primaryStage);
+        });
 
         btnNyKonsulent = new Button("Ny Konsulent");
         btnNyKonsulent.setId("btNyKonsulent");

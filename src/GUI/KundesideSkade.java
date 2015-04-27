@@ -12,7 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- * Created by Magnus on 24.04.15.
+ * Created by Magnus on 27.04.15.
  */
 public class KundesideSkade {
 
@@ -117,4 +117,5 @@ public class KundesideSkade {
 
         return borderPane;
     }
+
 }

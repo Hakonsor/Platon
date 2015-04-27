@@ -41,7 +41,7 @@ public class Registrer {
     }
     public Kunde getKunde(){
         if(velgpassord.getText().equals(gjentapassord.getText())){
-            return new Kunde(fornavn.getText(), etternavn.getText(), adresse.getText(), personnr.getText(), telefon.getText(),  velgpassord.getText() );
+            return new Kunde(fornavn.getText(), etternavn.getText(), null, adresse.getText(), telefon.getText(), personnr.getText(), velgpassord.getText() );
         } else {
             System.out.println("Todo popommelding i register getbruker");
         //pop opp melding hvis ordene ikke er like

@@ -5,6 +5,7 @@
  */
 package Forsikring;
 
+import Person.Person;
 import java.io.Serializable;
 
 /**
@@ -13,9 +14,9 @@ import java.io.Serializable;
  */
 public class BilForsikring extends Kjoretoy implements Serializable {
     private int kjorelengde;
-    public BilForsikring(double bonus, double egenandel,
-                int tlf, int kjorelengde,String regNr , String type ,String modell, String arsModell,  int kmStand){
-                super(bonus, regNr ,type,modell, arsModell);
+    
+    public BilForsikring(double bonus, double egenandel, int kjorelengde, String regNr, String type, String arsModell, int kmStand, Person person){
+                super(bonus, regNr ,type, arsModell, null, null);
                 this.kjorelengde = kjorelengde;
                 setPremie(premie(egenandel,getBonus() ));// premien settes
     }

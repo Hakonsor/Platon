@@ -8,11 +8,14 @@ package Kontroller;
 
 
 import Forsikring.BilForsikring;
+import Forsikring.Forsikringer;
+import GUI.KonsulentSide;
 import GUI.KundeSide;
 import GUI.Login;
 import GUI.Registrer;
 import Person.Bruker;
 import Person.Kunde;
+import Person.Person;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,7 +23,10 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,54 +43,85 @@ import javafx.stage.Stage;
         public static Map<String, Bruker> brukerRegister = new HashMap<>();
         private Bruker innLoggetBruker = null;
         
+        
         public Kontroller(Stage primaryStage) throws Exception{
-                primaryStage.setOnCloseRequest(e -> skrivTilFil());
-                primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
-                lesFil();
-                loginVindu(primaryStage);
+                primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png")); 
             }
+        
         //GUI
-        public void skrivInn(){
-            
-            }
         public void loginVindu(Stage primaryStage) {
-                innLoggetBruker = null;
-                try {
-                   Login login = new Login(primaryStage, this );
-                }
-                catch (java.lang.Exception jle){
+            innLoggetBruker = null;
+            try {
+                Login login = new Login(primaryStage, this );
+            }catch (java.lang.Exception jle){
                     System.out.println("Klarte ikke å åpne logginn vindu!");
                 }
             }
+        public void konsulentSide(Stage primaryStage) { KonsulentSide nySide = new KonsulentSide(primaryStage, this);}
         public void kundeSide(Stage primaryStage){
                 KundeSide nyside = new KundeSide(primaryStage, this);
-            }
-
+        }            
         public void regVindu(){
                 Registrer regVindu = new Registrer(new Stage(), this);
-            }
-
+        }
         //Forsikring
-        public void setForsikring(int bonusIndex, int egenandelIndex, 
-            String telefonnummerString, int kjorelengdeIndex, String fornavn, 
-            String tfEtternavn, String tfPersonnr, String postNr, String regNr, 
-            String arsmodell,  String type, String tfKmstand){
-                int telefonnummer = 0;
-                int kmStand = 0;
+        public void setForsikring(double bonus, double egenandel, int kjorelengde,  
+            String regNr, String arsmodell,  String type, String tfKmstand, Person person){
+            int kmStand = 0; 
+            if(person == null)  
+                person = innLoggetBruker;
+            
+            try{
+                kmStand = Integer.parseInt(tfKmstand);
+            }catch(NumberFormatException nfe){
+                System.out.println("Skriv inn kun helltall i kilometer stand");
+                return;
+            }
+            try{
+                Kunde k = (Kunde) innLoggetBruker;
                 
-                try{
-                    telefonnummer = Integer.parseInt(telefonnummerString);
-                }catch(NumberFormatException nfe){
-                    System.out.println("Skriv inn kun helltall som telefonnummer");
-                    return;
+                k.settInn(new BilForsikring( bonus, egenandel, kjorelengde, regNr, type, arsmodell, kmStand, person));
+            }catch(ClassCastException cce) {
+                System.out.println(" Innlogget kunde er ikke av type kunde"); 
+            }
+        }
+        
+        public double indexEgenandel(int indexEgenandel){
+                double egenandel;
+                switch(indexEgenandel){
+                    case 0:  egenandel = 4000.0;
+                        break;
+                    case 1:  egenandel = 6000.0;
+                        break;
+                    case 2:  egenandel = 10000.0;
+                        break;
+                    default: System.out.println("har ikke valgt egenandel");
+                            egenandel = 0;
+                    }
+                return egenandel;
+        
                 }
-                try{
-                    kmStand = Integer.parseInt(tfKmstand);
-                }catch(NumberFormatException nfe){
-                    System.out.println("Skriv inn kun helltall i kilometer stand");
-                    return;
+        public int indexKjoreLengde(int kjorelengdeIndex){
+                int kjorelengde;
+                switch(kjorelengdeIndex){
+                    case 0:  kjorelengde = 100000;
+                        break;
+                    case 1:  kjorelengde = 150000;
+                        break;
+                    case 2:  kjorelengde = 200000;
+                        break;
+                    case 3:  kjorelengde = 300000;
+                        break;
+                    case 4:  kjorelengde = 350000;
+                        break;
+                    default: System.out.println("har ikke valgt kjørelengde");
+                        kjorelengde = 0;    
                 }
-                double bonus;
+                return kjorelengde;
+    
+        }
+        public double indexBonus(int bonusIndex){
+            double bonus;
                 switch (bonusIndex) {
                     case 0:  bonus = -20.0;
                         break;
@@ -109,8 +146,10 @@ import javafx.stage.Stage;
                     case 10:  bonus = 75.0;
                         break;              
                     default: System.out.println("Har ikke valgt bonus");
-                        return;
+                        bonus = 0;
                 }
+            return bonus;
+            /*
                 double egenandel;
                 switch(egenandelIndex){
                     case 0:  egenandel = 4000.0;
@@ -121,6 +160,7 @@ import javafx.stage.Stage;
                         break;
                     default: System.out.println("har ikke valgt egenandel");
                         return;
+
                 }
                 int kjorelengde;
                 switch(kjorelengdeIndex){
@@ -145,17 +185,18 @@ import javafx.stage.Stage;
                 }catch(ClassCastException cce) {
                     System.out.println(" Innlogget kunde er ikke av type kunde"); 
                 }
+
                 
-                
+                */
           //  k.addForsikring(new BilForsikring());
             }
         //Bruker
         public void setInnloggetBruker(String nokkel){
                 innLoggetBruker = brukerRegister.get(nokkel);
-            }
+        }
         public Bruker getInnloggetBruker(){
             return innLoggetBruker;
-            }
+        }
         public Bruker finnBruker(String Bruker){
                 return brukerRegister.get(Bruker);
             }
@@ -172,11 +213,9 @@ import javafx.stage.Stage;
                 brukerRegister.put(b.getKundeNokkel(), b);
                 System.out.println(b.toString());
             }
-        public void addforsikring(Kunde kunde, String cbBonus, String cbEgenandel, String cbKjørelengde){
-            if(cbBonus.matches("")){}
-            }
+
         //Filskriving
-        private void lesFil(){
+        public void lesFil(){
             try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream( "src/Fil/forsikring.data" ))){
                     brukerRegister = (HashMap) innfil.readObject();
@@ -201,10 +240,40 @@ import javafx.stage.Stage;
                 System.out.println("Problem med utskrift til fil.");
             }
         }
+        
         @Override
         public void handle(ActionEvent event) {
         // Vi tar i bruk lambda uttrykk istedenfor istedenfor
         // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
+        } 
+        //infosiden
+        public ArrayList<Forsikringer> finnForsikringListe(int i) {
+            Kunde k = (Kunde) innLoggetBruker;
+            List a = k.getForsikringsListe(i);
+            if(a == null)
+                return null;
+            System.out.println(a);
+            return new ArrayList<> (k.getForsikringsListe(i));
+        }
+        public ArrayList<String> getInfoForsikringListe(int i) {
+            Kunde k = (Kunde) innLoggetBruker;
+            List a = k.getForsikringsListe(i);
+            if(a == null)
+                return null;
+            ArrayList<String> liste = new ArrayList<>();
+            Iterator<BilForsikring> iterator = a.iterator();
+            if(a.get(0) instanceof BilForsikring){
+                while (iterator.hasNext()){
+                    liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                    //iterator.next().getRegNr()
+                }
+                return liste;
+            }else{
+                while (iterator.hasNext()){
+                    liste.add(  Integer.toString(iterator.next().getPoliseNr()) );
+                }
+            }
+        return liste;
         }
     }
     

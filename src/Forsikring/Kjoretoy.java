@@ -5,6 +5,7 @@
  */
 package Forsikring;
 
+import Person.Person;
 import java.io.Serializable;
 
 /**
@@ -14,14 +15,16 @@ import java.io.Serializable;
 public abstract class Kjoretoy extends Forsikringer implements Serializable{
     private String regNr , type , modell , arsModell;
     private double bonus;
+    private Person person;
     
-    public Kjoretoy( double bonus, String regNr , String type,String modell, String arsModell ){
+    public Kjoretoy( double bonus, String regNr , String type,String modell, String arsModell, Person person ){
         super(0,0);
         this.bonus= bonus;
         this.regNr = regNr;
         this.type = type;
         this.modell = modell;
         this.arsModell = arsModell;
+        this.person = person;
     }
     public String getRegNr(){
      return regNr;

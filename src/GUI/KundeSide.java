@@ -16,8 +16,6 @@ import javafx.scene.layout.*;
 public class KundeSide {
 
     private Kontroller kontroll;
-    //static Stage vindu = new Stage();
-   // KundesideInfo info;
 
     public KundeSide(Stage primaryStage, Kontroller k){
         this.kontroll = k;
@@ -32,7 +30,6 @@ public class KundeSide {
         MenuItem left = new MenuItem("Logg ut");
         menu.getItems().addAll(left);
         left.setOnAction(e -> {
-            
             primaryStage.close();
             kontroll.loginVindu(primaryStage);
         });
@@ -69,6 +66,7 @@ public class KundeSide {
         tabReise.setClosable(false);
         KundesideReise reise = new KundesideReise();
         tabReise.setContent(reise.reiseFane(kontroll));
+        tabReise.setOnSelectionChanged(e -> kontroll.handle(null));
 
         //Bilforsikring
         Tab tabBil = new Tab();
