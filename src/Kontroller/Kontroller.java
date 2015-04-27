@@ -9,6 +9,7 @@ package Kontroller;
 
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
+import GUI.KonsulentSide;
 import GUI.KundeSide;
 import GUI.Login;
 import GUI.Registrer;
@@ -56,6 +57,7 @@ import javafx.stage.Stage;
                     System.out.println("Klarte ikke å åpne logginn vindu!");
                 }
             }
+        public void konsulentSide(Stage primaryStage) { KonsulentSide nySide = new KonsulentSide(primaryStage, this);}
         public void kundeSide(Stage primaryStage){
                 KundeSide nyside = new KundeSide(primaryStage, this);
         }            
@@ -146,8 +148,48 @@ import javafx.stage.Stage;
                     default: System.out.println("Har ikke valgt bonus");
                         bonus = 0;
                 }
-                return bonus;
-        }
+            return bonus;
+            /*
+                double egenandel;
+                switch(egenandelIndex){
+                    case 0:  egenandel = 4000.0;
+                        break;
+                    case 1:  egenandel = 6000.0;
+                        break;
+                    case 2:  egenandel = 10000.0;
+                        break;
+                    default: System.out.println("har ikke valgt egenandel");
+                        return;
+
+                }
+                int kjorelengde;
+                switch(kjorelengdeIndex){
+                    case 0:  kjorelengde = 100000;
+                        break;
+                    case 1:  kjorelengde = 150000;
+                        break;
+                    case 2:  kjorelengde = 200000;
+                        break;
+                    case 3:  kjorelengde = 300000;
+                        break;
+                    case 4:  kjorelengde = 350000;
+                        break;
+                    default: System.out.println("har ikke valgt kjørelengde");
+                        return;
+                }
+                try{
+                    Kunde k = (Kunde) innLoggetBruker;
+                    k.settInn(new BilForsikring( bonus, egenandel, telefonnummer, 
+                            kjorelengde, fornavn, tfEtternavn, tfPersonnr, postNr, 
+                            regNr, type, regNr, type, arsmodell, kmStand) );
+                }catch(ClassCastException cce) {
+                    System.out.println(" Innlogget kunde er ikke av type kunde"); 
+                }
+
+                
+                */
+          //  k.addForsikring(new BilForsikring());
+            }
         //Bruker
         public void setInnloggetBruker(String nokkel){
                 innLoggetBruker = brukerRegister.get(nokkel);

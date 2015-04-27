@@ -194,6 +194,10 @@ public class Login {
         btnKonsulentLogginn.setId("btnlogginn");
         btnKonsulentLogginn.setMaxWidth(200);
         GridPane.setHalignment(btnKonsulentLogginn, HPos.CENTER);
+        btnKonsulentLogginn.setOnAction(e -> {
+            primaryStage.close();
+            kontroll.konsulentSide(primaryStage);
+        });
 
         btnNyKonsulent = new Button("Ny Konsulent");
         btnNyKonsulent.setId("btNyKonsulent");

@@ -4,6 +4,7 @@ import Kontroller.Kontroller;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import static javafx.geometry.Pos.TOP_CENTER;

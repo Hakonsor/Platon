@@ -16,8 +16,6 @@ import javafx.scene.layout.*;
 public class KundeSide {
 
     private Kontroller kontroll;
-    //static Stage vindu = new Stage();
-   // KundesideInfo info;
 
     public KundeSide(Stage primaryStage, Kontroller k){
         this.kontroll = k;
