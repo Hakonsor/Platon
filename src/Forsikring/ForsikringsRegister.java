@@ -7,9 +7,15 @@ package Forsikring;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  *
@@ -126,7 +132,7 @@ public class ForsikringsRegister implements Serializable {
       
    
     
-}// end of class ForsikringsRegister
+
 
  /*   
 public class ForsikringsRegister {
@@ -155,5 +161,51 @@ public class ForsikringsRegister {
         });
         return s.toString();
     }*/
+    
+    public HashMap <String,Integer > antallPerType( List <Forsikringer> alleFors ){
+      
+       Iterator iter = alleFors.iterator();
+       int tall1 = 0;
+       int tall2 = 0;
+       int tall3 = 0;
+       int tall4 = 0;
+       int tall5 = 0;
+       
+       while(iter.hasNext()){
+           if(iter instanceof BoligForsikring){
+               ++tall1;
+           }
+           else if(iter instanceof FritidsBolig){
+               ++tall2;
+           }
+           else if(iter instanceof BilForsikring){
+               ++tall3;
+           }
+           else if(iter instanceof BatForsikring){
+               ++tall4;
+           }
+           else if(iter instanceof ReiseForsikring){
+               ++tall5;
+           }
+       }
+      
+       HashMap<String, Integer > kart = new HashMap<>();
+       kart.put("Reise", tall5);
+       kart.put("Bil", tall3);
+       kart.put("Fritidsbåt", tall4);
+       kart.put("Bolig", tall1);
+       kart.put("Fritidsbolig", tall2);
+       
+       return kart;
+    }
+       
+      /* alleFors.stream().forEach((Forsikringer item) -> {
+           if(item instanceof BoligForsikring){
+              
+               
+           }
+       });
+    }*/
+}// end of class ForsikringsRegister
 
      
