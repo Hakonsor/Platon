@@ -46,7 +46,7 @@ public class Registrer {
             System.out.println("Todo popommelding i register getbruker");
         //pop opp melding hvis ordene ikke er like
         }
-    return null;
+        return null;
     
     }
     public Registrer(Stage vindu, Kontroller kontroll)  {

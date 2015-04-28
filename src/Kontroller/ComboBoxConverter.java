@@ -21,7 +21,7 @@ public interface ComboBoxConverter {
         y = y.replaceAll("\\s", "");
         return Double.parseDouble(y);
     }
-
+    
     default double convertDou(String s) {
 
         s = s.replaceAll(" ", "");
