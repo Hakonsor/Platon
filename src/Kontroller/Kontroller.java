@@ -58,32 +58,11 @@ public class Kontroller implements EventHandler<ActionEvent> {
         } catch (java.lang.Exception jle) {
             System.out.println("Klarte ikke å åpne logginn vindu!");
         }
-        public void regKonsulent() {
-                RegKonsulent regKonsulent = new RegKonsulent(new Stage(), this);
-        }
-        public void sok() {Sok sok = new Sok(new Stage(), this);}
-
-        //Forsikring
-        public void setForsikring(double bonus, double egenandel, int kjorelengde,  
-            String regNr, String arsmodell,  String type, String tfKmstand, Person person){
-            int kmStand = 0; 
-            if(person == null)  
-                person = innLoggetBruker;
-            
-            try{
-                kmStand = Integer.parseInt(tfKmstand);
-            }catch(NumberFormatException nfe){
-                System.out.println("Skriv inn kun helltall i kilometer stand");
-                return;
-            }
-            try{
-                Kunde k = (Kunde) innLoggetBruker;
-                
-                k.settInn(new BilForsikring( bonus, egenandel, kjorelengde, regNr, type, arsmodell, kmStand, person));
-            }catch(ClassCastException cce) {
-                System.out.println(" Innlogget kunde er ikke av type kunde"); 
-            }
     }
+    public void regKonsulent() {
+        RegKonsulent regKonsulent = new RegKonsulent(new Stage(), this);
+    }
+    public void sok() {Sok sok = new Sok(new Stage(), this);}
     public void addSkade( SkadeMelding m ){
        skademeldingregister.addSkadeMedling(m);          
     }
@@ -121,28 +100,12 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BilForsikring(bonus, egenandel, kjorelengde, regNr, type, arsmodell, kmStand, person ));
+            forsikringsregister.settInn(kunde, new BilForsikring(bonus, egenandel, kjorelengde, regNr, type, arsmodell, kmStand, person));
 
         } catch (ClassCastException cce) {
             System.out.println(" Innlogget kunde er ikke av type kunde");
         }
-        public Bruker finnBruker(String Bruker) {
-            return brukerRegister.get(Bruker);
-        }
-        public boolean sjekkPassord(String bruker, String  passord){
-                Bruker sjekkBruker = finnBruker(bruker);
-                if(sjekkBruker == null) return false;
-                return sjekkBruker.sjekkPassord(passord);
-            }
-        //Kunde
-        public void registrerBruker( Bruker b){
-                brukerRegister.put(b.getNøkkel(), b);
-            }
-
-        //Konsulent
-        public void registrerKonsulent( Bruker b){
-            brukerRegister.put(b.getNøkkel(), b);
-        }
+    }
 
     //Bruker
 
@@ -169,6 +132,11 @@ public class Kontroller implements EventHandler<ActionEvent> {
     //Kunde
 
     public void registrerBruker(Bruker b) {
+        brukerRegister.put(b.getNøkkel(), b);
+    }
+
+    //Konsulent
+    public void registrerKonsulent( Bruker b){
         brukerRegister.put(b.getNøkkel(), b);
     }
 
