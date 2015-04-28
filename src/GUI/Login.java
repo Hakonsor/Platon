@@ -15,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 /**
@@ -75,7 +77,7 @@ public class Login {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(100));
-        
+
 
         ImageView loginImg = new ImageView(new Image(LoginBilde));
         loginImg.setId("loginImg");
@@ -141,7 +143,7 @@ public class Login {
         }catch (Exception ex) {
           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         grid.add(loginImg, 0, 0);
         grid.add(velkommen, 0, 1);
         grid.add(info, 0, 2);
