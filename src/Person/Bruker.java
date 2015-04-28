@@ -21,7 +21,11 @@ import java.util.LinkedList;
             passord;
    // private ArrayList<Integer> forsikringListe;// dette skal vel egentlig være liste over poliseNr.
     //private Calendar opprettetDato;
-    
+    public Bruker( String passord, String fornavn, String etternavn ){
+        this.fornavn = fornavn;
+        this.etternavn = etternavn;
+        this.passord = passord;
+    }
     public Bruker( String fornavn, String etternavn,String personNr,String gateAdr, String postNr, String passord, String telefon){
       super(fornavn, etternavn, personNr, gateAdr, postNr, telefon);
         this.passord = passord;
@@ -33,6 +37,7 @@ import java.util.LinkedList;
     public boolean sjekkPassord(String passord){
     return (this.passord.equals(passord));
     }
+    abstract public String getNøkkel();
     
         /*
     public int getForsikring(int polisnr){
