@@ -218,17 +218,14 @@ public class KundesideBil implements ComboBoxConverter{
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
-            double bonus = indexBonusConverterer( cbBonus.getItems().indexOf(cbBonus.getValue()) );
-            double index = indexEgenandelConverterer( cbEgenandel.getItems().indexOf(cbEgenandel.getValue()) );
-            int kjorelengde = indexKjoreLengdeConverterer( cbEgenandel.getItems().indexOf(cbEgenandel.getValue()) ); 
-            
-            Person person = null;
+
+            Person person;
             if(rbtJa.selectedProperty().getValue())
                 person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
             else
                 person = null;
             
-            kontroll.setForsikring(bonus, index, kjorelengde, tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), person);
+            kontroll.setForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), (int) convertDou(cbKjørelengde.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), person);
             regLabel.setText("Bilforsikring Registrert!");
         });
 
