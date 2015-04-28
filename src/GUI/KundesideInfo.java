@@ -1,5 +1,6 @@
 package GUI;
 
+import Forsikring.Forsikringer;
 import Kontroller.Kontroller;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
@@ -11,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.*;
-
 
 /**
  * Created by Magnus on 21.04.15.
@@ -25,8 +25,6 @@ public class KundesideInfo {
         vb.setPadding(new Insets(25, 25, 25, 25));
         vb.setSpacing(100);
         vb.setAlignment(Pos.CENTER);
-
-
 
         Button btnSlett = new Button();
         btnSlett.setText("Slett");
@@ -52,28 +50,28 @@ public class KundesideInfo {
         grid.setHgap(10);
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
-        
+
         ObservableList<String> navn = FXCollections.observableArrayList();
         ObservableList<String> data = FXCollections.observableArrayList();
 
         ComboBox<String> forsikringComboBox = new ComboBox<>();
         forsikringComboBox.setEditable(false);
-        forsikringComboBox.getItems().addAll("Alle","Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
+        forsikringComboBox.getItems().addAll("Alle", "Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
         forsikringComboBox.setOnAction(e -> {
-                
-                ArrayList<String> forsikringliste = kontroller.
-                        getInfoForsikringListe(forsikringComboBox.getItems().
-                                indexOf(forsikringComboBox.getValue()));
-                if(forsikringliste == null){
-                    navn.clear();
-                    navn.add("Ingen "+forsikringComboBox.getValue()+"er registrert");
-                }else
-                    navn.setAll(forsikringliste);
-                  
-                
-            });
-        
+
+            ArrayList<String> forsikringliste = kontroller.
+                    getInfoForsikringListe(forsikringComboBox.getItems().
+                            indexOf(forsikringComboBox.getValue()));
+            if (forsikringliste == null) {
+                navn.clear();
+                navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+            } else {
+                navn.setAll(forsikringliste);
+            }
+
+        });
+
         ListView<String> listView = new ListView<>(data);
         listView.setPrefSize(300, 600);
         listView.setEditable(false);
@@ -86,12 +84,15 @@ public class KundesideInfo {
         TextArea textArea = new TextArea();
         //listView.setOnMouseClicked(e -> { visElemnt();   });
         listView.getSelectionModel().selectedItemProperty().addListener(e -> {
-            //Integer.parseInt(listView.getSelectionModel().getSelectedItem())
-            textArea.setText(listView.getSelectionModel().getSelectedItem());
+
+            Forsikringer s = kontroller.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
+            if (s != null) {
+                textArea.setText(s.toString());
+            }
             System.out.println("yep");
-        
+
         });
-        
+
         textArea.setPrefSize(400, 600);
 
         grid.add(forsikringComboBox, 0, 0);
