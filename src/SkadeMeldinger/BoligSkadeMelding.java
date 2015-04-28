@@ -11,18 +11,16 @@ import java.io.Serializable;
  *
  * @author Therese
  */
-public class BoligSkadeMelding extends ByggSkade implements Serializable{
-    
-    
+public class BoligSkadeMelding extends ByggSkade implements Serializable {
+
     // tom konstruktør 
-     public BoligSkadeMelding(){
-         
-     }
-    public BoligSkadeMelding(String skadeBeskrivelse , int utbetal){
-        super(skadeBeskrivelse, utbetal);
-        
+    public BoligSkadeMelding() {
+
     }
-    
-    
-    
+
+    public BoligSkadeMelding(String skadeBeskrivelse, int utbetal) {
+        super(skadeBeskrivelse, utbetal);
+
+    }
+
 }

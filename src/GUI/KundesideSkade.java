@@ -19,6 +19,7 @@ public class KundesideSkade {
     public static Pane skadeFane(Kontroller kontroll) {
 
         //Group root = new Group();
+        TextField tfBeløp = new TextField();
         BorderPane borderPane = new BorderPane();
         HBox vb = new HBox();
         vb.setPadding(new Insets(25, 25, 0, 25));
@@ -32,7 +33,6 @@ public class KundesideSkade {
 
         borderPane.setTop(vb); //TOP
 
-
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
@@ -43,9 +43,7 @@ public class KundesideSkade {
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
 
-
         //Skjema
-
         ComboBox<String> forsikringComboBox = new ComboBox<String>();
         forsikringComboBox.setEditable(false);
         forsikringComboBox.getItems().addAll(
@@ -55,6 +53,17 @@ public class KundesideSkade {
                 "Boligforsikring",
                 "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
+        forsikringComboBox.setOnAction(e -> {
+            int index = forsikringComboBox.getItems().indexOf(forsikringComboBox.getValue());
+            if (kontroll.finnForsikringListe(index) == null) {
+                tfBeløp.setText("Vennligs velg forsikring du har");
+
+            } else {
+
+                System.out.println("mangler forsikrings register");
+            }
+
+        });
 
         Label lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
@@ -69,7 +78,6 @@ public class KundesideSkade {
         lbSkadebeløp.setText("Samlet skadebeløp:");
         lbSkadebeløp.setId("lbSkadebeløp");
 
-        TextField tfBeløp = new TextField();
         tfBeløp.setMaxWidth(200);
         tfBeløp.setAlignment(Pos.CENTER_RIGHT);
         tfBeløp.setPromptText("Beløp:");
@@ -93,12 +101,12 @@ public class KundesideSkade {
         lbSkade.setText("");
         lbSkade.setId("lbskade");
 
-
         Button btnRapSkade = new Button();
         btnRapSkade.setText("Raporter skade");
         btnRapSkade.setId("btnRapSkade");
         btnRapSkade.setMinWidth(200);
         btnRapSkade.setOnAction(e -> {
+            kontroll.addSkade(null);
             lbSkade.setText("Skademelding er sendt inn");
         });
 
