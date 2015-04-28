@@ -7,11 +7,15 @@ package Forsikring;
 
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  *
@@ -128,6 +132,15 @@ public class ForsikringsRegister implements Serializable {
       
    
    
+    
+
+ /*   
+public class ForsikringsRegister {
+    private List <BilForsikring> bilListe;
+    
+    public ForsikringsRegister(){
+        bilListe = new LinkedList(); 
+    }
     
      // setter inn bilene, er testet
     public boolean settInnBil(BilForsikring b){
