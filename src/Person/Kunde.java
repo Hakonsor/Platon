@@ -37,37 +37,23 @@ public class Kunde extends Bruker implements Serializable {
 
 
     public String getNøkkel(){
-    return Integer.toString(kundeNr);
+        return Integer.toString(kundeNr);
     }
     
-    // viser en liste over gyldige forsikringer av en bestemt type
-    public String visForsikring(int i){
-        return register.visListe(i);
+    public int getKundeNr(){
+        return kundeNr;
     }
-    public void settInn(Forsikringer f){
-        if (f instanceof BilForsikring){
-            register.settInn((BilForsikring)f);
-            System.out.println(register.visListe(2));
-        }
-        if (f instanceof BatForsikring){
-            register.settInn((BatForsikring)f);
-        }
-        if (f instanceof BoligForsikring){
-            register.settInn((BoligForsikring)f);
-        }
-        if (f instanceof ReiseForsikring){
-            register.settInn((ReiseForsikring)f);
-        }
-        if (f instanceof FritidsBolig){
-            register.settInn((FritidsBolig)f);
-        }
-    }// end of method settInn
-    public List getForsikringsListe(int index) {
-            return register.finnListe(index);
-        }  
-    public String toString(){
-            return Integer.toString(kundeNr);
-        }
+}// end of class Kunde
+
+
+
+
+
+    
+    
+    
+    
+    
 
         
     
@@ -75,4 +61,4 @@ public class Kunde extends Bruker implements Serializable {
      
     
     
-}// end of class Kunde
+

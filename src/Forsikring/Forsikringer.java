@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import Person.Kunde;
 
 /**
  *
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public abstract class Forsikringer implements Serializable{
     private boolean aktiv;
+    private Kunde kunde;
     private int poliseNr;
     private static int nestePolisNr = 100000;
     private double premie;
@@ -41,6 +43,13 @@ public abstract class Forsikringer implements Serializable{
        this.premie = premie;
        this.egenandel = egenandel;
 
+    }
+    
+    public void setKunde(Kunde kunde){
+        this.kunde = kunde;
+    }
+     public Kunde getKunde(){
+        return kunde;
     }
    
     public int getPoliseNr(){
@@ -81,16 +90,11 @@ public abstract class Forsikringer implements Serializable{
    } 
     
     public String toString(){
-    StringBuilder sb = new StringBuilder();
-    sb.append("Polisenummer: ");
-    sb.append(poliseNr);
-    sb.append("\nPremie: ");
-    sb.append(premie);
-    sb.append("\nEgenandel: ");
-    sb.append(egenandel);
-    sb.append("\nGjelder fra: ");
-    sb.append(startDato);
-    return sb.toString();
+   
+    String s = "Polisenummer: " + poliseNr + "\nPremie: "
+    + premie + "\nEgenandel: " + egenandel  +
+     "\nGjelder fra: " +  startDato;
+    return s;
     }
     
     public boolean equals(Forsikringer f){
