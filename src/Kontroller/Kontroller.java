@@ -14,6 +14,8 @@ import GUI.Registrer;
 import Person.Bruker;
 import Person.Kunde;
 import Person.Person;
+import SkadeMeldinger.SkadeMelding;
+import SkadeMeldinger.SkadeMeldingRegister;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,6 +41,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public static Map<String, Bruker> brukerRegister = new HashMap<>();
     private Bruker innLoggetBruker = null;
+    private SkadeMeldingRegister skademeldingregister;
 
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
@@ -53,6 +56,13 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println("Klarte ikke å åpne logginn vindu!");
         }
     }
+    public void addSkade( SkadeMelding m ){
+       skademeldingregister.addSkadeMedling(m);          
+    }
+    public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f){
+       return skademeldingregister.getSkadeMelding(  f.getClass(), innLoggetBruker );
+    }
+
 
     public void konsulentSide(Stage primaryStage) {
         KonsulentSide nySide = new KonsulentSide(primaryStage, this);
@@ -153,6 +163,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //infosiden
+    public Forsikringer finnForsikringsType(int i){
+    return null;
+    } 
 
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;

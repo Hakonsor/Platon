@@ -25,6 +25,7 @@ public abstract class Kjoretoy extends Forsikringer implements Serializable{
         this.modell = modell;
         this.arsModell = arsModell;
         this.person = person;
+        
     }
     public String getRegNr(){
      return regNr;

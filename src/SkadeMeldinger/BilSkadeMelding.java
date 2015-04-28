@@ -9,13 +9,14 @@ package SkadeMeldinger;
  *
  * @author Therese
  */
-public class BilSkadeMelding extends KjoretoySkade{
-    
-    public BilSkadeMelding(){
-        
+public class BilSkadeMelding extends KjoretoySkade {
+
+    public BilSkadeMelding() {
+
     }
-    public BilSkadeMelding(String skadeBeskrivelse, int utbetal){
-      super(skadeBeskrivelse ,utbetal);  
+
+    public BilSkadeMelding(String skadeBeskrivelse, int utbetal) {
+        super(skadeBeskrivelse, utbetal);
     }
-    
+
 }
