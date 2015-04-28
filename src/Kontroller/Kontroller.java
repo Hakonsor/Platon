@@ -214,6 +214,7 @@ import javafx.stage.Stage;
                 System.out.println(b.toString());
             }
 
+
         //Filskriving
         public void lesFil(){
             try (ObjectInputStream innfil = new ObjectInputStream(

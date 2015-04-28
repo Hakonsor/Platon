@@ -53,9 +53,11 @@ public class KonsulentSide {
 
 
         //Statistikk
-        Tab tabBåt = new Tab();
-        tabBåt.setText("Statistikk");
-        tabBåt.setClosable(false);
+        Tab tabStat = new Tab();
+        tabStat.setText("Statistikk");
+        tabStat.setClosable(false);
+        KonsulentsideStatistikk konsulentsideStatistikk = new KonsulentsideStatistikk();
+        tabStat.setContent(konsulentsideStatistikk.statFane(kontroll));
 
         //Skademelding system
         Tab tabSkade = new Tab();
@@ -66,7 +68,7 @@ public class KonsulentSide {
 
 
 
-        tabPane.getTabs().addAll(tabKunde, tabBåt, tabSkade);
+        tabPane.getTabs().addAll(tabKunde, tabStat, tabSkade);
 
         borderPane.setCenter(tabPane);
 
