@@ -6,7 +6,9 @@
 package Forsikring;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -20,10 +22,13 @@ public abstract class Forsikringer implements Serializable{
     private double egenandel;
     private Date startDato;
     private Date sluttDato;
-
+    private List<Double> utbetalinger = new ArrayList();
+    private List<Double> innbetalinger  = new ArrayList();
+    
     public Forsikringer() {
         poliseNr = ++nestePolisNr;
-        aktiv =true;   
+        aktiv =true; 
+        
     }
     // brukes når det registreres kjøretøy.
    
