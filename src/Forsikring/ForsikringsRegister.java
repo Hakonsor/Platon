@@ -64,7 +64,7 @@ public class ForsikringsRegister implements Serializable {
      // viser en spesifikk liste 
      public <T extends Forsikringer> String visListe(int i){
           List l = finnListe(i);
-          if(l.isEmpty()){
+          if(l == null || l.isEmpty()){
               return "Ingen forsikringer er registert på deg. ";
           }
           String s = hentString(l);
