@@ -85,112 +85,7 @@ import javafx.stage.Stage;
                 System.out.println(" Innlogget kunde er ikke av type kunde"); 
             }
         }
-        
-        public double indexEgenandel(int indexEgenandel){
-                double egenandel;
-                switch(indexEgenandel){
-                    case 0:  egenandel = 4000.0;
-                        break;
-                    case 1:  egenandel = 6000.0;
-                        break;
-                    case 2:  egenandel = 10000.0;
-                        break;
-                    default: System.out.println("har ikke valgt egenandel");
-                            egenandel = 0;
-                    }
-                return egenandel;
-        
-                }
-        public int indexKjoreLengde(int kjorelengdeIndex){
-                int kjorelengde;
-                switch(kjorelengdeIndex){
-                    case 0:  kjorelengde = 100000;
-                        break;
-                    case 1:  kjorelengde = 150000;
-                        break;
-                    case 2:  kjorelengde = 200000;
-                        break;
-                    case 3:  kjorelengde = 300000;
-                        break;
-                    case 4:  kjorelengde = 350000;
-                        break;
-                    default: System.out.println("har ikke valgt kjørelengde");
-                        kjorelengde = 0;    
-                }
-                return kjorelengde;
-    
-        }
-        public double indexBonus(int bonusIndex){
-            double bonus;
-                switch (bonusIndex) {
-                    case 0:  bonus = -20.0;
-                        break;
-                    case 1:  bonus = -10.0;
-                        break;
-                    case 2:  bonus = 0.0;
-                        break;
-                    case 3:  bonus = 10.0;
-                        break;
-                    case 4:  bonus = 20.0;
-                        break;
-                    case 5:  bonus = 30.0;
-                        break;
-                    case 6:  bonus = 40.0;
-                        break;
-                    case 7:  bonus = 50.0;
-                        break;
-                    case 8:  bonus = 60.0;
-                        break;
-                    case 9:  bonus = 70.0;
-                        break;
-                    case 10:  bonus = 75.0;
-                        break;              
-                    default: System.out.println("Har ikke valgt bonus");
-                        bonus = 0;
-                }
-            return bonus;
-            /*
-                double egenandel;
-                switch(egenandelIndex){
-                    case 0:  egenandel = 4000.0;
-                        break;
-                    case 1:  egenandel = 6000.0;
-                        break;
-                    case 2:  egenandel = 10000.0;
-                        break;
-                    default: System.out.println("har ikke valgt egenandel");
-                        return;
-
-                }
-                int kjorelengde;
-                switch(kjorelengdeIndex){
-                    case 0:  kjorelengde = 100000;
-                        break;
-                    case 1:  kjorelengde = 150000;
-                        break;
-                    case 2:  kjorelengde = 200000;
-                        break;
-                    case 3:  kjorelengde = 300000;
-                        break;
-                    case 4:  kjorelengde = 350000;
-                        break;
-                    default: System.out.println("har ikke valgt kjørelengde");
-                        return;
-                }
-                try{
-                    Kunde k = (Kunde) innLoggetBruker;
-                    k.settInn(new BilForsikring( bonus, egenandel, telefonnummer, 
-                            kjorelengde, fornavn, tfEtternavn, tfPersonnr, postNr, 
-                            regNr, type, regNr, type, arsmodell, kmStand) );
-                }catch(ClassCastException cce) {
-                    System.out.println(" Innlogget kunde er ikke av type kunde"); 
-                }
-
-                
-                */
-          //  k.addForsikring(new BilForsikring());
-            }
-        //Bruker
+     //Bruker
         public void setInnloggetBruker(String nokkel){
                 innLoggetBruker = brukerRegister.get(nokkel);
         }
@@ -206,13 +101,10 @@ import javafx.stage.Stage;
                 return sjekkBruker.sjekkPassord(passord);
             }
         //Kunde
-        public void nyKunde( Kunde b){
-                brukerRegister.put(b.getKundeNokkel(), b);
+        public void registrerBruker( Bruker b){
+                brukerRegister.put(b.getNøkkel(), b);
             }
-        public void registrerKunde(Kunde b){
-                brukerRegister.put(b.getKundeNokkel(), b);
-                System.out.println(b.toString());
-            }
+
 
         //Filskriving
         public void lesFil(){
