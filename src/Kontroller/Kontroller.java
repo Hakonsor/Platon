@@ -7,10 +7,12 @@ package Kontroller;
 
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
+import Forsikring.ForsikringsRegister;
 import GUI.KonsulentSide;
 import GUI.KundeSide;
 import GUI.Login;
 import GUI.Registrer;
+import GUI.*;
 import Person.Bruker;
 import Person.Kunde;
 import Person.Person;
@@ -41,7 +43,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public static Map<String, Bruker> brukerRegister = new HashMap<>();
     private Bruker innLoggetBruker = null;
-    private SkadeMeldingRegister skademeldingregister;
+    private SkadeMeldingRegister skademeldingregister = new SkadeMeldingRegister();
+    private ForsikringsRegister forsikringsregister = new ForsikringsRegister();
 
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
@@ -56,6 +59,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println("Klarte ikke å åpne logginn vindu!");
         }
     }
+    public void regKonsulent() {
+        RegKonsulent regKonsulent = new RegKonsulent(new Stage(), this);
+    }
+    public void sok() {Sok sok = new Sok(new Stage(), this);}
     public void addSkade( SkadeMelding m ){
        skademeldingregister.addSkadeMedling(m);          
     }
@@ -92,9 +99,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
             return;
         }
         try {
-            Kunde k = (Kunde) innLoggetBruker;
+            Kunde kunde = (Kunde) innLoggetBruker;
+            forsikringsregister.settInn(kunde, new BilForsikring(bonus, egenandel, kjorelengde, regNr, type, arsmodell, kmStand, person));
 
-            k.settInn(new BilForsikring(bonus, egenandel, kjorelengde, regNr, type, arsmodell, kmStand, person));
         } catch (ClassCastException cce) {
             System.out.println(" Innlogget kunde er ikke av type kunde");
         }
@@ -125,6 +132,11 @@ public class Kontroller implements EventHandler<ActionEvent> {
     //Kunde
 
     public void registrerBruker(Bruker b) {
+        brukerRegister.put(b.getNøkkel(), b);
+    }
+
+    //Konsulent
+    public void registrerKonsulent( Bruker b){
         brukerRegister.put(b.getNøkkel(), b);
     }
 
@@ -169,18 +181,19 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
-        List a = k.getForsikringsListe(i);
+        List a = forsikringsregister.finnForsikring(k, i); 
         if (a == null) {
             return null;
         }
         System.out.println(a);
-        return new ArrayList<>(k.getForsikringsListe(i));
+        return new ArrayList<>(a);
     }
 
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
-        List a = k.getForsikringsListe(i);
-        if (a == null) {
+        List a = forsikringsregister.finnForsikring(k, i);
+        System.out.println(a);
+        if (a == null || a.isEmpty()) {
             return null;
         }
         ArrayList<String> liste = new ArrayList<>();

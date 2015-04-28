@@ -218,7 +218,7 @@ public class KundesideBil implements ComboBoxConverter{
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
-
+            
             Person person;
             if(rbtJa.selectedProperty().getValue())
                 person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());

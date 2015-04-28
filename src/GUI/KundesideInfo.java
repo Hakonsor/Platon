@@ -26,6 +26,8 @@ public class KundesideInfo {
         vb.setSpacing(100);
         vb.setAlignment(Pos.CENTER);
 
+
+
         Button btnSlett = new Button();
         btnSlett.setText("Slett");
         btnSlett.setId("slett");
@@ -56,10 +58,9 @@ public class KundesideInfo {
 
         ComboBox<String> forsikringComboBox = new ComboBox<>();
         forsikringComboBox.setEditable(false);
-        forsikringComboBox.getItems().addAll("Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
+        forsikringComboBox.getItems().addAll("Alle","Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
         forsikringComboBox.setOnAction(e -> {
-                
                 
                 ArrayList<String> forsikringliste = kontroller.
                         getInfoForsikringListe(forsikringComboBox.getItems().
@@ -82,8 +83,15 @@ public class KundesideInfo {
 
         listView.setItems(navn);
         listView.setCellFactory(ComboBoxListCell.forListView(navn));
-
         TextArea textArea = new TextArea();
+        //listView.setOnMouseClicked(e -> { visElemnt();   });
+        listView.getSelectionModel().selectedItemProperty().addListener(e -> {
+            //Integer.parseInt(listView.getSelectionModel().getSelectedItem())
+            textArea.setText(listView.getSelectionModel().getSelectedItem());
+            System.out.println("yep");
+        
+        });
+        
         textArea.setPrefSize(400, 600);
 
         grid.add(forsikringComboBox, 0, 0);
@@ -93,6 +101,10 @@ public class KundesideInfo {
         borderPane.setCenter(grid);
 
         return borderPane;
+    }
+
+    private static void visElemnt() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

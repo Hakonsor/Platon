@@ -35,7 +35,7 @@ public class KundeSide {
         });
 
 
-        menuBar.getMenus().add(menu);
+        menuBar.getMenus().addAll(menu);
 
         BorderPane borderPane = new BorderPane();
 

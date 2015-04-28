@@ -12,6 +12,9 @@ import Forsikring.Forsikringer;
 import Forsikring.ForsikringsRegister;
 import Forsikring.FritidsBolig;
 import Forsikring.ReiseForsikring;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
+import javax.jws.soap.SOAPBinding;
 import java.io.Serializable;
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class Kunde extends Bruker implements Serializable {
         this.telefon = telefon;
         this.aktiv = true;
         kundeNr = ++nesteKundeNr;
+        System.out.println(kundeNr);
         register = new ForsikringsRegister();
     }
 

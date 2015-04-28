@@ -42,6 +42,14 @@ public class KonsulentsideKunde {
         btnSøk.setText("Søk");
         btnSøk.setId("søk");
         btnSøk.setMinWidth(100);
+        btnSøk.setOnAction(e -> {
+            kontroller.sok();
+        });
+
+        /*
+        kontroll.registrerBruker(this.getKunde());
+            vindu.close();
+         */
 
         Button btnRegKunde = new Button();
         btnRegKunde.setText("Reg. kunde");

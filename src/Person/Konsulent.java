@@ -5,22 +5,25 @@
  */
 package Person;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hakon_000
  */
-public class Konsulent extends Bruker{
+public class Konsulent extends Bruker implements Serializable {
     private String brukernavn;
-    Konsulent(String brukernavn, String passord, String fornavn, String etternavn ){
+
+    public Konsulent(String brukernavn, String passord, String fornavn, String etternavn ){
         super(fornavn, etternavn, passord);
         this.brukernavn = brukernavn;
+        System.out.println(brukernavn);
     }
     
     @Override
     public String getNøkkel() {
         return brukernavn;
     }
-    
-    
-    
+
 }
+
