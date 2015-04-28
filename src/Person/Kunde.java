@@ -35,7 +35,8 @@ public class Kunde extends Bruker implements Serializable {
         register = new ForsikringsRegister();
     }
 
-    public String getKundeNokkel(){
+
+    public String getNøkkel(){
     return Integer.toString(kundeNr);
     }
     
