@@ -7,9 +7,9 @@ package Forsikring;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import Person.Kunde;
+import java.util.Calendar;
 
 /**
  *
@@ -22,8 +22,8 @@ public abstract class Forsikringer implements Serializable{
     private static int nestePolisNr = 100000;
     private double premie;
     private double egenandel;
-    private Date startDato;
-    private Date sluttDato;
+    private Calendar startDato;
+    private Calendar sluttDato;
     private List<Double> utbetalinger = new ArrayList();
     private List<Double> innbetalinger  = new ArrayList();
     
@@ -71,21 +71,21 @@ public abstract class Forsikringer implements Serializable{
        return egenandel;
    }
     
-    public void setStartDato( Date startDato ){
+    public void setStartDato( Calendar startDato ){
        this.startDato = startDato;
        
     }
    
-    public void setSluttDato( Date sluttDato ){
+    public void setSluttDato( Calendar sluttDato ){
        this.sluttDato = sluttDato;
        
     }
    
-    public Date getStartDato(){
+    public Calendar getStartDato(){
        return startDato;
    }
    
-    public Date getSluttDato(){
+    public Calendar getSluttDato(){
        return sluttDato;
    } 
     

@@ -10,6 +10,7 @@ import Person.Kunde;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -69,8 +70,33 @@ public class ForsikringsRegister implements Serializable {
             }
          return liste;
         }// end of method  finnForsKunde
+        
+        // henter ut alle forsikringene som er kjøpt et gitt år
+        public List finnAntallForsikringer(Calendar c){
+            List<Forsikringer> liste = new ArrayList<>();
+            
+            forsikring.stream().filter((f) -> (f.getStartDato().get(Calendar.YEAR) == c.get(Calendar.YEAR))).forEach((f) -> {
+                liste.add(f);
+        });
+            
+            
+            return liste;
+          
+        }// end of method finnAntallForsikringer
+        
+        public Forsikringer finnForsPolise(int poliseNr){
+          Iterator<Forsikringer> i = forsikring.iterator();
+            while(i.hasNext()){
+                Forsikringer f = i.next();
+                 if (f.getPoliseNr()== poliseNr){
+                      return f;
+                 }
+            }
+          return null;
+        }         
+}// end of class ForsikringsRegister
      
-     }
+     
      
      
 
