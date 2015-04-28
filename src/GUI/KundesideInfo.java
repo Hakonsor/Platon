@@ -26,6 +26,8 @@ public class KundesideInfo {
         vb.setSpacing(100);
         vb.setAlignment(Pos.CENTER);
 
+
+
         Button btnSlett = new Button();
         btnSlett.setText("Slett");
         btnSlett.setId("slett");

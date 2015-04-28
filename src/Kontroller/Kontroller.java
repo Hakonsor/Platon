@@ -9,10 +9,7 @@ package Kontroller;
 
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
-import GUI.KonsulentSide;
-import GUI.KundeSide;
-import GUI.Login;
-import GUI.Registrer;
+import GUI.*;
 import Person.Bruker;
 import Person.Kunde;
 import Person.Person;
@@ -64,6 +61,11 @@ import javafx.stage.Stage;
         public void regVindu(){
                 Registrer regVindu = new Registrer(new Stage(), this);
         }
+        public void regKonsulent() {
+                RegKonsulent regKonsulent = new RegKonsulent(new Stage(), this);
+        }
+        public void sok() {Sok sok = new Sok(new Stage(), this);}
+
         //Forsikring
         public void setForsikring(double bonus, double egenandel, int kjorelengde,  
             String regNr, String arsmodell,  String type, String tfKmstand, Person person){
@@ -92,9 +94,9 @@ import javafx.stage.Stage;
         public Bruker getInnloggetBruker(){
             return innLoggetBruker;
         }
-        public Bruker finnBruker(String Bruker){
-                return brukerRegister.get(Bruker);
-            }
+        public Bruker finnBruker(String Bruker) {
+            return brukerRegister.get(Bruker);
+        }
         public boolean sjekkPassord(String bruker, String  passord){
                 Bruker sjekkBruker = finnBruker(bruker);
                 if(sjekkBruker == null) return false;
@@ -104,6 +106,11 @@ import javafx.stage.Stage;
         public void registrerBruker( Bruker b){
                 brukerRegister.put(b.getNøkkel(), b);
             }
+
+        //Konsulent
+        public void registrerKonsulent( Bruker b){
+            brukerRegister.put(b.getNøkkel(), b);
+        }
 
 
         //Filskriving

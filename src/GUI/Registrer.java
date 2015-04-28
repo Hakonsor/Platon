@@ -122,7 +122,7 @@ public class Registrer {
         btnRegKunde.setId("btNyKunde");
         btnRegKunde.setMaxWidth(200);
         btnRegKunde.setOnAction(e -> {
-            kontroll.registrerKunde(this.getKunde());
+            kontroll.registrerBruker(this.getKunde());
             vindu.close();
         });
 

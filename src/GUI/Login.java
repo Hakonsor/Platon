@@ -117,7 +117,7 @@ public class Login {
         btnKundeLogginn.setMaxWidth(200);
         //btnKundeLogginn.setOnAction(kontroll);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
-        
+
         try {
             btnKundeLogginn.setOnAction(e -> {
                 if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
@@ -133,7 +133,7 @@ public class Login {
             Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
+
         btnNyKunde = new Button("Ny Kunde");
         btnNyKunde.setId("btNyKunde");
         btnNyKunde.setMaxWidth(200);
@@ -192,26 +192,45 @@ public class Login {
         pfKonsulentPassord.setMaxWidth(200);
         GridPane.setHalignment(pfKonsulentPassord, HPos.CENTER);
 
+        Label logginnInfo = new Label();
+        logginnInfo.setText("");
+        logginnInfo.setId("logginnInfo");
+        GridPane.setHalignment(logginnInfo, HPos.CENTER);
+
         btnKonsulentLogginn = new Button("Logg inn");
         btnKonsulentLogginn.setId("btnlogginn");
         btnKonsulentLogginn.setMaxWidth(200);
         GridPane.setHalignment(btnKonsulentLogginn, HPos.CENTER);
-        btnKonsulentLogginn.setOnAction(e -> {
-            primaryStage.close();
-            kontroll.konsulentSide(primaryStage);
-        });
+        try {
+            btnKonsulentLogginn.setOnAction(e -> {
+                if (kontroll.sjekkPassord(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
+                    primaryStage.close();
+                    kontroll.konsulentSide(primaryStage);
+                    kontroll.setInnloggetBruker(tfKonsulentBrukernavn.getText());
+                } else {
+                    logginnInfo.setText("Feil Kundenr eller Passord!");
+                }
+            });
+        }catch (Exception ex) {
+            Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         btnNyKonsulent = new Button("Ny Konsulent");
         btnNyKonsulent.setId("btNyKonsulent");
         btnNyKonsulent.setMaxWidth(200);
         GridPane.setHalignment(btnNyKonsulent, HPos.CENTER);
+        try {
+            btnNyKonsulent.setOnAction(e -> kontroll.regKonsulent());
+        }catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         grid.add(loginImg, 0, 0);
         grid.add(velkommen, 0, 1);
         grid.add(info, 0, 2);
         grid.add(tfKonsulentBrukernavn, 0, 5);
         grid.add(pfKonsulentPassord, 0, 6);
-      //  grid.add(logginnInfo, 0, 7);
+        grid.add(logginnInfo, 0, 7);
         grid.add(btnKonsulentLogginn, 0, 8);
         grid.add(btnNyKonsulent, 0, 9);
 
@@ -245,3 +264,5 @@ public class Login {
 
 
 }//End of class
+
+//kontroll.getInnloggetBruker().getFornavn()

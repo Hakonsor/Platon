@@ -2,6 +2,7 @@ package GUI;
 
 import Kontroller.Kontroller;
 import Person.Bruker;
+import Person.Konsulent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -20,13 +21,14 @@ import static javafx.geometry.Pos.TOP_CENTER;
  * Created by Magnus on 28.04.15.
  */
 public class RegKonsulent {
-/*
+
     private final String LoginBilde = "Bilder/add_user.png";
 
     private final Button btnRegKonsulent;
     private final Label nyKonsulent;
     private final TextField fornavn;
     private final TextField etternavn;
+    private final TextField brukernavn;
     private final PasswordField velgpassord;
     private final PasswordField gjentapassord;
     private static Stage vindu;
@@ -35,16 +37,16 @@ public class RegKonsulent {
     public Button getBtnRegKonsulent(){
         return btnRegKonsulent;
     }
-    public Bruker getKonsulent(){
+    public Konsulent getKonsulent(){
         if(velgpassord.getText().equals(gjentapassord.getText())){
-            return new Bruker(fornavn.getText(), etternavn.getText(), null, velgpassord.getText() );
+            return new Konsulent(brukernavn.getText(), velgpassord.getText(), fornavn.getText(), etternavn.getText());
         } else {
             //pop opp melding hvis ordene ikke er like
         }
         return null;
-
     }
-    public Registrer(Stage vindu, Kontroller kontroll)  {
+
+    public RegKonsulent(Stage vindu, Kontroller kontroll)  {
         this.vindu = vindu;
 
         GridPane grid = new GridPane();
@@ -77,6 +79,12 @@ public class RegKonsulent {
         etternavn.setMaxWidth(200);
         GridPane.setHalignment(etternavn, HPos.CENTER);
 
+        brukernavn = new TextField();
+        brukernavn.setPromptText("Velg Brukernavn");
+        brukernavn.setId("brukernavn");
+        brukernavn.setMaxWidth(200);
+        GridPane.setHalignment(brukernavn, HPos.CENTER);
+
         velgpassord = new PasswordField();
         velgpassord.setPromptText("Velg Passord");
         velgpassord.setId("velgpassord");
@@ -93,7 +101,7 @@ public class RegKonsulent {
         btnRegKonsulent.setId("btNyKunde");
         btnRegKonsulent.setMaxWidth(200);
         btnRegKonsulent.setOnAction(e -> {
-          //  kontroll.registrerKonsulent(this.getKonsulent());
+              kontroll.registrerBruker(this.getKonsulent());
             vindu.close();
         });
 
@@ -104,9 +112,10 @@ public class RegKonsulent {
         grid.add(nyKonsulent,0 ,1);
         grid.add(fornavn, 0, 2);
         grid.add(etternavn, 0, 3);
-        grid.add(velgpassord, 0, 8);
-        grid.add(gjentapassord, 0, 9);
-        grid.add(btnRegKonsulent, 0, 10);
+        grid.add(brukernavn,0, 4);
+        grid.add(velgpassord, 0, 5);
+        grid.add(gjentapassord, 0, 6);
+        grid.add(btnRegKonsulent, 0, 8);
 
 
         Scene scene = new Scene(grid, 300, 650);
@@ -114,6 +123,6 @@ public class RegKonsulent {
         vindu.setScene(scene);
         scene.getStylesheets().add("CSS/registrer.css");
         vindu.show();
-    }*/
+    }
 
 }
