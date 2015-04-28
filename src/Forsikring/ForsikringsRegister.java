@@ -68,6 +68,8 @@ public class ForsikringsRegister implements Serializable {
             }
          return liste;
         }// end of method  finnForsKunde
+     
+     
      }
      
      
