@@ -89,7 +89,6 @@ public class KundesideInfo {
             if (s != null) {
                 textArea.setText(s.toString());
             }
-            System.out.println("yep");
 
         });
 
