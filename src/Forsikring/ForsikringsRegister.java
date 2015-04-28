@@ -47,34 +47,36 @@ public class ForsikringsRegister implements Serializable {
      // metoden returnerer en liste med forsikringer til en bestemt kunde. 
      // avhengig av valg: av en type eller av alle typer.
      public List finnForsikring(Kunde kunde, int forsType){
+        
         List<Forsikringer> liste = new ArrayList<>();
             if( forsType == 0 ){
-                liste.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr())).forEach((f) -> {
+                forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr())).forEach((f) -> {
                     liste.add(f);
                 });
             }
             else if( forsType == 1 ){
-                liste.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BatForsikring)).forEach((f) -> {
+                forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BatForsikring)).forEach((f) -> {
                     liste.add(f);
                 });
             }
             else if( forsType == 2 ){
-                 liste.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof ReiseForsikring)).forEach((f) -> {
+                 forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof ReiseForsikring)).forEach((f) -> {
                     liste.add(f);
                  });
             }
             else if ( forsType == 3){
-                liste.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BilForsikring)).forEach((f) -> {
+                forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BilForsikring)).forEach((f) -> {
                     liste.add(f);
                 });
             }
             else if(forsType == 4){
-                liste.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof FritidsBolig)).forEach((f) -> {
+                forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof FritidsBolig)).forEach((f) -> {
                     liste.add(f);
                 });
             }
          return liste;
         }// end of method  finnForsKunde
+     
      }
      
      
