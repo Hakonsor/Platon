@@ -39,7 +39,7 @@ public class ForsikringsRegister implements Serializable {
      
      // metoden returnerer en liste med forsikringer til en bestemt kunde. 
      // avhengig av valg: av en type eller av alle typer.
-     public List finnForsKunde(Kunde kunde, int forsType){
+     public List finnForsikring(Kunde kunde, int forsType){
         List<Forsikringer> liste = new ArrayList<>();
             if( forsType == 0 ){
                 liste.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr())).forEach((f) -> {
