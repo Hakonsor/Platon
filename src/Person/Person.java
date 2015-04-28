@@ -14,7 +14,9 @@ import java.io.Serializable;
 public class Person implements Serializable{
     private String fornavn, etternavn, personNr, gateAdr, postNr, telefon;
  
+    public Person(){
     
+    }
     
     public Person( String fornavn, String etternavn, String personNr, String gateAdr, String postNr, String telefon ){
         this.fornavn = fornavn;

@@ -46,7 +46,7 @@ public class Registrer {
             System.out.println("Todo popommelding i register getbruker");
         //pop opp melding hvis ordene ikke er like
         }
-    return null;
+        return null;
     
     }
     public Registrer(Stage vindu, Kontroller kontroll)  {
@@ -122,7 +122,7 @@ public class Registrer {
         btnRegKunde.setId("btNyKunde");
         btnRegKunde.setMaxWidth(200);
         btnRegKunde.setOnAction(e -> {
-            kontroll.registrerKunde(this.getKunde());
+            kontroll.registrerBruker(this.getKunde());
             vindu.close();
         });
 

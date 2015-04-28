@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class KonsulentsideKunde {
 
-    public static Pane kundeFane(Kontroller kontroller){
+    public static Pane kundeFane(Kontroller kontroller) {
 
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
@@ -37,7 +37,6 @@ public class KonsulentsideKunde {
         tfKundenavn.setId("Kundenavn");
         tfKundenavn.setMinWidth(300);
         tfKundenavn.setEditable(false);
-
 
         Button btnSøk = new Button();
         btnSøk.setText("Søk");
@@ -86,8 +85,9 @@ public class KonsulentsideKunde {
             if (forsikringliste == null) {
                 navn.clear();
                 navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
-            } else
+            } else {
                 navn.setAll(forsikringliste);
+            }
         });
 
         ListView<String> listView = new ListView<>(data);
@@ -105,10 +105,7 @@ public class KonsulentsideKunde {
 
         borderPane.setLeft(gridLeft);
 
-
-
         //RIGHT --------------------------------------------------------->>
-
         //Bil
         GridPane gridBil = new GridPane();
         gridBil.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
@@ -174,10 +171,6 @@ public class KonsulentsideKunde {
         );
         cbEgenandel.setValue("Velg Egenandel:");
 
-
-
-
-
         gridBil.add(tfRegnr, 0, 0);
         gridBil.add(tfKmstand, 0, 1);
         gridBil.add(tfÅrsmodell, 0, 2);
@@ -188,7 +181,6 @@ public class KonsulentsideKunde {
 
         borderPane.setRight(gridBil);
 
-
         //Buttons ---------------------------------->
         GridPane gridButtons = new GridPane();
         gridButtons.setPadding(new Insets(100, 0, 0, 0)); //top/right/bottom/left
@@ -197,7 +189,6 @@ public class KonsulentsideKunde {
         //gridButtons.setPrefHeight(50);
         //gridButtons.setPrefWidth(1000);
         gridButtons.setAlignment(Pos.CENTER);
-
 
         Button btnSlett = new Button();
         btnSlett.setText("Slett");
@@ -211,17 +202,14 @@ public class KonsulentsideKunde {
             System.out.println("RegForsikrings");
         });
 
-
         gridButtons.add(btnSlett, 0, 0);
         gridButtons.add(btnRegForsikring, 1, 0);
-
 
         GridPane gridRight = new GridPane();
         gridLeft.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridRight.add(gridBil, 0, 0);
         gridRight.add(gridButtons, 0, 1);
         gridRight.setAlignment(Pos.BOTTOM_CENTER);
-
 
         borderPane.setRight(gridRight);
         borderPane.setPadding(new Insets(10, 200, 200, 100)); //top/right/bottom/left
@@ -230,9 +218,7 @@ public class KonsulentsideKunde {
         gridLeft.setGridLinesVisible(false);
         gridBil.setGridLinesVisible(false);
 
-
         return borderPane;
     }
-
 
 }

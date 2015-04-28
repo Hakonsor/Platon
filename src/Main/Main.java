@@ -22,6 +22,7 @@ public class Main extends Application {
         Kontroller c = new Kontroller( primaryStage );
         c.lesFil();
         primaryStage.setOnCloseRequest(e -> c.skrivTilFil());
+        
         c.loginVindu(primaryStage);
     }
 
