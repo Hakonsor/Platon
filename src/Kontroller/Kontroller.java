@@ -211,4 +211,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return liste;
     }
+
+    public Forsikringer getForsikring(int parseInt) {
+        return forsikringsregister.finnForsPolise(parseInt);
+    }
 }
