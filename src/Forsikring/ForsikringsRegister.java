@@ -19,19 +19,17 @@ import java.util.List;
  */
 public class ForsikringsRegister implements Serializable {
     
-    private List <Forsikringer>  forsikring;
+    private List <Forsikringer>  register;
     
    
      public ForsikringsRegister(){
-        forsikring = new ArrayList(); 
+        register = new ArrayList(); 
      }
 
      // legger til et objekt i listen, og registrerer hvilken kuned den tilhører
      public void settInn(Kunde k,Forsikringer f){
          f.setKunde(k);
-         forsikring.add(f);
-         //System.out.println(f);
-         System.out.println(forsikring.toString());
+         register.add(f);
          System.out.println(finnForsikring(k, 1));
          System.out.println(finnForsikring(k, 2));
          System.out.println(finnForsikring(k, 3));
@@ -45,27 +43,27 @@ public class ForsikringsRegister implements Serializable {
         
         List<Forsikringer> liste = new ArrayList<>();
             if( forsType == 0 ){
-                forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr())).forEach((f) -> {
+                register.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr())).forEach((f) -> {
                     liste.add(f);
                 });
             }
             else if( forsType == 1 ){
-                forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BatForsikring)).forEach((f) -> {
+                register.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BatForsikring)).forEach((f) -> {
                     liste.add(f);
                 });
             }
             else if( forsType == 2 ){
-                 forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof ReiseForsikring)).forEach((f) -> {
+                 register.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof ReiseForsikring)).forEach((f) -> {
                     liste.add(f);
                  });
             }
             else if ( forsType == 3){
-                forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BilForsikring)).forEach((f) -> {
+                register.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BilForsikring)).forEach((f) -> {
                     liste.add(f);
                 });
             }
             else if(forsType == 4){
-                forsikring.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof FritidsBolig)).forEach((f) -> {
+                register.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof FritidsBolig)).forEach((f) -> {
                     liste.add(f);
                 });
             }
@@ -73,14 +71,11 @@ public class ForsikringsRegister implements Serializable {
         }// end of method  finnForsKunde
         
         // henter ut alle forsikringene som er kjøpt et gitt år
-        public List finnAntallForsikringer(Calendar c){
+        public List finnForsikringer(Calendar c){
             List<Forsikringer> liste = new ArrayList<>();
-            
-            forsikring.stream().filter((f) -> (f.getStartDato().get(Calendar.YEAR) == c.get(Calendar.YEAR))).forEach((f) -> {
+            register.stream().filter((f) -> (f.getStartDato().get(Calendar.YEAR) == c.get(Calendar.YEAR))).forEach((f) -> {
                 liste.add(f);
-        });
-            
-            
+            });
             return liste;
           
         }// end of method finnAntallForsikringer
@@ -88,7 +83,7 @@ public class ForsikringsRegister implements Serializable {
         
         // finner en forsikring gitt polisenr
         public Forsikringer finnForsPolise(int poliseNr){
-          Iterator<Forsikringer> i = forsikring.iterator();
+          Iterator<Forsikringer> i = register.iterator();
             while(i.hasNext()){
                 Forsikringer f = i.next();
                  if (f.getPoliseNr()== poliseNr){
@@ -97,7 +92,7 @@ public class ForsikringsRegister implements Serializable {
             }
           return null;
         }// end of method finnForsPolise
-        
+  
         
 }// end of class ForsikringsRegister
      
