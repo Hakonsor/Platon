@@ -1,23 +1,12 @@
 package GUI;
 
-import Forsikring.Bolig;
+
 import Kontroller.Kontroller;
-import javafx.animation.KeyFrame;
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.stage.Stage;
-
-import java.awt.*;
 
 /**
  * Created by Magnus on 27.04.15.
