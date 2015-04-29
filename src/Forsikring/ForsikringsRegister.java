@@ -83,7 +83,9 @@ public class ForsikringsRegister implements Serializable {
             return liste;
           
         }// end of method finnAntallForsikringer
+       
         
+        // finner en forsikring gitt polisenr
         public Forsikringer finnForsPolise(int poliseNr){
           Iterator<Forsikringer> i = forsikring.iterator();
             while(i.hasNext()){
@@ -93,7 +95,9 @@ public class ForsikringsRegister implements Serializable {
                  }
             }
           return null;
-        }         
+        }// end of method finnForsPolise
+        
+        
 }// end of class ForsikringsRegister
      
      
