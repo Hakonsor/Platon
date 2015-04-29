@@ -3,8 +3,6 @@ package GUI;
 import Forsikring.Forsikringer;
 import Kontroller.Kontroller;
 import java.util.ArrayList;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -103,9 +101,6 @@ public class KundesideInfo {
         return borderPane;
     }
 
-    private static void visElemnt() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
 
 /*

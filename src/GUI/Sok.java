@@ -38,11 +38,11 @@ public class Sok {
 
         this.vindu = vindu;
 
-        ImageView img = new ImageView(new Image(sokBilde));
+       ImageView img = new ImageView(new Image(sokBilde));
         img.setId("loginImg");
         img.setPreserveRatio(true);
         img.setFitWidth(100);
-        GridPane.setHalignment(img, HPos.CENTER);
+        GridPane.setHalignment(img , HPos.CENTER);
 
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
@@ -83,6 +83,12 @@ public class Sok {
         btnvelg.setId("btnvelg");
         btnvelg.setMinWidth(100);
         btnvelg.setOnAction(e -> {
+            
+           // kundeNr.getText()// finn kunde      
+            //etternavn.getText()// finn kunde
+            //fornavn.getText() // finn kunde
+                    
+            //listView.p kundeListe = kontroll.finnKunde(kundeNr.getText(), etternavn.getText(), fornavn.getText());
             System.out.println("Du har valgt en kunde!");
         });
 
@@ -104,7 +110,7 @@ public class Sok {
         hb.getChildren().addAll(btnlukk, btnvelg, btnsøk);
 
 
-        grid.add(img, 0, 0);
+       // grid.add(img, 0, 0);
         grid.add(fornavn, 0, 1);
         grid.add(etternavn, 0, 2);
         grid.add(kundeNr, 0, 3);
@@ -114,7 +120,7 @@ public class Sok {
         VBox vb = new VBox();
         vb.setSpacing(25);
         vb.setAlignment(Pos.CENTER);
-        vb.getChildren().addAll(img, grid);
+         vb.getChildren().addAll(img, grid);
 
         Scene scene = new Scene(vb, 450, 580);
         vindu.setTitle("Søk");

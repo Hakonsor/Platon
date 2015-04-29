@@ -40,4 +40,6 @@ public class SkadeMeldingRegister {
         return liste;
     }
 
+
+
 }
