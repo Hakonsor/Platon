@@ -13,7 +13,6 @@ import Forsikring.ForsikringsRegister;
 import Forsikring.FritidsBolig;
 import Forsikring.ReiseForsikring;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import javax.jws.soap.SOAPBinding;
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +26,6 @@ public class Kunde extends Bruker implements Serializable {
     private int kundeNr;
     private static int nesteKundeNr;
     private String passord, telefon;
-    private Forsikringer liste;// dette skal vel egentlig vÃ¦re liste over poliseNr.
     private ForsikringsRegister register;
     private boolean aktiv;
 
@@ -38,7 +36,6 @@ public class Kunde extends Bruker implements Serializable {
         this.aktiv = true;
         kundeNr = ++nesteKundeNr;
         System.out.println(kundeNr);
-        register = new ForsikringsRegister();
     }
 
     public boolean getAktiv() {

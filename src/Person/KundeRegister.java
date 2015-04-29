@@ -5,6 +5,9 @@
  */
 package Person;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -13,8 +16,12 @@ package Person;
 public class KundeRegister {
     
    
-    
+    private List <Kunde> register;
     public KundeRegister(){
-        
+        register = new ArrayList<>();
     }
+    
+    
+    
+    
 }
