@@ -19,11 +19,11 @@ public abstract class SkadeMelding implements Serializable {
     private Calendar datoInnmeldt;
     private Object skadeBilde;
     private int skadeSum;
-    private int utbetal;
     private Forsikringer forsikring;
     private String forsikringstype;
     private static int nesteSkadeNr = 100000;
     private int skadeNr;
+    private boolean godkjent;
    
     
     // tom konstruktør for å opprette objektet i fabrikk
@@ -42,18 +42,14 @@ public abstract class SkadeMelding implements Serializable {
         this.skadeSum = skadeSum;
         datoInnmeldt = Calendar.getInstance();
     }
-   
     
-   // utbetalingen settes av konsulenten.
-    public void setUtbetal( int utbetaling){
-        this.utbetal = utbetaling;
+    // viser at skademeldingen er godkjent og utbetaler.
+    public void okUtbetal(int utbetaling){
+        godkjent = true;
+        forsikring.utbetalt(skadeNr, utbetaling);
+        
     }
  
-   public int getUtbetalingsSum(){
-        return utbetal;
-   }
-   
-  
   public String getSkadeBeskrivelse(){ 
         return skadeBeskrivelse;
     }
@@ -83,9 +79,7 @@ public abstract class SkadeMelding implements Serializable {
     public void setSkadeBilde(Object skadeBilde){
         this.skadeBilde = skadeBilde;
     }
-    public int getForsikringsSum(){
-        return utbetal;
-    }
+   
     public int getskadeNr(){
         return skadeNr;
     }

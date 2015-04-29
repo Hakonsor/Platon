@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import Person.Kunde;
 import java.util.Calendar;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -24,8 +26,8 @@ public abstract class Forsikringer implements Serializable{
     private double egenandel;
     private Calendar startDato;
     private Calendar sluttDato;
-    private List<Double> utbetalinger = new ArrayList();
-    private List<Double> innbetalinger  = new ArrayList();
+    private Map<Integer,Integer> utbetalinger = new TreeMap();
+    private List<Integer> innbetalinger  = new ArrayList();
     
     public Forsikringer() {
         poliseNr = ++nestePolisNr;
@@ -45,6 +47,13 @@ public abstract class Forsikringer implements Serializable{
 
     }
     
+    public void utbetalt(int skadeNr,int utbetaling){
+        utbetalinger.put(skadeNr,utbetaling);
+    }
+    
+    public void betalPremie(int innbetaling){
+        
+    }
     public void setKunde(Kunde kunde){
         this.kunde = kunde;
     }
@@ -90,13 +99,13 @@ public abstract class Forsikringer implements Serializable{
    } 
     
     public String toString(){
-   
-    String s = "Polisenummer: " + poliseNr + "\nPremie: "
-    + premie + "\nEgenandel: " + egenandel  +
-     "\nGjelder fra: " +  startDato;
-    return s;
+        String s = "Polisenummer: " + poliseNr + "\nPremie: "
+        + premie + "\nEgenandel: " + egenandel  +
+        "\nGjelder fra: " +  startDato;
+            return s;
     }
     
+    // metoden sammenligner på poliseNr for å avgjøre om de er like
     public boolean equals(Forsikringer f){
        return ( f.getPoliseNr() == ( poliseNr) );
        }
