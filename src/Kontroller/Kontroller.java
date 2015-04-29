@@ -64,7 +64,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
     public void sok() {Sok sok = new Sok(new Stage(), this);}
     public void addSkade( SkadeMelding m ){
-       skademeldingregister.addSkadeMedling(m);          
+       skademeldingregister.addSkadeMelding(m);          
     }
     public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f){
        return skademeldingregister.getSkadeMelding(  f.getClass(), innLoggetBruker );
