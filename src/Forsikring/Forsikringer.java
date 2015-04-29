@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import Person.Kunde;
 import java.util.Calendar;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  *
@@ -26,7 +24,6 @@ public abstract class Forsikringer implements Serializable{
     private double egenandel;
     private Calendar startDato;
     private Calendar sluttDato;
-    private Map<Integer,Integer> utbetalinger = new TreeMap();
     private List<Integer> innbetalinger  = new ArrayList();
     
     public Forsikringer() {
@@ -35,11 +32,6 @@ public abstract class Forsikringer implements Serializable{
         
     }
     // brukes når det registreres kjøretøy.
-   
-    /*public Forsikringer( String s){
-        
-    }
-    */
     public Forsikringer( double premie, double egenandel ){
        this();
        this.premie = premie;
@@ -47,16 +39,10 @@ public abstract class Forsikringer implements Serializable{
 
     }
     
-    public void utbetalt(int skadeNr,int utbetaling){
-        utbetalinger.put(skadeNr,utbetaling);
-    }
-    
-    public void betalPremie(int innbetaling){
-        
-    }
     public void setKunde(Kunde kunde){
         this.kunde = kunde;
     }
+    
      public Kunde getKunde(){
         return kunde;
     }

@@ -7,7 +7,10 @@ package SkadeMeldinger;
 
 import Forsikring.Forsikringer;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -23,8 +26,9 @@ public abstract class SkadeMelding implements Serializable {
     private String forsikringstype;
     private static int nesteSkadeNr = 100000;
     private int skadeNr;
+    private int utbetaling;
     private boolean godkjent;
-   
+    private List<Integer> utbetalinger = new LinkedList();
     
     // tom konstruktør for å opprette objektet i fabrikk
     public SkadeMelding(){
@@ -43,10 +47,11 @@ public abstract class SkadeMelding implements Serializable {
         datoInnmeldt = Calendar.getInstance();
     }
     
-    // viser at skademeldingen er godkjent og utbetaler.
+    // viser at skademeldingen er godkjent og utbetaler og legger til listen
     public void okUtbetal(int utbetaling){
         godkjent = true;
-        forsikring.utbetalt(skadeNr, utbetaling);
+        this.utbetaling = utbetaling;
+        utbetalinger.add(utbetaling);
         
     }
  
