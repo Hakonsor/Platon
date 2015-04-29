@@ -1,6 +1,7 @@
 package GUI;
 
 import Kontroller.Kontroller;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -33,7 +34,6 @@ public class KundeSide {
             primaryStage.close();
             kontroll.loginVindu(primaryStage);
         });
-
 
         menuBar.getMenus().addAll(menu);
 
@@ -108,6 +108,7 @@ public class KundeSide {
         scene.getStylesheets().add("CSS/kundeside.css");
         primaryStage.show();
     }
+
 
 
 }//End of class

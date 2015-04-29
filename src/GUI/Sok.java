@@ -91,6 +91,13 @@ public class Sok {
         btnsøk.setMinWidth(100);
         btnsøk.setOnAction(e -> {
             System.out.println("Du søker");
+
+            if (kundeNr.getText().equals(kontroll.finnBruker(kundeNr.getText()))) {
+                System.out.println(kundeNr.getText());
+            }
+            else {
+                System.out.println("Fant ikke kunden");
+            }
         });
 
         btnlukk = new Button("Lukk");
