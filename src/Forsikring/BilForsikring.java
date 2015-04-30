@@ -88,40 +88,40 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     // beregner bonusen etter skaden. parameteren angir hva bonusen var før skaden
     public double bonusEtterSkade(double bonus){
         if(bonus == 0){
-            bonus -= 0.4;
+            bonus -= 40;
         }
-        if(bonus >= 0.1 && bonus <= 0.6){
-            bonus -= 0.3;
+        if(bonus >= 10 && bonus <= 60){
+            bonus -= 30;
         }
-        if(bonus == 0.7){
-            bonus -= 0.3;
+        if(bonus == 70){
+            bonus -= 30;
         }
-        if(bonus == 0.75){
-            bonus -= 0.15;
+        if(bonus == 75){
+            bonus -= 15;
         }
         return bonus;
     }// end of method
 
     // beregner premien basert på bonus etter en skade.
      public double premieEtterSkade( int grunnPremie, double nyBonus ){       
-        double nyPremie = (1 - nyBonus)* grunnPremie;
+        double nyPremie = (100 - nyBonus)/100* grunnPremie;
         return nyPremie;     
      }// end of method
 
     // bestemmer premien utifra hva som velges som egenandel. 
-    public double premie(double egenandel, double bonus){
+    public double premie(double egenandel,double bonus){
         double grunnPremie = 20000;
         double premium;
         double rabatt = 0;
   
         if(egenandel == 10000){
-            rabatt = 0.15;
+            rabatt = 15;
         }
         else if(egenandel == 6000){
-            rabatt = 0.1;
+            rabatt = 10;
         }
     
-        premium = (1-rabatt-bonus )*grunnPremie;
+        premium = (100-rabatt-bonus )/100*grunnPremie;
     
         return premium;
     }// end of method premie

@@ -8,8 +8,7 @@ package SkadeMeldinger;
 import Forsikring.Forsikringer;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
+
 
 /**
  *
@@ -22,7 +21,7 @@ public abstract class SkadeMelding implements Serializable {
     private Object skadeBilde;
     private int skadeSum;
     private Forsikringer forsikring;
-    private String forsikringstype;
+   // private String forsikringstype;
     private static int nesteSkadeNr = 100000;
     private int skadeNr;
     private int utbetaling;
@@ -74,9 +73,7 @@ public abstract class SkadeMelding implements Serializable {
     public void setForsikring(Forsikringer forsikring){
         this.forsikring = forsikring;
     }
-    public String getforsikringsType(){
-        return forsikringstype;
-    }
+    
     public Object getSkadeBilde(){
         return skadeBilde;
     }

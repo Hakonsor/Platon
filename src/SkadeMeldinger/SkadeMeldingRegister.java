@@ -9,8 +9,11 @@ import Forsikring.Forsikringer;
 import Person.Bruker;
 import Person.Kunde;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Queue;
 
 /**
  *
@@ -18,16 +21,56 @@ import java.util.List;
  */
 public class SkadeMeldingRegister {
     
-    List<SkadeMelding> behandling = new LinkedList<>();
-    List<SkadeMelding> register= new ArrayList<>();
-
+    List <SkadeMelding> behandling;
+    List <SkadeMelding> register;
+    ListIterator<SkadeMelding> i = behandling.listIterator();
     public SkadeMeldingRegister() {
-
+        behandling = new LinkedList<>();
+        register= new ArrayList<>();
     }
 
-    // legger skademelcingen i registeret
-    public void addSkadeMelding(SkadeMelding skademelding) {
-        register.add(skademelding);
+    // legger skademeldingen i behandlingskøen returnerer false om det gikk galt:
+    public void leggIKø(SkadeMelding skade){
+    }//end method
+    
+    // returnerer antall ubehandlede skader
+    public int visAntallIKø(){
+       return behandling.size();
+    }
+    
+    // henter ut neste i køen
+    public SkadeMelding visNesteIKø(int index){
+        int vis = index + 1;
+        SkadeMelding skade = behandling.get(vis);
+        
+        return skade;
+    }
+    
+    // bruker indexen til å finne forrige elementet i listen
+    public SkadeMelding visForrige(int index){
+        int vis = index - 1;
+        SkadeMelding skade;
+        if(vis <0){
+            return null;
+        }
+        else{
+            skade = behandling.get(vis);
+        }
+        return skade;
+    }
+    
+    // flytter objekt fra behandling til registeret
+    public void flyttTilRegister(int index){
+        SkadeMelding skade =behandling.get(index);
+        register.add(skade);
+        boolean remove = behandling.remove(skade); 
+    }
+    
+    
+    // legger skademelcingen i registeret, den kommer fra køen
+    public void addSkadeMelding( SkadeMelding skademelding ) {
+        
+        register.add(skademelding );
     }
     
 
