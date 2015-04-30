@@ -5,6 +5,7 @@
  */
 package Forsikring;
 
+import CSS.Bilder.Bolig;
 import java.io.Serializable;
 
 /**
