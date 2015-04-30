@@ -49,7 +49,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
         public String boligType(){
            return boligType;
         }
-        public String byggeår(){
+        public String byggear(){
            return byggeår;
         }
         public double byggSum(){
@@ -58,7 +58,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
         public double inboSum(){
            return innboSum;
         }
-        public String metriale(){
+        public String materiale(){
            return metriale;
         }
         public String standard(){
@@ -95,7 +95,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
     
         }// end of method egenandel
         
-        // utbetaling av forsikringssum, med regler.
+        // utbetaling av erstatningsbeløp, med regler.
         public int utbetaling( double skadeBelop , double verdi, int alder, double egenAndel ){
           double totalSkadeGrense = 0.75;
           int femAar= 5;
@@ -133,12 +133,13 @@ public abstract class Bolig extends Forsikringer implements Serializable {
           return (int)sum;
            
       }// end of method fullUtbetaling  
-       
+      
+      // beregner premien utifra størrelsen på boligen og verdien på innboet og bygningen
       public int premie(double kvadrat, double byggSum, double innboSum){
           double prisPerKvadrat = 0.1;
           double prisPerByggVerdi = 0.0007;
           double prisPerInnbo= 0.003;
-          double premium= 0;
+          double premium;
           
           premium = prisPerKvadrat*kvadrat + prisPerByggVerdi*byggSum + prisPerInnbo* innboSum;
           
