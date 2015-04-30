@@ -16,7 +16,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
     private double kvadrat;
     private double byggSum;
     private double innboSum;
-    private int egenAndel = 4000;
+    private int egenAndel = 4000;// minimumsverdi
     private String adresse;
     private String boligType ;
     private String byggeår ;

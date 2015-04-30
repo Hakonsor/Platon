@@ -13,12 +13,13 @@ import java.util.List;
  *
  * @author Therese
  */
-public class KundeRegister {
+public class BrukerRegister {
     
    
     private List <Kunde> register;
-    public KundeRegister(){
-        register = new ArrayList<>();
+    
+    public BrukerRegister(){
+        
     }
     
     

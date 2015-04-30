@@ -145,16 +145,22 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
             brukerRegister = (HashMap) innfil.readObject();
+           // forsikringsregister
+            //        skademeldingregister
             
         } catch (ClassNotFoundException cnfe) {
             System.out.println("Opprette tomt map");
             brukerRegister = new HashMap<>();
+            
         } catch (FileNotFoundException fne) {
             System.out.println("Finner ikke datafil. Oppretter ny fil.\n");
             brukerRegister = new HashMap<>();
+            
         } catch (IOException ioe) {
             System.out.println("Innlesingsfeil. Oppretter ny fil.\n");
             brukerRegister = new HashMap<>();
+            
+                   
         }
     }
 
@@ -162,6 +168,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try (ObjectOutputStream utfil = new ObjectOutputStream(
                 new FileOutputStream("src/Fil/forsikring.data"))) {
             utfil.writeObject(brukerRegister);
+            
         } catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
         } catch (IOException ioe) {
