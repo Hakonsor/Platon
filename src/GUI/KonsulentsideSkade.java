@@ -26,8 +26,8 @@ public class KonsulentsideSkade {
         lbAntall.setId("antall");
 
         Label lbForje = new Label();
-        lbForje.setText("Forje");
-        lbForje.setId("forje");
+        lbForje.setText("Forrige");
+        lbForje.setId("forrige");
 
         Label lbNeste = new Label();
         lbNeste.setText("Neste");
@@ -36,7 +36,7 @@ public class KonsulentsideSkade {
         Button btnVenstre = new Button("<-----");
         btnVenstre.setId("bntVenstre");
         btnVenstre.setOnAction(e -> {
-            System.out.println("Du trykket på forje!");
+            System.out.println("Du trykket på forrige!");
         });
 
         Button btnHøyre = new Button("----->");

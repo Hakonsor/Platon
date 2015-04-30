@@ -34,7 +34,9 @@ import javafx.stage.Stage;
  */
 public class KundesideSkade {
 
-    public static Pane skadeFane(Kontroller kontroll) {
+    private String skade;
+
+    public Pane skadeFane(Kontroller kontroll) {
 
         //Group root = new Group();
         TextField tfBeløp = new TextField();
@@ -104,6 +106,31 @@ public class KundesideSkade {
 
         hb.getChildren().addAll(listView, skriveOmråde);
 
+        ToggleGroup skadeType = new ToggleGroup();
+        RadioButton rbtVann = new RadioButton("Vannskade");
+        rbtVann.setToggleGroup(skadeType);
+        rbtVann.setSelected(true);
+        rbtVann.setOnAction(e -> {
+            skade = "VannSkade";
+        });
+        rbtVann.setVisible(false);
+
+        RadioButton rbtRør = new RadioButton("Rørskade");
+        rbtRør.setToggleGroup(skadeType);
+        rbtRør.setSelected(true);
+        rbtRør.setOnAction(e -> {
+            skade = "RørSkade";
+        });
+        rbtRør.setVisible(false);
+
+        RadioButton rbtBrann = new RadioButton("Brannskade");
+        rbtBrann.setToggleGroup(skadeType);
+        rbtBrann.setSelected(true);
+        rbtBrann.setOnAction(e -> {
+            skade = "BrannSkade";
+        });
+        rbtBrann.setVisible(false);
+
         Label lbSkadebeløp = new Label();
         lbSkadebeløp.setText("Samlet skadebeløp:");
         lbSkadebeløp.setId("lbSkadebeløp");
@@ -135,15 +162,20 @@ public class KundesideSkade {
         btnRapSkade.setText("Raporter skade");
         btnRapSkade.setId("btnRapSkade");
         btnRapSkade.setMinWidth(200);
-        
-        Label  lbFeilFormat = new Label();
-        lbFeilFormat.setVisible( false );
-        
+
+        Label lbFeilFormat = new Label();
+        lbFeilFormat.setVisible(false);
+
         grid.add(forsikringComboBox, 0, 0);
         //grid.add(lbInfo, 0, 1);
         grid.add(hb, 0, 2);
         grid.add(lbSkadebeløp, 0, 3);
         grid.add(tfBeløp, 0, 4);
+
+        grid.add(rbtBrann, 2, 1);
+        grid.add(rbtVann, 2, 2);
+        grid.add(rbtRør, 2, 3);
+
         grid.add(lbFeilFormat, 1, 4);
         grid.add(lbDato, 0, 5);
         grid.add(dpDato, 0, 6);
@@ -169,8 +201,18 @@ public class KundesideSkade {
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
             if (fors != null) {
                 skriveOmråde.setEditable(true);
+                if (fors instanceof BoligForsikring || fors instanceof FritidsBolig) {
+                    rbtVann.setVisible(true);
+                    rbtBrann.setVisible(true);
+                    rbtRør.setVisible(true);
+                } else {
+                    rbtVann.setVisible(false);
+                    rbtBrann.setVisible(false);
+                    rbtRør.setVisible(false);
+                }
             } else {
                 skriveOmråde.setEditable(false);
+
             }
 
         });
@@ -189,8 +231,8 @@ public class KundesideSkade {
                     kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
                 }
             } catch (NumberFormatException nfe) {
-                  lbFeilFormat.setText("Kun hele tall.");
-                  lbFeilFormat.setVisible(true);
+                lbFeilFormat.setText("Kun hele tall.");
+                lbFeilFormat.setVisible(true);
             }
 
             lbSkade.setText("Skademelding er sendt inn");
