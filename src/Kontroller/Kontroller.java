@@ -64,7 +64,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
     public void sok() {Sok sok = new Sok(new Stage(), this);}
     public void addSkade( SkadeMelding m ){
-       skademeldingregister.addSkadeMelding(m);          
+       skademeldingregister.leggIKø(m);          
     }
     public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f){
        return skademeldingregister.getSkadeMelding(  f.getClass(), innLoggetBruker );
@@ -145,6 +145,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
             brukerRegister = (HashMap) innfil.readObject();
+            
         } catch (ClassNotFoundException cnfe) {
             System.out.println("Opprette tomt map");
             brukerRegister = new HashMap<>();
@@ -178,7 +179,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public Forsikringer finnForsikringsType(int i){
     return null;
     } 
-
+    
+    // Finner alle forsikringene til en gitt kunde, legger i liste, returnerer null hvis kunden ikke har noen forsikring.
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i); 
@@ -189,6 +191,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         return new ArrayList<>(a);
     }
 
+    //
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);

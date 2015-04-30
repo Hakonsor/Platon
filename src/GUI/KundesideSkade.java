@@ -59,8 +59,8 @@ public class KundesideSkade {
                 tfBeløp.setText("Vennligs velg forsikring du har");
 
             } else {
-
-                System.out.println("mangler forsikrings register");
+                
+            
             }
 
         });

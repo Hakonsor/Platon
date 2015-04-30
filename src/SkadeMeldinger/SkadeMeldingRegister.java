@@ -8,22 +8,22 @@ package SkadeMeldinger;
 import Forsikring.Forsikringer;
 import Person.Bruker;
 import Person.Kunde;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Queue;
+
 
 /**
  *
  * @author hakon_000
  */
-public class SkadeMeldingRegister {
+public class SkadeMeldingRegister implements Serializable{
     
     List <SkadeMelding> behandling;
     List <SkadeMelding> register;
-    ListIterator<SkadeMelding> i = behandling.listIterator();
+    //ListIterator<SkadeMelding> i = behandling.listIterator();
     public SkadeMeldingRegister() {
         behandling = new LinkedList<>();
         register= new ArrayList<>();
@@ -31,6 +31,7 @@ public class SkadeMeldingRegister {
 
     // legger skademeldingen i behandlingskøen returnerer false om det gikk galt:
     public void leggIKø(SkadeMelding skade){
+        behandling.add(skade);
     }//end method
     
     // returnerer antall ubehandlede skader
@@ -68,10 +69,10 @@ public class SkadeMeldingRegister {
     
     
     // legger skademelcingen i registeret, den kommer fra køen
-    public void addSkadeMelding( SkadeMelding skademelding ) {
+    //public void addSkadeMelding( SkadeMelding skademelding ) {
         
-        register.add(skademelding );
-    }
+        //register.add(skademelding );
+   // }
     
 
     // Metode som henter en liste over alle skademeldinger knyttet en bestemt bruker(kunde)
