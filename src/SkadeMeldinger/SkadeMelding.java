@@ -84,4 +84,9 @@ public abstract class SkadeMelding implements Serializable {
     public int getskadeNr(){
         return skadeNr;
     }
+    
+    public String toString(){
+        String s = "Skadedato" + "\nSkadeNr: " + skadeNr + "\nSkadebeskrivelse: \n\n " + skadeBeskrivelse ;
+        return s;
+    }
 }

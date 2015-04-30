@@ -5,11 +5,13 @@
  */
 package SkadeMeldinger;
 
+
 import Person.Bruker;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 
 
 /**
@@ -19,7 +21,7 @@ import java.util.List;
  * 
  */
 public class SkadeMeldingRegister implements Serializable{
-    
+    private int  index;
     LinkedList <SkadeMelding> behandling;
     List <SkadeMelding> register;
     //ListIterator<SkadeMelding> i = behandling.listIterator();
@@ -46,26 +48,38 @@ public class SkadeMeldingRegister implements Serializable{
        return behandling.size();
     }
     
+    public int visIndex(){
+        int visIndex = index +1;
+        return visIndex;
+    }
+    
+    
+    
     // henter ut neste i køen
-    public SkadeMelding visNesteIKø(int index){
-        int vis = index + 1;
-        SkadeMelding skade = behandling.get(vis);
-        
-        return skade;
+    public SkadeMelding visNesteIKø(){
+        index ++;
+       // ListIterator i = behandling.listIterator(vis);
+        if(index < behandling.size()){
+            SkadeMelding skade = behandling.get(index);
+            return skade;
+        }
+        else{
+            index = 0;
+            return behandling.getFirst();
+        }
     }
     
     // bruker indexen til å finne forrige elementet i listen
-    public SkadeMelding visForrigeIKø(int index){
-        int vis = index - 1;
-        SkadeMelding skade;
-        if(vis <0){
-            return null;
+    public SkadeMelding visForrigeIKø(){
+        
+        if(index == 0){
+            index = behandling.size()-1;
+            return behandling.getLast(); 
         }
-        else{
-            skade = behandling.get(vis);
-        }
-        return skade;
+        --index;
+        return behandling.get(index); 
     }
+   
     
     // flytter objekt fra behandling til registeret
     public void flyttTilRegister(SkadeMelding skade){

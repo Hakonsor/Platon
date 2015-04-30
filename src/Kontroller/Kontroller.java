@@ -134,21 +134,25 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
     }
     
-    //SkadeMelding
+    //SkadeMeldingBehandling skadeKunde
     
     // henter den første skademeldingen i behandlingskøen
     public SkadeMelding getFørste(){
         return skademeldingregister.getFørste();
     }
     
-    // henter Skademeldingen med gitt index +1
-    public SkadeMelding visNesteIKø(int index){
-         return skademeldingregister.visNesteIKø( index);
+    // henter Skademeldingen med gitt index
+    public SkadeMelding visNesteIKø(){
+         return skademeldingregister.visNesteIKø();
     }
     
-    // henter Skademeldingen med gitt index -1
-    public SkadeMelding visForrigeIKø(int index){
-        return skademeldingregister.visNesteIKø( index);
+    // henter den forrige skademeldingen
+    public SkadeMelding visForrigeIKø(){
+        return skademeldingregister.visForrigeIKø();
+    }
+    
+    public int visIndex(){
+        return skademeldingregister.visIndex();
     }
     
     // flytter skademeldingen til registeret når den er behandlet. 
