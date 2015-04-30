@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import project.Postregister;
+import Kontroller.Postregister;
 
 /**
  * Created by Magnus on 21.04.15.
@@ -23,6 +23,7 @@ public class KundesideBil implements ComboBoxConverter{
 
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
+        borderPane.setId("borderpane");
         HBox vb = new HBox();
         vb.setPadding(new Insets(25, 25, 0, 25));
         vb.setSpacing(100);
@@ -66,6 +67,7 @@ public class KundesideBil implements ComboBoxConverter{
 
         Label lbPerson = new Label();
         lbPerson.setText("Bileier innformasjon");
+        lbPerson.setId("lbPerson");
         lbPerson.setAlignment(Pos.CENTER);
 
         TextField tfFornavn = new TextField();
@@ -106,7 +108,7 @@ public class KundesideBil implements ComboBoxConverter{
                 Postregister register = new Postregister();
                 String poststed = register.getPoststed(tfPostnr.getText());
                 if(poststed == null){
-                    poststed = "FInnes faen ikke";
+                    poststed = "Eksisterer ikke!";
                 }
                 postSted.setText(poststed);
             }
@@ -117,6 +119,7 @@ public class KundesideBil implements ComboBoxConverter{
 
         Label lbBil = new Label();
         lbBil.setText("Bil innformasjon");
+        lbBil.setId("lbBil");
         lbBil.setAlignment(Pos.CENTER);
 
         TextField tfRegnr = new TextField();
@@ -186,6 +189,7 @@ public class KundesideBil implements ComboBoxConverter{
 
         RadioButton rbtJa = new RadioButton("JA");
         rbtJa.setToggleGroup(eiere);
+        rbtJa.setId("rbtJa");
         rbtJa.setSelected(true);
         rbtJa.setOnAction(e -> {
             borderPane.setRight(gridright);
@@ -194,6 +198,7 @@ public class KundesideBil implements ComboBoxConverter{
 
         RadioButton rbtNei = new RadioButton("NEI");
         rbtNei.setToggleGroup(eiere);
+        rbtNei.setId("rbtNei");
         rbtNei.setSelected(true);
         rbtNei.setOnAction(e -> {
             borderPane.setRight(null);
@@ -262,6 +267,9 @@ public class KundesideBil implements ComboBoxConverter{
 
         //borderPane.setRight(gridright); //Right
 
+        borderPane.getStylesheets().add("CSS/kundeBil.css");
+
         return borderPane;
+
     }
 }
