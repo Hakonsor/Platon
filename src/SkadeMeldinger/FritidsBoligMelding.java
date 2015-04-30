@@ -5,17 +5,22 @@
  */
 package SkadeMeldinger;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Therese
  */
-public class BatSkadeMelding extends KjoretoySkade {
-   
-    
-    public BatSkadeMelding(String skadeBeskrivelse, int utbetal) {
-        super(skadeBeskrivelse, utbetal);
+public class FritidsBoligMelding extends ByggSkade implements Serializable {
+
+    // tom konstruktør 
+    public FritidsBoligMelding() {
+
     }
-        
-    
-    
+
+    public FritidsBoligMelding(String skadeBeskrivelse, int utbetal) {
+        super(skadeBeskrivelse, utbetal);
+
+    }
+
 }

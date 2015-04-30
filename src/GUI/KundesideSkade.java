@@ -2,6 +2,8 @@ package GUI;
 
 import Forsikring.Forsikringer;
 import Kontroller.Kontroller;
+import java.util.ArrayList;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -57,39 +59,26 @@ public class KundesideSkade {
                 "Boligforsikring",
                 "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
-        forsikringComboBox.setOnAction(e -> {
-            int index = forsikringComboBox.getItems().indexOf(forsikringComboBox.getValue());
-            if (kontroll.finnForsikringListe(index) == null) {
-                tfBeløp.setText("Vennligs velg forsikring du har");
-
-            } else {
-                
-            
-            }
-
-        });
-
+       
+       
         Label lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
         lbInfo.setId("lbInfo");
-
 
         HBox hb = new HBox();
         hb.setSpacing(20);
         hb.setAlignment(Pos.CENTER);
 
-        TextArea taSkriv = new TextArea();
-        taSkriv.setEditable(true);
-        taSkriv.setPromptText("Skriv innformasjon om skaden");
-        taSkriv.setPrefSize(400, 400);
-
+        TextArea skriveOmråde = new TextArea();
+        skriveOmråde.setEditable(true);
+        skriveOmråde.setPromptText("Skriv innformasjon om skaden");
+        skriveOmråde.setPrefSize(400, 400);
 
         ObservableList<String> data = FXCollections.observableArrayList();
         ListView<String> listView = new ListView<>(data);
         listView.setPrefSize(300, 400);
         listView.setId("listview");
         listView.setEditable(false);
-
 
         data.addAll("Trykk på meg :)");
 
@@ -102,7 +91,7 @@ public class KundesideSkade {
             System.out.println("Her skal det stå en kode");
         });
 
-        hb.getChildren().addAll(listView, taSkriv);
+        hb.getChildren().addAll(listView, skriveOmråde);
 
         Label lbSkadebeløp = new Label();
         lbSkadebeløp.setText("Samlet skadebeløp:");
@@ -135,10 +124,7 @@ public class KundesideSkade {
         btnRapSkade.setText("Raporter skade");
         btnRapSkade.setId("btnRapSkade");
         btnRapSkade.setMinWidth(200);
-        btnRapSkade.setOnAction(e -> {
-            kontroll.addSkade(null);
-            lbSkade.setText("Skademelding er sendt inn");
-        });
+        
 
         grid.add(forsikringComboBox, 0, 0);
         //grid.add(lbInfo, 0, 1);
@@ -152,7 +138,32 @@ public class KundesideSkade {
         grid.add(lbSkade, 0, 9);
 
         borderPane.setCenter(grid); // CENTER
+        forsikringComboBox.setOnAction(e -> {
 
+            ArrayList<String> forsikringliste = kontroll.
+                    getInfoForsikringListe(forsikringComboBox.getItems().
+                            indexOf(forsikringComboBox.getValue()));
+            if (forsikringliste == null) {
+                data.clear();
+                data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+            } else {
+                data.setAll(forsikringliste);
+            }
+        });
+        listView.getSelectionModel().selectedItemProperty().addListener((Observable e) ->{
+            Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
+            if( fors != null ){
+               skriveOmråde.setEditable(true);
+            }
+            else{
+                skriveOmråde.setEditable(false);
+            }
+            
+        });
+        btnRapSkade.setOnAction(e -> {
+            kontroll.addSkade(null);
+            lbSkade.setText("Skademelding er sendt inn");
+        });
         return borderPane;
     }
 

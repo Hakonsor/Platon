@@ -67,7 +67,7 @@ public abstract class Bolig extends Forsikringer implements Serializable {
         }
        
        
-        // beregner skaden avhengig av skadetype, og om boligen er fg godkjent.
+        // beregner egenandelen avhengig av skadetype, og om boligen er fg godkjent.
         public int egenandel(String skadeType, boolean fG ){
             int fGgodkjent = 4000;
             
