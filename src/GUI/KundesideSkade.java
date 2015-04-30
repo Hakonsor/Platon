@@ -1,11 +1,23 @@
 package GUI;
 
+import Forsikring.BatForsikring;
+import Forsikring.BilForsikring;
+import Forsikring.BoligForsikring;
 import Forsikring.Forsikringer;
+import Forsikring.FritidsBolig;
+import Forsikring.ReiseForsikring;
 import Kontroller.Kontroller;
+import SkadeMeldinger.BatSkadeMelding;
+import SkadeMeldinger.BilSkadeMelding;
+import SkadeMeldinger.BoligSkadeMelding;
+import SkadeMeldinger.FritidsBoligMelding;
+import SkadeMeldinger.ReiseSkadeMelding;
 import java.util.ArrayList;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -59,8 +71,7 @@ public class KundesideSkade {
                 "Boligforsikring",
                 "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
-       
-       
+
         Label lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
         lbInfo.setId("lbInfo");
@@ -125,12 +136,15 @@ public class KundesideSkade {
         btnRapSkade.setId("btnRapSkade");
         btnRapSkade.setMinWidth(200);
         
-
+        Label  lbFeilFormat = new Label();
+        lbFeilFormat.setVisible( false );
+        
         grid.add(forsikringComboBox, 0, 0);
         //grid.add(lbInfo, 0, 1);
         grid.add(hb, 0, 2);
         grid.add(lbSkadebeløp, 0, 3);
         grid.add(tfBeløp, 0, 4);
+        grid.add(lbFeilFormat, 1, 4);
         grid.add(lbDato, 0, 5);
         grid.add(dpDato, 0, 6);
         grid.add(btnÅpnefil, 0, 7);
@@ -150,18 +164,35 @@ public class KundesideSkade {
                 data.setAll(forsikringliste);
             }
         });
-        listView.getSelectionModel().selectedItemProperty().addListener((Observable e) ->{
+
+        listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
-            if( fors != null ){
-               skriveOmråde.setEditable(true);
-            }
-            else{
+            if (fors != null) {
+                skriveOmråde.setEditable(true);
+            } else {
                 skriveOmråde.setEditable(false);
             }
-            
+
         });
-        btnRapSkade.setOnAction(e -> {
-            kontroll.addSkade(null);
+        btnRapSkade.setOnAction((ActionEvent e) -> {
+            Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
+            try {
+                if (fors instanceof BilForsikring) {
+                    kontroll.addSkade(new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                } else if (fors instanceof BatForsikring) {
+                    kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                } else if (fors instanceof BoligForsikring) {
+                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                } else if (fors instanceof FritidsBolig) {
+                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                } else if (fors instanceof ReiseForsikring) {
+                    kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                }
+            } catch (NumberFormatException nfe) {
+                  lbFeilFormat.setText("Kun hele tall.");
+                  lbFeilFormat.setVisible(true);
+            }
+
             lbSkade.setText("Skademelding er sendt inn");
         });
         return borderPane;

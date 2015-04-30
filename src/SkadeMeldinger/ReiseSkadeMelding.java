@@ -11,13 +11,13 @@ package SkadeMeldinger;
  *
  * @author Therese
  */
-public class PersonSkadeMelding extends SkadeMelding{
+public class ReiseSkadeMelding extends SkadeMelding{
    
-   public PersonSkadeMelding(){
+   public ReiseSkadeMelding(){
        
    }
    
-   public PersonSkadeMelding(String skadeBeskrivelse , int utbetal){
+   public ReiseSkadeMelding(String skadeBeskrivelse , int utbetal){
    super(skadeBeskrivelse ,  utbetal);
    
    }
