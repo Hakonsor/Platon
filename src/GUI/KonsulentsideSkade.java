@@ -98,27 +98,19 @@ public class KonsulentsideSkade {
         vb.getChildren().addAll(lbAntall, hbControll, taLes, hbKnapper);
         borderPane.setCenter(vb); // CENTER
         btnVenstre.setOnAction(( e) -> {
-            if(kontroll.visForrigeIKø()!= null){
+            
                 skade = kontroll.visForrigeIKø();
                 tfAntall.setText(Integer.toString(kontroll.visIndex()));
                 taLes.setText(skade.toString());
                 System.out.println("Du trykket på forrige!");
-            }
-            else{
-                taLes.setText("Ingen skademeldinger til behandling.");
-            }
         });
          btnHøyre.setOnAction(( e) -> {
-             if(kontroll.visNesteIKø()!= null){
+             
                     skade = kontroll.visNesteIKø();
                     tfAntall.setText(Integer.toString(kontroll.visIndex()));
                     taLes.setText(skade.toString());
 
             System.out.println("Du trykket på Neste!");
-             }
-             else{
-                 taLes.setText("Ingen skademeldinger til behandling.");
-             }
         });
          
         

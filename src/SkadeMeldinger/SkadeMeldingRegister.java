@@ -21,10 +21,13 @@ import java.util.List;
  * 
  */
 public class SkadeMeldingRegister implements Serializable{
+    
     private int  index;
+    
     LinkedList <SkadeMelding> behandling;
     List <SkadeMelding> register;
-    //ListIterator<SkadeMelding> i = behandling.listIterator();
+    
+    
     public SkadeMeldingRegister() {
         behandling = new LinkedList<>();
         register= new ArrayList<>();
