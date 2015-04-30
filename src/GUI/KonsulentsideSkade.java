@@ -22,12 +22,12 @@ public class KonsulentsideSkade {
         //Elementer
 
         Label lbAntall = new Label();
-        lbAntall.setText("Antall");
+        lbAntall.setText("Nummer:");
         lbAntall.setId("antall");
 
-        Label lbForje = new Label();
-        lbForje.setText("Forrige");
-        lbForje.setId("forrige");
+        Label lbForrige = new Label();
+        lbForrige.setText("Forrige");
+        lbForrige.setId("forrige");
 
         Label lbNeste = new Label();
         lbNeste.setText("Neste");
@@ -43,6 +43,7 @@ public class KonsulentsideSkade {
         btnHøyre.setId("btnHøyre");
         btnHøyre.setOnAction(e -> {
             System.out.println("Du trykket på Neste!");
+            
         });
 
 
@@ -84,7 +85,7 @@ public class KonsulentsideSkade {
         HBox hbControll = new HBox();
         hbControll.setSpacing(10);
         hbControll.setAlignment(Pos.CENTER);
-        hbControll.getChildren().addAll(lbForje, btnVenstre, tfAntall, btnHøyre, lbNeste);
+        hbControll.getChildren().addAll(lbForrige, btnVenstre, tfAntall, btnHøyre, lbNeste);
 
         HBox hbKnapper = new HBox();
         hbKnapper.setSpacing(10);

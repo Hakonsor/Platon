@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -134,7 +133,30 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println(" Innlogget kunde er ikke av type kunde");
         }
     }
-
+    
+    //SkadeMelding
+    
+    // henter den første skademeldingen i behandlingskøen
+    public SkadeMelding getFørste(){
+        return skademeldingregister.getFørste();
+    }
+    
+    // henter Skademeldingen med gitt index +1
+    public SkadeMelding visNesteIKø(int index){
+         return skademeldingregister.visNesteIKø( index);
+    }
+    
+    // henter Skademeldingen med gitt index -1
+    public SkadeMelding visForrigeIKø(int index){
+        return skademeldingregister.visNesteIKø( index);
+    }
+    
+    // flytter skademeldingen til registeret når den er behandlet. 
+    public void ferdigBehandlet(SkadeMelding skade){
+        skademeldingregister.flyttTilRegister(skade);
+    }
+    
+   
     //Bruker
 
     public void setInnloggetBruker(String nokkel) {

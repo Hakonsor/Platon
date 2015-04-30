@@ -14,11 +14,13 @@ import java.util.List;
 
 /**
  *
- * @author hakon_000
+ * @author  Therese
+ * @author  Håkon
+ * 
  */
 public class SkadeMeldingRegister implements Serializable{
     
-    List <SkadeMelding> behandling;
+    LinkedList <SkadeMelding> behandling;
     List <SkadeMelding> register;
     //ListIterator<SkadeMelding> i = behandling.listIterator();
     public SkadeMeldingRegister() {
@@ -30,6 +32,14 @@ public class SkadeMeldingRegister implements Serializable{
     public void leggIKø(SkadeMelding skade){
         behandling.add(skade);
     }//end method
+    
+    // returnerer det første objektet i listen, hvis det ikke finnes 
+    public SkadeMelding getFørste(){
+        if(!behandling.isEmpty()){
+            return behandling.getFirst();
+        }
+        return null;
+    }
     
     // returnerer antall ubehandlede skader
     public int visAntallIKø(){
@@ -45,7 +55,7 @@ public class SkadeMeldingRegister implements Serializable{
     }
     
     // bruker indexen til å finne forrige elementet i listen
-    public SkadeMelding visForrige(int index){
+    public SkadeMelding visForrigeIKø(int index){
         int vis = index - 1;
         SkadeMelding skade;
         if(vis <0){
@@ -58,10 +68,10 @@ public class SkadeMeldingRegister implements Serializable{
     }
     
     // flytter objekt fra behandling til registeret
-    public void flyttTilRegister(int index){
-        SkadeMelding skade =behandling.get(index);
+    public void flyttTilRegister(SkadeMelding skade){
         register.add(skade);
         boolean remove = behandling.remove(skade); 
+        
     }
     
     
