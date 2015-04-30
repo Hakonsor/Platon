@@ -12,8 +12,7 @@ package SkadeMeldinger;
  */
 public class KjoretoySkade extends SkadeMelding{
     
-    public KjoretoySkade(){
-    }
+    
    
    public KjoretoySkade(String skadeBeskrivelse , int utbetal){
         super(skadeBeskrivelse , utbetal);

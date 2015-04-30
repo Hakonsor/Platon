@@ -11,9 +11,6 @@ package SkadeMeldinger;
  */
 public class BilSkadeMelding extends KjoretoySkade {
 
-    public BilSkadeMelding() {
-
-    }
 
     public BilSkadeMelding(String skadeBeskrivelse, int utbetal) {
         super(skadeBeskrivelse, utbetal);

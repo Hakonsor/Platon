@@ -29,7 +29,7 @@ public class ForsikringsRegister implements Serializable {
      // legger til et objekt i listen, og registrerer hvilken kuned den tilhører
      public void settInn(Kunde k,Forsikringer f){
          f.setKunde(k);
-         forsikring.add(f);
+         register.add(f);
      }
      
      // metoden returnerer en liste med forsikringer til en bestemt kunde. 

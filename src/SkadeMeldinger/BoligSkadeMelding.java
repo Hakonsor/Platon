@@ -13,12 +13,9 @@ import java.io.Serializable;
  */
 public class BoligSkadeMelding extends ByggSkade implements Serializable {
 
-    // tom konstruktør 
-    public BoligSkadeMelding() {
+    
 
-    }
-
-    public BoligSkadeMelding(String skadeBeskrivelse, int utbetal) {
+    public BoligSkadeMelding(String skadeBeskrivelse, int utbetal, String skadeType) {
         super(skadeBeskrivelse, utbetal);
 
     }

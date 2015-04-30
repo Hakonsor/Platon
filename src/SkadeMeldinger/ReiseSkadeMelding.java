@@ -13,13 +13,11 @@ package SkadeMeldinger;
  */
 public class ReiseSkadeMelding extends SkadeMelding{
    
-   public ReiseSkadeMelding(){
-       
-   }
+  
    
    public ReiseSkadeMelding(String skadeBeskrivelse , int utbetal){
-   super(skadeBeskrivelse ,  utbetal);
-   
+        super(skadeBeskrivelse ,  utbetal);
+ 
    }
     
 }

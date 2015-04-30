@@ -2,6 +2,7 @@ package GUI;
 
 import Kontroller.Kontroller;
 import SkadeMeldinger.SkadeMelding;
+import SkadeMeldinger.SkadeMeldingRegister;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,6 +18,7 @@ public class KonsulentsideSkade {
 
     private int index;
     private SkadeMelding skade;
+    private SkadeMeldingRegister skadeRegister;
 
     public Pane skadeFane(Kontroller kontroll) {
 
@@ -47,7 +49,7 @@ public class KonsulentsideSkade {
        
 
         TextField tfAntall = new TextField();
-        tfAntall.setText(Integer.toString(kontroll.visIndex()));
+        tfAntall.setText("1");
         tfAntall.setAlignment(Pos.CENTER);
         tfAntall.setId("tfantall");
         tfAntall.setMaxWidth(50);
@@ -95,22 +97,38 @@ public class KonsulentsideSkade {
 
         vb.getChildren().addAll(lbAntall, hbControll, taLes, hbKnapper);
         borderPane.setCenter(vb); // CENTER
-        btnVenstre.setOnAction(e -> {
+        btnVenstre.setOnAction(( e) -> {
+            if(kontroll.visForrigeIKø()!= null){
                 skade = kontroll.visForrigeIKø();
-                --index;
                 tfAntall.setText(Integer.toString(kontroll.visIndex()));
                 taLes.setText(skade.toString());
                 System.out.println("Du trykket på forrige!");
+            }
+            else{
+                taLes.setText("Ingen skademeldinger til behandling.");
+            }
         });
          btnHøyre.setOnAction(( e) -> {
+             if(kontroll.visNesteIKø()!= null){
                     skade = kontroll.visNesteIKø();
-                    ++index;
                     tfAntall.setText(Integer.toString(kontroll.visIndex()));
                     taLes.setText(skade.toString());
 
             System.out.println("Du trykket på Neste!");
-
+             }
+             else{
+                 taLes.setText("Ingen skademeldinger til behandling.");
+             }
         });
+         
+         btnGodta.setOnAction((ActionEvent e) ->{
+             skade.okUtbetal(300);
+             skadeRegister.flyttTilRegister(skade);
+         });
+         
+         btnAvvis.setOnAction((ActionEvent e)->{
+            skadeRegister.flyttTilRegister(skade);
+         });
         return borderPane;
     }
 
