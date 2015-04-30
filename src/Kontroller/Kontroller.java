@@ -64,6 +64,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         RegKonsulent regKonsulent = new RegKonsulent(new Stage(), this);
     }
     public void sok() {Sok sok = new Sok(new Stage(), this);}
+    
     public void addSkade( SkadeMelding m ){
        skademeldingregister.leggIKø(m);          
     }
@@ -248,7 +249,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
         if (a == null) {
             return null;
         }
-        System.out.println(a);
         return new ArrayList<>(a);
     }
 
@@ -256,7 +256,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
-        System.out.println(a);
         if (a == null || a.isEmpty()) {
             return null;
         }

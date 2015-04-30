@@ -105,4 +105,6 @@ public class SkadeMeldingRegister implements Serializable{
         return liste;
     }
 
+
+
 }
