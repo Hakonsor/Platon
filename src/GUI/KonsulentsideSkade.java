@@ -1,6 +1,7 @@
 package GUI;
 
 import Kontroller.Kontroller;
+import SkadeMeldinger.SkadeMelding;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -12,8 +13,8 @@ import javafx.stage.Stage;
  * Created by Magnus on 27.04.15.
  */
 public class KonsulentsideSkade {
-
-    public static Pane skadeFane(Kontroller kontroll) {
+       private int index;
+    public Pane skadeFane(Kontroller kontroll) {
 
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
@@ -22,12 +23,12 @@ public class KonsulentsideSkade {
         //Elementer
 
         Label lbAntall = new Label();
-        lbAntall.setText("Antall");
+        lbAntall.setText("Nummer:");
         lbAntall.setId("antall");
 
-        Label lbForje = new Label();
-        lbForje.setText("Forje");
-        lbForje.setId("forje");
+        Label lbForrige = new Label();
+        lbForrige.setText("Forrige");
+        lbForrige.setId("forrige");
 
         Label lbNeste = new Label();
         lbNeste.setText("Neste");
@@ -36,13 +37,16 @@ public class KonsulentsideSkade {
         Button btnVenstre = new Button("<-----");
         btnVenstre.setId("bntVenstre");
         btnVenstre.setOnAction(e -> {
-            System.out.println("Du trykket på forje!");
+            SkadeMelding skade = kontroll.visNesteIKø(index);
+            System.out.println("Du trykket på forrige!");
         });
 
         Button btnHøyre = new Button("----->");
         btnHøyre.setId("btnHøyre");
         btnHøyre.setOnAction(e -> {
+            SkadeMelding skade = kontroll.visNesteIKø(index);
             System.out.println("Du trykket på Neste!");
+            
         });
 
 
@@ -84,7 +88,7 @@ public class KonsulentsideSkade {
         HBox hbControll = new HBox();
         hbControll.setSpacing(10);
         hbControll.setAlignment(Pos.CENTER);
-        hbControll.getChildren().addAll(lbForje, btnVenstre, tfAntall, btnHøyre, lbNeste);
+        hbControll.getChildren().addAll(lbForrige, btnVenstre, tfAntall, btnHøyre, lbNeste);
 
         HBox hbKnapper = new HBox();
         hbKnapper.setSpacing(10);

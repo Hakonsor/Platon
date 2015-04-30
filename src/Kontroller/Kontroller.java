@@ -5,6 +5,7 @@
  */
 package Kontroller;
 
+import Forsikring.BatForsikring;
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
 import Forsikring.ForsikringsRegister;
@@ -65,7 +66,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public void sok() {Sok sok = new Sok(new Stage(), this);}
     
     public void addSkade( SkadeMelding m ){
-       skademeldingregister.addSkadeMelding(m);          
+       skademeldingregister.leggIKø(m);          
     }
     public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f){
        return skademeldingregister.getSkadeMelding(  f.getClass(), innLoggetBruker );
@@ -85,6 +86,32 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //Forsikring
+    public void setForsikring(Forsikringer forsikring){
+
+        forsikringsregister.settInn((Kunde) innLoggetBruker, forsikring);
+    }
+    public void setForsikring(double bonus, double egenandel,
+                              String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person){
+        int fot = 0;
+        if (person == null) {
+            person = innLoggetBruker;
+        }
+
+        try {
+            fot = Integer.parseInt(tffot);
+        }
+        catch (NumberFormatException nfe) {
+            System.out.println("Kun heltall er lov!");
+            return;
+        }
+        try {
+            Kunde kunde = (Kunde) innLoggetBruker;
+            forsikringsregister.settInn(kunde, new BatForsikring(bonus, motor, fot, ytelse, regNr, type, modell, arsmodell, person ));
+        }
+        catch (ClassCastException cce) {
+            System.out.println("Innlogget kunde er ikke av type kunde");
+        }
+    }
 
     public void setForsikring(double bonus, double egenandel, int kjorelengde,
             String regNr, String arsmodell, String type, String tfKmstand, Person person) {
@@ -107,7 +134,30 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println(" Innlogget kunde er ikke av type kunde");
         }
     }
-
+    
+    //SkadeMelding
+    
+    // henter den første skademeldingen i behandlingskøen
+    public SkadeMelding getFørste(){
+        return skademeldingregister.getFørste();
+    }
+    
+    // henter Skademeldingen med gitt index +1
+    public SkadeMelding visNesteIKø(int index){
+         return skademeldingregister.visNesteIKø( index);
+    }
+    
+    // henter Skademeldingen med gitt index -1
+    public SkadeMelding visForrigeIKø(int index){
+        return skademeldingregister.visNesteIKø( index);
+    }
+    
+    // flytter skademeldingen til registeret når den er behandlet. 
+    public void ferdigBehandlet(SkadeMelding skade){
+        skademeldingregister.flyttTilRegister(skade);
+    }
+    
+   
     //Bruker
 
     public void setInnloggetBruker(String nokkel) {
@@ -146,15 +196,22 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
             brukerRegister = (HashMap) innfil.readObject();
+           // forsikringsregister
+            //        skademeldingregister
+            
         } catch (ClassNotFoundException cnfe) {
             System.out.println("Opprette tomt map");
             brukerRegister = new HashMap<>();
+            
         } catch (FileNotFoundException fne) {
             System.out.println("Finner ikke datafil. Oppretter ny fil.\n");
             brukerRegister = new HashMap<>();
+            
         } catch (IOException ioe) {
             System.out.println("Innlesingsfeil. Oppretter ny fil.\n");
             brukerRegister = new HashMap<>();
+            
+                   
         }
     }
 
@@ -162,6 +219,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try (ObjectOutputStream utfil = new ObjectOutputStream(
                 new FileOutputStream("src/Fil/forsikring.data"))) {
             utfil.writeObject(brukerRegister);
+            
         } catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
         } catch (IOException ioe) {
@@ -179,7 +237,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public Forsikringer finnForsikringsType(int i){
     return null;
     } 
-
+    
+    // Finner alle forsikringene til en gitt kunde, legger i liste, returnerer null hvis kunden ikke har noen forsikring.
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i); 
@@ -189,12 +248,14 @@ public class Kontroller implements EventHandler<ActionEvent> {
         return new ArrayList<>(a);
     }
 
+    //
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
         if (a == null || a.isEmpty()) {
             return null;
         }
+
         ArrayList<String> liste = new ArrayList<>();
         Iterator<BilForsikring> iterator = a.iterator();
         if (a.get(0) instanceof BilForsikring) {
@@ -203,7 +264,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
                 //iterator.next().getRegNr()
             }
             return liste;
-        } else {
+        } else if (a.get(0) instanceof  BatForsikring) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }

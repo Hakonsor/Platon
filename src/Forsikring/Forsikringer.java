@@ -6,52 +6,48 @@
 package Forsikring;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import Person.Kunde;
 import java.util.Calendar;
+import java.util.LinkedList;
 
 /**
  *
- * @author Therese, H�kon
+ * @author Therese, Håkon
  */
 public abstract class Forsikringer implements Serializable{
     private boolean aktiv;
     private Kunde kunde;
     private int poliseNr;
-    private static int nestePolisNr = 100000;
+    private static int nestePoliseNr = 100000;
     private double premie;
     private double egenandel;
     private Calendar startDato;
     private Calendar sluttDato;
-    private List<Double> utbetalinger = new ArrayList();
-    private List<Double> innbetalinger  = new ArrayList();
+    private List<Integer> innbetalinger  = new LinkedList();
     
     public Forsikringer() {
-        poliseNr = ++nestePolisNr;
+        poliseNr = ++nestePoliseNr;
         aktiv =true; 
         
     }
     // brukes når det registreres kjøretøy.
-   
-    /*public Forsikringer( String s){
-        
-    }
-    */
     public Forsikringer( double premie, double egenandel ){
        this();
        this.premie = premie;
        this.egenandel = egenandel;
-
+       aktiv = true;
     }
     
+    // legger peker til kunden som har denne forsikringen
     public void setKunde(Kunde kunde){
         this.kunde = kunde;
     }
+    
      public Kunde getKunde(){
         return kunde;
     }
-   
+    
     public int getPoliseNr(){
        return poliseNr;
    }
@@ -90,13 +86,13 @@ public abstract class Forsikringer implements Serializable{
    } 
     
     public String toString(){
-   
-    String s = "Polisenummer: " + poliseNr + "\nPremie: "
-    + premie + "\nEgenandel: " + egenandel  +
-     "\nGjelder fra: " +  startDato;
-    return s;
+        String s = "Polisenummer: " + poliseNr + "\nPremie: "
+        + premie + "\nEgenandel: " + egenandel  +
+        "\nGjelder fra: " +  startDato;
+            return s;
     }
     
+    // metoden sammenligner på poliseNr for å avgjøre om de er like
     public boolean equals(Forsikringer f){
        return ( f.getPoliseNr() == ( poliseNr) );
        }

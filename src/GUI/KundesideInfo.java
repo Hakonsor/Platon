@@ -9,7 +9,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.effect.Reflection;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 /**
  * Created by Magnus on 21.04.15.
@@ -19,7 +21,9 @@ public class KundesideInfo {
     public static Pane infoFane(Kontroller kontroller) {
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
+        borderPane.setId("haha");
         HBox vb = new HBox();
+        vb.setId("border");
         vb.setPadding(new Insets(25, 25, 25, 25));
         vb.setSpacing(100);
         vb.setAlignment(Pos.CENTER);
@@ -42,12 +46,14 @@ public class KundesideInfo {
 
         borderPane.setTop(vb);
 
+
+        //CENTER
+
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(0, 25, 25, 25));
-        grid.setVgap(10);
+        grid.setPadding(new Insets(50, 50, 50, 50));
+        grid.setVgap(50);
         grid.setHgap(10);
-        grid.setPrefHeight(50);
-        grid.setPrefWidth(800);
+        grid.setAlignment(Pos.CENTER);
 
         ObservableList<String> navn = FXCollections.observableArrayList();
         ObservableList<String> data = FXCollections.observableArrayList();
@@ -67,11 +73,11 @@ public class KundesideInfo {
             } else {
                 navn.setAll(forsikringliste);
             }
-
         });
 
         ListView<String> listView = new ListView<>(data);
-        listView.setPrefSize(300, 600);
+        listView.setPrefSize(300, 400);
+        listView.setId("listview");
         listView.setEditable(false);
 
         //navn.addAll("Honda CRV", "Ferrari Enzo", "VW Golf");
@@ -90,7 +96,10 @@ public class KundesideInfo {
 
         });
 
-        textArea.setPrefSize(400, 600);
+
+        textArea.setPrefSize(300, 400);
+        textArea.setId("textarea");
+        textArea.setEditable(false);
 
         grid.add(forsikringComboBox, 0, 0);
         grid.add(listView, 0, 1);
@@ -98,11 +107,9 @@ public class KundesideInfo {
 
         borderPane.setCenter(grid);
 
+        borderPane.getStylesheets().add("CSS/kundeInfo.css");
         return borderPane;
     }
 
 }
 
-/*
-
- */

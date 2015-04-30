@@ -5,6 +5,8 @@
  */
 package Forsikring;
 
+import CSS.Bilder.Bolig;
+
 /**
  *
  * @author Therese, Håkon

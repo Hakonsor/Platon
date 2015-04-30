@@ -5,16 +5,24 @@
  */
 package Person;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
  * @author Therese
  */
-public class KundeRegister {
+public class BrukerRegister {
     
    
+    private List <Kunde> register;
     
-    public KundeRegister(){
+    public BrukerRegister(){
         
     }
+    
+    
+    
+    
 }

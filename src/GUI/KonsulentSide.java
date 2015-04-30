@@ -1,11 +1,14 @@
 package GUI;
 
 import Kontroller.Kontroller;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -22,17 +25,13 @@ public class KonsulentSide {
         Scene scene = new Scene(root, 1024, 768);
 
         MenuBar menuBar = new MenuBar();
-
         Menu menu = new Menu("Fil");
-
         MenuItem left = new MenuItem("Logg ut");
         menu.getItems().addAll(left);
         left.setOnAction(e -> {
             primaryStage.close();
             kontroll.loginVindu(primaryStage);
         });
-
-
         menuBar.getMenus().add(menu);
 
         BorderPane borderPane = new BorderPane();

@@ -1,7 +1,9 @@
 package GUI;
 
+import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
-import javafx.geometry.HPos;
+import Person.Person;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -9,14 +11,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import static javafx.geometry.Pos.TOP_CENTER;
+
+import java.util.LinkedList;
 
 /**
  * Created by Magnus on 21.04.15.
  */
-public class KundesideBåt {
+public class KundesideBåt implements ComboBoxConverter{
 
-    public static Pane båtFane(Kontroller kontroll) {
+    private String type;
+
+
+    public Pane båtFane(Kontroller kontroll) {
 
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
@@ -42,6 +48,30 @@ public class KundesideBåt {
 
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
+
+        GridPane gridleft = new GridPane();
+        gridleft.setAlignment(Pos.TOP_CENTER);
+        gridleft.setHgap(10);
+        gridleft.setVgap(10);
+        gridleft.setPadding(new Insets(10));
+        gridleft.setPrefHeight(50);
+        gridleft.setPrefWidth(400);
+
+        GridPane gridright = new GridPane();
+        gridright.setAlignment(Pos.TOP_CENTER);
+        gridright.setHgap(10);
+        gridright.setVgap(10);
+        gridright.setPadding(new Insets(10));
+        gridright.setPrefHeight(50);
+        gridright.setPrefWidth(400);
+
+        GridPane gridcenter = new GridPane();
+        gridcenter.setAlignment(Pos.CENTER);
+        gridcenter.setHgap(10);
+        gridcenter.setVgap(10);
+        gridcenter.setPadding(new Insets(10));
+        gridcenter.setPrefHeight(50);
+        gridcenter.setPrefWidth(200);
 
 
         //Person
@@ -101,48 +131,54 @@ public class KundesideBåt {
         tfMotormerke.setPromptText("Motormerke");
         tfMotormerke.setMinWidth(200);
 
+        TextField tfYtelse = new TextField();
+        tfYtelse.setPromptText("Ytelse (hk)");
+        tfYtelse.setMinWidth(200);
+
         ToggleGroup båtType = new ToggleGroup();
+
+
 
         RadioButton rbtSeilbåt = new RadioButton("Seilbåt");
         rbtSeilbåt.setToggleGroup(båtType);
         rbtSeilbåt.setSelected(true);
         rbtSeilbåt.setOnAction(e -> {
-            System.out.println("Du har valgt Seilbåt! =D");
+            type = "Seilbåt";
         });
 
         RadioButton rbtYacht = new RadioButton("Yacht");
         rbtYacht.setToggleGroup(båtType);
         rbtYacht.setSelected(true);
         rbtYacht.setOnAction(e -> {
-            System.out.println("Du har valgt en Yacht! WoHo!");
+            type = "Yacht";
         });
 
         RadioButton rbtSnekke = new RadioButton("Snekke");
         rbtSnekke.setToggleGroup(båtType);
         rbtSnekke.setSelected(true);
         rbtSnekke.setOnAction(e -> {
-            System.out.println("Du har valgt en gammel lekker snekke =)");
+            type = "Snekke";
         });
 
         RadioButton rbtDaycruiser = new RadioButton("Daycruiser");
         rbtDaycruiser.setToggleGroup(båtType);
         rbtDaycruiser.setSelected(true);
         rbtDaycruiser.setOnAction(e -> {
-            System.out.println("Du har valgt en Daycruiser =D");
+            type = "Daycruiser";
         });
 
         RadioButton rbtCabincruiser = new RadioButton("Cabincruiser");
         rbtCabincruiser.setToggleGroup(båtType);
         rbtCabincruiser.setSelected(true);
         rbtCabincruiser.setOnAction(e -> {
-            System.out.println("Du har valgt en Cabincruiser RichBitch!");
+            type = "Cabin cruiser";
         });
 
-        RadioButton rbtAndre = new RadioButton("Andre");
+        RadioButton rbtAndre = new RadioButton("Annet");
         rbtAndre.setToggleGroup(båtType);
         rbtAndre.setSelected(true);
         rbtAndre.setOnAction(e -> {
-            System.out.println("Du har valgt en annen type båt en det vi har listet, dette går bra =D");
+            type = "Annet";
         });
 
         ComboBox<String> cbBonus = new ComboBox<>();
@@ -180,6 +216,26 @@ public class KundesideBåt {
         regLabel.setId("regLabel");
         regLabel.setAlignment(Pos.CENTER);
 
+        ToggleGroup eiere = new ToggleGroup();
+
+        RadioButton rbtJa = new RadioButton("JA");
+        rbtJa.setToggleGroup(eiere);
+        rbtJa.setId("rbtJa");
+        rbtJa.setSelected(true);
+        rbtJa.setOnAction(e -> {
+            borderPane.setRight(gridright);
+            System.out.println("Du har valgt Ja! =D");
+        });
+
+        RadioButton rbtNei = new RadioButton("NEI");
+        rbtNei.setToggleGroup(eiere);
+        rbtNei.setId("rbtNei");
+        rbtNei.setSelected(true);
+        rbtNei.setOnAction(e -> {
+            borderPane.setRight(null);
+            System.out.println("Du har valgt Nei");
+        });
+
         Button btnSjekkpris = new Button();
         btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
@@ -188,13 +244,39 @@ public class KundesideBåt {
             regLabel.setText("Prisen er: " + "getPris()");
         });
 
-        Button btnRegBilforsikring = new Button();
-        btnRegBilforsikring.setText("Registrer Bilforsikring");
-        btnRegBilforsikring.setId("btnRegBilforsikring");
-        btnRegBilforsikring.setMinWidth(200);
-        btnRegBilforsikring.setOnAction(e -> {
+        Button btnRegBåtforsikring = new Button();
+        btnRegBåtforsikring.setText("Registrer Båtforsikring");
+        btnRegBåtforsikring.setId("btnRegBåtforsikring");
+        btnRegBåtforsikring.setMinWidth(200);
+        btnRegBåtforsikring.setOnAction(e -> {
+            regLabel.setText("Båtforsikring Registrert!");
+            Person person;
+            if (rbtJa.selectedProperty().getValue())
+                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
+            else
+                person = null;
+
+
+            int effekt = 0;
+
+            try{
+                effekt = Integer.parseInt(tfYtelse.getText());
+            }catch(NumberFormatException nfe){
+                System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
+                        "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
+            }
+
+
+
+            kontroll.setForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , person);
             regLabel.setText("Bilforsikring Registrert!");
         });
+
+        /*
+        setForsikring(double bonus, double egenandel,
+                              String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person){
+
+         */
 
         grid.add(lbBåt, 0, 0);
         grid.add(lbPerson, 2, 0);
@@ -214,10 +296,12 @@ public class KundesideBåt {
         grid.add(tfMotormerke, 0, 5);
         grid.add(tfAdresse, 2, 5);
 
-        grid.add(cbEgenandel, 0, 6);
+        grid.add(tfYtelse, 0, 6);
+
+        grid.add(cbEgenandel, 0, 7);
         grid.add(tfPostnr, 2, 6);
 
-        grid.add(cbBonus, 0, 7);
+        grid.add(cbBonus, 0, 8);
 
         grid.add(rbtCabincruiser, 1, 1);
         grid.add(rbtDaycruiser, 1, 2);
@@ -228,7 +312,7 @@ public class KundesideBåt {
 
 
         grid.add(btnSjekkpris, 1, 13);
-        grid.add(btnRegBilforsikring, 1, 14);
+        grid.add(btnRegBåtforsikring, 1, 14);
 
         grid.add(regLabel, 1, 15);
 
