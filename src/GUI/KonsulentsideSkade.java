@@ -1,6 +1,7 @@
 package GUI;
 
 import Kontroller.Kontroller;
+import SkadeMeldinger.SkadeMelding;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -12,8 +13,8 @@ import javafx.stage.Stage;
  * Created by Magnus on 27.04.15.
  */
 public class KonsulentsideSkade {
-
-    public static Pane skadeFane(Kontroller kontroll) {
+       private int index;
+    public Pane skadeFane(Kontroller kontroll) {
 
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
@@ -36,12 +37,14 @@ public class KonsulentsideSkade {
         Button btnVenstre = new Button("<-----");
         btnVenstre.setId("bntVenstre");
         btnVenstre.setOnAction(e -> {
+            SkadeMelding skade = kontroll.visNesteIKø(index);
             System.out.println("Du trykket på forrige!");
         });
 
         Button btnHøyre = new Button("----->");
         btnHøyre.setId("btnHøyre");
         btnHøyre.setOnAction(e -> {
+            SkadeMelding skade = kontroll.visNesteIKø(index);
             System.out.println("Du trykket på Neste!");
             
         });
