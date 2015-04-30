@@ -15,7 +15,7 @@ public class BoligSkadeMelding extends ByggSkade implements Serializable {
 
     
 
-    public BoligSkadeMelding(String skadeBeskrivelse, int utbetal, String skadeType) {
+    public BoligSkadeMelding(String skadeBeskrivelse, int utbetal) {
         super(skadeBeskrivelse, utbetal);
 
     }

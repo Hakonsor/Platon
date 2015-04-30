@@ -224,9 +224,9 @@ public class KundesideSkade {
                 } else if (fors instanceof BatForsikring) {
                     kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
                 } else if (fors instanceof BoligForsikring) {
-                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), skade));
+                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
                 } else if (fors instanceof FritidsBolig) {
-                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),skade));
+                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
                 } else if (fors instanceof ReiseForsikring) {
                     kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
                 }

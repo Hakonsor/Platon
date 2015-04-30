@@ -57,8 +57,7 @@ public class SkadeMeldingRegister implements Serializable{
     
     // henter ut neste i køen
     public SkadeMelding visNesteIKø(){
-        index ++;
-       // ListIterator i = behandling.listIterator(vis);
+       index++;
         if(index < behandling.size()){
             SkadeMelding skade = behandling.get(index);
             return skade;
@@ -76,8 +75,8 @@ public class SkadeMeldingRegister implements Serializable{
             index = behandling.size()-1;
             return behandling.getLast(); 
         }
-        --index;
-        return behandling.get(index); 
+        index --;
+        return behandling.get(index);
     }
    
     

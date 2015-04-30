@@ -16,9 +16,9 @@ import javafx.stage.Stage;
  */
 public class KonsulentsideSkade {
 
-    private int index;
+   
     private SkadeMelding skade;
-    private SkadeMeldingRegister skadeRegister;
+    
 
     public Pane skadeFane(Kontroller kontroll) {
 
@@ -121,14 +121,7 @@ public class KonsulentsideSkade {
              }
         });
          
-         btnGodta.setOnAction((ActionEvent e) ->{
-             skade.okUtbetal(300);
-             skadeRegister.flyttTilRegister(skade);
-         });
-         
-         btnAvvis.setOnAction((ActionEvent e)->{
-            skadeRegister.flyttTilRegister(skade);
-         });
+        
         return borderPane;
     }
 
