@@ -1,9 +1,13 @@
 package GUI;
 
+import Forsikring.Forsikringer;
 import Kontroller.Kontroller;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -69,10 +73,36 @@ public class KundesideSkade {
         lbInfo.setText("Info om skaden:");
         lbInfo.setId("lbInfo");
 
+
+        HBox hb = new HBox();
+        hb.setSpacing(20);
+        hb.setAlignment(Pos.CENTER);
+
         TextArea taSkriv = new TextArea();
         taSkriv.setEditable(true);
-        taSkriv.setPromptText("");
-        taSkriv.setPrefSize(900, 300);
+        taSkriv.setPromptText("Skriv innformasjon om skaden");
+        taSkriv.setPrefSize(400, 400);
+
+
+        ObservableList<String> data = FXCollections.observableArrayList();
+        ListView<String> listView = new ListView<>(data);
+        listView.setPrefSize(300, 400);
+        listView.setId("listview");
+        listView.setEditable(false);
+
+
+        data.addAll("Trykk på meg :)");
+
+        listView.setItems(data);
+        listView.setCellFactory(ComboBoxListCell.forListView(data));
+        listView.setOnMouseClicked(e -> {
+            System.out.println("visElement()");
+        });
+        listView.getSelectionModel().selectedItemProperty().addListener(e -> {
+            System.out.println("Her skal det stå en kode");
+        });
+
+        hb.getChildren().addAll(listView, taSkriv);
 
         Label lbSkadebeløp = new Label();
         lbSkadebeløp.setText("Samlet skadebeløp:");
@@ -111,8 +141,8 @@ public class KundesideSkade {
         });
 
         grid.add(forsikringComboBox, 0, 0);
-        grid.add(lbInfo, 0, 1);
-        grid.add(taSkriv, 0, 2);
+        //grid.add(lbInfo, 0, 1);
+        grid.add(hb, 0, 2);
         grid.add(lbSkadebeløp, 0, 3);
         grid.add(tfBeløp, 0, 4);
         grid.add(lbDato, 0, 5);

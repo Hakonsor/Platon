@@ -5,6 +5,7 @@
  */
 package Kontroller;
 
+import Forsikring.BatForsikring;
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
 import Forsikring.ForsikringsRegister;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -84,6 +86,32 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //Forsikring
+    public void setForsikring(Forsikringer forsikring){
+
+        forsikringsregister.settInn((Kunde) innLoggetBruker, forsikring);
+    }
+    public void setForsikring(double bonus, double egenandel,
+                              String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person){
+        int fot = 0;
+        if (person == null) {
+            person = innLoggetBruker;
+        }
+
+        try {
+            fot = Integer.parseInt(tffot);
+        }
+        catch (NumberFormatException nfe) {
+            System.out.println("Kun heltall er lov!");
+            return;
+        }
+        try {
+            Kunde kunde = (Kunde) innLoggetBruker;
+            forsikringsregister.settInn(kunde, new BatForsikring(bonus, motor, fot, ytelse, regNr, type, modell, arsmodell, person ));
+        }
+        catch (ClassCastException cce) {
+            System.out.println("Innlogget kunde er ikke av type kunde");
+        }
+    }
 
     public void setForsikring(double bonus, double egenandel, int kjorelengde,
             String regNr, String arsmodell, String type, String tfKmstand, Person person) {
@@ -206,6 +234,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         if (a == null || a.isEmpty()) {
             return null;
         }
+
         ArrayList<String> liste = new ArrayList<>();
         Iterator<BilForsikring> iterator = a.iterator();
         if (a.get(0) instanceof BilForsikring) {
@@ -214,7 +243,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
                 //iterator.next().getRegNr()
             }
             return liste;
-        } else {
+        } else if (a.get(0) instanceof  BatForsikring) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }
