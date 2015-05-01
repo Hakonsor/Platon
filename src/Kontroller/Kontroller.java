@@ -30,12 +30,8 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -122,9 +118,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
     }
 
-    // borlig forsikring
+    // bolig forsikring
 
-    public void setForsikring(double kvadrat, String adresse, String boligType, String byggeår,
+    public void setBoligForsikring(double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
@@ -137,7 +133,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //Forsikring
-    public void setFritidsForsikring(double kvadrat, String adresse, String boligType, String byggeår,
+    public void setFritidsForsikring(double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
         try {
             Kunde kunde = (Kunde) innLoggetBruker;

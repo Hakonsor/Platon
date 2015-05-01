@@ -164,7 +164,7 @@ public class KundesideFribolig {
         btnRegFriboligforsikring.setOnAction(e -> {
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
-            String byggeÅr = tfByggeår.getText();
+            int byggeÅr = 0;
             double kvadrat = 0;
             double byggSum = 0;
             double innboSum= 0;
@@ -172,6 +172,7 @@ public class KundesideFribolig {
             kvadrat = Double.parseDouble(tfKvadrat.getText());
             byggSum = Double.parseDouble(tfByggSum.getText());
             innboSum = Double.parseDouble(tfInnboSum.getText());
+            byggeÅr = Integer.parseInt(tfByggeår.getText());
         } catch (NumberFormatException nfe) {
             System.out.println("Feil tallformat.");
         }

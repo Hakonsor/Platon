@@ -1,8 +1,6 @@
 package GUI;
 
 import Kontroller.Kontroller;
-import javafx.event.ActionEvent;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -156,6 +154,7 @@ public class KundesideBolig {
             double kvadrat = 0;
             double byggSum = 0;
             double innboSum= 0;
+            int byggeår = 0;
             String mertiale = cbMatriale.getValue();
             
 
@@ -163,11 +162,12 @@ public class KundesideBolig {
                 kvadrat = Double.parseDouble(tfKvadrat.getText());
                 byggSum = Double.parseDouble(tfByggSum.getText());
                 innboSum = Double.parseDouble(tfInnboSum.getText());
+                byggeår = Integer.parseInt(tfKvadrat.getText());
             } catch (NumberFormatException nfe) {
                 System.out.println("Feil tallformat.");
             }
 
-            kontroller.setForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
+            kontroller.setBoligForsikring(kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
             regLabel.setText("Boligforsikring registrert!");
 
         });
