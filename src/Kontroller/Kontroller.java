@@ -7,6 +7,7 @@ package Kontroller;
 
 import Forsikring.BatForsikring;
 import Forsikring.BilForsikring;
+import Forsikring.BoligForsikring;
 import Forsikring.Forsikringer;
 import Forsikring.ForsikringsRegister;
 import GUI.KonsulentSide;
@@ -70,8 +71,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
         Sok sok = new Sok(new Stage(), this);
     }
 
-    public void addSkade(SkadeMelding m) {
-        skademeldingregister.leggIKø(m);
+    // legger skade i skademeldingskøen. slik at den kan bli behandlet av konsulenten.
+    public void addSkade(SkadeMelding m, Forsikringer f) {
+        skademeldingregister.leggIKø(m, f);
     }
 
     public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f) {
@@ -115,6 +117,19 @@ public class Kontroller implements EventHandler<ActionEvent> {
         } catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
+    }
+
+    public void setForsikring(double kvadrat, String adresse, String boligType, String byggeår,
+            String materiale, String standard, double byggSum, double inboSum) {
+        try{
+            Kunde kunde = (Kunde)innLoggetBruker;
+            System.out.println("innlogget bruker");
+            forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType,byggeår,materiale,standard,byggSum,inboSum));
+        }
+        catch(ClassCastException cce){
+            System.out.println("Feil med bruker");
+        }
+            
     }
 
     //Forsikring

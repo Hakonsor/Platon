@@ -1,6 +1,7 @@
 package GUI;
 
 import Kontroller.Kontroller;
+import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -68,7 +69,7 @@ public class KundesideBolig {
         TextField tfInnboSum = new TextField();
         tfInnboSum.setPromptText("Innbo verdi");
         tfInnboSum.setMinWidth(200);
-        
+
         ComboBox<String> cbBoligtype = new ComboBox<>();
         cbBoligtype.setEditable(false);
         cbBoligtype.setMinWidth(200);
@@ -136,7 +137,6 @@ public class KundesideBolig {
 
         grid.add(tfInnboSum, 0, 6);
 
-        
         grid.add(cbBoligtype, 0, 7);
         grid.add(cbStandard, 0, 8);
         grid.add(cbMatriale, 0, 9);
@@ -147,10 +147,25 @@ public class KundesideBolig {
         grid.add(regLabel, 1, 15);
 
         borderPane.setCenter(grid); // CENTER
-        
+
         // lyttere 
         btnRegBoligforsikring.setOnAction(e -> {
-             
+            String postNr = tfPostnr.getText();
+            String adresse = tfAdresse.getText();
+            String byggeÅr = tfByggeår.getText();
+            double kvadrat = 0;
+            double byggSum = 0;
+            double innboSum= 0;
+
+            try {
+                kvadrat = Double.parseDouble(tfKvadrat.getText());
+                byggSum = Double.parseDouble(tfByggSum.getText());
+                innboSum = Double.parseDouble(tfInnboSum.getText());
+            } catch (NumberFormatException nfe) {
+                System.out.println("Feil tallformat.");
+            }
+
+            kontroller.setForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
             regLabel.setText("Boligforsikring registrert!");
 
         });

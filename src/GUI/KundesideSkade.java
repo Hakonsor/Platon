@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 
 /**
  * Created by Magnus on 27.04.15.
+ * @author Therese
  */
 public class KundesideSkade {
 
@@ -220,20 +221,21 @@ public class KundesideSkade {
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
             try {
                 if (fors instanceof BilForsikring) {
-                    kontroll.addSkade(new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                    kontroll.addSkade(new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
                 } else if (fors instanceof BatForsikring) {
-                    kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                    kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
                 } else if (fors instanceof BoligForsikring) {
-                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
                 } else if (fors instanceof FritidsBolig) {
-                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
                 } else if (fors instanceof ReiseForsikring) {
-                    kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())));
+                    kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
                 }
             } catch (NumberFormatException nfe) {
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);
             }
+            
 
             lbSkade.setText("Skademelding er sendt inn");
         });

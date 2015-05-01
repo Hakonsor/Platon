@@ -6,6 +6,7 @@
 package SkadeMeldinger;
 
 
+import Forsikring.Forsikringer;
 import Person.Bruker;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,8 +34,9 @@ public class SkadeMeldingRegister implements Serializable{
         register= new ArrayList<>();
     }
 
-    // legger skademeldingen i behandlingskøen returnerer false om det gikk galt:
-    public void leggIKø(SkadeMelding skade){
+    // legger skademeldingen i behandlingskøen, og knytter en forsikring til skademeldingen.
+    public void leggIKø(SkadeMelding skade, Forsikringer fors){
+        skade.setForsikring(fors);
         behandling.add(skade);
     }//end method
     

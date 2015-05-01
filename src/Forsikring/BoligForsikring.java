@@ -14,10 +14,10 @@ import java.io.Serializable;
  */
 public class BoligForsikring extends Bolig implements Serializable {
     
-    public BoligForsikring(boolean utleie,
+    public BoligForsikring(
                   double kvadrat, String adresse, String boligType, String byggeår,
                   String metriale, String standard, double byggSum, double inboSUm){
-                  super( utleie, kvadrat, adresse, boligType, byggeår, metriale, standard, byggSum, inboSUm);
+                  super(false, kvadrat, adresse, boligType, byggeår, metriale, standard, byggSum, inboSUm);
                  
         
     }
