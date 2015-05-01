@@ -193,6 +193,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public Bruker finnBruker(String Bruker) {
         return brukerRegister.getBruker(Bruker);
     }
+    
 
     public boolean sjekkPassord(String bruker, String passord) {
         Bruker sjekkBruker = finnBruker(bruker);
