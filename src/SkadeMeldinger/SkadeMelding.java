@@ -27,14 +27,10 @@ public abstract class SkadeMelding implements Serializable {
     private int utbetaling;
     private boolean godkjent;
     
-    // tom konstruktør for å opprette objektet i fabrikk
-    public SkadeMelding(){
-       datoInnmeldt = Calendar.getInstance();
-    }
-   // private SkadeMelding(){
-        
-    //skadeNr = (++nesteSkadeNr);
-   // } 
+    
+   private SkadeMelding(){
+       skadeNr = (++nesteSkadeNr);
+   } 
     
     // mottar skadebeløpet, mens utbetalingen settes av konsulenten
     public SkadeMelding(String skadeBeskrivelse , int skadeSum){
@@ -83,5 +79,10 @@ public abstract class SkadeMelding implements Serializable {
    
     public int getskadeNr(){
         return skadeNr;
+    }
+    
+    public String toString(){
+        String s = "Skadedato" + "\nSkadeNr: " + skadeNr + "\nSkadebeskrivelse: \n\n " + skadeBeskrivelse ;
+        return s;
     }
 }

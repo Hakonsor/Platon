@@ -48,7 +48,7 @@ public class KundeSide {
 
         //Info
         Tab tabInfo = new Tab();
-        tabInfo.setText("Informasjon");
+        tabInfo.setText("Min side");
         tabInfo.setClosable(false);
         KundesideInfo info = new KundesideInfo();
         tabInfo.setContent(info.infoFane(kontroll));
@@ -84,7 +84,7 @@ public class KundeSide {
 
         //Fri.Boligforsikring
         Tab tabFriBolig = new Tab();
-        tabFriBolig.setText("Fritids-boligforsikring");
+        tabFriBolig.setText("Fritidsboligforsikring");
         tabFriBolig.setClosable(false);
         KundesideFribolig fribolig = new KundesideFribolig();
         tabFriBolig.setContent(fribolig.friboligFane(kontroll));

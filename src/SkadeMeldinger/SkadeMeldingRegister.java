@@ -5,25 +5,29 @@
  */
 package SkadeMeldinger;
 
-import Forsikring.Forsikringer;
+
 import Person.Bruker;
-import Person.Kunde;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 
+
 /**
  *
- * @author hakon_000
+ * @author  Therese
+ * @author  Håkon
+ * 
  */
 public class SkadeMeldingRegister implements Serializable{
     
-    List <SkadeMelding> behandling;
+    private int  index;
+    
+    LinkedList <SkadeMelding> behandling;
     List <SkadeMelding> register;
-    //ListIterator<SkadeMelding> i = behandling.listIterator();
+    
+    
     public SkadeMeldingRegister() {
         behandling = new LinkedList<>();
         register= new ArrayList<>();
@@ -34,37 +38,56 @@ public class SkadeMeldingRegister implements Serializable{
         behandling.add(skade);
     }//end method
     
+    // returnerer det første objektet i listen, hvis det ikke finnes 
+    public SkadeMelding getFørste(){
+        if(!behandling.isEmpty()){
+            return behandling.getFirst();
+        }
+        return null;
+    }
+    
     // returnerer antall ubehandlede skader
     public int visAntallIKø(){
        return behandling.size();
     }
     
+    public int visIndex(){
+        int visIndex = index +1;
+        return visIndex;
+    }
+    
+    
+    
     // henter ut neste i køen
-    public SkadeMelding visNesteIKø(int index){
-        int vis = index + 1;
-        SkadeMelding skade = behandling.get(vis);
-        
-        return skade;
+    public SkadeMelding visNesteIKø(){
+       index++;
+        if(index < behandling.size()){
+            SkadeMelding skade = behandling.get(index);
+            return skade;
+        }
+        else{
+            index = 0;
+            return behandling.getFirst();
+        }
     }
     
     // bruker indexen til å finne forrige elementet i listen
-    public SkadeMelding visForrige(int index){
-        int vis = index - 1;
-        SkadeMelding skade;
-        if(vis <0){
-            return null;
+    public SkadeMelding visForrigeIKø(){
+        
+        if(index == 0){
+            index = behandling.size()-1;
+            return behandling.getLast(); 
         }
-        else{
-            skade = behandling.get(vis);
-        }
-        return skade;
+        index --;
+        return behandling.get(index);
     }
+   
     
     // flytter objekt fra behandling til registeret
-    public void flyttTilRegister(int index){
-        SkadeMelding skade =behandling.get(index);
+    public void flyttTilRegister(SkadeMelding skade){
         register.add(skade);
         boolean remove = behandling.remove(skade); 
+        
     }
     
     
@@ -83,5 +106,7 @@ public class SkadeMeldingRegister implements Serializable{
         });
         return liste;
     }
+
+
 
 }

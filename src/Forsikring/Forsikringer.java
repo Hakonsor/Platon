@@ -8,7 +8,9 @@ package Forsikring;
 import java.io.Serializable;
 import java.util.List;
 import Person.Kunde;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -16,15 +18,15 @@ import java.util.LinkedList;
  * @author Therese, Håkon
  */
 public abstract class Forsikringer implements Serializable{
-    private boolean aktiv;
-    private Kunde kunde;
-    private int poliseNr;
-    private static int nestePoliseNr = 100000;
-    private double premie;
-    private double egenandel;
-    private Calendar startDato;
-    private Calendar sluttDato;
-    private List<Integer> innbetalinger  = new LinkedList();
+    protected boolean aktiv;
+    protected Kunde kunde;
+    protected int poliseNr;
+    protected static int nestePoliseNr = 100000;
+    protected double premie;
+    protected double egenandel;
+    protected Calendar startDato;
+    protected Calendar sluttDato;
+     
     
     public Forsikringer() {
         poliseNr = ++nestePoliseNr;
@@ -37,6 +39,7 @@ public abstract class Forsikringer implements Serializable{
        this.premie = premie;
        this.egenandel = egenandel;
        aktiv = true;
+       startDato = Calendar.getInstance();
     }
     
     // legger peker til kunden som har denne forsikringen
@@ -77,18 +80,22 @@ public abstract class Forsikringer implements Serializable{
        
     }
    
+    // returnerer uformattert dato.
     public Calendar getStartDato(){
        return startDato;
    }
    
+    // returnerer en uformattert sluttdato
     public Calendar getSluttDato(){
        return sluttDato;
    } 
     
     public String toString(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String date = dateFormat.format(startDato.getTime());
         String s = "Polisenummer: " + poliseNr + "\nPremie: "
         + premie + "\nEgenandel: " + egenandel  +
-        "\nGjelder fra: " +  startDato;
+        "\nGjelder fra: " +  date;
             return s;
     }
     

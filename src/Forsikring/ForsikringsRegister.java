@@ -30,11 +30,6 @@ public class ForsikringsRegister implements Serializable {
      public void settInn(Kunde k,Forsikringer f){
          f.setKunde(k);
          register.add(f);
-         System.out.println(finnForsikring(k, 1));
-         System.out.println(finnForsikring(k, 2));
-         System.out.println(finnForsikring(k, 3));
-         System.out.println(finnForsikring(k, 4));
-         System.out.println(finnForsikring(k, 5));
      }
      
      // metoden returnerer en liste med forsikringer til en bestemt kunde. 

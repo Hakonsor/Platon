@@ -21,21 +21,21 @@ public abstract class Bolig extends Forsikringer implements Serializable {
     private String adresse;
     private String boligType ;
     private String byggeår ;
-    private String metriale;
+    private String materiale;
     private String standard;
     private boolean utleie;
     
     
     public Bolig( boolean utleie, double kvadrat, String adresse, String boligType, String byggeår,
-                  String metriale, String standard, double byggSum, double inboSUm){
+                  String materiale, String standard, double byggSum, double inboSum){
         super();
         this.kvadrat = kvadrat;
         this.adresse = adresse;
         this.boligType = boligType;
         this.byggeår = byggeår;
         this.byggSum = byggSum;
-        this.innboSum = inboSUm;
-        this.metriale = metriale;
+        this.innboSum = inboSum;
+        this.materiale = materiale;
         this.standard = standard;
         this.utleie = utleie;
         setPremie(premie(kvadrat, byggSum, innboSum));
@@ -60,14 +60,14 @@ public abstract class Bolig extends Forsikringer implements Serializable {
            return innboSum;
         }
         public String materiale(){
-           return metriale;
+           return materiale;
         }
         public String standard(){
            return standard;
         }
        
        
-        // beregner skaden avhengig av skadetype, og om boligen er fg godkjent.
+        // beregner egenandelen avhengig av skadetype, og om boligen er fg godkjent.
         public int egenandel(String skadeType, boolean fG ){
             int fGgodkjent = 4000;
             

@@ -63,7 +63,9 @@ public class KonsulentSide {
         tabSkade.setText("Skade");
         tabSkade.setClosable(false);
         KonsulentsideSkade konsulentsideSkade = new KonsulentsideSkade();
-        tabSkade.setContent(konsulentsideSkade.skadeFane(kontroll));
+        tabSkade.setOnSelectionChanged(e-> {
+            tabSkade.setContent(konsulentsideSkade.skadeFane(kontroll));
+        });
 
 
 

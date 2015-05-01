@@ -181,7 +181,7 @@ public class KundesideBil implements ComboBoxConverter{
         //Registrer knapp & Label & Toggle
 
         Label lbvelgEier = new Label();
-        lbvelgEier.setText("Ny eier av bilen?");
+        lbvelgEier.setText("Annen eier?");
         lbvelgEier.setId("velgeier");
         lbvelgEier.setAlignment(Pos.CENTER);
 
@@ -211,7 +211,7 @@ public class KundesideBil implements ComboBoxConverter{
         regLabel.setAlignment(Pos.CENTER);
 
         Button btnSjekkpris = new Button();
-        btnSjekkpris.setText("Sjekk Pris");
+        btnSjekkpris.setText("Beregn Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
         btnSjekkpris.setOnAction(e -> {

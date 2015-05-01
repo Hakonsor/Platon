@@ -17,18 +17,18 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     private int kjorelengde;
     
     public BilForsikring(double bonus, double egenandel, int kjorelengde, String regNr, String type, String arsModell, int kmStand, Person person){
-                super(bonus, regNr ,type, arsModell, null, null);
+                super(bonus,egenandel, regNr ,type, arsModell, null, null);
                 this.kjorelengde = kjorelengde;
-                setPremie(premie(egenandel,getBonus() ));// premien settes
+                premie = (premie(egenandel,bonus ));// premien settes
     }
 
     public int getKjorelengde(){
         return kjorelengde;
     }
-        // km angir hvor langt bilen kan kjøre per år
+        
     
 
-
+    // angir hvor mye kunden får utbetalt, dersom uhellet skulle være ute.
      public int utbetal( int km , double kostnad, int egenandel){
           double delta = 0; // angir hvor stor andel av skaden som dekkes
           double belop;
@@ -120,6 +120,9 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         }
         else if(egenandel == 6000){
             rabatt = 10;
+        }
+        else if(egenandel == 4000){
+            rabatt = 0;
         }
     
         premium = (100-rabatt-bonus )/100*grunnPremie;

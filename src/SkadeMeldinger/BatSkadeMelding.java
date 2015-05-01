@@ -12,8 +12,10 @@ package SkadeMeldinger;
 public class BatSkadeMelding extends KjoretoySkade {
    
     
-    public BatSkadeMelding(){
-        
+    public BatSkadeMelding(String skadeBeskrivelse, int utbetal) {
+        super(skadeBeskrivelse, utbetal);
     }
+        
+    
     
 }

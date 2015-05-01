@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -65,6 +64,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         RegKonsulent regKonsulent = new RegKonsulent(new Stage(), this);
     }
     public void sok() {Sok sok = new Sok(new Stage(), this);}
+    
     public void addSkade( SkadeMelding m ){
        skademeldingregister.leggIKø(m);          
     }
@@ -106,7 +106,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BatForsikring(bonus, motor, fot, ytelse, regNr, type, modell, arsmodell, person ));
+            forsikringsregister.settInn(kunde, new BatForsikring(bonus,egenandel, motor, fot, ytelse, regNr, type, modell, arsmodell, person ));
         }
         catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
@@ -134,7 +134,35 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println(" Innlogget kunde er ikke av type kunde");
         }
     }
-
+    
+    
+    //SkadeMeldingBehandling skadeKunde-------------------------------------------
+    
+    // henter den første skademeldingen i behandlingskøen
+    public SkadeMelding getFørste(){
+        return skademeldingregister.getFørste();
+    }
+    
+    // henter Skademeldingen med gitt index
+    public SkadeMelding visNesteIKø(){
+         return skademeldingregister.visNesteIKø();
+    }
+    
+    // henter den forrige skademeldingen
+    public SkadeMelding visForrigeIKø(){
+        return skademeldingregister.visForrigeIKø();
+    }
+    
+    public int visIndex(){
+        return skademeldingregister.visIndex();
+    }
+    
+    // flytter skademeldingen til registeret når den er behandlet. 
+    public void ferdigBehandlet(SkadeMelding skade){
+        skademeldingregister.flyttTilRegister(skade);
+    }
+    
+   
     //Bruker
 
     public void setInnloggetBruker(String nokkel) {
@@ -222,7 +250,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
         if (a == null) {
             return null;
         }
-        System.out.println(a);
         return new ArrayList<>(a);
     }
 
@@ -230,7 +257,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
-        System.out.println(a);
         if (a == null || a.isEmpty()) {
             return null;
         }

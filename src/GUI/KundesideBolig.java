@@ -14,9 +14,6 @@ import static javafx.geometry.Pos.TOP_CENTER;
 /**
  * Created by Magnus on 21.04.15.
  */
-
-
-
 public class KundesideBolig {
 
     public static Pane boligFane(Kontroller kontroller) {
@@ -28,12 +25,11 @@ public class KundesideBolig {
         vb.setAlignment(Pos.CENTER);
 
         Label overskrift = new Label();
-        overskrift.setText("Her registrerer du boligforsikring");
+        overskrift.setText("Boligforsikring\nSørg for å ha nødvendig økonomisk støtte dersom noe skulle skje med huset ditt.");
         overskrift.setId("overskrift");
         vb.getChildren().addAll(overskrift);
 
         borderPane.setTop(vb); //TOP
-
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
@@ -44,11 +40,9 @@ public class KundesideBolig {
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
 
-
         //Bolig
-
         Label lbBolig = new Label();
-        lbBolig.setText("Bolig innformasjon");
+        lbBolig.setText("Informasjon om din bolig");
         lbBolig.setAlignment(Pos.CENTER);
 
         TextField tfPostnr = new TextField();
@@ -60,7 +54,7 @@ public class KundesideBolig {
         tfAdresse.setMinWidth(200);
 
         TextField tfByggeår = new TextField();
-        tfByggeår.setPromptText("Byggår");
+        tfByggeår.setPromptText("Byggeår");
         tfByggeår.setMinWidth(200);
 
         TextField tfKvadrat = new TextField();
@@ -74,18 +68,7 @@ public class KundesideBolig {
         TextField tfInnboSum = new TextField();
         tfInnboSum.setPromptText("Innbo verdi");
         tfInnboSum.setMinWidth(200);
-
-
-        ComboBox<String> cbEgenandel = new ComboBox<>();
-        cbEgenandel.setEditable(false);
-        cbEgenandel.setMinWidth(200);
-        cbEgenandel.getItems().addAll(
-                "Egenandel: 10 000,-",
-                "Egenandel: 15 000,-",
-                "Egenandel: 20 000,-"
-        );
-        cbEgenandel.setValue("Velg Egenandel:");
-
+        
         ComboBox<String> cbBoligtype = new ComboBox<>();
         cbBoligtype.setEditable(false);
         cbBoligtype.setMinWidth(200);
@@ -106,7 +89,7 @@ public class KundesideBolig {
                 "Over gjennomsnitt",
                 "Svært Høy"
         );
-        cbStandard.setValue("Velg Standard:");
+        cbStandard.setValue("Standard:");
 
         ComboBox<String> cbMatriale = new ComboBox<>();
         cbMatriale.setEditable(false);
@@ -118,18 +101,16 @@ public class KundesideBolig {
                 "Leca",
                 "Laft"
         );
-        cbMatriale.setValue("Velg Byggmatriale:");
-
+        cbMatriale.setValue("Byggematriale:");
 
         //Registrer knapp & Label
-
         Label regLabel = new Label();
         regLabel.setText("");
         regLabel.setId("regLabel");
         regLabel.setAlignment(Pos.CENTER);
 
         Button btnSjekkpris = new Button();
-        btnSjekkpris.setText("Sjekk Pris");
+        btnSjekkpris.setText("Beregn pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
         btnSjekkpris.setOnAction(e -> {
@@ -140,9 +121,6 @@ public class KundesideBolig {
         btnRegBoligforsikring.setText("Registrer Boligforsikring");
         btnRegBoligforsikring.setId("btnRegBoligforsikring");
         btnRegBoligforsikring.setMinWidth(200);
-        btnRegBoligforsikring.setOnAction(e -> {
-            regLabel.setText("Boligforsikring Registrert!");
-        });
 
         grid.add(lbBolig, 0, 0);
 
@@ -158,24 +136,24 @@ public class KundesideBolig {
 
         grid.add(tfInnboSum, 0, 6);
 
-        grid.add(cbEgenandel, 0, 7);
-        grid.add(cbBoligtype, 0, 8);
-        grid.add(cbStandard, 0, 9);
-        grid.add(cbMatriale, 0, 10);
-
-
+        
+        grid.add(cbBoligtype, 0, 7);
+        grid.add(cbStandard, 0, 8);
+        grid.add(cbMatriale, 0, 9);
 
         grid.add(btnSjekkpris, 1, 13);
         grid.add(btnRegBoligforsikring, 1, 14);
 
         grid.add(regLabel, 1, 15);
 
-
-
-
         borderPane.setCenter(grid); // CENTER
+        
+        // lyttere 
+        btnRegBoligforsikring.setOnAction(e -> {
+             
+            regLabel.setText("Boligforsikring registrert!");
 
+        });
         return borderPane;
     }
 }
-

@@ -1,6 +1,9 @@
 package GUI;
 
 import Kontroller.Kontroller;
+import SkadeMeldinger.SkadeMelding;
+import SkadeMeldinger.SkadeMeldingRegister;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -13,21 +16,25 @@ import javafx.stage.Stage;
  */
 public class KonsulentsideSkade {
 
-    public static Pane skadeFane(Kontroller kontroll) {
+   
+    private SkadeMelding skade;
+    
 
+    public Pane skadeFane(Kontroller kontroll) {
+
+        skade = kontroll.getFørste();
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(50));
 
         //Elementer
-
         Label lbAntall = new Label();
-        lbAntall.setText("Antall");
+        lbAntall.setText("Nummer:");
         lbAntall.setId("antall");
 
-        Label lbForje = new Label();
-        lbForje.setText("Forje");
-        lbForje.setId("forje");
+        Label lbForrige = new Label();
+        lbForrige.setText("Forrige");
+        lbForrige.setId("forrige");
 
         Label lbNeste = new Label();
         lbNeste.setText("Neste");
@@ -35,19 +42,14 @@ public class KonsulentsideSkade {
 
         Button btnVenstre = new Button("<-----");
         btnVenstre.setId("bntVenstre");
-        btnVenstre.setOnAction(e -> {
-            System.out.println("Du trykket på forje!");
-        });
+        
 
         Button btnHøyre = new Button("----->");
         btnHøyre.setId("btnHøyre");
-        btnHøyre.setOnAction(e -> {
-            System.out.println("Du trykket på Neste!");
-        });
-
+       
 
         TextField tfAntall = new TextField();
-        tfAntall.setText("13");
+        tfAntall.setText("1");
         tfAntall.setAlignment(Pos.CENTER);
         tfAntall.setId("tfantall");
         tfAntall.setMaxWidth(50);
@@ -57,9 +59,11 @@ public class KonsulentsideSkade {
         taLes.setEditable(true);
         taLes.setPromptText("");
         taLes.setPrefSize(700, 400);
-
+        if (skade != null) {
+            taLes.setText(skade.toString());
+        }
         Label lbPris = new Label();
-        lbPris.setText("Pris:");
+        lbPris.setText("Skadebeløp:");
         lbPris.setId("lbPris");
 
         TextField tfBeløp = new TextField();
@@ -84,17 +88,32 @@ public class KonsulentsideSkade {
         HBox hbControll = new HBox();
         hbControll.setSpacing(10);
         hbControll.setAlignment(Pos.CENTER);
-        hbControll.getChildren().addAll(lbForje, btnVenstre, tfAntall, btnHøyre, lbNeste);
+        hbControll.getChildren().addAll(lbForrige, btnVenstre, tfAntall, btnHøyre, lbNeste);
 
         HBox hbKnapper = new HBox();
         hbKnapper.setSpacing(10);
         hbKnapper.setAlignment(Pos.CENTER);
         hbKnapper.getChildren().addAll(lbPris, tfBeløp, btnGodta, btnAvvis);
 
-
-        vb.getChildren().addAll(lbAntall,hbControll, taLes, hbKnapper);
+        vb.getChildren().addAll(lbAntall, hbControll, taLes, hbKnapper);
         borderPane.setCenter(vb); // CENTER
+        btnVenstre.setOnAction(( e) -> {
+            
+                skade = kontroll.visForrigeIKø();
+                tfAntall.setText(Integer.toString(kontroll.visIndex()));
+                taLes.setText(skade.toString());
+                System.out.println("Du trykket på forrige!");
+        });
+         btnHøyre.setOnAction(( e) -> {
+             
+                    skade = kontroll.visNesteIKø();
+                    tfAntall.setText(Integer.toString(kontroll.visIndex()));
+                    taLes.setText(skade.toString());
 
+            System.out.println("Du trykket på Neste!");
+        });
+         
+        
         return borderPane;
     }
 
