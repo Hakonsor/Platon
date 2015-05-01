@@ -17,6 +17,7 @@ import GUI.Login;
 import GUI.Registrer;
 import GUI.*;
 import Person.Bruker;
+import Person.BrukerRegister;
 import Person.Kunde;
 import Person.Person;
 import SkadeMeldinger.SkadeMelding;
@@ -45,7 +46,7 @@ import javafx.stage.Stage;
  */
 public class Kontroller implements EventHandler<ActionEvent> {
 
-    public static Map<String, Bruker> brukerRegister = new HashMap<>();
+    private BrukerRegister brukerRegister = new BrukerRegister();
     private Bruker innLoggetBruker = null;
     private SkadeMeldingRegister skademeldingregister = new SkadeMeldingRegister();
     private ForsikringsRegister forsikringsregister = new ForsikringsRegister();
@@ -95,10 +96,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     //Forsikring
     public void setForsikring(Forsikringer forsikring) {
-
         forsikringsregister.settInn((Kunde) innLoggetBruker, forsikring);
     }
 
+    //båt forsikring
     public void setForsikring(double bonus, double egenandel,
             String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person) {
         int fot = 0;
@@ -119,15 +120,13 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
     }
-
-
-
+    // borlig forsikring
     public void setForsikring(double kvadrat, String adresse, String boligType, String byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
         try{
             Kunde kunde = (Kunde)innLoggetBruker;
             System.out.println("innlogget bruker");
-            forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType,byggeår,materiale,standard,byggSum,inboSum));
+            forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
         }
         catch(ClassCastException cce){
             System.out.println("Feil med bruker");
@@ -186,7 +185,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         return skademeldingregister.visForrigeIKø();
     }
 
-    public int visIndex() {
+    public int visSkadeIndex() {
         return skademeldingregister.visIndex();
     }
 
@@ -197,7 +196,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     //Bruker
     public void setInnloggetBruker(String nokkel) {
-        innLoggetBruker = brukerRegister.get(nokkel);
+        innLoggetBruker = brukerRegister.getKunde(nokkel);
     }
 
     public Bruker getInnloggetBruker() {
@@ -205,8 +204,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     public Bruker finnBruker(String Bruker) {
-        return brukerRegister.get(Bruker);
+        return brukerRegister.getBruker(Bruker);
     }
+    
 
     public boolean sjekkPassord(String bruker, String passord) {
         Bruker sjekkBruker = finnBruker(bruker);
@@ -218,38 +218,30 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     //Kunde
     public void registrerBruker(Bruker b) {
-        brukerRegister.put(b.getNøkkel(), b);
+        brukerRegister.registrerBruker(b);
     }
-
-    //Konsulent
-    public void registrerKonsulent(Bruker b) {
-        brukerRegister.put(b.getNøkkel(), b);
-    }
-    
-    
-
     //Filskriving
     public void lesFil() {
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
-            brukerRegister = (HashMap) innfil.readObject();
+            brukerRegister = (BrukerRegister) innfil.readObject();
             skademeldingregister = (SkadeMeldingRegister) innfil.readObject();
             forsikringsregister = (ForsikringsRegister) innfil.readObject();
         } catch (ClassNotFoundException cnfe) {
             System.out.println("Opprette nye registere");
-            brukerRegister = new HashMap<>();
+            brukerRegister = new BrukerRegister();
             skademeldingregister = new SkadeMeldingRegister();
             forsikringsregister = new ForsikringsRegister();
 
         } catch (FileNotFoundException fne) {
             System.out.println("Finner ikke datafil. Oppretter ny fil.\n");
-            brukerRegister = new HashMap<>();
+            brukerRegister = new BrukerRegister();
             skademeldingregister = new SkadeMeldingRegister();
             forsikringsregister = new ForsikringsRegister();
 
         } catch (IOException ioe) {
             System.out.println("Innlesingsfeil. Oppretter ny fil.\n");
-            brukerRegister = new HashMap<>();
+            brukerRegister = new BrukerRegister();
             skademeldingregister = new SkadeMeldingRegister();
             forsikringsregister = new ForsikringsRegister();
 
@@ -277,10 +269,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //infosiden
-    public Forsikringer finnForsikringsType(int i) {
-        return null;
-    }
-
     // Finner alle forsikringene til en gitt kunde, legger i liste, returnerer null hvis kunden ikke har noen forsikring.
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
@@ -290,7 +278,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return new ArrayList<>(a);
     }
-
+    
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
@@ -318,32 +306,16 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return liste;
     }
-
+    
     public Forsikringer getForsikring(int parseInt) {
         return forsikringsregister.finnForsPolise(parseInt);
     }
-
-    public List<Kunde> sokResultater(String fornavn, String etternavn, String kundernr) {
-        List<Kunde> liste = new ArrayList<>();
-        Kunde kunde;
-        if (brukerRegister.containsKey(kundernr)) {
-            liste.add((Kunde) brukerRegister.get(kundernr));
-            return liste;
-        }
-        for (Entry<String, Bruker> e : brukerRegister.entrySet()) {
-
-            if (e.getValue() instanceof Kunde) {
-                kunde = (Kunde) e.getValue();
-                if (kunde.getFornavn().equals(fornavn)) {
-                    liste.add(kunde);
-                } else if (kunde.getEtternavn().equals(etternavn)) {
-                    liste.add(kunde);
-                }
-            }
-        }
-        return liste;
+    
+    public List<Kunde> søkeResultater(String fornavn, String etternavn, String kundeNr){
+        return brukerRegister.søkeResultater(fornavn, etternavn, kundeNr);
     }
+    
     public Kunde getKunde(String id) {
-        return (Kunde) brukerRegister.get(id);
+        return brukerRegister.getKunde(id);
     }
 }

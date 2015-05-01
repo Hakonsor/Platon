@@ -100,14 +100,14 @@ public class KonsulentsideSkade {
         btnVenstre.setOnAction(( e) -> {
             
                 skade = kontroll.visForrigeIKø();
-                tfAntall.setText(Integer.toString(kontroll.visIndex()));
+                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                 taLes.setText(skade.toString());
                 System.out.println("Du trykket på forrige!");
         });
          btnHøyre.setOnAction(( e) -> {
              
                     skade = kontroll.visNesteIKø();
-                    tfAntall.setText(Integer.toString(kontroll.visIndex()));
+                    tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                     taLes.setText(skade.toString());
 
             System.out.println("Du trykket på Neste!");
