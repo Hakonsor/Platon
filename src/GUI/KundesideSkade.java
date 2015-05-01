@@ -12,7 +12,11 @@ import SkadeMeldinger.BilSkadeMelding;
 import SkadeMeldinger.BoligSkadeMelding;
 import SkadeMeldinger.FritidsBoligMelding;
 import SkadeMeldinger.ReiseSkadeMelding;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,9 +37,13 @@ import javafx.stage.Stage;
  * Created by Magnus on 27.04.15.
  *
  * @author Therese
+ *
+ * public static Calendar DateToCalendar(Date date){ Calendar cal =
+ * Calendar.getInstance(); cal.setTime(date); return cal; }
  */
 public class KundesideSkade {
 
+    private Calendar dato;
     private String skade;
 
     public Pane skadeFane(Kontroller kontroll) {
@@ -187,6 +195,18 @@ public class KundesideSkade {
         grid.add(lbSkade, 0, 9);
 
         borderPane.setCenter(grid); // CENTER
+
+        dpDato.setOnAction((ActionEvent e) -> {
+            {
+                LocalDate date = dpDato.getValue();
+                Date dat = Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                System.err.println("Selected date: " + date);
+                dato =Calendar.getInstance();
+                dato.setTime(dat);
+              
+            }
+        });
+
         forsikringComboBox.setOnAction(e -> {
 
             ArrayList<String> forsikringliste = kontroll.
@@ -203,10 +223,9 @@ public class KundesideSkade {
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
             int poisnr = -1;
             if (listView.getSelectionModel().getSelectedItem() != null) {
-                 poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
+                poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
             }
 
-           
             Forsikringer fors = kontroll.getForsikring(poisnr);
             if (fors != null) {
                 skriveOmråde.setEditable(true);
@@ -229,15 +248,15 @@ public class KundesideSkade {
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
             try {
                 if (fors instanceof BilForsikring) {
-                    kontroll.addSkade(new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
+                    kontroll.addSkade(new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
                 } else if (fors instanceof BatForsikring) {
-                    kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
+                    kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
                 } else if (fors instanceof BoligForsikring) {
-                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
+                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
                 } else if (fors instanceof FritidsBolig) {
-                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
+                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
                 } else if (fors instanceof ReiseForsikring) {
-                    kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
+                    kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
                 }
             } catch (NumberFormatException nfe) {
                 lbFeilFormat.setText("Kun hele tall.");

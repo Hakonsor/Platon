@@ -7,7 +7,10 @@ package SkadeMeldinger;
 
 import Forsikring.Forsikringer;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -16,7 +19,7 @@ import java.util.Calendar;
  */
 public abstract class SkadeMelding implements Serializable {
     private String skadeBeskrivelse;
-    private Calendar datoSkade;  // når skaden inntraff.
+    private Calendar skadeDato;  // når skaden inntraff.
     private Calendar datoInnmeldt;
     private Object skadeBilde;
     private int skadeSum;
@@ -33,11 +36,12 @@ public abstract class SkadeMelding implements Serializable {
    } 
     
     // mottar skadebeløpet, mens utbetalingen settes av konsulenten
-    public SkadeMelding(String skadeBeskrivelse , int skadeSum){
+    public SkadeMelding(String skadeBeskrivelse , int skadeSum, Calendar skadeDato){
         this(); 
         this.skadeBeskrivelse = skadeBeskrivelse;
         this.skadeSum = skadeSum;
         datoInnmeldt = Calendar.getInstance();
+        this.skadeDato = skadeDato; 
     }
     
     // viser at skademeldingen er godkjent og utbetaler og legger til listen
@@ -54,11 +58,11 @@ public abstract class SkadeMelding implements Serializable {
     }
     
     public Calendar getdatoSkade(){
-        return datoSkade;
+        return skadeDato;
     }
     
     public void setDatoSkade(Calendar skadeDato){
-        this.datoSkade = skadeDato;
+        this.skadeDato = skadeDato;
     }
     public int getSkadeNr(){
         return skadeNr;
@@ -82,7 +86,10 @@ public abstract class SkadeMelding implements Serializable {
     }
     
     public String toString(){
-        String s = "Skadedato" + "\nSkadeNr: " + skadeNr + "\nSkadebeskrivelse: \n\n " + skadeBeskrivelse ;
+        Date dt = skadeDato.getTime();
+       DateFormat df = new SimpleDateFormat("dd.MM.yyyy"); 
+       String dato = df.format(dt);
+        String s = "Skadedato: " + dato + "\nSkadeNr: " + skadeNr + "\nSkadebeskrivelse: \n\n " + skadeBeskrivelse ;
         return s;
     }
 }

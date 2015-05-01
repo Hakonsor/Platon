@@ -104,7 +104,7 @@ public class KonsulentsideSkade {
                 taLes.setText(skade.toString());
                 System.out.println("Du trykket på forrige!");
         });
-         btnHøyre.setOnAction(( e) -> {
+         btnHøyre.setOnAction(( ActionEvent e) -> {
              
                     skade = kontroll.visNesteIKø();
                     tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));

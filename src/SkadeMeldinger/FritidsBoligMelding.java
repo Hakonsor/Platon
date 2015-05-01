@@ -6,6 +6,7 @@
 package SkadeMeldinger;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  *
@@ -15,8 +16,8 @@ public class FritidsBoligMelding extends ByggSkade implements Serializable {
 
 
 
-    public FritidsBoligMelding(String skadeBeskrivelse, int utbetal) {
-        super(skadeBeskrivelse, utbetal);
+    public FritidsBoligMelding(String skadeBeskrivelse, int utbetal, Calendar skadeDato) {
+        super(skadeBeskrivelse, utbetal, skadeDato);
         
     }
 

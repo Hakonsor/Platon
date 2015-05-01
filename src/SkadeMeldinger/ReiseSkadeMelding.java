@@ -5,6 +5,8 @@
  */
 package SkadeMeldinger;
 
+import java.util.Calendar;
+
 
 
 /**
@@ -15,8 +17,8 @@ public class ReiseSkadeMelding extends SkadeMelding{
    
   
    
-   public ReiseSkadeMelding(String skadeBeskrivelse , int utbetal){
-        super(skadeBeskrivelse ,  utbetal);
+   public ReiseSkadeMelding(String skadeBeskrivelse , int utbetal, Calendar skadeDato){
+        super(skadeBeskrivelse ,  utbetal, skadeDato);
  
    }
     

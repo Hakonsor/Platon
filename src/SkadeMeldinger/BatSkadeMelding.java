@@ -5,15 +5,18 @@
  */
 package SkadeMeldinger;
 
+import java.io.Serializable;
+import java.util.Calendar;
+
 /**
  *
  * @author Therese
  */
-public class BatSkadeMelding extends KjoretoySkade {
+public class BatSkadeMelding extends KjoretoySkade implements Serializable{
    
     
-    public BatSkadeMelding(String skadeBeskrivelse, int utbetal) {
-        super(skadeBeskrivelse, utbetal);
+    public BatSkadeMelding(String skadeBeskrivelse, int utbetal, Calendar skadeDato) {
+        super(skadeBeskrivelse, utbetal, skadeDato);
     }
         
     

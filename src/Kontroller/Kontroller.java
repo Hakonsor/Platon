@@ -30,6 +30,7 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -74,8 +75,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     // legger skade i skademeldingskøen. slik at den kan bli behandlet av konsulenten.
-    public void addSkade(SkadeMelding m, Forsikringer f) {
-        skademeldingregister.leggIKø(m, f);
+    public void addSkade(SkadeMelding m,Forsikringer f) {
+        skademeldingregister.leggIKø(m,f);
     }
 
     public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f) {
@@ -120,33 +121,34 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
     }
+
     // borlig forsikring
+
     public void setForsikring(double kvadrat, String adresse, String boligType, String byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
-        try{
-            Kunde kunde = (Kunde)innLoggetBruker;
+        try {
+            Kunde kunde = (Kunde) innLoggetBruker;
             System.out.println("innlogget bruker");
             forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
-        }
-        catch(ClassCastException cce){
+        } catch (ClassCastException cce) {
             System.out.println("Feil med bruker");
         }
-            
+
     }
 
     //Forsikring
     public void setFritidsForsikring(double kvadrat, String adresse, String boligType, String byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
-        try{
-            Kunde kunde = (Kunde)innLoggetBruker;
+        try {
+            Kunde kunde = (Kunde) innLoggetBruker;
             System.out.println("innlogget bruker");
-            forsikringsregister.settInn(kunde, new FritidsBolig(false, kvadrat, adresse, boligType,byggeår,materiale,standard,byggSum,inboSum));
-        }
-        catch(ClassCastException cce){
+            forsikringsregister.settInn(kunde, new FritidsBolig(false, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
+        } catch (ClassCastException cce) {
             System.out.println("Feil med bruker");
         }
-            
+
     }
+
     public void setForsikring(double bonus, double egenandel, int kjorelengde,
             String regNr, String arsmodell, String type, String tfKmstand, Person person) {
         int kmStand = 0;
@@ -206,7 +208,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public Bruker finnBruker(String Bruker) {
         return brukerRegister.getBruker(Bruker);
     }
-    
 
     public boolean sjekkPassord(String bruker, String passord) {
         Bruker sjekkBruker = finnBruker(bruker);
@@ -220,7 +221,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public void registrerBruker(Bruker b) {
         brukerRegister.registrerBruker(b);
     }
+
     //Filskriving
+
     public void lesFil() {
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
@@ -278,7 +281,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return new ArrayList<>(a);
     }
-    
+
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
@@ -299,26 +302,26 @@ public class Kontroller implements EventHandler<ActionEvent> {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }
-        }   else if (a.get(0) instanceof BoligForsikring) {
+        } else if (a.get(0) instanceof BoligForsikring) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }
-        }   else if (a.get(0) instanceof FritidsBolig) {
+        } else if (a.get(0) instanceof FritidsBolig) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }
         }
         return liste;
     }
-    
+
     public Forsikringer getForsikring(int parseInt) {
         return forsikringsregister.finnForsPolise(parseInt);
     }
-    
-    public List<Kunde> søkeResultater(String fornavn, String etternavn, String kundeNr){
+
+    public List<Kunde> søkeResultater(String fornavn, String etternavn, String kundeNr) {
         return brukerRegister.søkeResultater(fornavn, etternavn, kundeNr);
     }
-    
+
     public Kunde getKunde(String id) {
         return brukerRegister.getKunde(id);
     }

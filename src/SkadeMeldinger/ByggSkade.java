@@ -6,6 +6,7 @@
 package SkadeMeldinger;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  *klassen gjelder forsikring på både bolig og fritidsbolig
@@ -14,8 +15,8 @@ import java.io.Serializable;
 public class ByggSkade extends SkadeMelding implements Serializable {
     
     
-    public ByggSkade(String skadeBeskrivelse , int utbetal){
-        super( skadeBeskrivelse , utbetal);
+    public ByggSkade(String skadeBeskrivelse , int utbetal, Calendar skadeDato){
+        super( skadeBeskrivelse , utbetal, skadeDato);
     }
     
 }

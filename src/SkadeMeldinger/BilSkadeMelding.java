@@ -5,6 +5,8 @@
  */
 package SkadeMeldinger;
 
+import java.util.Calendar;
+
 /**
  *
  * @author Therese
@@ -12,8 +14,8 @@ package SkadeMeldinger;
 public class BilSkadeMelding extends KjoretoySkade {
 
 
-    public BilSkadeMelding(String skadeBeskrivelse, int utbetal) {
-        super(skadeBeskrivelse, utbetal);
+    public BilSkadeMelding(String skadeBeskrivelse, int utbetal, Calendar skadeDato) {
+        super(skadeBeskrivelse, utbetal, skadeDato);
     }
 
 }

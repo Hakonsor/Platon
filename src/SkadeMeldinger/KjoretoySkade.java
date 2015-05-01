@@ -5,6 +5,8 @@
  */
 package SkadeMeldinger;
 
+import java.util.Calendar;
+
 
 /**
  *
@@ -14,8 +16,8 @@ public class KjoretoySkade extends SkadeMelding{
     
     
    
-   public KjoretoySkade(String skadeBeskrivelse , int utbetal){
-        super(skadeBeskrivelse , utbetal);
+   public KjoretoySkade(String skadeBeskrivelse , int utbetal, Calendar skadeDato){
+        super(skadeBeskrivelse , utbetal, skadeDato);
    
    }
     
