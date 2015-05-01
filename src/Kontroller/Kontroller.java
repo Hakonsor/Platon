@@ -122,6 +122,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
             String materiale, String standard, double byggSum, double inboSum) {
         try{
             Kunde kunde = (Kunde)innLoggetBruker;
+            System.out.println("innlogget bruker");
             forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType,byggeår,materiale,standard,byggSum,inboSum));
         }
         catch(ClassCastException cce){
