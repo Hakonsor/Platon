@@ -34,7 +34,6 @@ public class KundesideFribolig {
 
         borderPane.setTop(vb); //TOP
 
-
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
@@ -44,9 +43,7 @@ public class KundesideFribolig {
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
 
-
         //Bolig
-
         Label lbBolig = new Label();
         lbBolig.setText("Bolig innformasjon");
         lbBolig.setAlignment(Pos.CENTER);
@@ -74,7 +71,6 @@ public class KundesideFribolig {
         TextField tfInnboSum = new TextField();
         tfInnboSum.setPromptText("Innbo verdi");
         tfInnboSum.setMinWidth(200);
-
 
         ComboBox<String> cbEgenandel = new ComboBox<>();
         cbEgenandel.setEditable(false);
@@ -120,9 +116,7 @@ public class KundesideFribolig {
         );
         cbMatriale.setValue("Velg Byggmatriale:");
 
-
         //Registrer knapp & Label
-
         Label regLabel = new Label();
         regLabel.setText("");
         regLabel.setId("regLabel");
@@ -140,9 +134,7 @@ public class KundesideFribolig {
         btnRegFriboligforsikring.setText("Registrer Fritidsboligforsikring");
         btnRegFriboligforsikring.setId("btnRegFriboligforsikring");
         btnRegFriboligforsikring.setMinWidth(200);
-        btnRegFriboligforsikring.setOnAction(e -> {
-            regLabel.setText("Fritidsboligforsikring Registrert!");
-        });
+       
 
         grid.add(lbBolig, 0, 0);
 
@@ -163,18 +155,32 @@ public class KundesideFribolig {
         grid.add(cbStandard, 0, 9);
         grid.add(cbMatriale, 0, 10);
 
-
-
         grid.add(btnSjekkpris, 1, 13);
         grid.add(btnRegFriboligforsikring, 1, 14);
 
         grid.add(regLabel, 1, 15);
 
-
-
-
         borderPane.setCenter(grid); // CENTER
+        btnRegFriboligforsikring.setOnAction(e -> {
+            String postNr = tfPostnr.getText();
+            String adresse = tfAdresse.getText();
+            String byggeÅr = tfByggeår.getText();
+            double kvadrat = 0;
+            double byggSum = 0;
+            double innboSum= 0;
+        try {
+            kvadrat = Double.parseDouble(tfKvadrat.getText());
+            byggSum = Double.parseDouble(tfByggSum.getText());
+            innboSum = Double.parseDouble(tfInnboSum.getText());
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat.");
+        }
 
-        return borderPane;
+        kontroller.setFritidsForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
+        regLabel.setText("Boligforsikring registrert!");
+
     }
+    );
+    return borderPane ;
+}
 }

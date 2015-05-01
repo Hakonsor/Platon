@@ -12,7 +12,6 @@ package Forsikring;
  * @author Therese, Håkon
  */
 public class FritidsBolig extends Bygg {
-    boolean utleie;
     
     public FritidsBolig(boolean utleie,
          double kvadrat, String adresse, String boligType, String byggeår,

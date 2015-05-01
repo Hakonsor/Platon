@@ -10,6 +10,7 @@ import Forsikring.BilForsikring;
 import Forsikring.BoligForsikring;
 import Forsikring.Forsikringer;
 import Forsikring.ForsikringsRegister;
+import Forsikring.FritidsBolig;
 import GUI.KonsulentSide;
 import GUI.KundeSide;
 import GUI.Login;
@@ -135,7 +136,18 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //Forsikring
-
+    public void setFritidsForsikring(double kvadrat, String adresse, String boligType, String byggeår,
+            String materiale, String standard, double byggSum, double inboSum) {
+        try{
+            Kunde kunde = (Kunde)innLoggetBruker;
+            System.out.println("innlogget bruker");
+            forsikringsregister.settInn(kunde, new FritidsBolig(false, kvadrat, adresse, boligType,byggeår,materiale,standard,byggSum,inboSum));
+        }
+        catch(ClassCastException cce){
+            System.out.println("Feil med bruker");
+        }
+            
+    }
     public void setForsikring(double bonus, double egenandel, int kjorelengde,
             String regNr, String arsmodell, String type, String tfKmstand, Person person) {
         int kmStand = 0;
