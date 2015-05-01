@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -60,18 +61,22 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println("Klarte ikke å åpne logginn vindu!");
         }
     }
+
     public void regKonsulent() {
         RegKonsulent regKonsulent = new RegKonsulent(new Stage(), this);
     }
-    public void sok() {Sok sok = new Sok(new Stage(), this);}
-    
-    public void addSkade( SkadeMelding m ){
-       skademeldingregister.leggIKø(m);          
-    }
-    public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f){
-       return skademeldingregister.getSkadeMelding(  f.getClass(), innLoggetBruker );
+
+    public void sok() {
+        Sok sok = new Sok(new Stage(), this);
     }
 
+    public void addSkade(SkadeMelding m) {
+        skademeldingregister.leggIKø(m);
+    }
+
+    public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f) {
+        return skademeldingregister.getSkadeMelding(f.getClass(), innLoggetBruker);
+    }
 
     public void konsulentSide(Stage primaryStage) {
         KonsulentSide nySide = new KonsulentSide(primaryStage, this);
@@ -86,12 +91,13 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //Forsikring
-    public void setForsikring(Forsikringer forsikring){
+    public void setForsikring(Forsikringer forsikring) {
 
         forsikringsregister.settInn((Kunde) innLoggetBruker, forsikring);
     }
+
     public void setForsikring(double bonus, double egenandel,
-                              String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person){
+            String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person) {
         int fot = 0;
         if (person == null) {
             person = innLoggetBruker;
@@ -99,19 +105,19 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
         try {
             fot = Integer.parseInt(tffot);
-        }
-        catch (NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             System.out.println("Kun heltall er lov!");
             return;
         }
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BatForsikring(bonus,egenandel, motor, fot, ytelse, regNr, type, modell, arsmodell, person ));
-        }
-        catch (ClassCastException cce) {
+            forsikringsregister.settInn(kunde, new BatForsikring(bonus, egenandel, motor, fot, ytelse, regNr, type, modell, arsmodell, person));
+        } catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
     }
+
+    //Forsikring
 
     public void setForsikring(double bonus, double egenandel, int kjorelengde,
             String regNr, String arsmodell, String type, String tfKmstand, Person person) {
@@ -134,37 +140,33 @@ public class Kontroller implements EventHandler<ActionEvent> {
             System.out.println(" Innlogget kunde er ikke av type kunde");
         }
     }
-    
-    
+
     //SkadeMeldingBehandling skadeKunde-------------------------------------------
-    
     // henter den første skademeldingen i behandlingskøen
-    public SkadeMelding getFørste(){
+    public SkadeMelding getFørste() {
         return skademeldingregister.getFørste();
     }
-    
+
     // henter Skademeldingen med gitt index
-    public SkadeMelding visNesteIKø(){
-         return skademeldingregister.visNesteIKø();
+    public SkadeMelding visNesteIKø() {
+        return skademeldingregister.visNesteIKø();
     }
-    
+
     // henter den forrige skademeldingen
-    public SkadeMelding visForrigeIKø(){
+    public SkadeMelding visForrigeIKø() {
         return skademeldingregister.visForrigeIKø();
     }
-    
-    public int visIndex(){
+
+    public int visIndex() {
         return skademeldingregister.visIndex();
     }
-    
+
     // flytter skademeldingen til registeret når den er behandlet. 
-    public void ferdigBehandlet(SkadeMelding skade){
+    public void ferdigBehandlet(SkadeMelding skade) {
         skademeldingregister.flyttTilRegister(skade);
     }
-    
-   
-    //Bruker
 
+    //Bruker
     public void setInnloggetBruker(String nokkel) {
         innLoggetBruker = brukerRegister.get(nokkel);
     }
@@ -186,13 +188,12 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //Kunde
-
     public void registrerBruker(Bruker b) {
         brukerRegister.put(b.getNøkkel(), b);
     }
 
     //Konsulent
-    public void registrerKonsulent( Bruker b){
+    public void registrerKonsulent(Bruker b) {
         brukerRegister.put(b.getNøkkel(), b);
     }
 
@@ -203,20 +204,19 @@ public class Kontroller implements EventHandler<ActionEvent> {
             brukerRegister = (HashMap) innfil.readObject();
            // forsikringsregister
             //        skademeldingregister
-            
+
         } catch (ClassNotFoundException cnfe) {
             System.out.println("Opprette tomt map");
             brukerRegister = new HashMap<>();
-            
+
         } catch (FileNotFoundException fne) {
             System.out.println("Finner ikke datafil. Oppretter ny fil.\n");
             brukerRegister = new HashMap<>();
-            
+
         } catch (IOException ioe) {
             System.out.println("Innlesingsfeil. Oppretter ny fil.\n");
             brukerRegister = new HashMap<>();
-            
-                   
+
         }
     }
 
@@ -224,7 +224,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try (ObjectOutputStream utfil = new ObjectOutputStream(
                 new FileOutputStream("src/Fil/forsikring.data"))) {
             utfil.writeObject(brukerRegister);
-            
+
         } catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
         } catch (IOException ioe) {
@@ -239,14 +239,14 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //infosiden
-    public Forsikringer finnForsikringsType(int i){
-    return null;
-    } 
-    
+    public Forsikringer finnForsikringsType(int i) {
+        return null;
+    }
+
     // Finner alle forsikringene til en gitt kunde, legger i liste, returnerer null hvis kunden ikke har noen forsikring.
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
-        List a = forsikringsregister.finnForsikring(k, i); 
+        List a = forsikringsregister.finnForsikring(k, i);
         if (a == null) {
             return null;
         }
@@ -269,7 +269,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
                 //iterator.next().getRegNr()
             }
             return liste;
-        } else if (a.get(0) instanceof  BatForsikring) {
+        } else if (a.get(0) instanceof BatForsikring) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }
@@ -279,5 +279,29 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public Forsikringer getForsikring(int parseInt) {
         return forsikringsregister.finnForsPolise(parseInt);
+    }
+
+    public List<Kunde> sokResultater(String fornavn, String etternavn, String kundernr) {
+        List<Kunde> liste = new ArrayList<>();
+        Kunde kunde;
+        if (brukerRegister.containsKey(kundernr)) {
+            liste.add((Kunde) brukerRegister.get(kundernr));
+            return liste;
+        }
+        for (Entry<String, Bruker> e : brukerRegister.entrySet()) {
+
+            if (e.getValue() instanceof Kunde) {
+                kunde = (Kunde) e.getValue();
+                if (kunde.getFornavn().equals(fornavn)) {
+                    liste.add(kunde);
+                } else if (kunde.getEtternavn().equals(etternavn)) {
+                    liste.add(kunde);
+                }
+            }
+        }
+        return liste;
+    }
+    public Kunde getKunde(String id) {
+        return (Kunde) brukerRegister.get(id);
     }
 }

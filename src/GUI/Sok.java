@@ -3,6 +3,7 @@ package GUI;
 import Kontroller.Kontroller;
 import Person.Konsulent;
 import Person.Kunde;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -84,9 +85,14 @@ public class Sok {
         btnvelg.setMinWidth(100);
         btnvelg.setOnAction(e -> {
             
-           // kundeNr.getText()// finn kunde      
-            //etternavn.getText()// finn kunde
-            //fornavn.getText() // finn kunde
+            Kunde k = kontroll.getKunde(listView.getSelectionModel().getSelectedItem().replaceAll("\\D", ""));
+            if (k != null) {
+                kontroll.setInnloggetBruker((listView.getSelectionModel().getSelectedItem().replaceAll("\\D", "")));
+                KonsulentsideKunde.tfKundenavn.setText(kontroll.getInnloggetBruker().getFornavn() + " " + kontroll.getInnloggetBruker().getEtternavn());
+                vindu.close();
+            }
+            else
+                System.out.println("Du har ikke valgt en kunde");
                     
             //listView.p kundeListe = kontroll.finnKunde(kundeNr.getText(), etternavn.getText(), fornavn.getText());
             System.out.println("Du har valgt en kunde!");
@@ -96,13 +102,11 @@ public class Sok {
         btnsøk.setId("btnsøk");
         btnsøk.setMinWidth(100);
         btnsøk.setOnAction(e -> {
-            System.out.println("Du søker");
-
-            if (kundeNr.getText().equals(kontroll.finnBruker(kundeNr.getText()))) {
-                System.out.println(kundeNr.getText());
-            }
-            else {
-                System.out.println("Fant ikke kunden");
+            data.clear();
+            List<Kunde> list = kontroll.sokResultater(fornavn.getText(), etternavn.getText(), kundeNr.getText());
+            System.out.println(list.toString());
+            for (Kunde i : list) {
+                data.add(i.getFornavn() + " " + i.getEtternavn() + ", KundeNr: " + i.getNøkkel());
             }
         });
 
@@ -116,8 +120,7 @@ public class Sok {
         hb.setAlignment(Pos.CENTER);
         hb.getChildren().addAll(btnlukk, btnvelg, btnsøk);
 
-
-       // grid.add(img, 0, 0);
+        grid.add(img, 0, 0);
         grid.add(fornavn, 0, 1);
         grid.add(etternavn, 0, 2);
         grid.add(kundeNr, 0, 3);
