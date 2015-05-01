@@ -24,6 +24,7 @@ public abstract class Forsikringer implements Serializable{
     protected double egenandel;
     protected Calendar startDato;
     protected Calendar sluttDato;
+     
     
     public Forsikringer() {
         poliseNr = ++nestePoliseNr;
@@ -36,6 +37,7 @@ public abstract class Forsikringer implements Serializable{
        this.premie = premie;
        this.egenandel = egenandel;
        aktiv = true;
+       startDato = Calendar.getInstance();
     }
     
     // legger peker til kunden som har denne forsikringen
@@ -76,6 +78,7 @@ public abstract class Forsikringer implements Serializable{
        
     }
    
+    // returnerer uformattert dato.
     public Calendar getStartDato(){
        return startDato;
    }
@@ -85,6 +88,7 @@ public abstract class Forsikringer implements Serializable{
    } 
     
     public String toString(){
+        
         String s = "Polisenummer: " + poliseNr + "\nPremie: "
         + premie + "\nEgenandel: " + egenandel  +
         "\nGjelder fra: " +  startDato;

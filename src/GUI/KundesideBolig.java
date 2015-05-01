@@ -28,7 +28,7 @@ public class KundesideBolig {
         vb.setAlignment(Pos.CENTER);
 
         Label overskrift = new Label();
-        overskrift.setText("Her registrerer du boligforsikring");
+        overskrift.setText("Boligforsikring\nSørg for å ha nødvendig økonomisk støtte dersom noe skulle skje med huset ditt.");
         overskrift.setId("overskrift");
         vb.getChildren().addAll(overskrift);
 
@@ -48,7 +48,7 @@ public class KundesideBolig {
         //Bolig
 
         Label lbBolig = new Label();
-        lbBolig.setText("Bolig innformasjon");
+        lbBolig.setText("Informasjon om din bolig");
         lbBolig.setAlignment(Pos.CENTER);
 
         TextField tfPostnr = new TextField();
@@ -129,7 +129,7 @@ public class KundesideBolig {
         regLabel.setAlignment(Pos.CENTER);
 
         Button btnSjekkpris = new Button();
-        btnSjekkpris.setText("Sjekk Pris");
+        btnSjekkpris.setText("Beregn pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
         btnSjekkpris.setOnAction(e -> {
@@ -141,7 +141,7 @@ public class KundesideBolig {
         btnRegBoligforsikring.setId("btnRegBoligforsikring");
         btnRegBoligforsikring.setMinWidth(200);
         btnRegBoligforsikring.setOnAction(e -> {
-            regLabel.setText("Boligforsikring Registrert!");
+            regLabel.setText("Boligforsikring registrert!");
         });
 
         grid.add(lbBolig, 0, 0);

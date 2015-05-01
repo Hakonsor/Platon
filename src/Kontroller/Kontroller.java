@@ -106,7 +106,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BatForsikring(bonus, motor, fot, ytelse, regNr, type, modell, arsmodell, person ));
+            forsikringsregister.settInn(kunde, new BatForsikring(bonus,egenandel, motor, fot, ytelse, regNr, type, modell, arsmodell, person ));
         }
         catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");

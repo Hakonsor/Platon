@@ -17,8 +17,8 @@ public class BatForsikring extends Kjoretoy implements Serializable{
     private int lendgeFot, motorStyrke;
     private String motorType;
     
-    public BatForsikring( double bonus, String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
-    super( bonus, regNr ,type,modell,arsModell, person); 
+    public BatForsikring( double bonus,double egenandel, String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
+    super( bonus,egenandel, regNr ,type,modell,arsModell, person); 
     this.lendgeFot = lendgeFot;
     this.motorStyrke = motorStyrke;
     this.motorType = motorType;
