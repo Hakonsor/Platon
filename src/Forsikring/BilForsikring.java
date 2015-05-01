@@ -24,6 +24,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     public int getKjorelengde(){
         return kjorelengde;
     }
+    
         
     
 

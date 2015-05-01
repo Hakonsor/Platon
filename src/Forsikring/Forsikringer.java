@@ -104,6 +104,10 @@ public abstract class Forsikringer implements Serializable{
     public boolean equals(Forsikringer f){
        return ( f.getPoliseNr() == ( poliseNr) );
        }
+
+    public int utbetal(int i, double d, int i0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
    
  }// end of abstract class Forsikringer

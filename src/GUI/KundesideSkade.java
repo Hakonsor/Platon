@@ -195,7 +195,8 @@ public class KundesideSkade {
         grid.add(lbSkade, 0, 9);
 
         borderPane.setCenter(grid); // CENTER
-
+        
+        // henter datoen og konverterer den til Calendar
         dpDato.setOnAction((ActionEvent e) -> {
             {
                 LocalDate date = dpDato.getValue();

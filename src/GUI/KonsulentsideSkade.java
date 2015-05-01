@@ -1,15 +1,17 @@
 package GUI;
 
+import Forsikring.BatForsikring;
+import Forsikring.BilForsikring;
+import Forsikring.BoligForsikring;
+import Forsikring.FritidsBolig;
 import Kontroller.Kontroller;
+import SkadeMeldinger.BilSkadeMelding;
 import SkadeMeldinger.SkadeMelding;
-import SkadeMeldinger.SkadeMeldingRegister;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 /**
  * Created by Magnus on 27.04.15.
@@ -107,6 +109,25 @@ public class KonsulentsideSkade {
                     skade = kontroll.visNesteIKø();
                     tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                     taLes.setText(skade.toString());
+        });
+         btnGodta.setOnAction(( ActionEvent e) -> {
+             kontroll.ferdigBehandlet(skade);
+             if(skade.getForsikring() instanceof BilForsikring){
+                 BilSkadeMelding bilskade = (BilSkadeMelding)skade;
+                 int sum = bilskade.getForsikring().utbetal(30000, 50000.0, 6000);
+                 System.out.println("Bilskade" + sum);
+                
+             }
+             else if(skade.getForsikring() instanceof BatForsikring){
+         
+             }
+             else if(skade.getForsikring() instanceof BoligForsikring){
+                 
+             }
+             else if(skade.getForsikring() instanceof FritidsBolig){
+                 
+             }
+             
         });
          
         

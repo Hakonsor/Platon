@@ -70,6 +70,7 @@ public class SkadeMeldingRegister implements Serializable{
         else{
             index = 0;
             return behandling.getFirst();
+           
         }
     }
     
