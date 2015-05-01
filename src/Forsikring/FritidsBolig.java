@@ -5,13 +5,13 @@
  */
 package Forsikring;
 
-import CSS.Bilder.Bolig;
+
 
 /**
  *
  * @author Therese, Håkon
  */
-public class FritidsBolig extends Bolig {
+public class FritidsBolig extends Bygg {
     boolean utleie;
     
     public FritidsBolig(boolean utleie,
