@@ -132,6 +132,19 @@ public class Kontroller implements EventHandler<ActionEvent> {
             
     }
 
+    public void setForsikring(double kvadrat, String adresse, String boligType, String byggeår,
+            String materiale, String standard, double byggSum, double inboSum) {
+        try{
+            Kunde kunde = (Kunde)innLoggetBruker;
+            System.out.println("innlogget bruker");
+            forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType,byggeår,materiale,standard,byggSum,inboSum));
+        }
+        catch(ClassCastException cce){
+            System.out.println("Feil med bruker");
+        }
+            
+    }
+
     //Forsikring
 
     public void setForsikring(double bonus, double egenandel, int kjorelengde,
