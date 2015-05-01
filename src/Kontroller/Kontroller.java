@@ -7,6 +7,7 @@ package Kontroller;
 
 import Forsikring.BatForsikring;
 import Forsikring.BilForsikring;
+import Forsikring.BoligForsikring;
 import Forsikring.Forsikringer;
 import Forsikring.ForsikringsRegister;
 import GUI.KonsulentSide;
@@ -119,6 +120,13 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public void setForsikring(double kvadrat, String adresse, String boligType, String byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
+        try{
+            Kunde kunde = (Kunde)innLoggetBruker;
+            forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType,byggeår,materiale,standard,byggSum,inboSum));
+        }
+        catch(ClassCastException cce){
+            System.out.println("Feil med bruker");
+        }
             
     }
 
