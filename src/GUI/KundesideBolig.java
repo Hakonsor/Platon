@@ -156,6 +156,8 @@ public class KundesideBolig {
             double kvadrat = 0;
             double byggSum = 0;
             double innboSum= 0;
+            String mertiale = cbMatriale.getValue();
+            
 
             try {
                 kvadrat = Double.parseDouble(tfKvadrat.getText());

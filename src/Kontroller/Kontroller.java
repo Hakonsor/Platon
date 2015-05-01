@@ -303,6 +303,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }
+        }   else if (a.get(0) instanceof FritidsBolig) {
+            while (iterator.hasNext()) {
+                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+            }
         }
         return liste;
     }

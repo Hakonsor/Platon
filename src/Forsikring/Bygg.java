@@ -26,7 +26,7 @@ abstract class Bygg extends Forsikringer implements Serializable{
     
     public Bygg( boolean utleie, double kvadrat, String adresse, String boligType, String byggeår,
                   String materiale, String standard, double byggSum, double inboSum){
-        super();
+        super(0,0);
         this.kvadrat = kvadrat;
         this.adresse = adresse;
         this.boligType = boligType;
