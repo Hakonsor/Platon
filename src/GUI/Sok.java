@@ -103,7 +103,7 @@ public class Sok {
         btnsøk.setMinWidth(100);
         btnsøk.setOnAction(e -> {
             data.clear();
-            List<Kunde> list = kontroll.sokResultater(fornavn.getText(), etternavn.getText(), kundeNr.getText());
+            List<Kunde> list = kontroll.søkeResultater(fornavn.getText(), etternavn.getText(), kundeNr.getText());
             System.out.println(list.toString());
             for (Kunde i : list) {
                 data.add(i.getFornavn() + " " + i.getEtternavn() + ", KundeNr: " + i.getNøkkel());
