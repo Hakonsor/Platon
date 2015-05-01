@@ -6,6 +6,7 @@
 package SkadeMeldinger;
 
 
+
 import Forsikring.Forsikringer;
 import Person.Bruker;
 import java.io.Serializable;
@@ -93,13 +94,6 @@ public class SkadeMeldingRegister implements Serializable{
         
     }
     
-    
-    // legger skademelcingen i registeret, den kommer fra køen
-    //public void addSkadeMelding( SkadeMelding skademelding ) {
-        
-        //register.add(skademelding );
-   // }
-    
 
     // Metode som henter en liste over alle skademeldinger knyttet en bestemt bruker(kunde)
     public ArrayList<SkadeMelding> getSkadeMelding(Class forsikring, Bruker b) {
@@ -109,7 +103,26 @@ public class SkadeMeldingRegister implements Serializable{
         });
         return liste;
     }
+    
+    // metoden kaller på beregningsmetoder som setter utbetalingsbeløp pga skade, etc.
+    /*public void setInfoSkade(SkadeMelding skade) {
+        if (skade.getForsikring() instanceof BilForsikring) {
+            BilSkadeMelding bilskade = (BilSkadeMelding) skade;
+            int sum = bilskade.getForsikring().utbetal(30000, 50000.0, 6000);
+            System.out.println("Bilskade:" + sum);
+
+        } else if (skade.getForsikring() instanceof BatForsikring) {
+            BatSkadeMelding batskade = (BatSkadeMelding) skade;
+            int sum = batskade.getForsikring().utbetal(4000, 50000.0, 6000);
+            System.out.println("Batskade:" + sum);
+        } else if (skade.getForsikring() instanceof BoligForsikring) {
+             BoligSkadeMelding boligskade = (BoligSkadeMelding) skade; 
+ 
+        } else if (skade.getForsikring() instanceof FritidsBolig) {
+             BoligSkadeMelding fritidskade = (BoligSkadeMelding) skade; 
+        }*/
+    }
 
 
 
-}
+

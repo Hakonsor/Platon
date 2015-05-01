@@ -5,6 +5,7 @@
  */
 package SkadeMeldinger;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 
@@ -12,7 +13,7 @@ import java.util.Calendar;
  *
  * @author Therese
  */
-public class KjoretoySkade extends SkadeMelding{
+public class KjoretoySkade extends SkadeMelding implements Serializable{
     
     
    

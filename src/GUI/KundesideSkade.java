@@ -249,15 +249,33 @@ public class KundesideSkade {
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
             try {
                 if (fors instanceof BilForsikring) {
-                    kontroll.addSkade(new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
+                    BilForsikring f = (BilForsikring)fors;
+                    BilSkadeMelding bil =new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato); 
+                    kontroll.addSkade(bil, f);
+                    bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
+                    skriveOmråde.setText(bil.melding());
                 } else if (fors instanceof BatForsikring) {
-                    kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
+                    BatForsikring f = (BatForsikring) fors;
+                    BatSkadeMelding bat =new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
+                    kontroll.addSkade(bat, f);
+                    bat.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                 } else if (fors instanceof BoligForsikring) {
-                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
+                    BoligForsikring f = (BoligForsikring)fors;
+                    BoligSkadeMelding bolig = new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
+                    kontroll.addSkade(bolig,f);
+                    f.utbetaling(Integer.parseInt(tfBeløp.getText()), 2015);// 2015 er året skaden inntraff 
+                    skriveOmråde.setText(bolig.melding());
                 } else if (fors instanceof FritidsBolig) {
-                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
+                    FritidsBolig f = (FritidsBolig)fors;
+                    FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
+                    kontroll.addSkade(fri,f);
+                    skriveOmråde.setText(fri.melding());
+                    f.utbetaling(Integer.parseInt(tfBeløp.getText()), 2015);
                 } else if (fors instanceof ReiseForsikring) {
-                    kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato), fors);
+                    ReiseForsikring f = (ReiseForsikring) fors;
+                    ReiseSkadeMelding reise =new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
+                    kontroll.addSkade(reise, f);
+                    skriveOmråde.setText(reise.melding());
                 }
             } catch (NumberFormatException nfe) {
                 lbFeilFormat.setText("Kun hele tall.");

@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 
 /**
  * Created by Magnus on 27.04.15.
+ * author@ Therese 
  */
 public class KonsulentsideSkade {
 

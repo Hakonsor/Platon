@@ -21,5 +21,14 @@ public class ReiseSkadeMelding extends SkadeMelding{
         super(skadeBeskrivelse ,  utbetal, skadeDato);
  
    }
+   
+   public String melding(){
+        String s;
+        s = "Reiseskademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"+
+                "Forsikringstype: " + "verden\n";
+                super.toString();
+        
+        return s;
+    }
     
 }

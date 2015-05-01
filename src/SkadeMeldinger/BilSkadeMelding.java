@@ -5,6 +5,7 @@
  */
 package SkadeMeldinger;
 
+import Forsikring.BilForsikring;
 import java.util.Calendar;
 
 /**
@@ -17,5 +18,12 @@ public class BilSkadeMelding extends KjoretoySkade {
     public BilSkadeMelding(String skadeBeskrivelse, int utbetal, Calendar skadeDato) {
         super(skadeBeskrivelse, utbetal, skadeDato);
     }
-
+    
+    public String melding(){
+        String s;
+        s = "Bilskademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"+
+                  "RegNO: "+ ((BilForsikring)forsikring).getRegNr()+ "\n" +super.toString();
+        
+        return s;
+    }
 }

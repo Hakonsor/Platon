@@ -71,8 +71,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     // legger skade i skademeldingskøen. slik at den kan bli behandlet av konsulenten.
-    public void addSkade(SkadeMelding m,Forsikringer f) {
-        skademeldingregister.leggIKø(m,f);
+    public void addSkade(SkadeMelding skade,Forsikringer fors) {
+        skademeldingregister.leggIKø(skade,fors);
     }
 
     public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f) {

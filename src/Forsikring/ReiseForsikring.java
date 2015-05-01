@@ -44,5 +44,8 @@ public class ReiseForsikring extends Forsikringer implements Serializable{
     }
     
     
+
+    
+    
    
 }// end of class ForsikringsPremie.

@@ -18,16 +18,16 @@ import java.util.Date;
  * @author Therese, Håkon
  */
 public abstract class SkadeMelding implements Serializable {
-    private String skadeBeskrivelse;
-    private Calendar skadeDato;  // når skaden inntraff.
-    private Calendar datoInnmeldt;
-    private Object skadeBilde;
-    private int skadeSum;
-    private Forsikringer forsikring;
+    protected String skadeBeskrivelse;
+    protected Calendar skadeDato;  // når skaden inntraff.
+    protected Calendar datoInnmeldt;
+    protected Object skadeBilde;
+    protected int skadeSum;
+    protected Forsikringer forsikring;
    // private String forsikringstype;
-    private static int nesteSkadeNr = 100000;
-    private int skadeNr;
-    private int utbetaling;
+    protected static int nesteSkadeNr = 100000;
+    protected int skadeNr;
+    protected int utbetaling;
     private boolean godkjent;
     
     
@@ -44,11 +44,16 @@ public abstract class SkadeMelding implements Serializable {
         this.skadeDato = skadeDato; 
     }
     
-    // viser at skademeldingen er godkjent og utbetaler og legger til listen
-    public void okUtbetal(int utbetaling){
-        godkjent = true;
+    
+    public void setUtbetaling(int utbetaling){
         this.utbetaling = utbetaling;
-        
+    }
+    // viser at skademeldingen er godkjent.
+    public void okUtbetal(){
+        godkjent = true;
+    }
+    public void avvis(){
+        utbetaling = 0;
     }
     
     // henter summen av alle innbetalinger 
@@ -89,7 +94,9 @@ public abstract class SkadeMelding implements Serializable {
         Date dt = skadeDato.getTime();
        DateFormat df = new SimpleDateFormat("dd.MM.yyyy"); 
        String dato = df.format(dt);
-        String s = "Skadedato: " + dato + "\nSkadeNr: " + skadeNr + "\nSkadebeskrivelse: \n\n " + skadeBeskrivelse ;
+        String s = "Skadedato: " + dato + "\tSkadeNr: " + skadeNr + "\nSkadebeløp: "
+                + skadeSum + "\t\t Utbetaling: " + utbetaling + "\nSkadebeskrivelse: \n" 
+                + skadeBeskrivelse;
         return s;
     }
 }

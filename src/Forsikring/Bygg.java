@@ -21,7 +21,7 @@ abstract class Bygg extends Forsikringer implements Serializable {
     protected String standard;
     protected double byggSum;
     protected double innboSum;
-    protected double forsikringSum = innboSum + byggSum;
+    protected double forsikringSum;
     protected boolean utleie;
 
     public Bygg(boolean utleie, double kvadrat, String adresse, String boligType, int byggeår,
@@ -36,6 +36,7 @@ abstract class Bygg extends Forsikringer implements Serializable {
         this.materiale = materiale;
         this.standard = standard;
         this.utleie = utleie;
+        forsikringSum = innboSum + byggSum;
         setPremie(premie(kvadrat, byggSum, innboSum));
 
     }
