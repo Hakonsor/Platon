@@ -8,7 +8,9 @@ package Forsikring;
 import java.io.Serializable;
 import java.util.List;
 import Person.Kunde;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -83,15 +85,17 @@ public abstract class Forsikringer implements Serializable{
        return startDato;
    }
    
+    // returnerer en uformattert sluttdato
     public Calendar getSluttDato(){
        return sluttDato;
    } 
     
     public String toString(){
-        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String date = dateFormat.format(startDato.getTime());
         String s = "Polisenummer: " + poliseNr + "\nPremie: "
         + premie + "\nEgenandel: " + egenandel  +
-        "\nGjelder fra: " +  startDato;
+        "\nGjelder fra: " +  date;
             return s;
     }
     

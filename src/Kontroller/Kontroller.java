@@ -135,7 +135,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
     }
     
-    //SkadeMeldingBehandling skadeKunde
+    
+    //SkadeMeldingBehandling skadeKunde-------------------------------------------
     
     // henter den første skademeldingen i behandlingskøen
     public SkadeMelding getFørste(){
