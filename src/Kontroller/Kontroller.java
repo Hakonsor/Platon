@@ -237,6 +237,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
         ArrayList<String> liste = new ArrayList<>();
         Iterator<BilForsikring> iterator = a.iterator();
+
         if (a.get(0) instanceof BilForsikring) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));

@@ -1,0 +1,6 @@
+#error{
+    -fx-text-fill: red;
+}
+#valid{
+    -fx-text-fill: black;
+}

@@ -3,6 +3,8 @@ package GUI;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import Person.Person;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import javax.swing.*;
 import java.util.LinkedList;
 
 /**
@@ -114,10 +117,46 @@ public class KundesideBåt implements ComboBoxConverter{
         TextField tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr");
         tfRegnr.setMinWidth(200);
+        tfRegnr.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                
+            }
+        });
+
+
+
 
         TextField tfÅrsmodell = new TextField();
         tfÅrsmodell.setPromptText("Årsmodell");
         tfÅrsmodell.setMinWidth(200);
+
+        tfÅrsmodell.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String årsmodell = tfÅrsmodell.getText();
+
+                if (årsmodell.length() == 0) {
+                    tfÅrsmodell.setId("valid");
+                }
+
+                if (!årsmodell.matches(regex) || årsmodell.length() > 4) {
+                    tfÅrsmodell.setId("error");
+                } else {
+                    tfÅrsmodell.setId("valid");
+                }
+                if (årsmodell.length() == 0) {
+                    tfÅrsmodell.setId("valid");
+                }
+            }
+        });
+
+
+
+
+
 
         TextField tfBåtmodell = new TextField();
         tfBåtmodell.setPromptText("Båtmodell eks (Ibiza 22");
@@ -249,27 +288,33 @@ public class KundesideBåt implements ComboBoxConverter{
         btnRegBåtforsikring.setId("btnRegBåtforsikring");
         btnRegBåtforsikring.setMinWidth(200);
         btnRegBåtforsikring.setOnAction(e -> {
-            regLabel.setText("Båtforsikring Registrert!");
-            Person person;
-            if (rbtJa.selectedProperty().getValue())
-                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
-            else
-                person = null;
 
 
-            int effekt = 0;
 
-            try{
-                effekt = Integer.parseInt(tfYtelse.getText());
-            }catch(NumberFormatException nfe){
-                System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
-                        "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
+            if(tfÅrsmodell.getId().equals("valid")){
+                regLabel.setText("Båtforsikring Registrert!");
+                Person person;
+                if (rbtJa.selectedProperty().getValue())
+                    person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
+                else
+                    person = null;
+
+
+                int effekt = 0;
+
+                try {
+                    effekt = Integer.parseInt(tfYtelse.getText());
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
+                            "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
+                }
+
+
+                kontroll.setForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, person);
+                regLabel.setText("Bilforsikring Registrert!");
+            }else{
+                regLabel.setText("Fargeblind bro?!");
             }
-
-
-
-            kontroll.setForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , person);
-            regLabel.setText("Bilforsikring Registrert!");
         });
 
         /*
@@ -321,6 +366,11 @@ public class KundesideBåt implements ComboBoxConverter{
 
         borderPane.setCenter(grid); // CENTER
 
+        borderPane.getStylesheets().add("CSS/error.css");
+
         return borderPane;
+
     }
+
+
 }

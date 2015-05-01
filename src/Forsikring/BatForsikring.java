@@ -35,6 +35,6 @@ public class BatForsikring extends Kjoretoy implements Serializable{
     }
     
     public String toString(){
-        return "s";
+        return "s LALALALALALLA";
     }
 }

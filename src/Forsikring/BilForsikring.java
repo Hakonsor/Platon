@@ -12,6 +12,7 @@ import java.io.Serializable;
  *
  * @author Therese, Håkon
  */
+
 public class BilForsikring extends Kjoretoy implements Serializable {
     private int kjorelengde;
     
