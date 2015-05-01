@@ -67,6 +67,7 @@ public class KundesideInfo {
             ArrayList<String> forsikringliste = kontroller.
                     getInfoForsikringListe(forsikringComboBox.getItems().
                             indexOf(forsikringComboBox.getValue()));
+            System.out.println(forsikringliste);
             if (forsikringliste == null) {
                 navn.clear();
                 navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");

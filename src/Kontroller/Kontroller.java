@@ -277,7 +277,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         return new ArrayList<>(a);
     }
 
-    //
+    // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
@@ -286,7 +286,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
 
         ArrayList<String> liste = new ArrayList<>();
-        Iterator<BilForsikring> iterator = a.iterator();
+        Iterator<? extends Forsikringer> iterator = a.iterator();
         if (a.get(0) instanceof BilForsikring) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
@@ -294,6 +294,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
             }
             return liste;
         } else if (a.get(0) instanceof BatForsikring) {
+            while (iterator.hasNext()) {
+                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+            }
+        }   else if (a.get(0) instanceof BoligForsikring) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }

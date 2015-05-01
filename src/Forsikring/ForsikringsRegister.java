@@ -30,6 +30,7 @@ public class ForsikringsRegister implements Serializable {
      public void settInn(Kunde k,Forsikringer f){
          f.setKunde(k);
          register.add(f);
+         System.out.println(register.contains(f));
      }
      
      // metoden returnerer en liste med forsikringer til en bestemt kunde. 
@@ -58,6 +59,11 @@ public class ForsikringsRegister implements Serializable {
                 });
             }
             else if(forsType == 4){
+                register.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof BoligForsikring)).forEach((f) -> {
+                    liste.add(f);
+                });
+            }
+             else if(forsType == 5){
                 register.stream().filter((f) -> (f.getKunde().getKundeNr() == kunde.getKundeNr() && f instanceof FritidsBolig)).forEach((f) -> {
                     liste.add(f);
                 });

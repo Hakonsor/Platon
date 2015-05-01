@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 
 /**
  * Created by Magnus on 27.04.15.
+ *
  * @author Therese
  */
 public class KundesideSkade {
@@ -68,6 +69,7 @@ public class KundesideSkade {
         ComboBox<String> forsikringComboBox = new ComboBox<String>();
         forsikringComboBox.setEditable(false);
         forsikringComboBox.getItems().addAll(
+                "Alle",
                 "Båtforsikring",
                 "Reiseforsikring",
                 "Bilforsikring",
@@ -199,7 +201,13 @@ public class KundesideSkade {
         });
 
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
-            Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
+            int poisnr = -1;
+            if (listView.getSelectionModel().getSelectedItem() != null) {
+                 poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
+            }
+
+           
+            Forsikringer fors = kontroll.getForsikring(poisnr);
             if (fors != null) {
                 skriveOmråde.setEditable(true);
                 if (fors instanceof BoligForsikring || fors instanceof FritidsBolig) {
@@ -221,21 +229,20 @@ public class KundesideSkade {
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
             try {
                 if (fors instanceof BilForsikring) {
-                    kontroll.addSkade(new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
+                    kontroll.addSkade(new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
                 } else if (fors instanceof BatForsikring) {
-                    kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
+                    kontroll.addSkade(new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
                 } else if (fors instanceof BoligForsikring) {
-                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
+                    kontroll.addSkade(new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
                 } else if (fors instanceof FritidsBolig) {
-                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
+                    kontroll.addSkade(new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
                 } else if (fors instanceof ReiseForsikring) {
-                    kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())),fors);
+                    kontroll.addSkade(new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText())), fors);
                 }
             } catch (NumberFormatException nfe) {
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);
             }
-            
 
             lbSkade.setText("Skademelding er sendt inn");
         });
