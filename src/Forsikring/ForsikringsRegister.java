@@ -81,6 +81,20 @@ public class ForsikringsRegister implements Serializable {
           
         }// end of method finnAntallForsikringer
        
+        public int genererPolisenr(){
+            int nr = 1000;
+            if(register.isEmpty()){
+                return nr;
+            }else{
+                for(Forsikringer forsikring : register){
+                    if(forsikring.getPoliseNr() == nr){
+                        nr++;
+                    }
+                }
+            }
+            return nr;
+            
+        }
         
         // finner en forsikring gitt polisenr
         public Forsikringer finnForsPolise(int poliseNr){
