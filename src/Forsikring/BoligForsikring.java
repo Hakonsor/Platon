@@ -5,14 +5,13 @@
  */
 package Forsikring;
 
-import CSS.Bilder.Bolig;
 import java.io.Serializable;
 
 /**
  *
  * @author Therese
  */
-public class BoligForsikring extends Bolig implements Serializable {
+public class BoligForsikring extends Bygg implements Serializable {
     
     public BoligForsikring(
                   double kvadrat, String adresse, String boligType, String byggeår,
