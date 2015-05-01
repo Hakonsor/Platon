@@ -98,19 +98,15 @@ public class KonsulentsideSkade {
         vb.getChildren().addAll(lbAntall, hbControll, taLes, hbKnapper);
         borderPane.setCenter(vb); // CENTER
         btnVenstre.setOnAction(( e) -> {
-            
                 skade = kontroll.visForrigeIKø();
                 tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                 taLes.setText(skade.toString());
-                System.out.println("Du trykket på forrige!");
         });
          btnHøyre.setOnAction(( ActionEvent e) -> {
              
                     skade = kontroll.visNesteIKø();
                     tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                     taLes.setText(skade.toString());
-
-            System.out.println("Du trykket på Neste!");
         });
          
         

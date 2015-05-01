@@ -6,13 +6,11 @@
 package Forsikring;
 
 import java.io.Serializable;
-import java.util.List;
 import Person.Kunde;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 
 /**
  *
@@ -41,7 +39,6 @@ public abstract class Forsikringer implements Serializable{
        this.egenandel = egenandel;
        aktiv = true;
        startDato = Calendar.getInstance();
-        System.out.println(startDato.getTime().toString());
     }
     
     // legger peker til kunden som har denne forsikringen
@@ -93,7 +90,7 @@ public abstract class Forsikringer implements Serializable{
    } 
     
     public String toString(){
-        Date dt = startDato.getTime();
+       Date dt = startDato.getTime();
        DateFormat df = new SimpleDateFormat("dd.MM.yyyy"); 
        String dato = df.format(dt);
        
