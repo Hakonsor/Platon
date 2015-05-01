@@ -16,15 +16,14 @@ import java.util.LinkedList;
  * @author Therese, Håkon
  */
 public abstract class Forsikringer implements Serializable{
-    private boolean aktiv;
-    private Kunde kunde;
-    private int poliseNr;
-    private static int nestePoliseNr = 100000;
-    private double premie;
-    private double egenandel;
-    private Calendar startDato;
-    private Calendar sluttDato;
-    private List<Integer> innbetalinger  = new LinkedList();
+    protected boolean aktiv;
+    protected Kunde kunde;
+    protected int poliseNr;
+    protected static int nestePoliseNr = 100000;
+    protected double premie;
+    protected double egenandel;
+    protected Calendar startDato;
+    protected Calendar sluttDato;
     
     public Forsikringer() {
         poliseNr = ++nestePoliseNr;
