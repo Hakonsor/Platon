@@ -21,6 +21,8 @@ import java.util.logging.Logger;
  */
 public class KonsulentsideKunde {
 
+    public static TextField tfKundenavn = new TextField();
+
     public static Pane kundeFane(Kontroller kontroller) {
 
         //Group root = new Group();
@@ -32,7 +34,6 @@ public class KonsulentsideKunde {
         vb.setSpacing(70);
         vb.setAlignment(Pos.CENTER);
 
-        TextField tfKundenavn = new TextField();
         tfKundenavn.setText("Ola Normann");
         tfKundenavn.setId("Kundenavn");
         tfKundenavn.setMinWidth(300);
@@ -78,6 +79,7 @@ public class KonsulentsideKunde {
         ComboBox<String> forsikringComboBox = new ComboBox<>();
         forsikringComboBox.setEditable(false);
         forsikringComboBox.getItems().addAll(
+                "Alle",
                 "Båtforsikring",
                 "Reiseforsikring",
                 "Bilforsikring",

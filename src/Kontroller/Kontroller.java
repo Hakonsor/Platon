@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -118,6 +119,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
     }
 
+
+
     public void setForsikring(double kvadrat, String adresse, String boligType, String byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
         try{
@@ -130,6 +133,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
             
     }
+
+    //Forsikring
 
     public void setForsikring(double bonus, double egenandel, int kjorelengde,
             String regNr, String arsmodell, String type, String tfKmstand, Person person) {
@@ -214,20 +219,25 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
             brukerRegister = (HashMap) innfil.readObject();
-           // forsikringsregister
-            //        skademeldingregister
-
+            skademeldingregister = (SkadeMeldingRegister) innfil.readObject();
+            forsikringsregister = (ForsikringsRegister) innfil.readObject();
         } catch (ClassNotFoundException cnfe) {
-            System.out.println("Opprette tomt map");
+            System.out.println("Opprette nye registere");
             brukerRegister = new HashMap<>();
+            skademeldingregister = new SkadeMeldingRegister();
+            forsikringsregister = new ForsikringsRegister();
 
         } catch (FileNotFoundException fne) {
             System.out.println("Finner ikke datafil. Oppretter ny fil.\n");
             brukerRegister = new HashMap<>();
+            skademeldingregister = new SkadeMeldingRegister();
+            forsikringsregister = new ForsikringsRegister();
 
         } catch (IOException ioe) {
             System.out.println("Innlesingsfeil. Oppretter ny fil.\n");
             brukerRegister = new HashMap<>();
+            skademeldingregister = new SkadeMeldingRegister();
+            forsikringsregister = new ForsikringsRegister();
 
         }
     }
@@ -236,6 +246,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try (ObjectOutputStream utfil = new ObjectOutputStream(
                 new FileOutputStream("src/Fil/forsikring.data"))) {
             utfil.writeObject(brukerRegister);
+            utfil.writeObject(skademeldingregister);
+            utfil.writeObject(forsikringsregister);
 
         } catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
@@ -291,5 +303,29 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public Forsikringer getForsikring(int parseInt) {
         return forsikringsregister.finnForsPolise(parseInt);
+    }
+
+    public List<Kunde> sokResultater(String fornavn, String etternavn, String kundernr) {
+        List<Kunde> liste = new ArrayList<>();
+        Kunde kunde;
+        if (brukerRegister.containsKey(kundernr)) {
+            liste.add((Kunde) brukerRegister.get(kundernr));
+            return liste;
+        }
+        for (Entry<String, Bruker> e : brukerRegister.entrySet()) {
+
+            if (e.getValue() instanceof Kunde) {
+                kunde = (Kunde) e.getValue();
+                if (kunde.getFornavn().equals(fornavn)) {
+                    liste.add(kunde);
+                } else if (kunde.getEtternavn().equals(etternavn)) {
+                    liste.add(kunde);
+                }
+            }
+        }
+        return liste;
+    }
+    public Kunde getKunde(String id) {
+        return (Kunde) brukerRegister.get(id);
     }
 }
