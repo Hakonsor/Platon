@@ -213,6 +213,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public void registrerKonsulent(Bruker b) {
         brukerRegister.put(b.getNøkkel(), b);
     }
+    
+    
 
     //Filskriving
     public void lesFil() {
