@@ -116,7 +116,6 @@ abstract class Bygg extends Forsikringer implements Serializable {
         double delta5 = 0.01;
         double sum;
         double byggVerdi;
-        double egenanDel = 4000;
         int a = 2015;
         int b = 2010;
         int alder;
@@ -133,13 +132,12 @@ abstract class Bygg extends Forsikringer implements Serializable {
 
         // laveste skadegrense for totalskade her er det tatt hensyn til byggets alder:    
         double minTotal = byggVerdi * totalSkadeGrense;
-        System.out.println("minTotal" + minTotal);
+       
         // sjekker om bygget er totalskadet, dvs skaden utgjør minst 75% av verdien til boligen.
         if (skadeBelop < minTotal) {
-            sum = skadeBelop - egenanDel;
-            System.out.println("sum1" + sum);
+            sum = skadeBelop - egenandel;
         } else {
-            sum = byggVerdi - egenanDel;
+            sum = byggVerdi - egenandel;
         }
         System.out.println("Sum" + sum);
         return (int) sum;
