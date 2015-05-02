@@ -1,5 +1,6 @@
 package GUI;
 
+import Forsikring.BilForsikring;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import Person.Person;
@@ -229,7 +230,6 @@ public class KundesideBil implements ComboBoxConverter{
                 person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
             else
                 person = null;
-            
             kontroll.setBilForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), (int) convertDou(cbKjørelengde.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), person);
             regLabel.setText("Bilforsikring Registrert!");
         });

@@ -54,8 +54,13 @@ public class SkadeMeldingRegister implements Serializable{
     }
     
     public int visIndex(){
+        if(behandling.isEmpty()){
+            return 0;
+        }
+        else{
         int visIndex = index +1;
         return visIndex;
+        }
     }
     
     
@@ -69,7 +74,7 @@ public class SkadeMeldingRegister implements Serializable{
         }
         else{
             index = 0;
-            return behandling.getFirst();
+            return getFørste();
            
         }
     }

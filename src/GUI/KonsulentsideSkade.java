@@ -14,13 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 /**
- * Created by Magnus on 27.04.15.
- * author@ Therese 
+ * Created by Magnus on 27.04.15. author@ Therese
  */
 public class KonsulentsideSkade {
 
     private SkadeMelding skade;
-    
 
     public Pane skadeFane(Kontroller kontroll) {
 
@@ -44,14 +42,12 @@ public class KonsulentsideSkade {
 
         Button btnVenstre = new Button("<-----");
         btnVenstre.setId("bntVenstre");
-        
 
         Button btnHøyre = new Button("----->");
         btnHøyre.setId("btnHøyre");
-       
 
         TextField tfAntall = new TextField();
-        tfAntall.setText("1");
+        tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
         tfAntall.setAlignment(Pos.CENTER);
         tfAntall.setId("tfantall");
         tfAntall.setMaxWidth(50);
@@ -99,30 +95,53 @@ public class KonsulentsideSkade {
 
         vb.getChildren().addAll(lbAntall, hbControll, taLes, hbKnapper);
         borderPane.setCenter(vb); // CENTER
-        btnVenstre.setOnAction(( e) -> {
+
+        // går tilbake i køen over skademeldinger.
+        btnVenstre.setOnAction((e) -> {
+
+            if (skade != null) {
+
                 skade = kontroll.visForrigeIKø();
                 tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                 taLes.setText(skade.toString());
+            } else {
+                taLes.setText("Det er ikke registrert noen flere skademeldinger.");
+            }
         });
-         btnHøyre.setOnAction(( ActionEvent e) -> {
-             
-                    skade = kontroll.visNesteIKø();
-                    tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                    taLes.setText(skade.toString());
+        btnHøyre.setOnAction((ActionEvent e) -> {
+
+            if (skade != null) {
+
+                skade = kontroll.visNesteIKø();
+                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                taLes.setText(skade.toString());
+            } else {
+
+                taLes.setText("Det er ikke registrert noen nye skademeldinger.");
+            }
         });
-         // godkjenner beløpet og setter skademeldingen i registeret
-         btnGodta.setOnAction(( ActionEvent e) -> {
-            kontroll.ferdigBehandlet(skade);
-             skade.okUtbetal();
-             
+        // godkjenner beløpet og setter skademeldingen i registeret
+        btnGodta.setOnAction((ActionEvent e) -> {
+
+            if (skade != null) {
+                kontroll.ferdigBehandlet(skade);
+                skade.okUtbetal();
+            } else {
+                taLes.setText("Det er ingen skademeldinger registert.");
+            }
+
         });
-         //legger skademeldingen i registeret, og sletter beløpet som er lagt tli betaling.
-         btnAvvis.setOnAction(( ActionEvent e) -> {
-            kontroll.ferdigBehandlet(skade);
-             skade.avvis();
-             
+        //legger skademeldingen i registeret, og sletter beløpet som er lagt tli betaling.
+        btnAvvis.setOnAction((ActionEvent e) -> {
+            if (skade != null) {
+                kontroll.ferdigBehandlet(skade);
+                skade.avvis();
+            } else {
+                taLes.setText("Det er ingen skademeldinger registert.");
+            }
+
         });
-        
+
         return borderPane;
     }
 
