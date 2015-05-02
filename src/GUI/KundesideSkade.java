@@ -265,33 +265,34 @@ public class KundesideSkade {
                     bat.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     kontroll.addSkade(bat);
                     skriveOmråde.setText(bat.melding());
-                    
+
                 } else if (fors instanceof BoligForsikring) {
-                    
+
                     BoligForsikring f = (BoligForsikring) fors;
                     BoligSkadeMelding bolig = new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bolig.setForsikring(f);
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015));
                     kontroll.addSkade(bolig);
                     skriveOmråde.setText(bolig.melding());
-                    
+
                 } else if (fors instanceof FritidsBolig) {
-                    
+
                     FritidsBolig f = (FritidsBolig) fors;
                     FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015));
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
-                    fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015));
-                
+
                 } else if (fors instanceof ReiseForsikring) {
-                    
+
                     ReiseForsikring f = (ReiseForsikring) fors;
                     ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     kontroll.addSkade(reise);
                     skriveOmråde.setText(reise.melding());
-                    
+
                 }
-               
+
             } catch (NumberFormatException nfe) {
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);
