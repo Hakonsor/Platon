@@ -279,6 +279,7 @@ public class KundesideSkade {
 
                     FritidsBolig f = (FritidsBolig) fors;
                     FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    System.out.println("beløp" + f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015) + f.getEgenAndel());
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015));
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());

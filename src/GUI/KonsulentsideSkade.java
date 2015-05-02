@@ -115,8 +115,7 @@ public class KonsulentsideSkade {
              kontroll.ferdigBehandlet(skade);
              if(skade.getForsikring() instanceof BilForsikring){
                  BilSkadeMelding bilskade = (BilSkadeMelding)skade;
-                 int sum = bilskade.getForsikring().utbetal(30000, 50000.0, 6000);
-                 System.out.println("Bilskade" + sum);
+           
                 
              }
              else if(skade.getForsikring() instanceof BatForsikring){

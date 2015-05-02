@@ -15,10 +15,9 @@ public class BoligForsikring extends Bygg implements Serializable {
     
     public BoligForsikring(
                   double kvadrat, String adresse, String boligType, int byggeår,
-                  String materiale, String standard, double byggSum, double inboSUm){
-                  super(false, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSUm);
+                  String materiale, String standard, double byggSum, double innboSum){
+                  super(false, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
                  
         
-    }       
-    
+    }
 }

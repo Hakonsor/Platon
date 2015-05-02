@@ -110,7 +110,6 @@ abstract class Bygg extends Forsikringer implements Serializable {
         double totalSkadeGrense = 0.75;
         double femAar = 5;
         double tiAar = 10;
-
         double delta10 = 0.015;
         double delta5 = 0.01;
         double sum;
