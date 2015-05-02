@@ -36,8 +36,7 @@ public class SkadeMeldingRegister implements Serializable{
     }
 
     // legger skademeldingen i behandlingskøen, og knytter en forsikring til skademeldingen.
-    public void leggIKø(SkadeMelding skade, Forsikringer fors){
-        skade.setForsikring(fors);
+    public void leggIKø(SkadeMelding skade){
         behandling.add(skade);
     }//end method
     

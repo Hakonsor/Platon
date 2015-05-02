@@ -25,6 +25,7 @@ public abstract class Forsikringer implements Serializable{
     protected double egenandel;
     protected Calendar startDato;
     protected Calendar sluttDato;
+    protected double forsikringSum;
      
     
     private Forsikringer() {
@@ -41,6 +42,9 @@ public abstract class Forsikringer implements Serializable{
        startDato = Calendar.getInstance();
     }
     
+    public double getForsikringssum(){
+        return forsikringSum;
+    }
     // legger peker til kunden som har denne forsikringen
     public void setKunde(Kunde kunde){
         this.kunde = kunde;

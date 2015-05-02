@@ -72,8 +72,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     // legger skade i skademeldingskøen. slik at den kan bli behandlet av konsulenten.
-    public void addSkade(SkadeMelding skade,Forsikringer fors) {
-        skademeldingregister.leggIKø(skade,fors);
+    public void addSkade(SkadeMelding skade) {
+        skademeldingregister.leggIKø(skade);
     }
 
     public ArrayList<SkadeMelding> getSkadeMelding(Forsikringer f) {
@@ -168,7 +168,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
     }
 
-    //SkadeMeldingBehandling skadeKunde-------------------------------------------
+    //SkadeMeldingBehandling skadeKonsulent-------------------------------------------
     // henter den første skademeldingen i behandlingskøen
     public SkadeMelding getFørste() {
         return skademeldingregister.getFørste();

@@ -195,16 +195,16 @@ public class KundesideSkade {
         grid.add(lbSkade, 0, 9);
 
         borderPane.setCenter(grid); // CENTER
-        
+
         // henter datoen og konverterer den til Calendar
         dpDato.setOnAction((ActionEvent e) -> {
             {
                 LocalDate date = dpDato.getValue();
                 Date dat = Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                 System.err.println("Selected date: " + date);
-                dato =Calendar.getInstance();
+                dato = Calendar.getInstance();
                 dato.setTime(dat);
-              
+
             }
         });
 
@@ -249,36 +249,49 @@ public class KundesideSkade {
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
             try {
                 if (fors instanceof BilForsikring) {
-                    BilForsikring f = (BilForsikring)fors;
-                    BilSkadeMelding bil =new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato); 
-                    kontroll.addSkade(bil, f);
+
+                    BilForsikring f = (BilForsikring) fors;
+                    BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    bil.setForsikring(f);
                     bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
+                    kontroll.addSkade(bil);
                     skriveOmråde.setText(bil.melding());
+
                 } else if (fors instanceof BatForsikring) {
+
                     BatForsikring f = (BatForsikring) fors;
-                    BatSkadeMelding bat =new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
-                    kontroll.addSkade(bat, f);
+                    BatSkadeMelding bat = new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    bat.setForsikring(f);
                     bat.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
+                    kontroll.addSkade(bat);
+                    skriveOmråde.setText(bat.melding());
+                    
                 } else if (fors instanceof BoligForsikring) {
-                    BoligForsikring f = (BoligForsikring)fors;
-                    BoligSkadeMelding bolig = new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
-                    kontroll.addSkade(bolig,f);
-                    f.utbetaling(Integer.parseInt(tfBeløp.getText()),f.getForsikringsSum(),  2015);// 2015 er året skaden inntraff 
+                    
+                    BoligForsikring f = (BoligForsikring) fors;
+                    BoligSkadeMelding bolig = new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    bolig.setForsikring(f);
+                    bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015));
+                    kontroll.addSkade(bolig);
                     skriveOmråde.setText(bolig.melding());
+                    
                 } else if (fors instanceof FritidsBolig) {
-                    FritidsBolig f = (FritidsBolig)fors;
-                    FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
-                    System.out.println("Forsikringssum " + (f.getEgenAndel()));
-                    kontroll.addSkade(fri,f);
-                    System.out.println("Forsikringssum " + (f.getEgenAndel()));
+                    
+                    FritidsBolig f = (FritidsBolig) fors;
+                    FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
-                    fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()),f.getForsikringsSum(),2015));
+                    fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015));
+                
                 } else if (fors instanceof ReiseForsikring) {
+                    
                     ReiseForsikring f = (ReiseForsikring) fors;
-                    ReiseSkadeMelding reise =new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
-                    kontroll.addSkade(reise, f);
+                    ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    kontroll.addSkade(reise);
                     skriveOmråde.setText(reise.melding());
+                    
                 }
+               
             } catch (NumberFormatException nfe) {
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);

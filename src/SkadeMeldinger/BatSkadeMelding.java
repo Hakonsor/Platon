@@ -19,6 +19,9 @@ public class BatSkadeMelding extends KjoretoySkade implements Serializable{
         super(skadeBeskrivelse, utbetal, skadeDato);
     }
         
-    
+    public String melding(){
+        String s = "Båtskademelding";
+        return s;
+    }
     
 }
