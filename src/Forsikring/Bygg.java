@@ -106,7 +106,7 @@ abstract class Bygg extends Forsikringer implements Serializable {
     }// end of method egenandel
 
     // utbetaling av erstatningsbeløp, med regler, full utbetaling
-    public int utbetaling(double skadeBelop, double verdi, int skadeÅr) {
+    public int utbetaling(double skadeBelop, double verdi, int skadeÅr, int egenandel) {
      
         double totalSkadeGrense = 0.75;
         System.out.println("Totalskadegrense" +totalSkadeGrense);

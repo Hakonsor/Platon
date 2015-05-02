@@ -19,7 +19,6 @@ import javafx.scene.layout.*;
  */
 public class KonsulentsideSkade {
 
-   
     private SkadeMelding skade;
     
 
@@ -112,7 +111,7 @@ public class KonsulentsideSkade {
                     taLes.setText(skade.toString());
         });
          btnGodta.setOnAction(( ActionEvent e) -> {
-             kontroll.ferdigBehandlet(skade);
+            /* kontroll.ferdigBehandlet(skade);
              if(skade.getForsikring() instanceof BilForsikring){
                  BilSkadeMelding bilskade = (BilSkadeMelding)skade;
            
@@ -127,7 +126,7 @@ public class KonsulentsideSkade {
              else if(skade.getForsikring() instanceof FritidsBolig){
                  
              }
-             
+             */
         });
          
         
