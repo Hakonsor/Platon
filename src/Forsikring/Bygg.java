@@ -32,6 +32,7 @@ abstract class Bygg extends Forsikringer implements Serializable {
         this.byggeår = byggeår;
         this.byggSum = byggSum;
         this.innboSum = inboSum;
+        System.out.println("innbosum" + this.innboSum);
         this.materiale = materiale;
         this.standard = standard;
         this.utleie = utleie;
@@ -108,15 +109,19 @@ abstract class Bygg extends Forsikringer implements Serializable {
     public int utbetaling(double skadeBelop, double verdi, int skadeÅr) {
      
         double totalSkadeGrense = 0.75;
+        System.out.println("Totalskadegrense" +totalSkadeGrense);
         double femAar = 5;
         double tiAar = 10;
         double delta10 = 0.015;
         double delta5 = 0.01;
         double sum;
         double byggVerdi;
-
-        int alder = skadeÅr - byggeår;
-
+        double egenanDel = 4000;
+        int a = 2015;
+        int b = 2010;
+        int alder;
+        alder = a-b;
+        System.out.println("" + alder);
         if (alder >= tiAar) {
             byggVerdi = verdi - alder * verdi * delta10;
         } else if (alder >= femAar) {
@@ -124,17 +129,19 @@ abstract class Bygg extends Forsikringer implements Serializable {
         } else {
             byggVerdi = verdi;
         }
+        System.out.println("byggverdi" + byggVerdi);
 
         // laveste skadegrense for totalskade her er det tatt hensyn til byggets alder:    
         double minTotal = byggVerdi * totalSkadeGrense;
-
+        System.out.println("minTotal" + minTotal);
         // sjekker om bygget er totalskadet, dvs skaden utgjør minst 75% av verdien til boligen.
         if (skadeBelop < minTotal) {
-            sum = skadeBelop - egenandel;
+            sum = skadeBelop - egenanDel;
+            System.out.println("sum1" + sum);
         } else {
-            sum = byggVerdi - egenandel;
+            sum = byggVerdi - egenanDel;
         }
-
+        System.out.println("Sum" + sum);
         return (int) sum;
 
     }// end of method fullUtbetaling  

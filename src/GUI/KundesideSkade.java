@@ -273,6 +273,8 @@ public class KundesideSkade {
                     bolig.setForsikring(f);
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015));
                     kontroll.addSkade(bolig);
+                    System.out.println("beløp" + f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015) + f.getEgenAndel());
+                    System.out.println("" + "Forsikringssum:" + f.getForsikringsSum());
                     skriveOmråde.setText(bolig.melding());
 
                 } else if (fors instanceof FritidsBolig) {
