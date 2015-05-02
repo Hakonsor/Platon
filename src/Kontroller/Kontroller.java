@@ -11,6 +11,7 @@ import Forsikring.BoligForsikring;
 import Forsikring.Forsikringer;
 import Forsikring.ForsikringsRegister;
 import Forsikring.FritidsBolig;
+import Forsikring.ReiseForsikring;
 import GUI.KonsulentSide;
 import GUI.KundeSide;
 import GUI.Login;
@@ -288,6 +289,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
         ArrayList<String> liste = new ArrayList<>();
         Iterator<? extends Forsikringer> iterator = a.iterator();
+        
         if (a.get(0) instanceof BilForsikring) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
@@ -306,6 +308,11 @@ public class Kontroller implements EventHandler<ActionEvent> {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }
+        }else if (a.get(0) instanceof ReiseForsikring) {
+            while (iterator.hasNext()) {
+                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+            }
+        
         }
         return liste;
     }

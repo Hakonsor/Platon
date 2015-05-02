@@ -263,14 +263,16 @@ public class KundesideSkade {
                     BoligForsikring f = (BoligForsikring)fors;
                     BoligSkadeMelding bolig = new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
                     kontroll.addSkade(bolig,f);
-                    f.utbetaling(Integer.parseInt(tfBeløp.getText()), 2015);// 2015 er året skaden inntraff 
+                    f.utbetaling(Integer.parseInt(tfBeløp.getText()),f.getForsikringsSum(),  2015);// 2015 er året skaden inntraff 
                     skriveOmråde.setText(bolig.melding());
                 } else if (fors instanceof FritidsBolig) {
                     FritidsBolig f = (FritidsBolig)fors;
                     FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);
+                    System.out.println("Forsikringssum " + (f.getEgenAndel()));
                     kontroll.addSkade(fri,f);
+                    System.out.println("Forsikringssum " + (f.getEgenAndel()));
                     skriveOmråde.setText(fri.melding());
-                    f.utbetaling(Integer.parseInt(tfBeløp.getText()), 2015);
+                    fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()),f.getForsikringsSum(),2015));
                 } else if (fors instanceof ReiseForsikring) {
                     ReiseForsikring f = (ReiseForsikring) fors;
                     ReiseSkadeMelding reise =new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()),dato);

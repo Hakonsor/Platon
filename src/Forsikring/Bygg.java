@@ -40,6 +40,9 @@ abstract class Bygg extends Forsikringer implements Serializable {
         setPremie(premie(kvadrat, byggSum, innboSum));
 
     }
+    public double getForsikringsSum(){
+        return forsikringSum;
+    }
 
     public double getKvadrat() {
         return kvadrat;
@@ -102,9 +105,9 @@ abstract class Bygg extends Forsikringer implements Serializable {
 
     }// end of method egenandel
 
-    // utbetaling av erstatningsbeløp, med regler.
-    public int utbetaling(double skadeBelop, int skadeÅr) {
-        double verdi = forsikringSum;
+    // utbetaling av erstatningsbeløp, med regler, full utbetaling
+    public int utbetaling(double skadeBelop, double verdi, int skadeÅr) {
+     
         double totalSkadeGrense = 0.75;
         int femAar = 5;
         int tiAar = 10;
@@ -114,7 +117,6 @@ abstract class Bygg extends Forsikringer implements Serializable {
         double sum;
         double byggVerdi;
 
-        // bestemmer byggets verdi på skadetidspunktet
         int alder = skadeÅr - byggeår;
 
         if (alder >= tiAar) {
