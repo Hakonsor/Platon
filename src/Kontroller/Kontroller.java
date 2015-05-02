@@ -98,7 +98,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //båt forsikring
-    public void setForsikring(double bonus, double egenandel,
+    public void setBåtForsikring(double bonus, double egenandel,
             String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person) {
         int fot = 0;
         if (person == null) {
@@ -146,7 +146,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     }
 
-    public void setForsikring(double bonus, double egenandel, int kjorelengde,
+    public void setBilForsikring(double bonus, double egenandel, int kjorelengde,
             String regNr, String arsmodell, String type, String tfKmstand, Person person) {
         int kmStand = 0;
         if (person == null) {

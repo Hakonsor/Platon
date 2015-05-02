@@ -230,7 +230,7 @@ public class KundesideBil implements ComboBoxConverter{
             else
                 person = null;
             
-            kontroll.setForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), (int) convertDou(cbKjørelengde.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), person);
+            kontroll.setBilForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), (int) convertDou(cbKjørelengde.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), person);
             regLabel.setText("Bilforsikring Registrert!");
         });
 

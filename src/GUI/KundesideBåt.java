@@ -268,7 +268,7 @@ public class KundesideBåt implements ComboBoxConverter{
 
 
 
-            kontroll.setForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , person);
+            kontroll.setBåtForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , person);
             regLabel.setText("Bilforsikring Registrert!");
         });
 
