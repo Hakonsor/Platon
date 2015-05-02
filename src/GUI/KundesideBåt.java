@@ -265,9 +265,7 @@ public class KundesideBåt implements ComboBoxConverter{
                 System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
                         "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
             }
-
-
-
+            
             kontroll.setBåtForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , person);
             regLabel.setText("Bilforsikring Registrert!");
         });

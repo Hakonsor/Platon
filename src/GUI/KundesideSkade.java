@@ -280,6 +280,7 @@ public class KundesideSkade {
                     FritidsBolig f = (FritidsBolig) fors;
                     FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015));
+                    f.egenandel(skade, false);
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
 
@@ -297,6 +298,7 @@ public class KundesideSkade {
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);
             }
+            
 
             lbSkade.setText("Skademelding er sendt inn");
         });

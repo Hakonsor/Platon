@@ -22,8 +22,9 @@ public class FritidsBoligMelding extends ByggSkade implements Serializable {
     }
     public String melding(){
         String s;
-        s = "Fritidshus skademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"
-                + super.toString();
+        //s = "Fritidshus skademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"
+               // + super.toString();
+        s = "TRUSE";
         
         return s;
     }
