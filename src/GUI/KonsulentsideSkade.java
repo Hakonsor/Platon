@@ -110,25 +110,18 @@ public class KonsulentsideSkade {
                     tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                     taLes.setText(skade.toString());
         });
+         // godkjenner beløpet og setter skademeldingen i registeret
          btnGodta.setOnAction(( ActionEvent e) -> {
-            /* kontroll.ferdigBehandlet(skade);
-             if(skade.getForsikring() instanceof BilForsikring){
-                 BilSkadeMelding bilskade = (BilSkadeMelding)skade;
-           
-                
-             }
-             else if(skade.getForsikring() instanceof BatForsikring){
-         
-             }
-             else if(skade.getForsikring() instanceof BoligForsikring){
-                 
-             }
-             else if(skade.getForsikring() instanceof FritidsBolig){
-                 
-             }
-             */
+            kontroll.ferdigBehandlet(skade);
+             skade.okUtbetal();
+             
         });
-         
+         //legger skademeldingen i registeret, og sletter beløpet som er lagt tli betaling.
+         btnAvvis.setOnAction(( ActionEvent e) -> {
+            kontroll.ferdigBehandlet(skade);
+             skade.avvis();
+             
+        });
         
         return borderPane;
     }

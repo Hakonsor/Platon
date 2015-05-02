@@ -90,6 +90,7 @@ public abstract class SkadeMelding implements Serializable {
         return skadeNr;
     }
     
+    
     public String toString(){
        Date dt = skadeDato.getTime();
        DateFormat df = new SimpleDateFormat("dd.MM.yyyy"); 
