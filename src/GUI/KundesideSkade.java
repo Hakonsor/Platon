@@ -21,7 +21,6 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -44,7 +43,7 @@ import javafx.stage.Stage;
 public class KundesideSkade {
 
     private Calendar dato;
-    private String skade;
+    private String skade = "BrannSkade";
 
     public Pane skadeFane(Kontroller kontroll) {
 
@@ -228,7 +227,9 @@ public class KundesideSkade {
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
             int poisnr = -1;
             if (listView.getSelectionModel().getSelectedItem() != null) {
-                poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
+                String polisnrs = listView.getSelectionModel().getSelectedItem();
+                System.out.println(polisnrs.replaceAll("[^0-9]", ""));
+                poisnr = Integer.parseInt(polisnrs.replaceAll("[^0-9]", ""));
             }
 
             Forsikringer fors = kontroll.getForsikring(poisnr);
@@ -258,6 +259,7 @@ public class KundesideSkade {
                     BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bil.setForsikring(f);
                     bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
+                  
                     kontroll.addSkade(bil);
                     skriveOmråde.setText(bil.melding());
 
@@ -277,7 +279,6 @@ public class KundesideSkade {
                     bolig.setForsikring(f);
                     int egenandel = f.egenandel(skade, false);
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
-                    
                     kontroll.addSkade(bolig);
                     skriveOmråde.setText(bolig.melding());
 
@@ -286,8 +287,10 @@ public class KundesideSkade {
                     FritidsBolig f = (FritidsBolig) fors;
                     FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     fri.setForsikring(f);
+                    System.out.println("Gammel premie:" + f.getPremie());
                     int egenandel = f.egenandel(skade, false);
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
+                    System.out.println("Ny premie:" + f.getPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
 

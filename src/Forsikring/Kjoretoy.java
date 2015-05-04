@@ -17,15 +17,20 @@ public abstract class Kjoretoy extends Forsikringer implements Serializable{
     private double bonus;
     private Person person;
     
-    public Kjoretoy( double bonus, double egenandel,String regNr , String type,String modell, String arsModell, Person person ){
+    public Kjoretoy( double bonus, double egenandel,String regNr , String type,String modell, String arsModell ){
         super(0,egenandel);
         this.bonus= bonus;
         this.regNr = regNr;
         this.type = type;
         this.modell = modell;
         this.arsModell = arsModell;
-        this.person = person;
+        
      
+    }
+    
+    public void setPerson(Person person ){
+        this.person = person;
+        
     }
     public String getRegNr(){
      return regNr;

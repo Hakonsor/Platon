@@ -89,8 +89,9 @@ public class KundesideInfo {
         TextArea textArea = new TextArea();
         //listView.setOnMouseClicked(e -> { visElemnt();   });
         listView.getSelectionModel().selectedItemProperty().addListener(e -> {
-
-            Forsikringer s = kontroller.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
+            
+            String polisnr = listView.getSelectionModel().getSelectedItem().replaceAll("\\D", "");
+            Forsikringer s = kontroller.getForsikring(Integer.parseInt(polisnr));
             if (s != null) {
                 textArea.setText(s.toString());
             }

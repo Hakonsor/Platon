@@ -90,7 +90,6 @@ abstract class Bygg extends Forsikringer implements Serializable {
         }
         switch (skadeType) {
             case "BrannSkade":
-            case "NaturSkade":
                 egenAndel += brann;
                 break;
             case "VannSkade":
@@ -154,6 +153,11 @@ abstract class Bygg extends Forsikringer implements Serializable {
         premium = prisPerKvadrat * kvadrat + prisPerByggVerdi * byggSum + prisPerInnbo * innboSum;
 
         return (int) premium;
+    }
+    
+    public void setNyPremie(){
+        int premieØkning = 500;
+        this.premie +=  premieØkning; 
     }
 
 }// end of class Bolig.
