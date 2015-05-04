@@ -18,7 +18,7 @@ import Kontroller.Postregister;
 /**
  * Created by Magnus on 21.04.15.
  */
-public class KundesideBil implements ComboBoxConverter{
+public class KundesideBil implements ComboBoxConverter {
 
     public Pane bilFane(Kontroller kontroll) {
 
@@ -36,7 +36,6 @@ public class KundesideBil implements ComboBoxConverter{
         vb.getChildren().addAll(overskrift);
 
         borderPane.setTop(vb); //TOP
-
 
         GridPane gridleft = new GridPane();
         gridleft.setAlignment(Pos.TOP_CENTER);
@@ -62,10 +61,7 @@ public class KundesideBil implements ComboBoxConverter{
         gridcenter.setPrefHeight(50);
         gridcenter.setPrefWidth(200);
 
-
-
         //Person
-
         Label lbPerson = new Label();
         lbPerson.setText("Bileier innformasjon");
         lbPerson.setId("lbPerson");
@@ -94,30 +90,26 @@ public class KundesideBil implements ComboBoxConverter{
         TextField tfTelefon = new TextField();
         tfTelefon.setPromptText("Telefon");
         tfTelefon.setMinWidth(200);
-        
+
         TextField postSted = new TextField();
         postSted.setPromptText("PostSted");
         postSted.setEditable(false);
         postSted.setMinWidth(200);
-        
-        
-      
-        tfPostnr.textProperty().addListener(new ChangeListener<String>(){
+
+        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
 
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 Postregister register = new Postregister();
                 String poststed = register.getPoststed(tfPostnr.getText());
-                if(poststed == null){
+                if (poststed == null) {
                     poststed = "Eksisterer ikke!";
                 }
                 postSted.setText(poststed);
             }
         });
 
-
         //Bil
-
         Label lbBil = new Label();
         lbBil.setText("Bil innformasjon");
         lbBil.setId("lbBil");
@@ -180,7 +172,6 @@ public class KundesideBil implements ComboBoxConverter{
         cbEgenandel.setValue("Velg Egenandel:");
 
         //Registrer knapp & Label & Toggle
-
         Label lbvelgEier = new Label();
         lbvelgEier.setText("Annen eier?");
         lbvelgEier.setId("velgeier");
@@ -224,13 +215,29 @@ public class KundesideBil implements ComboBoxConverter{
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
-            
+
             Person person;
-            if(rbtJa.selectedProperty().getValue())
+            if (rbtJa.selectedProperty().getValue()) {
                 person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
-            else
+            } else {
                 person = null;
-            kontroll.setBilForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), (int) convertDou(cbKjørelengde.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), person);
+            }
+            double bonus = 0;
+            double egenandel = 0;
+            int kjøreLengde = 0;
+            String regNo = tfRegnr.getText();
+            String årsModell = tfÅrsmodell.getText();
+            String bilType = tfBiltype.getText();
+            String kmStand = tfKmstand.getText();
+            try {
+                bonus = Double.parseDouble(cbBonus.getValue());
+                egenandel = Double.parseDouble(cbEgenandel.getValue());
+                kjøreLengde = Integer.parseInt(cbKjørelengde.getValue());
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Feil tallformat");
+            }
+            kontroll.setBilForsikring(bonus, egenandel, kjøreLengde, regNo, årsModell, bilType, kmStand, person);
             regLabel.setText("Bilforsikring Registrert!");
         });
 
@@ -246,7 +253,6 @@ public class KundesideBil implements ComboBoxConverter{
         gridleft.add(rbtJa, 0, 9);
         gridleft.add(rbtNei, 0, 10);
 
-
         gridright.add(lbPerson, 0, 0);
         gridright.add(tfFornavn, 0, 1);
         gridright.add(tfEtternavn, 0, 2);
@@ -255,7 +261,6 @@ public class KundesideBil implements ComboBoxConverter{
         gridright.add(tfAdresse, 0, 5);
         gridright.add(tfPostnr, 0, 6);
         gridright.add(postSted, 0, 7);
-
 
         gridcenter.add(btnSjekkpris, 0, 11);
         gridcenter.add(btnRegBilforsikring, 0, 12);
@@ -266,7 +271,6 @@ public class KundesideBil implements ComboBoxConverter{
         borderPane.setCenter(gridcenter); //Center
 
         //borderPane.setRight(gridright); //Right
-
         borderPane.getStylesheets().add("CSS/kundeBil.css");
 
         return borderPane;

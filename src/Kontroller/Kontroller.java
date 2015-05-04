@@ -279,6 +279,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
         return new ArrayList<>(a);
     }
 
+    
+    
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
@@ -317,6 +319,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
         return liste;
     }
 
+    
+    // Finner forsikringer basert på poliseNr
     public Forsikringer getForsikring(int parseInt) {
         return forsikringsregister.finnForsPolise(parseInt);
     }
