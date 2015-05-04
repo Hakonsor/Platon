@@ -55,7 +55,7 @@ public class KundeSide {
         tabInfo.setClosable(false);
         KundesideInfo info = new KundesideInfo();
         tabInfo.setOnSelectionChanged(e -> {
-        tabInfo.setContent(info.infoFane(kontroll));
+        tabInfo.setContent(KundesideInfo.infoFane(kontroll));
         });
         //Båtforsikring
         Tab tabBåt = new Tab();
@@ -92,7 +92,7 @@ public class KundeSide {
         tabBolig.setClosable(false);
         KundesideBolig bolig = new KundesideBolig();
         tabBolig.setOnSelectionChanged(e -> {
-        tabBolig.setContent(bolig.boligFane(kontroll));
+        tabBolig.setContent(KundesideBolig.boligFane(kontroll));
         });
 
         //Fri.Boligforsikring
