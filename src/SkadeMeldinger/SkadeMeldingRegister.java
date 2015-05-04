@@ -84,10 +84,20 @@ public class SkadeMeldingRegister implements Serializable{
         
         if(index == 0){
             index = behandling.size()-1;
-            return behandling.getLast(); 
+           if(!behandling.isEmpty()){
+               return behandling.getLast();
+           }
+           else{
+               return null;
+           }
         }
         index --;
+        if(!behandling.isEmpty()){
         return behandling.get(index);
+        }
+        else {
+            return null;
+        }
     }
    
     

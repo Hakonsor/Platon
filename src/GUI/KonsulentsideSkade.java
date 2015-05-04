@@ -155,7 +155,9 @@ public class KonsulentsideSkade {
                 skade.getForsikring().nyPremieOk();
                 if(skade instanceof BilSkadeMelding){
                     BilForsikring bil = (BilForsikring)skade.getForsikring();
-                        bil.bonusGodkjent();
+                       System.out.println("Gammel bonus: " + bil.getBonus());
+                    bil.bonusGodkjent();
+                        System.out.println("Ny bonus: " + bil.getBonus());
                 }
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
@@ -167,6 +169,7 @@ public class KonsulentsideSkade {
             if (skade != null) {
                 kontroll.ferdigBehandlet(skade);
                 skade.avvis();
+                taLes.setText("Skaden er avvist.");
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }
