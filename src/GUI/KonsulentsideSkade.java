@@ -54,7 +54,7 @@ public class KonsulentsideSkade {
         btnVenstre.setFitWidth(32);
 
         ImageView btnHøyre = new ImageView(new Image(right));
-        btnHøyre.setId("btnHøyre");
+        btnHøyre.setId("btnHoyre");
         btnHøyre.setPreserveRatio(true);
         btnHøyre.setFitWidth(32);
 
@@ -166,6 +166,7 @@ public class KonsulentsideSkade {
 
         });
 
+        borderPane.getStylesheets().add("CSS/konsulentskade.css");
         return borderPane;
     }
 

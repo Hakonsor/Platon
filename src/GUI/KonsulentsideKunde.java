@@ -1,5 +1,6 @@
 package GUI;
 
+import Forsikring.BilForsikring;
 import Kontroller.Kontroller;
 import Kontroller.ComboBoxConverter;
 import javafx.beans.value.ChangeListener;
@@ -262,9 +263,25 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
+            double bonus = 0;
+            double egenandel = 0;
+            int kjøreLengde = 0;
+            String regNo = tfRegnr.getText();
+            String årsModell = tfÅrsmodell.getText();
+            String bilType = tfBiltype.getText();
+            int kmStand = 0;
+            try {
+                bonus = convertDou(cbBonus.getValue());
+                egenandel = convertDou(cbEgenandel.getValue());
+                kjøreLengde = convertInt(cbKjørelengde.getValue());
+                kmStand = Integer.parseInt(tfKmstand.getText());
 
-            kontroll.setBilForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), (int) convertDou(cbKjørelengde.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), null);
-            System.out.println(("Bilforsikring Registrert!"));
+            } catch (NumberFormatException nfe) {
+                System.out.println("Feil tallformat");
+            }
+            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, årsModell, bilType, kmStand);
+            kontroll.setBilForsikring(bil, null);
+            regLabelBil.setText("Bilforsikring Registrert!");
         });
 
         gridBil.add(tfRegnr, 0, 0);
