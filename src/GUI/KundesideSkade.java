@@ -21,7 +21,6 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -44,7 +43,7 @@ import javafx.stage.Stage;
 public class KundesideSkade {
 
     private Calendar dato;
-    private String skade;
+    private String skade = "BrannSkade";
 
     public Pane skadeFane(Kontroller kontroll) {
 
@@ -276,7 +275,6 @@ public class KundesideSkade {
                     bolig.setForsikring(f);
                     int egenandel = f.egenandel(skade, false);
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
-                    f.setNyPremie();
                     kontroll.addSkade(bolig);
                     skriveOmråde.setText(bolig.melding());
 
@@ -288,7 +286,6 @@ public class KundesideSkade {
                     System.out.println("Gammel premie:" + f.getPremie());
                     int egenandel = f.egenandel(skade, false);
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
-                    f.setNyPremie();
                     System.out.println("Ny premie:" + f.getPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());

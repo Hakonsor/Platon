@@ -90,7 +90,6 @@ abstract class Bygg extends Forsikringer implements Serializable {
         }
         switch (skadeType) {
             case "BrannSkade":
-            case "NaturSkade":
                 egenAndel += brann;
                 break;
             case "VannSkade":
