@@ -230,9 +230,9 @@ public class KundesideBil implements ComboBoxConverter {
             String bilType = tfBiltype.getText();
             int kmStand = 0;
             try {
-                bonus = Double.parseDouble(cbBonus.getValue());
-                egenandel = Double.parseDouble(cbEgenandel.getValue());
-                kjøreLengde = Integer.parseInt(cbKjørelengde.getValue());
+                bonus = convertDou(cbBonus.getValue());
+                egenandel = convertDou(cbEgenandel.getValue());
+                kjøreLengde = convertInt(cbKjørelengde.getValue());
                 kmStand = Integer.parseInt(tfKmstand.getText());
 
             } catch (NumberFormatException nfe) {
@@ -241,6 +241,7 @@ public class KundesideBil implements ComboBoxConverter {
             BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, årsModell, bilType, kmStand);
             kontroll.setBilForsikring(bil, person);
             regLabel.setText("Bilforsikring Registrert!");
+
         });
 
         gridleft.add(lbBil, 0, 0);
