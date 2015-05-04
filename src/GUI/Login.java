@@ -82,7 +82,6 @@ public class Login {
     private Pane kundeFane(){
 
 
-
         final Rectangle rect1 = new Rectangle(10, 10, 100, 100);
         rect1.setArcHeight(50);
         rect1.setArcWidth(50);
@@ -96,22 +95,12 @@ public class Login {
         ft.setAutoReverse(true);
         ft.play();
 
-
-
-
-
-
-
-
-
-
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
         //grid.setGridLinesVisible(true);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(100));
-
 
         ImageView loginImg = new ImageView(new Image(LoginBilde));
         loginImg.setId("loginImg");
@@ -129,13 +118,13 @@ public class Login {
         info.setId("logginn_info");
         GridPane.setHalignment(info, HPos.CENTER);
 
+        ParallelTransition pt;
+
         tfKundeBrukernavn = new TextField();
         tfKundeBrukernavn.setPromptText("kundenr");
         tfKundeBrukernavn.setId("tfkundenr");
         tfKundeBrukernavn.setMaxWidth(200);
         GridPane.setHalignment(tfKundeBrukernavn, HPos.CENTER);
-
-        ParallelTransition pt;
 
         FadeTransition ftBrukernavn = new FadeTransition(Duration.millis(1500), tfKundeBrukernavn);
         ftBrukernavn.setFromValue(0.3F);
@@ -180,7 +169,6 @@ public class Login {
         ttbShake.setFromX(-30);
         ttbShake.setToX(0);
         ttbShake.setCycleCount(3);
-
 
         pt = new ParallelTransition();
         pt.getChildren().addAll(
