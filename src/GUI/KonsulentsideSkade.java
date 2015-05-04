@@ -120,12 +120,18 @@ public class KonsulentsideSkade {
                 taLes.setText("Det er ikke registrert noen nye skademeldinger.");
             }
         });
-        // godkjenner beløpet og setter skademeldingen i registeret
+        
+        // godkjenner beløpet og setter skademeldingen i registeret, samt oppdaterer premien.
         btnGodta.setOnAction((ActionEvent e) -> {
 
             if (skade != null) {
                 kontroll.ferdigBehandlet(skade);
                 skade.okUtbetal();
+                skade.getForsikring().nyPremieOk();
+                if(skade instanceof BilSkadeMelding){
+                    BilForsikring bil = (BilForsikring)skade.getForsikring();
+                        bil.bonusGodkjent();
+                }
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }

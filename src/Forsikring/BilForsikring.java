@@ -64,6 +64,10 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     public void nyBonusTilGodkjenning(double bonusEtterSkade){
     bonusTilGodkjenning =bonusEtterSkade; 
 } 
+    
+    public void bonusGodkjent(){
+        bonus = bonusTilGodkjenning;
+    }
 
     /* // beregner premien på nyregisterte biler
      public double bonusNyRegBil(int skadeFrieAar){       
