@@ -263,7 +263,7 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
 
-            kontroll.setBilForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), (int) convertDou(cbKjørelengde.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), null);
+            //kontroll.setBilForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), (int) convertDou(cbKjørelengde.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBiltype.getText(), tfKmstand.getText(), null);
             System.out.println(("Bilforsikring Registrert!"));
         });
 
