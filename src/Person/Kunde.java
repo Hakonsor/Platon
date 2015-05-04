@@ -23,6 +23,14 @@ import java.util.List;
  */
 public class Kunde extends Bruker implements Serializable {
 
+    public static int getStaticKundeNr() {
+        return nesteKundeNr;
+    }
+
+    public static void setStaticKundeNr(int nestekundeNr) {
+        nesteKundeNr = nestekundeNr;
+    }
+
     private int kundeNr;
     private static int nesteKundeNr;
     private String passord, telefon;

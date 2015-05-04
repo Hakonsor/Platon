@@ -18,6 +18,14 @@ import java.util.Date;
  * @author Therese, Håkon
  */
 public abstract class SkadeMelding implements Serializable {
+
+    public static int getStaticSkadeNr() {
+       return nesteSkadeNr;
+    }
+
+    public static void setStaticSkadeNr(int nyttSkadeNr) {
+        nesteSkadeNr = nyttSkadeNr;
+    }
     protected String skadeBeskrivelse;
     protected Calendar skadeDato;  // når skaden inntraff.
     protected Calendar datoInnmeldt;

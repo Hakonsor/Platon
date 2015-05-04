@@ -33,6 +33,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -43,16 +44,13 @@ import javafx.stage.Stage;
  * @author hakon_000
  */
 public class Kontroller implements EventHandler<ActionEvent> {
-
     private BrukerRegister brukerRegister = new BrukerRegister();
     private Bruker innLoggetBruker = null;
     private SkadeMeldingRegister skademeldingregister = new SkadeMeldingRegister();
     private ForsikringsRegister forsikringsregister = new ForsikringsRegister();
-
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
     }
-
     //GUI
     public void loginVindu(Stage primaryStage) {
         innLoggetBruker = null;
@@ -218,11 +216,16 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     //Filskriving
     public void lesFil() {
+        
+
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
             brukerRegister = (BrukerRegister) innfil.readObject();
             skademeldingregister = (SkadeMeldingRegister) innfil.readObject();
             forsikringsregister = (ForsikringsRegister) innfil.readObject();
+            Forsikringer.setStaticPolisnr(innfil.readInt());
+            SkadeMelding.setStaticSkadeNr(innfil.readInt());
+            Kunde.setStaticKundeNr(innfil.readInt());
         } catch (ClassNotFoundException cnfe) {
             System.out.println("Opprette nye registere");
             brukerRegister = new BrukerRegister();
@@ -244,17 +247,23 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
     }
 
+
     public void skrivTilFil() {
         try (ObjectOutputStream utfil = new ObjectOutputStream(
                 new FileOutputStream("src/Fil/forsikring.data"))) {
             utfil.writeObject(brukerRegister);
             utfil.writeObject(skademeldingregister);
             utfil.writeObject(forsikringsregister);
+            utfil.writeInt(Forsikringer.getStaticPolisnr());
+            utfil.writeInt(SkadeMelding.getStaticSkadeNr());
+            utfil.writeInt(Kunde.getStaticKundeNr());
 
         } catch (NotSerializableException nse) {
             System.out.println("Objektet er ikke serialisert!");
+        } catch (FileNotFoundException ioe) {
+            System.out.println("Finner ikke fil");
         } catch (IOException ioe) {
-            System.out.println("Problem med utskrift til fil.");
+            System.out.println("Problem med utskrift til fil."+ ioe.toString());
         }
     }
 
@@ -263,7 +272,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
         // Vi tar i bruk lambda uttrykk istedenfor istedenfor
         // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
     }
-
     //infosiden
     // Finner alle forsikringene til en gitt kunde, legger i liste, returnerer null hvis kunden ikke har noen forsikring.
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
@@ -274,7 +282,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return new ArrayList<>(a);
     }
-
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
@@ -282,13 +289,14 @@ public class Kontroller implements EventHandler<ActionEvent> {
         if (a == null || a.isEmpty()) {
             return null;
         }
-
         ArrayList<String> liste = new ArrayList<>();
         Iterator<? extends Forsikringer> iterator = a.iterator();
+        String infoliste = "";
 
         if (a.get(0) instanceof BilForsikring) {
             while (iterator.hasNext()) {
-                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                infoliste = Integer.toString(iterator.next().getPoliseNr());
+                liste.add(infoliste);
                 //iterator.next().getRegNr()
             }
             return liste;

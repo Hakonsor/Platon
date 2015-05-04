@@ -224,7 +224,9 @@ public class KundesideSkade {
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
             int poisnr = -1;
             if (listView.getSelectionModel().getSelectedItem() != null) {
-                poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
+                String polisnrs = listView.getSelectionModel().getSelectedItem();
+                System.out.println(polisnrs.replaceAll("[^0-9]", ""));
+                poisnr = Integer.parseInt(polisnrs.replaceAll("[^0-9]", ""));
             }
 
             Forsikringer fors = kontroll.getForsikring(poisnr);

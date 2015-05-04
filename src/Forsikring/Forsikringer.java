@@ -26,6 +26,7 @@ public abstract class Forsikringer implements Serializable{
     protected Calendar startDato;
     protected Calendar sluttDato;
     protected double forsikringSum;
+
      
     
     private Forsikringer() {
@@ -40,6 +41,13 @@ public abstract class Forsikringer implements Serializable{
        this.egenandel = egenandel;
        aktiv = true;
        startDato = Calendar.getInstance();
+    }
+    public static int getStaticPolisnr(){
+        return nestePoliseNr;
+    }
+    
+    public static void setStaticPolisnr(int nyNesteNr){
+        nestePoliseNr = nyNesteNr;
     }
     
     public double getForsikringssum(){
