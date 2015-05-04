@@ -115,31 +115,25 @@ public class KonsulentsideSkade {
         borderPane.setCenter(vb); // CENTER
 
         // går tilbake i køen over skademeldinger.
-        btnVenstre.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (skade != null) {
-
-                    skade = kontroll.visForrigeIKø();
-                    tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                    taLes.setText(skade.toString());
-                } else {
-                    taLes.setText("Det er ikke registrert noen flere skademeldinger.");
-                }
+        btnVenstre.setOnMouseClicked((MouseEvent event) -> {
+            if (skade != null) {
+                
+                skade = kontroll.visForrigeIKø();
+                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                taLes.setText(skade.toString());
+            } else {
+                taLes.setText("Det er ikke registrert noen flere skademeldinger.");
             }
         });
 
-        btnHøyre.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (skade != null) {
-
-                    skade = kontroll.visNesteIKø();
-                    tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                    taLes.setText(skade.toString());
-                } else {
-                    taLes.setText("Det er ikke registrert noen nye skademeldinger.");
-                }
+        btnHøyre.setOnMouseClicked((MouseEvent event) -> {
+            if (skade != null) {
+                
+                skade = kontroll.visNesteIKø();
+                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                taLes.setText(skade.toString());
+            } else {
+                taLes.setText("Det er ikke registrert noen nye skademeldinger.");
             }
         });
         
