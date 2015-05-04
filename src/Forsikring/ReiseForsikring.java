@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Forsikring ;
-
+package Forsikring;
 
 import java.io.Serializable;
 
@@ -12,44 +11,51 @@ import java.io.Serializable;
  *
  * @author Therese, Håkon
  */
-public class ReiseForsikring extends Forsikringer implements Serializable{
+public class ReiseForsikring extends Forsikringer implements Serializable {
+
     private String type;
-    public ReiseForsikring(){
+
+    public ReiseForsikring() {
         super(0, 0);
-        setPremie(type);
-        egenandel = egenAndel();
+
     }
-    
-    
-    // om det er verden, europa eller norden
-    public void setType(String type){
+
+    public String getType() {
+        return type;
+    }
+
+    // Premien setter avhangig av om det er verden, europa eller norden
+
+    public void setType(String type) {
         this.type = type;
     }
-    
-    public void setPremie(String type){
-        if(type.equals("Verden")){
+
+    public void setPremie(String type) {
+        if (type.equals("Verden")) {
             premie = 1700;
-        }
-        else if(type.equalsIgnoreCase("Europa")){
+        } else if (type.equalsIgnoreCase("Europa")) {
             premie = 1400;
-        }
-        else if(type.equalsIgnoreCase("Europa")){
+        } else if (type.equalsIgnoreCase("Europa")) {
             premie = 900;
         }
     }
-    
-    private double egenAndel(){
+
+    public double egenAndel() {
         egenandel = 300;
         return egenandel;
     }
 
-    public String getType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void premieTilGodkjenning() {
+        premieTilGodkjenning = premie + 200;
     }
-    
-    
 
-    
-    
-   
+    public String toString() {
+        String s = "";
+        s = "ReiseForsikring:" + "\nForsikringen gjelder for: " + type
+                + "PoliseNr: " + poliseNr
+                + "Gjelder fra: " + startDato + " til:  sluttDato"
+                + "Forsikringsum: " + forsikringSum;
+        return s;
+    }
+
 }// end of class ForsikringsPremie.
