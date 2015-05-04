@@ -239,6 +239,11 @@ public class KundesideSkade {
                 skriveOmråde.setEditable(false);
             }
         });
+        
+        
+        // finner ut hvilken forsikring det er og legger skademeldingen i køen,
+        // her beregnes også skadesummen samt nye premier, men premien settes endelig,
+        // først når konsulenten har godkjent beløpet/ skademeldingen.
         btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
             
@@ -285,20 +290,28 @@ public class KundesideSkade {
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
+                    
                 } else if (fors instanceof ReiseForsikring) {
+                    
                     ReiseForsikring f = (ReiseForsikring) fors;
                     ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
+                    f.nyPremieTilGodkjenning();
                     kontroll.addSkade(reise);
                     skriveOmråde.setText(reise.melding());
+                    
                 }
 
             } catch (NumberFormatException nfe) {
+                
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);
+                
             }
+            
             lbSkade.setText("Skademelding er sendt inn");
         });
+        
         return borderPane;
     }
 }

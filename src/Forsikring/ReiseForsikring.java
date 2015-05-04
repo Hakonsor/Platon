@@ -45,12 +45,13 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
         return egenandel;
     }
 
-    public void premieTilGodkjenning() {
-        premieTilGodkjenning = premie + 200;
+    public void nyPremieTilGodkjenning() {
+        int tillegg = 200;
+        premieTilGodkjenning = premie +tillegg;
     }
 
     public String toString() {
-        String s = "";
+        String s;
         s = "ReiseForsikring:" + "\nForsikringen gjelder for: " + type
                 + "PoliseNr: " + poliseNr
                 + "Gjelder fra: " + startDato + " til:  sluttDato"
