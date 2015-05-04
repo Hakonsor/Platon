@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class BilForsikring extends Kjoretoy implements Serializable {
 
     private int kjorelengde;
+    private double bonusTilGodkjenning;
 
     public BilForsikring(double bonus, double egenandel, int kjorelengde, String regNr, String type, String arsModell, int kmStand) {
         super(bonus, egenandel, regNr, type, arsModell, null);
@@ -58,7 +59,15 @@ public class BilForsikring extends Kjoretoy implements Serializable {
 
         return (int) utbetales;
 
-    }// end of method
+    }// end of 
+    
+    public void nyBonusTilGodkjenning(double bonusEtterSkade){
+    bonusTilGodkjenning =bonusEtterSkade; 
+} 
+    
+    public void bonusGodkjent(){
+        bonus = bonusTilGodkjenning;
+    }
 
     /* // beregner premien på nyregisterte biler
      public double bonusNyRegBil(int skadeFrieAar){       
@@ -97,7 +106,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     }// end of method
 
     // beregner premien basert på bonus etter en skade.
-    public double premieEtterSkade(int grunnPremie, double nyBonus) {
+    public double premieEtterSkade(double grunnPremie, double nyBonus) {
         double nyPremie = (100 - nyBonus) / 100 * grunnPremie;
         return nyPremie;
     }// end of method

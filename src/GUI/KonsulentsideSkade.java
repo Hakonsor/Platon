@@ -142,6 +142,8 @@ public class KonsulentsideSkade {
                 }
             }
         });
+        
+        // godkjenner beløpet og setter skademeldingen i registeret, samt oppdaterer premien.
 
 
         // godkjenner beløpet og setter skademeldingen i registeret
@@ -150,6 +152,11 @@ public class KonsulentsideSkade {
             if (skade != null) {
                 kontroll.ferdigBehandlet(skade);
                 skade.okUtbetal();
+                skade.getForsikring().nyPremieOk();
+                if(skade instanceof BilSkadeMelding){
+                    BilForsikring bil = (BilForsikring)skade.getForsikring();
+                        bil.bonusGodkjent();
+                }
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }

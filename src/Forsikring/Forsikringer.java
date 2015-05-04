@@ -22,6 +22,7 @@ public abstract class Forsikringer implements Serializable{
     protected int poliseNr;
     protected static int nestePoliseNr = 100000;
     protected double premie;
+    protected double premieTilGodkjenning;
     protected double egenandel;
     protected Calendar startDato;
     protected Calendar sluttDato;
@@ -50,6 +51,15 @@ public abstract class Forsikringer implements Serializable{
         nestePoliseNr = nyNesteNr;
     }
     
+    // mottar en premie som skal bli den nye premien når skaden er gokjent
+    public void  premieTilGodkjenning(double nyPremie){
+        premieTilGodkjenning = nyPremie;  
+    }
+    
+    // Når skademeldingen bekreftet ok, så settes premien på nytt.(Økning) 
+    public void nyPremieOk(){
+        premie = premieTilGodkjenning;
+    }
     public double getForsikringssum(){
         return forsikringSum;
     }

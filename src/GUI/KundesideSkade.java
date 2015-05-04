@@ -107,12 +107,6 @@ public class KundesideSkade {
 
         listView.setItems(data);
         listView.setCellFactory(ComboBoxListCell.forListView(data));
-        listView.setOnMouseClicked(e -> {
-            System.out.println("visElement()");
-        });
-        listView.getSelectionModel().selectedItemProperty().addListener(e -> {
-            System.out.println("Her skal det stå en kode");
-        });
 
         ToggleGroup skadeType = new ToggleGroup();
         RadioButton rbtVann = new RadioButton("Vannskade");
@@ -207,7 +201,6 @@ public class KundesideSkade {
                 System.err.println("Selected date: " + date);
                 dato = Calendar.getInstance();
                 dato.setTime(dat);
-
             }
         });
 
@@ -226,10 +219,9 @@ public class KundesideSkade {
 
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
             int poisnr = -1;
-            if (listView.getSelectionModel().getSelectedItem() != null) {
-                String polisnrs = listView.getSelectionModel().getSelectedItem();
-                System.out.println(polisnrs.replaceAll("[^0-9]", ""));
-                poisnr = Integer.parseInt(polisnrs.replaceAll("[^0-9]", ""));
+            if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem().isEmpty()) {
+                
+                poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
             }
 
             Forsikringer fors = kontroll.getForsikring(poisnr);
@@ -246,12 +238,12 @@ public class KundesideSkade {
                 }
             } else {
                 skriveOmråde.setEditable(false);
-
             }
-
         });
         btnRapSkade.setOnAction((ActionEvent e) -> {
-            Forsikringer fors = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
+            String polisNr = listView.getSelectionModel().getSelectedItem();
+            
+            Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
                 if (fors instanceof BilForsikring) {
 
@@ -259,7 +251,8 @@ public class KundesideSkade {
                     BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bil.setForsikring(f);
                     bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
-                  
+                    f.premieTilGodkjenning(f.premieEtterSkade(f.getPremie(), f.getBonus()));
+                    f.nyBonusTilGodkjenning(f.bonusEtterSkade(f.getBonus()));
                     kontroll.addSkade(bil);
                     skriveOmråde.setText(bil.melding());
 
@@ -279,6 +272,7 @@ public class KundesideSkade {
                     bolig.setForsikring(f);
                     int egenandel = f.egenandel(skade, false);
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
+                    f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(bolig);
                     skriveOmråde.setText(bolig.melding());
 
@@ -287,32 +281,25 @@ public class KundesideSkade {
                     FritidsBolig f = (FritidsBolig) fors;
                     FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     fri.setForsikring(f);
-                    System.out.println("Gammel premie:" + f.getPremie());
                     int egenandel = f.egenandel(skade, false);
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
-                    System.out.println("Ny premie:" + f.getPremie());
+                    f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
-
                 } else if (fors instanceof ReiseForsikring) {
-
                     ReiseForsikring f = (ReiseForsikring) fors;
                     ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     kontroll.addSkade(reise);
                     skriveOmråde.setText(reise.melding());
-
                 }
 
             } catch (NumberFormatException nfe) {
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);
             }
-            
-
             lbSkade.setText("Skademelding er sendt inn");
         });
         return borderPane;
     }
-
 }
