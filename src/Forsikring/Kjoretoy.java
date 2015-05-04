@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 public abstract class Kjoretoy extends Forsikringer implements Serializable{
     private String regNr , type , modell , arsModell;
-    private double bonus;
+    protected double bonus;
     private Person person;
     
     public Kjoretoy( double bonus, double egenandel,String regNr , String type,String modell, String arsModell ){

@@ -21,7 +21,6 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -44,7 +43,7 @@ import javafx.stage.Stage;
 public class KundesideSkade {
 
     private Calendar dato;
-    private String skade;
+    private String skade = "BrannSkade";
 
     public Pane skadeFane(Kontroller kontroll) {
 
@@ -109,8 +108,6 @@ public class KundesideSkade {
         listView.setItems(data);
         listView.setCellFactory(ComboBoxListCell.forListView(data));
 
-        hb.getChildren().addAll(listView, skriveOmråde);
-
         ToggleGroup skadeType = new ToggleGroup();
         RadioButton rbtVann = new RadioButton("Vannskade");
         rbtVann.setToggleGroup(skadeType);
@@ -136,12 +133,22 @@ public class KundesideSkade {
         });
         rbtBrann.setVisible(false);
 
+
+        GridPane radioGrid = new GridPane();
+        radioGrid.add(rbtBrann, 0, 0);
+        radioGrid.add(rbtRør, 0, 1);
+        radioGrid.add(rbtVann,0, 2);
+        radioGrid.setVgap(30);
+
+        hb.getChildren().addAll(listView, skriveOmråde, radioGrid);
+
+
         Label lbSkadebeløp = new Label();
         lbSkadebeløp.setText("Samlet skadebeløp:");
         lbSkadebeløp.setId("lbSkadebeløp");
 
-        tfBeløp.setMaxWidth(200);
-        tfBeløp.setAlignment(Pos.CENTER_RIGHT);
+        tfBeløp.setMaxWidth(100);
+        tfBeløp.setAlignment(Pos.CENTER_LEFT);
         tfBeløp.setPromptText("Beløp:");
 
         Label lbDato = new Label();
@@ -176,10 +183,6 @@ public class KundesideSkade {
         grid.add(hb, 0, 2);
         grid.add(lbSkadebeløp, 0, 3);
         grid.add(tfBeløp, 0, 4);
-
-        grid.add(rbtBrann, 2, 1);
-        grid.add(rbtVann, 2, 2);
-        grid.add(rbtRør, 2, 3);
 
         grid.add(lbFeilFormat, 1, 4);
         grid.add(lbDato, 0, 5);
@@ -248,7 +251,8 @@ public class KundesideSkade {
                     BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bil.setForsikring(f);
                     bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
-                  
+                    f.premieTilGodkjenning(f.premieEtterSkade(f.getPremie(), f.getBonus()));
+                    f.nyBonusTilGodkjenning(f.bonusEtterSkade(f.getBonus()));
                     kontroll.addSkade(bil);
                     skriveOmråde.setText(bil.melding());
 
@@ -268,7 +272,7 @@ public class KundesideSkade {
                     bolig.setForsikring(f);
                     int egenandel = f.egenandel(skade, false);
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
-                    f.setNyPremie();
+                    f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(bolig);
                     skriveOmråde.setText(bolig.melding());
 
@@ -277,11 +281,9 @@ public class KundesideSkade {
                     FritidsBolig f = (FritidsBolig) fors;
                     FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     fri.setForsikring(f);
-                    System.out.println("Gammel premie:" + f.getPremie());
                     int egenandel = f.egenandel(skade, false);
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
-                    f.setNyPremie();
-                    System.out.println("Ny premie:" + f.getPremie());
+                    f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
                 } else if (fors instanceof ReiseForsikring) {

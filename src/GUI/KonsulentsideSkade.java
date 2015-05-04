@@ -6,17 +6,25 @@ import Forsikring.BoligForsikring;
 import Forsikring.FritidsBolig;
 import Kontroller.Kontroller;
 import SkadeMeldinger.BilSkadeMelding;
+import javafx.scene.input.MouseEvent;
+import javafx.event.EventHandler;
+
 import SkadeMeldinger.SkadeMelding;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 /**
  * Created by Magnus on 27.04.15. author@ Therese
  */
 public class KonsulentsideSkade {
+
+    private final String left = "Bilder/left.png";
+    private final String right = "Bilder/right.png";
 
     private SkadeMelding skade;
 
@@ -40,11 +48,15 @@ public class KonsulentsideSkade {
         lbNeste.setText("Neste");
         lbNeste.setId("neste");
 
-        Button btnVenstre = new Button("<-----");
-        btnVenstre.setId("bntVenstre");
+        ImageView btnVenstre = new ImageView(new Image(left));
+        btnVenstre.setId("btnVenstre");
+        btnVenstre.setPreserveRatio(true);
+        btnVenstre.setFitWidth(32);
 
-        Button btnHøyre = new Button("----->");
+        ImageView btnHøyre = new ImageView(new Image(right));
         btnHøyre.setId("btnHøyre");
+        btnHøyre.setPreserveRatio(true);
+        btnHøyre.setFitWidth(32);
 
         TextField tfAntall = new TextField();
         tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
@@ -65,10 +77,16 @@ public class KonsulentsideSkade {
         lbPris.setId("lbPris");
 
         TextField tfBeløp = new TextField();
-        tfBeløp.setMaxWidth(200);
+        tfBeløp.setMaxWidth(100);
         tfBeløp.setEditable(false);
         tfBeløp.setAlignment(Pos.CENTER_RIGHT);
-        tfBeløp.setText("65 000,-");
+
+        String beløp = "";
+
+        if (skade != null) {
+            beløp = String.valueOf(skade.getUtbetaling());
+        }
+        tfBeløp.setText(beløp);
 
         Button btnGodta = new Button("Godta");
         btnGodta.setMinWidth(200);
@@ -97,35 +115,48 @@ public class KonsulentsideSkade {
         borderPane.setCenter(vb); // CENTER
 
         // går tilbake i køen over skademeldinger.
-        btnVenstre.setOnAction((e) -> {
+        btnVenstre.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (skade != null) {
 
-            if (skade != null) {
-
-                skade = kontroll.visForrigeIKø();
-                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                taLes.setText(skade.toString());
-            } else {
-                taLes.setText("Det er ikke registrert noen flere skademeldinger.");
+                    skade = kontroll.visForrigeIKø();
+                    tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                    taLes.setText(skade.toString());
+                } else {
+                    taLes.setText("Det er ikke registrert noen flere skademeldinger.");
+                }
             }
         });
-        btnHøyre.setOnAction((ActionEvent e) -> {
 
-            if (skade != null) {
+        btnHøyre.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (skade != null) {
 
-                skade = kontroll.visNesteIKø();
-                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                taLes.setText(skade.toString());
-            } else {
-
-                taLes.setText("Det er ikke registrert noen nye skademeldinger.");
+                    skade = kontroll.visNesteIKø();
+                    tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                    taLes.setText(skade.toString());
+                } else {
+                    taLes.setText("Det er ikke registrert noen nye skademeldinger.");
+                }
             }
         });
+        
+        // godkjenner beløpet og setter skademeldingen i registeret, samt oppdaterer premien.
+
+
         // godkjenner beløpet og setter skademeldingen i registeret
         btnGodta.setOnAction((ActionEvent e) -> {
 
             if (skade != null) {
                 kontroll.ferdigBehandlet(skade);
                 skade.okUtbetal();
+                skade.getForsikring().nyPremieOk();
+                if(skade instanceof BilSkadeMelding){
+                    BilForsikring bil = (BilForsikring)skade.getForsikring();
+                        bil.bonusGodkjent();
+                }
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }
