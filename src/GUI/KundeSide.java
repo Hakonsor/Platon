@@ -1,12 +1,15 @@
 package GUI;
 
 import Kontroller.Kontroller;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.scene.layout.*;
 
 
 /**
@@ -98,7 +101,7 @@ public class KundeSide {
         tabFriBolig.setClosable(false);
         KundesideFribolig fribolig = new KundesideFribolig();
         tabFriBolig.setOnSelectionChanged(e -> {
-        tabFriBolig.setContent(fribolig.friboligFane(kontroll));
+        tabFriBolig.setContent(KundesideFribolig.friboligFane(kontroll));
         });
         //SkadeMelding
         Tab tabSkade = new Tab();
