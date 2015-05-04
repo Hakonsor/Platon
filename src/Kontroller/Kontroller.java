@@ -5,6 +5,7 @@
  */
 package Kontroller;
 
+
 import Forsikring.BatForsikring;
 import Forsikring.BilForsikring;
 import Forsikring.BoligForsikring;
