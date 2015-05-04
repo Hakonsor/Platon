@@ -1,6 +1,7 @@
 package GUI;
 
 import Forsikring.Forsikringer;
+import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -16,7 +17,7 @@ import javafx.scene.text.Text;
 /**
  * Created by Magnus on 21.04.15.
  */
-public class KundesideInfo {
+public class KundesideInfo implements ComboBoxConverter {
 
     public static Pane infoFane(Kontroller kontroller) {
         //Group root = new Group();
@@ -46,9 +47,7 @@ public class KundesideInfo {
 
         borderPane.setTop(vb);
 
-
         //CENTER
-
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(50, 50, 50, 50));
         grid.setVgap(50);
@@ -62,19 +61,7 @@ public class KundesideInfo {
         forsikringComboBox.setEditable(false);
         forsikringComboBox.getItems().addAll("Alle", "Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
-        forsikringComboBox.setOnAction(e -> {
-
-            ArrayList<String> forsikringliste = kontroller.
-                    getInfoForsikringListe(forsikringComboBox.getItems().
-                            indexOf(forsikringComboBox.getValue()));
-            System.out.println(forsikringliste);
-            if (forsikringliste == null) {
-                navn.clear();
-                navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
-            } else {
-                navn.setAll(forsikringliste);
-            }
-        });
+        
 
         ListView<String> listView = new ListView<>(data);
         listView.setPrefSize(300, 400);
@@ -88,16 +75,7 @@ public class KundesideInfo {
         listView.setCellFactory(ComboBoxListCell.forListView(navn));
         TextArea textArea = new TextArea();
         //listView.setOnMouseClicked(e -> { visElemnt();   });
-        listView.getSelectionModel().selectedItemProperty().addListener(e -> {
-            
-            String polisnr = listView.getSelectionModel().getSelectedItem().replaceAll("\\D", "");
-            Forsikringer s = kontroller.getForsikring(Integer.parseInt(polisnr));
-            if (s != null) {
-                textArea.setText(s.toString());
-            }
-
-        });
-
+        
 
         textArea.setPrefSize(300, 400);
         textArea.setId("textarea");
@@ -110,8 +88,34 @@ public class KundesideInfo {
         borderPane.setCenter(grid);
 
         borderPane.getStylesheets().add("CSS/kundeInfo.css");
+        
+        listView.getSelectionModel().selectedItemProperty().addListener(e -> {
+
+            String polisnr = listView.getSelectionModel().getSelectedItem();
+            if (polisnr != null) {
+                polisnr = polisnr.substring(0,6);
+                System.out.println(polisnr);
+                Forsikringer s = kontroller.getForsikring(Integer.parseInt(polisnr));
+                if (s != null) {
+                    textArea.setText(s.toString());
+                }
+            }
+        });
+        
+        forsikringComboBox.setOnAction(e -> {
+            ArrayList<String> forsikringliste = kontroller.
+                    getInfoForsikringListe(forsikringComboBox.getItems().
+                            indexOf(forsikringComboBox.getValue()));
+            System.out.println(forsikringliste);
+            if (forsikringliste == null) {
+                navn.clear();
+                navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+            } else {
+                navn.setAll(forsikringliste);
+            }
+        });
+        
         return borderPane;
     }
 
 }
-

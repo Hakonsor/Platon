@@ -6,13 +6,14 @@
 package SkadeMeldinger;
 
 import Forsikring.BilForsikring;
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  *
  * @author Therese
  */
-public class BilSkadeMelding extends KjoretoySkade {
+public class BilSkadeMelding extends KjoretoySkade implements Serializable{
 
 
     public BilSkadeMelding(String skadeBeskrivelse, int utbetal, Calendar skadeDato) {
