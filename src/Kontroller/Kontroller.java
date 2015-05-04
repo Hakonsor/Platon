@@ -44,14 +44,18 @@ import javafx.stage.Stage;
  * @author hakon_000
  */
 public class Kontroller implements EventHandler<ActionEvent> {
+
     private BrukerRegister brukerRegister = new BrukerRegister();
     private Bruker innLoggetBruker = null;
     private SkadeMeldingRegister skademeldingregister = new SkadeMeldingRegister();
     private ForsikringsRegister forsikringsregister = new ForsikringsRegister();
+
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
     }
+
     //GUI
+
     public void loginVindu(Stage primaryStage) {
         innLoggetBruker = null;
         try {
@@ -144,23 +148,22 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     public void setBilForsikring(BilForsikring bil, Person person) {
-            Kunde kunde = null;
-            try {
-                kunde = (Kunde) innLoggetBruker;
-                    
-              //  forsikringsregister.settInn(kunde,);
+        Kunde kunde = null;
+        try {
+            kunde = (Kunde) innLoggetBruker;
 
-            } catch (ClassCastException cce) {
-                System.out.println(" Innlogget kunde er ikke av type kunde");
-            }
-            
-            if (kunde!= null){
-                forsikringsregister.settInn(kunde, bil);
-                if(person!= null){
-                    bil.setPerson(person);
-                }
+              //  forsikringsregister.settInn(kunde,);
+        } catch (ClassCastException cce) {
+            System.out.println(" Innlogget kunde er ikke av type kunde");
         }
-        
+
+        if (kunde != null) {
+            forsikringsregister.settInn(kunde, bil);
+            if (person != null) {
+                bil.setPerson(person);
+            }
+        }
+
     }
 
     //SkadeMeldingBehandling skadeKonsulent-------------------------------------------
@@ -216,7 +219,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     //Filskriving
     public void lesFil() {
-        
 
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
@@ -247,7 +249,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
     }
 
-
     public void skrivTilFil() {
         try (ObjectOutputStream utfil = new ObjectOutputStream(
                 new FileOutputStream("src/Fil/forsikring.data"))) {
@@ -263,7 +264,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         } catch (FileNotFoundException ioe) {
             System.out.println("Finner ikke fil");
         } catch (IOException ioe) {
-            System.out.println("Problem med utskrift til fil."+ ioe.toString());
+            System.out.println("Problem med utskrift til fil." + ioe.toString());
         }
     }
 
@@ -272,8 +273,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
         // Vi tar i bruk lambda uttrykk istedenfor istedenfor
         // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
     }
+
     //infosiden
     // Finner alle forsikringene til en gitt kunde, legger i liste, returnerer null hvis kunden ikke har noen forsikring.
+
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
@@ -282,41 +285,51 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return new ArrayList<>(a);
     }
+
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
+
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
+        
         if (a == null || a.isEmpty()) {
             return null;
         }
+        String infoliste = "";
         ArrayList<String> liste = new ArrayList<>();
         Iterator<? extends Forsikringer> iterator = a.iterator();
-        String infoliste = "";
-
-        if (a.get(0) instanceof BilForsikring) {
+        
+        if (i == 0) {
             while (iterator.hasNext()) {
-                infoliste = Integer.toString(iterator.next().getPoliseNr());
+                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+            }
+        } else if (a.get(0) instanceof BilForsikring) {
+             while(iterator.hasNext()) {
+                BilForsikring b = (BilForsikring)iterator.next();
+                infoliste = b.getPoliseNr()+" Regnr: "+b.getRegNr();
                 liste.add(infoliste);
-                //iterator.next().getRegNr()
             }
             return liste;
         } else if (a.get(0) instanceof BatForsikring) {
             while (iterator.hasNext()) {
-                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                BatForsikring b = (BatForsikring)iterator.next();
+                liste.add(Integer.toString(b.getPoliseNr())+" Regnr: "+b.getRegNr());
             }
         } else if (a.get(0) instanceof BoligForsikring) {
             while (iterator.hasNext()) {
-                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                BoligForsikring b = (BoligForsikring)iterator.next();
+                liste.add(Integer.toString(b.getPoliseNr())+" Adresse: "+b.adresse());
             }
         } else if (a.get(0) instanceof FritidsBolig) {
             while (iterator.hasNext()) {
-                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                FritidsBolig b = (FritidsBolig)iterator.next();
+                liste.add(Integer.toString(b.getPoliseNr())+" Adresse: "+b.adresse());
             }
         } else if (a.get(0) instanceof ReiseForsikring) {
             while (iterator.hasNext()) {
-                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                ReiseForsikring b = (ReiseForsikring)iterator.next();
+                liste.add(Integer.toString(b.getPoliseNr())+" "+b.getType());
             }
-
         }
         return liste;
     }
