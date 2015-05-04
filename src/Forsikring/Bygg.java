@@ -155,9 +155,12 @@ abstract class Bygg extends Forsikringer implements Serializable {
         return (int) premium;
     }
     
-    public void setNyPremie(){
-        int premieØkning = 500;
-        this.premie +=  premieØkning; 
+    // beregner ny premie etter skade.
+    public double nyPremie(){
+        double premieØkning = 500;
+        double nyPremie = this.premie + premieØkning;
+        return nyPremie;
+        
     }
 
 }// end of class Bolig.
