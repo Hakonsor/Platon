@@ -48,16 +48,18 @@ public class KonsulentSide {
         tabKunde.setText("Kunde");
         tabKunde.setClosable(false);
         KonsulentsideKunde konsulentsideKunde = new KonsulentsideKunde();
+        tabKunde.setOnSelectionChanged(e-> {
         tabKunde.setContent(konsulentsideKunde.kundeFane(kontroll));
-
+        });
 
         //Statistikk
         Tab tabStat = new Tab();
         tabStat.setText("Statistikk");
         tabStat.setClosable(false);
         KonsulentsideStatistikk konsulentsideStatistikk = new KonsulentsideStatistikk();
-        tabStat.setContent(konsulentsideStatistikk.statFane(kontroll));
-
+        tabStat.setOnSelectionChanged(e-> {
+            tabStat.setContent(konsulentsideStatistikk.statFane(kontroll));
+        });
         //Skademelding system
         Tab tabSkade = new Tab();
         tabSkade.setText("Skade");

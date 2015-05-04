@@ -218,7 +218,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //Filskriving
-
     public void lesFil() {
         
 
@@ -276,6 +275,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         // Vi tar i bruk lambda uttrykk istedenfor istedenfor
         // Metodene blir kjøre direkte med <knapp>.setOnAction( e -> regVindu())
     }
+    
     //infosiden
     // Finner alle forsikringene til en gitt kunde, legger i liste, returnerer null hvis kunden ikke har noen forsikring.
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
@@ -335,4 +335,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public Kunde getKunde(String id) {
         return brukerRegister.getKunde(id);
     }
+    
+    
 }

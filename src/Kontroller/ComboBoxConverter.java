@@ -23,18 +23,15 @@ public interface ComboBoxConverter {
     }
     
     default double convertDou(String s) {
-
         s = s.replaceAll(" ", "");
         Pattern pattern = Pattern.compile("(-?[0-9]+)");
         Matcher matcher = pattern.matcher(s);
         if (matcher.find()) {
             System.out.println(Double.parseDouble(matcher.group()));
             return Double.parseDouble(matcher.group());
-          
         }else
             System.out.println("ERROR i comboconverter");
         return -1;
-        
         }
        
         default int convertInt(String s){

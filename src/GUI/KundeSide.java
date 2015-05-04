@@ -51,50 +51,64 @@ public class KundeSide {
         tabInfo.setText("Min side");
         tabInfo.setClosable(false);
         KundesideInfo info = new KundesideInfo();
+        tabInfo.setOnSelectionChanged(e -> {
         tabInfo.setContent(info.infoFane(kontroll));
-
+        });
         //Båtforsikring
         Tab tabBåt = new Tab();
         tabBåt.setText("Båtforsikring");
         tabBåt.setClosable(false);
         KundesideBåt båt = new KundesideBåt();
+        tabBåt.setOnSelectionChanged(e -> {
         tabBåt.setContent(båt.båtFane(kontroll));
+        });
+        
+       
 
         //Reiseforsikring
         Tab tabReise = new Tab();
         tabReise.setText("Reiseforsikring");
         tabReise.setClosable(false);
         KundesideReise reise = new KundesideReise();
+        tabReise.setOnSelectionChanged(e -> {
         tabReise.setContent(reise.reiseFane(kontroll));
-        tabReise.setOnSelectionChanged(e -> kontroll.handle(null));
+        });
 
         //Bilforsikring
         Tab tabBil = new Tab();
         tabBil.setText("Bilforsikring");
         tabBil.setClosable(false);
         KundesideBil bil = new KundesideBil();
+        tabBil.setOnSelectionChanged(e -> {
         tabBil.setContent(bil.bilFane(kontroll));
+        });
 
         //Boligforsikring
         Tab tabBolig = new Tab();
         tabBolig.setText("Boligforsikring");
         tabBolig.setClosable(false);
         KundesideBolig bolig = new KundesideBolig();
+        tabBolig.setOnSelectionChanged(e -> {
         tabBolig.setContent(bolig.boligFane(kontroll));
+        });
 
         //Fri.Boligforsikring
         Tab tabFriBolig = new Tab();
         tabFriBolig.setText("Fritidsboligforsikring");
         tabFriBolig.setClosable(false);
         KundesideFribolig fribolig = new KundesideFribolig();
+        tabFriBolig.setOnSelectionChanged(e -> {
         tabFriBolig.setContent(fribolig.friboligFane(kontroll));
-
+        });
         //SkadeMelding
         Tab tabSkade = new Tab();
         tabSkade.setText("Skademelding");
         tabSkade.setClosable(false);
         KundesideSkade skade = new KundesideSkade();
+        tabSkade.setOnSelectionChanged(e -> {
         tabSkade.setContent(skade.skadeFane(kontroll));
+        });
+        
 
 
         tabPane.getTabs().addAll(tabInfo, tabBåt, tabReise, tabBil, tabBolig, tabFriBolig, tabSkade);
