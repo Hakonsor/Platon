@@ -16,8 +16,8 @@ public class BilForsikring extends Kjoretoy implements Serializable {
 
     private int kjorelengde;
 
-    public BilForsikring(double bonus, double egenandel, int kjorelengde, String regNr, String type, String arsModell, int kmStand, Person person) {
-        super(bonus, egenandel, regNr, type, arsModell, null, null);
+    public BilForsikring(double bonus, double egenandel, int kjorelengde, String regNr, String type, String arsModell, int kmStand) {
+        super(bonus, egenandel, regNr, type, arsModell, null);
         this.kjorelengde = kjorelengde;
         premie = (premie(egenandel, bonus));// premien settes
     }

@@ -155,7 +155,7 @@ public class KundesideBolig {
             double byggSum = 0;
             double innboSum= 0;
             int byggeår = 0;
-            String mertiale = cbMatriale.getValue();
+            String materiale = cbMatriale.getValue();
             
 
             try {
