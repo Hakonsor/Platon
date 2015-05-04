@@ -32,7 +32,6 @@ import java.util.Map;
             return liste;
         }
         for (Map.Entry<String, Bruker> e : register.entrySet()) {
-
             if (e.getValue() instanceof Kunde) {
                 kunde = (Kunde) e.getValue();
                 if (kunde.getFornavn().equals(fornavn)) {

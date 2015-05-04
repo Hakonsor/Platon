@@ -26,9 +26,6 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         return kjorelengde;
     }
 
-    public String getRegNr() {
-        return super.getRegNr();
-    }
 
     // angir hvor mye kunden får utbetalt, dersom uhellet skulle være ute.
     public int utbetal(int km, double kostnad) {
