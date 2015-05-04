@@ -48,6 +48,10 @@ public abstract class SkadeMelding implements Serializable {
     public void setUtbetaling(int utbetaling){
         this.utbetaling = utbetaling;
     }
+
+    public int getUtbetaling(){
+        return this.utbetaling;
+    }
     // viser at skademeldingen er godkjent.
     public void okUtbetal(){
         godkjent = true;

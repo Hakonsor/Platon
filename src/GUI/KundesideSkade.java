@@ -115,8 +115,6 @@ public class KundesideSkade {
             System.out.println("Her skal det stå en kode");
         });
 
-        hb.getChildren().addAll(listView, skriveOmråde);
-
         ToggleGroup skadeType = new ToggleGroup();
         RadioButton rbtVann = new RadioButton("Vannskade");
         rbtVann.setToggleGroup(skadeType);
@@ -142,12 +140,22 @@ public class KundesideSkade {
         });
         rbtBrann.setVisible(false);
 
+
+        GridPane radioGrid = new GridPane();
+        radioGrid.add(rbtBrann, 0, 0);
+        radioGrid.add(rbtRør, 0, 1);
+        radioGrid.add(rbtVann,0, 2);
+        radioGrid.setVgap(30);
+
+        hb.getChildren().addAll(listView, skriveOmråde, radioGrid);
+
+
         Label lbSkadebeløp = new Label();
         lbSkadebeløp.setText("Samlet skadebeløp:");
         lbSkadebeløp.setId("lbSkadebeløp");
 
-        tfBeløp.setMaxWidth(200);
-        tfBeløp.setAlignment(Pos.CENTER_RIGHT);
+        tfBeløp.setMaxWidth(100);
+        tfBeløp.setAlignment(Pos.CENTER_LEFT);
         tfBeløp.setPromptText("Beløp:");
 
         Label lbDato = new Label();
@@ -182,10 +190,6 @@ public class KundesideSkade {
         grid.add(hb, 0, 2);
         grid.add(lbSkadebeløp, 0, 3);
         grid.add(tfBeløp, 0, 4);
-
-        grid.add(rbtBrann, 2, 1);
-        grid.add(rbtVann, 2, 2);
-        grid.add(rbtRør, 2, 3);
 
         grid.add(lbFeilFormat, 1, 4);
         grid.add(lbDato, 0, 5);
