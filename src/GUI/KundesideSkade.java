@@ -198,7 +198,6 @@ public class KundesideSkade {
             {
                 LocalDate date = dpDato.getValue();
                 Date dat = Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-                System.err.println("Selected date: " + date);
                 dato = Calendar.getInstance();
                 dato.setTime(dat);
             }
