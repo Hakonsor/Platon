@@ -228,16 +228,18 @@ public class KundesideBil implements ComboBoxConverter {
             String regNo = tfRegnr.getText();
             String årsModell = tfÅrsmodell.getText();
             String bilType = tfBiltype.getText();
-            String kmStand = tfKmstand.getText();
+            int kmStand = 0;
             try {
                 bonus = Double.parseDouble(cbBonus.getValue());
                 egenandel = Double.parseDouble(cbEgenandel.getValue());
                 kjøreLengde = Integer.parseInt(cbKjørelengde.getValue());
+                kmStand = Integer.parseInt(tfKmstand.getText());
 
             } catch (NumberFormatException nfe) {
                 System.out.println("Feil tallformat");
             }
-            kontroll.setBilForsikring(bonus, egenandel, kjøreLengde, regNo, årsModell, bilType, kmStand, person);
+            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, årsModell, bilType, kmStand);
+            kontroll.setBilForsikring(bil, person);
             regLabel.setText("Bilforsikring Registrert!");
         });
 
