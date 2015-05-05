@@ -245,7 +245,13 @@ public class KundesideSkade {
         // først når konsulenten har godkjent beløpet/ skademeldingen.
         btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
-            
+            if (polisNr == null) {
+                return;
+            }
+            if(dato.after(Calendar.getInstance())){
+                lbSkade.setText("Vennligst sett en gyldig dato");
+                return;
+            }
             Forsikringer fors = kontroll.getForsikring( Integer.parseInt( polisNr ) );
             try {
                 if ( fors instanceof BilForsikring ) {
