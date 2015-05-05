@@ -99,23 +99,12 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //båt forsikring, oppretter båtforsikring og setter den inn i registeret
-    public void setBåtForsikring(double verdi,
-            String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person) {
-        int fot = 0;
-        if (person == null) {
-            person = innLoggetBruker;
-        }
-
-        try {
-            fot = Integer.parseInt(tffot);
-        } catch (NumberFormatException nfe) {
-            System.out.println("Kun heltall er lov!");
-            return;
-        }
+    public void setBåtForsikring(BatForsikring båt) {
+        
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BatForsikring(verdi, motor, fot, ytelse, regNr, type, modell, arsmodell, person));
-        } catch (ClassCastException cce) {
+            forsikringsregister.settInn(kunde, båt);
+        } catch (ClassCastException cce) {//double forSum, int lendgeFot,String regNr , boolean type, String modell, String arsModell
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
     }
