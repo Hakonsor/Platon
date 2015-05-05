@@ -79,6 +79,10 @@ public class KundesideBåt implements ComboBoxConverter{
         lbBåt.setText("Båt innformasjon");
         lbBåt.setAlignment(Pos.CENTER);
 
+        TextField tfVerdi = new TextField();
+        tfVerdi.setPromptText("Båtens verdi");
+        tfVerdi.setMinWidth(200);
+        
         TextField tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr");
         tfRegnr.setMinWidth(200);
@@ -153,17 +157,18 @@ public class KundesideBåt implements ComboBoxConverter{
         });
 
         grid.add(lbBåt, 0, 0);
-        grid.add(tfRegnr, 0, 1);
-        grid.add(tfÅrsmodell, 0, 2);
-        grid.add(tfBåtmodell, 0, 3);
-        grid.add(tfAntfor, 0, 4);
-        grid.add(tfMotormerke, 0, 5);
-        grid.add(tfYtelse, 0, 6);
-        grid.add(rbtSeilbåt, 0, 7);
-        grid.add(rbtMotorbåt, 0, 8);
-        grid.add(btnSjekkpris, 0, 9);
-        grid.add(btnRegBåtforsikring, 0, 10);
-        grid.add(regLabel, 0, 11);
+        grid.add(tfVerdi,0, 1);
+        grid.add(tfRegnr, 0, 2);
+        grid.add(tfÅrsmodell, 0, 3);
+        grid.add(tfBåtmodell, 0, 4);
+        grid.add(tfAntfor, 0, 5);
+        grid.add(tfMotormerke, 0, 6);
+        grid.add(tfYtelse, 0, 7);
+        grid.add(rbtSeilbåt, 0, 8);
+        grid.add(rbtMotorbåt, 0, 9);
+        grid.add(btnSjekkpris, 0, 10);
+        grid.add(btnRegBåtforsikring, 0, 11);
+        grid.add(regLabel, 0, 12);
 
         borderPane.setCenter(grid); // CENTER
 
