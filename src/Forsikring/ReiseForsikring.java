@@ -29,14 +29,18 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-
-    public void setPremie(String type) {
+    
+    // setter premie og forsikringsum
+    public void setPremieOgForsSum(String type) {
         if (type.equals("Verden")) {
             premie = 1700;
+            forsikringSum = 10000000; 
         } else if (type.equalsIgnoreCase("Europa")) {
             premie = 1400;
+            forsikringSum = 1000000; 
         } else if (type.equalsIgnoreCase("Europa")) {
             premie = 900;
+            forsikringSum = 1000000;
         }
     }
 
@@ -54,7 +58,7 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
         String s;
         s = "ReiseForsikring:" + "\nForsikringen gjelder for: " + type
                 + "PoliseNr: " + poliseNr
-                + "Gjelder fra: " + startDato + " til:  sluttDato"
+                + "Gjelder fra: " + startDato + " til: " + utløpsDato
                 + "Forsikringsum: " + forsikringSum;
         return s;
     }

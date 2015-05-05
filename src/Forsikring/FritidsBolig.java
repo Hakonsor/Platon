@@ -17,10 +17,10 @@ public class FritidsBolig extends Bygg implements Serializable{
     
     public FritidsBolig(boolean utleie,
          double kvadrat, String adresse, String boligType, int byggeår,
-         String metriale, String standard, double byggSum, double inboSum){
+         String materiale, String standard, double byggSum, double innboSum){
         
         super( utleie,kvadrat, adresse, boligType, byggeår,
-                  metriale, standard, byggSum, inboSum);
+                  materiale, standard, byggSum, innboSum);
      
     }
     

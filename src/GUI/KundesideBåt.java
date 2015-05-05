@@ -307,21 +307,22 @@ public class KundesideBåt implements ComboBoxConverter{
                 tfMotormerke.getId().equals("valid") &&
                 tfYtelse.getId().equals("valid")
                     ) {
-
+                double verdi = 0;
                 int effekt = 0;
 
-                try {
+                try{
+                    verdi = Double.parseDouble(tfVerdi.getText());
                     effekt = Integer.parseInt(tfYtelse.getText());
-                } catch (NumberFormatException nfe) {
+                }catch(NumberFormatException nfe){
                     System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
                             "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
                 }
 
-                kontroll.setBåtForsikring(0, convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
+                kontroll.setBåtForsikring(verdi, tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
                 regLabel.setText("Bilforsikring Registrert!");
+            
             } else{
             regLabel.setText("Fargeblind bro?!");
-            }
         });
 
         FadeTransition ftBestill = new FadeTransition(Duration.millis(100), btnRegBåtforsikring);

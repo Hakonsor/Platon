@@ -2,6 +2,7 @@ package GUI;
 
 import Forsikring.BoligForsikring;
 import Kontroller.Kontroller;
+import java.text.DecimalFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -18,7 +19,7 @@ import Kontroller.Postregister;
  */
 public class KundesideBolig {
 
-    String leie;
+    private boolean utLeie;
 
     public Pane boligFane(Kontroller kontroller) {
         //Group root = new Group();
@@ -120,17 +121,14 @@ public class KundesideBolig {
         );
         cbMatriale.setValue("Byggematriale:");
 
-        CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
-        cbleie.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (cbleie.isSelected() == true) {
-                    leie = "Ja";
-                    System.out.println("Ja");
-                } else {
-                    leie = "Nei";
-                    System.out.println("Nei");
-                }
+        CheckBox cbleie = new CheckBox( "Er dette utleiebolig ? ");
+        cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (cbleie.isSelected() == true) {
+                utLeie = true;
+                
+            } else {
+                utLeie = false;
+                System.out.println("Nei");
             }
         });
 
@@ -205,10 +203,11 @@ public class KundesideBolig {
         } catch (NumberFormatException nfe) {
             System.out.println("Feil tallformat.");
         }
-         BoligForsikring f = new BoligForsikring(kvadrat,adresse,boligType,byggeÅr,
+         BoligForsikring f = new BoligForsikring(utLeie,kvadrat,adresse,boligType,byggeÅr,
                   materiale, standard, byggSum,innboSum);
-           
-            regLabel.setText("Årlig premie: " + f.getPremie() );
+           String form = "0.00";
+            DecimalFormat tall = new DecimalFormat(form);
+            regLabel.setText("Årlig premie: " + tall.format(f.getPremie()) + " kr" );
         });
         //registrerer boligforsikring og setter sen inn i forsikringsregisteret.
         btnRegBoligforsikring.setOnAction(e -> {
@@ -232,7 +231,7 @@ public class KundesideBolig {
                 System.out.println("Feil tallformat.");
             }
 
-            kontroller.setBoligForsikring(kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
+            kontroller.setBoligForsikring(utLeie,kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
             regLabel.setText("Boligforsikring registrert!");
 
         });

@@ -3,14 +3,24 @@ package GUI;
 import Forsikring.BilForsikring;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
+import Kontroller.Postregister;
 import Person.Person;
-import javafx.beans.value.ChangeListener;
+import java.text.DecimalFormat;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import Kontroller.Postregister;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * Created by Magnus on 21.04.15.
@@ -34,7 +44,6 @@ public class KundesideBil implements ComboBoxConverter {
         vb2.getChildren().addAll(overskrift);
 
         borderPane.setTop(vb2); //TOP
-
 
         HBox hb = new HBox();
         hb.setAlignment(Pos.CENTER);
@@ -69,7 +78,7 @@ public class KundesideBil implements ComboBoxConverter {
 
         TextField tfFornavn = new TextField();
         tfFornavn.setPromptText("Fornavn");
-        tfFornavn. setId("promtfix");
+        tfFornavn.setId("promtfix");
         tfFornavn.setMinWidth(200);
 
         TextField tfEtternavn = new TextField();
@@ -103,20 +112,17 @@ public class KundesideBil implements ComboBoxConverter {
         postSted.setEditable(false);
         postSted.setMinWidth(200);
 
-        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                Postregister register = new Postregister();
-                String poststed = register.getPoststed(tfPostnr.getText());
-                if (poststed == null) {
-                    poststed = "Finnes ikke!";
-                }
-                if (tfPostnr.getText().equals("")) {
-                    postSted.setText("");
-                    postSted.setPromptText("PostSted");
-                } else
-                    postSted.setText(poststed);
+        tfPostnr.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            Postregister register = new Postregister();
+            String poststed = register.getPoststed(tfPostnr.getText());
+            if (poststed == null) {
+                poststed = "Finnes ikke!";
+            }
+            if (tfPostnr.getText().equals("")) {
+                postSted.setText("");
+                postSted.setPromptText("PostSted");
+            } else {
+                postSted.setText(poststed);
             }
         });
 
@@ -224,14 +230,39 @@ public class KundesideBil implements ComboBoxConverter {
         btnSjekkpris.setText("Beregn Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
-        btnSjekkpris.setOnAction(e -> {
-            regLabel.setText("Prisen er: " + "getPris()");
-        });
+        
 
         Button btnRegBilforsikring = new Button();
         btnRegBilforsikring.setText("Registrer Bilforsikring");
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
+
+        btnSjekkpris.setOnAction((ActionEvent e) -> {
+
+            double bonus = 0;
+            double egenandel = 0;
+            int kjøreLengde = 0;
+            String regNo = tfRegnr.getText();
+            String årsModell = tfÅrsmodell.getText();
+            String bilMerke = tfMerke.getText();
+            String bilModell = tfModell.getText();
+            int kmStand = 0;
+            try {
+                bonus = convertDou(cbBonus.getValue());
+                egenandel = convertDou(cbEgenandel.getValue());
+                kjøreLengde = convertInt(cbKjørelengde.getValue());
+                kmStand = Integer.parseInt(tfKmstand.getText());
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Feil tallformat");
+            }
+            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde,
+                    regNo, bilMerke, bilModell, årsModell, kmStand);
+            String form = "0.00";
+            DecimalFormat tall = new DecimalFormat(form);
+            regLabel.setText("Årlig premie: " + tall.format(bil.getPremie()) + " kr");
+
+        });
         btnRegBilforsikring.setOnAction(e -> {
 
             Person person;
@@ -287,10 +318,6 @@ public class KundesideBil implements ComboBoxConverter {
 
         //gridBil.setGridLinesVisible(true);
         //gridPerson.setGridLinesVisible(true);
-
-
-
-
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(10);

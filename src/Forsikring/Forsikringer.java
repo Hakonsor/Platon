@@ -136,6 +136,13 @@ public abstract class Forsikringer implements Serializable{
     public int utbetal(int i, double d, int i0) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public void setInaktiv() {
+        aktiv = false;
+    }
+    public boolean getAktiv() {
+        return aktiv;
+    }
     
    
  }// end of abstract class Forsikringer

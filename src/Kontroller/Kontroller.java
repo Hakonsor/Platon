@@ -99,7 +99,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //båt forsikring, oppretter båtforsikring og setter den inn i registeret
-    public void setBåtForsikring(double bonus, double egenandel,
+    public void setBåtForsikring(double verdi,
             String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person) {
         int fot = 0;
         if (person == null) {
@@ -114,32 +114,34 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BatForsikring(bonus, egenandel, motor, fot, ytelse, regNr, type, modell, arsmodell, person));
+            forsikringsregister.settInn(kunde, new BatForsikring(verdi, motor, fot, ytelse, regNr, type, modell, arsmodell, person));
         } catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
     }
 
     // bolig forsikring, metode som oppretter boligforsikringer og setter de inn i registeret.
-    public void setBoligForsikring(double kvadrat, String adresse, String boligType, int byggeår,
+    public void setBoligForsikring( boolean utLeie, double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
+        
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
             System.out.println("innlogget bruker");
-            forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
+            forsikringsregister.settInn(kunde, new BoligForsikring(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
         } catch (ClassCastException cce) {
+            
             System.out.println("Feil med bruker");
         }
 
     }
 
     //FritidsForsikring, metode som oppretter fritidsbolig forsikringer og setter de inn i registeret.
-    public void setFritidsForsikring(double kvadrat, String adresse, String boligType, int byggeår,
+    public void setFritidsForsikring(boolean utLeie, double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
             System.out.println("innlogget bruker");
-            forsikringsregister.settInn(kunde, new FritidsBolig(false, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
+            forsikringsregister.settInn(kunde, new FritidsBolig(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
         } catch (ClassCastException cce) {
             System.out.println("Feil med bruker");
         }
@@ -284,12 +286,11 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return new ArrayList<>(a);
     }
-
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
-
+        
         if (a == null || a.isEmpty()) {
             return null;
         }
@@ -299,34 +300,47 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
         if (i == 0) {
             while (iterator.hasNext()) {
-                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                Forsikringer f = iterator.next();
+                if(f.getAktiv()){
+                liste.add(Integer.toString(f.getPoliseNr()));
+                }
             }
         } else if (a.get(0) instanceof BilForsikring) {
             while (iterator.hasNext()) {
                 BilForsikring b = (BilForsikring) iterator.next();
-                infoliste = b.getPoliseNr() + " Regnr: " + b.getRegNr();
-                liste.add(infoliste);
+                if(b.getAktiv()){
+                    infoliste = b.getPoliseNr() + " Regnr: " + b.getRegNr();
+                    liste.add(infoliste);
+                }
             }
             return liste;
         } else if (a.get(0) instanceof BatForsikring) {
             while (iterator.hasNext()) {
                 BatForsikring b = (BatForsikring) iterator.next();
+                if(b.getAktiv()){
                 liste.add(Integer.toString(b.getPoliseNr()) + " Regnr: " + b.getRegNr());
+                }
             }
         } else if (a.get(0) instanceof BoligForsikring) {
             while (iterator.hasNext()) {
                 BoligForsikring b = (BoligForsikring) iterator.next();
+                if(b.getAktiv()){
                 liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
+                }
             }
         } else if (a.get(0) instanceof FritidsBolig) {
             while (iterator.hasNext()) {
                 FritidsBolig b = (FritidsBolig) iterator.next();
+                if(b.getAktiv()){
                 liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
+                }
             }
         } else if (a.get(0) instanceof ReiseForsikring) {
             while (iterator.hasNext()) {
                 ReiseForsikring b = (ReiseForsikring) iterator.next();
+                if(b.getAktiv()){
                 liste.add(Integer.toString(b.getPoliseNr()) + " " + b.getType());
+                }
             }
         }
         return liste;
@@ -343,5 +357,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public Kunde getKunde(String id) {
         return brukerRegister.getKunde(id);
+    }
+
+    public void slettForsikring(int polisnr) {
+        forsikringsregister.fjernForsikring(polisnr);
     }
 }

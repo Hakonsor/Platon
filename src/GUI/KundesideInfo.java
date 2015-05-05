@@ -109,13 +109,23 @@ public class KundesideInfo implements ComboBoxConverter {
         textArea.setId("textarea");
         textArea.setEditable(false);
         
+        btnSlett.setOnAction(e -> {
+            String polisNr = listView.getSelectionModel().getSelectedItem();
+            if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+                polisNr = polisNr.substring(0, 6);
+            }else{
+                return;
+            }
+            kontroller.slettForsikring(Integer.parseInt(polisNr));
+        
+        });
+        
         listView.getSelectionModel().selectedItemProperty().addListener(e -> {
 
             String polisnr = listView.getSelectionModel().getSelectedItem();
             if (polisnr != null) {
-                polisnr = polisnr.substring(0, 6);
-                System.out.println(polisnr);
-                Forsikringer s = kontroller.getForsikring(Integer.parseInt(polisnr));
+                polisnr = polisnr.substring(0,6);
+                Forsikringer s = kontroller.getForsikring(Integer.parseInt(polisnr.replaceAll("[^0-9]","0")));
                 if (s != null) {
                     textArea.setText(s.toString());
                 }

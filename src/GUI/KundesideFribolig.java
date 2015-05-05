@@ -5,6 +5,7 @@ import Kontroller.Kontroller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import Kontroller.Postregister;
+import java.text.DecimalFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -17,7 +18,7 @@ import javafx.scene.layout.Pane;
  */
 public class KundesideFribolig {
 
-    String leie;
+    private boolean utLeie;
 
     public Pane friboligFane(Kontroller kontroller) {
 
@@ -120,17 +121,8 @@ public class KundesideFribolig {
         cbMatriale.setValue("Velg Byggmatriale:");
 
         CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
-        cbleie.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (cbleie.isSelected() == true) {
-                    leie = "Ja";
-                    System.out.println("Ja");
-                } else {
-                    leie = "Nei";
-                    System.out.println("Nei");
-                }
-            }
+        cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            utLeie = cbleie.isSelected() == true;
         });
 
         //Registrer knapp & Label
@@ -143,10 +135,7 @@ public class KundesideFribolig {
         btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
-        btnSjekkpris.setOnAction(e -> {
-            regLabel.setText("Prisen er: " + "getPris()");
-        });
-
+       
         Button btnRegFriboligforsikring = new Button();
         btnRegFriboligforsikring.setText("Registrer Fritidsboligforsikring");
         btnRegFriboligforsikring.setId("btnRegFriboligforsikring");
@@ -193,6 +182,8 @@ public class KundesideFribolig {
         // oppretter en forsikring som kan settes inn i registeret dersom de trykker kjøp rett
         // etter at de har sjekket prisen, hvis ikke forsvinner objektet.
         btnSjekkpris.setOnAction(e -> {
+            String form = "0.00";
+            DecimalFormat tall = new DecimalFormat(form);
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
             String standard = cbStandard.getValue();
@@ -213,7 +204,7 @@ public class KundesideFribolig {
          FritidsBolig f = new FritidsBolig(false,
          kvadrat,adresse, boligType,byggeÅr,
          materiale, standard, byggSum,innboSum);
-            regLabel.setText("Årlig premie: " + f.getPremie());
+        regLabel.setText("Årlig premie: " + tall.format(f.getPremie()) + " kr");
         });
         
         // oppretter og setter fritidsboligforsikring inn i registeret
@@ -236,7 +227,7 @@ public class KundesideFribolig {
             System.out.println("Feil tallformat.");
         }
 
-        kontroller.setFritidsForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
+        kontroller.setFritidsForsikring(utLeie,kvadrat, adresse, boligType, byggeÅr, materiale,standard, byggSum, innboSum);
         regLabel.setText("Boligforsikring registrert!");
 
         });

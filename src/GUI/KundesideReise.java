@@ -2,6 +2,7 @@ package GUI;
 
 import Forsikring.ReiseForsikring;
 import Kontroller.Kontroller;
+import java.text.DecimalFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -77,24 +78,36 @@ public class KundesideReise {
         btnBeregn.setText("Beregn pris");
         btnBeregn.setMinWidth(100);
         btnBeregn.setId("beregn");
-        btnBeregn.setOnAction(e -> {
-            lbPrint.setText("Prisen er: getPris()");
-        });
+        
 
         Button btnBestill = new Button();
         btnBestill.setText("Bestill");
         btnBestill.setMinWidth(100);
         btnBestill.setId("bestill");
+
+
+// lyttere_________________________________________________________________________--
+       
+        // oppretter objekt og henter ut prisen, objektet blir ikke lagret.
+        btnBeregn.setOnAction(e -> {
+            String form = "0.00";
+            DecimalFormat tall = new DecimalFormat(form);
+            ReiseForsikring f = new ReiseForsikring();
+            f.setType(type);
+            f.setPremieOgForsSum(type);
+            
+            lbPrint.setText("Prisen er: " + tall.format(f.getPremie()) + " kr");
+        });
         btnBestill.setOnAction(e -> {
-          ReiseForsikring f=  new ReiseForsikring(); 
-          f.setType(type);
-          f.setPremie(type);
-          kontroller.setReiseForsikring(f);
-          
+            ReiseForsikring f = new ReiseForsikring();
+            f.setType(type);
+            f.setPremieOgForsSum(type);
+            kontroller.setReiseForsikring(f);
+
             lbPrint.setText("Reiseforsikring bestilt!");
         });
 
-        hb.getChildren().addAll(btnBeregn,btnBestill);
+        hb.getChildren().addAll(btnBeregn, btnBestill);
 
         vb.getChildren().addAll(lbInfo, rbtnVerden, rbtnEuropa, rbtnNorden, hb, lbPrint);
 
