@@ -1,5 +1,6 @@
 package GUI;
 
+import Forsikring.FritidsBolig;
 import Kontroller.Kontroller;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -104,17 +105,17 @@ public class KundesideFribolig {
         );
         cbStandard.setValue("Velg Standard:");
 
-        ComboBox<String> cbMatriale = new ComboBox<>();
-        cbMatriale.setEditable(false);
-        cbMatriale.setMinWidth(200);
-        cbMatriale.getItems().addAll(
+        ComboBox<String> cbMateriale = new ComboBox<>();
+        cbMateriale.setEditable(false);
+        cbMateriale.setMinWidth(200);
+        cbMateriale.getItems().addAll(
                 "Mur",
                 "Tre",
                 "Betong",
                 "Leca",
                 "Laft"
         );
-        cbMatriale.setValue("Velg Byggmatriale:");
+        cbMateriale.setValue("Velg Byggmatriale:");
 
         //Registrer knapp & Label
         Label regLabel = new Label();
@@ -126,9 +127,7 @@ public class KundesideFribolig {
         btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
-        btnSjekkpris.setOnAction(e -> {
-            regLabel.setText("Prisen er: " + "getPris()");
-        });
+        
 
         Button btnRegFriboligforsikring = new Button();
         btnRegFriboligforsikring.setText("Registrer Fritidsboligforsikring");
@@ -153,7 +152,7 @@ public class KundesideFribolig {
         grid.add(cbEgenandel, 0, 7);
         grid.add(cbBoligtype, 0, 8);
         grid.add(cbStandard, 0, 9);
-        grid.add(cbMatriale, 0, 10);
+        grid.add(cbMateriale, 0, 10);
 
         grid.add(btnSjekkpris, 1, 13);
         grid.add(btnRegFriboligforsikring, 1, 14);
@@ -161,9 +160,15 @@ public class KundesideFribolig {
         grid.add(regLabel, 1, 15);
 
         borderPane.setCenter(grid); // CENTER
-        btnRegFriboligforsikring.setOnAction(e -> {
+        
+        // oppretter en forsikring som kan settes inn i registeret dersom de trykker kjøp rett
+        // etter at de har sjekket prisen, hvis ikke forsvinner objektet.
+        btnSjekkpris.setOnAction(e -> {
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
+            String standard = cbStandard.getValue();
+            String materiale = cbMateriale.getValue();
+            String boligType = cbBoligtype.getValue();
             int byggeÅr = 0;
             double kvadrat = 0;
             double byggSum = 0;
@@ -176,8 +181,34 @@ public class KundesideFribolig {
         } catch (NumberFormatException nfe) {
             System.out.println("Feil tallformat.");
         }
+         FritidsBolig f = new FritidsBolig(false,
+         kvadrat,adresse, boligType,byggeÅr,
+         materiale, standard, byggSum,innboSum);
+            regLabel.setText("Årlig premie: " + f.getPremie());
+        });
+        
+        // oppretter og setter fritidsboligforsikring inn i registeret
+        btnRegFriboligforsikring.setOnAction(e -> {
+            String postNr = tfPostnr.getText();
+            String adresse = tfAdresse.getText();
+            String standard = cbStandard.getValue();
+            String materiale = cbMateriale.getValue();
+            String boligType = cbBoligtype.getValue();
+            int byggeÅr = 0;
+            double kvadrat = 0;
+            double byggSum = 0;
+            double innboSum= 0;
+        try {
+            kvadrat = Double.parseDouble(tfKvadrat.getText());
+            byggSum = Double.parseDouble(tfByggSum.getText());
+            innboSum = Double.parseDouble(tfInnboSum.getText());
+            byggeÅr = Integer.parseInt(tfByggeår.getText());
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat.");
+        }
+        
 
-        kontroller.setFritidsForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
+        kontroller.setFritidsForsikring(kvadrat, adresse, boligType, byggeÅr,materiale, standard, byggSum, innboSum);
         regLabel.setText("Boligforsikring registrert!");
 
     }
