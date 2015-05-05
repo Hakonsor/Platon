@@ -246,7 +246,7 @@ public class KundesideSkade {
         // først når konsulenten har godkjent beløpet/ skademeldingen.
         btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
-            
+            polisNr = polisNr.substring(0,6);
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
                 if (fors instanceof BilForsikring) {
