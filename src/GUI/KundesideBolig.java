@@ -183,23 +183,6 @@ public class KundesideBolig {
         grid.add(btnRegBoligforsikring, 0, 13);
         grid.add(regLabel, 0, 14);
 
-        grid.add(tfByggeår, 0, 3);
-
-        grid.add(tfKvadrat, 0, 4);
-
-        grid.add(tfByggSum, 0, 5);
-
-        grid.add(tfInnboSum, 0, 6);
-
-        grid.add(cbBoligtype, 0, 7);
-        grid.add(cbStandard, 0, 8);
-        grid.add(cbMatriale, 0, 9);
-
-        grid.add(btnSjekkpris, 1, 13);
-        grid.add(btnRegBoligforsikring, 1, 14);
-
-        grid.add(regLabel, 1, 15);
-
         borderPane.setCenter(grid); // CENTER
         
         //Oppretter en forsikring, slik at man kan sjekke pris. Objektet lagres ikke,
@@ -208,7 +191,7 @@ public class KundesideBolig {
              String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
             String standard = cbStandard.getValue();
-            String materiale = cbMateriale.getValue();
+            String materiale = cbMatriale.getValue();
             String boligType = cbBoligtype.getValue();
             int byggeÅr = 0;
             double kvadrat = 0;
@@ -233,7 +216,7 @@ public class KundesideBolig {
             String adresse = tfAdresse.getText();
             String byggeÅr = tfByggeår.getText();
             String standard = cbStandard.getValue();
-            String materiale = cbMateriale.getValue();
+            String materiale = cbMatriale.getValue();
             String boligType = cbBoligtype.getValue();
             double kvadrat = 0;
             double byggSum = 0;

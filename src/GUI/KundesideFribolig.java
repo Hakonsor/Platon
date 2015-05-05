@@ -196,7 +196,7 @@ public class KundesideFribolig {
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
             String standard = cbStandard.getValue();
-            String materiale = cbMateriale.getValue();
+            String materiale = cbMatriale.getValue();
             String boligType = cbBoligtype.getValue();
             int byggeÅr = 0;
             double kvadrat = 0;
@@ -221,7 +221,7 @@ public class KundesideFribolig {
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
             String standard = cbStandard.getValue();
-            String materiale = cbMateriale.getValue();
+            String materiale = cbMatriale.getValue();
             String boligType = cbBoligtype.getValue();
             int byggeÅr = 0;
             double kvadrat = 0;

@@ -92,7 +92,7 @@ public class KundeSide {
         tabBolig.setClosable(false);
         KundesideBolig bolig = new KundesideBolig();
         tabBolig.setOnSelectionChanged(e -> {
-        tabBolig.setContent(KundesideBolig.boligFane(kontroll));
+        tabBolig.setContent(bolig.boligFane(kontroll));
         });
 
         //Fri.Boligforsikring
@@ -101,7 +101,7 @@ public class KundeSide {
         tabFriBolig.setClosable(false);
         KundesideFribolig fribolig = new KundesideFribolig();
         tabFriBolig.setOnSelectionChanged(e -> {
-        tabFriBolig.setContent(KundesideFribolig.friboligFane(kontroll));
+        tabFriBolig.setContent(fribolig.friboligFane(kontroll));
         });
         //SkadeMelding
         Tab tabSkade = new Tab();
