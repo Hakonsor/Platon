@@ -79,6 +79,10 @@ public class KundesideBåt implements ComboBoxConverter{
         lbBåt.setText("Båt innformasjon");
         lbBåt.setAlignment(Pos.CENTER);
 
+        TextField tfVerdi = new TextField();
+        tfVerdi.setPromptText("Båtens verdi");
+        tfVerdi.setMinWidth(200);
+        
         TextField tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr");
         tfRegnr.setMinWidth(200);
@@ -118,18 +122,6 @@ public class KundesideBåt implements ComboBoxConverter{
             type = "Motorbåt";
         });
 
-
-        ComboBox<String> cbEgenandel = new ComboBox<>();
-        cbEgenandel.setEditable(false);
-        cbEgenandel.setMinWidth(200);
-        cbEgenandel.getItems().addAll(
-                "Egenandel:  4 000,-",
-                "Egenandel:  6 000,-",
-                "Egenandel: 10 000,-"
-        );
-        cbEgenandel.setValue("Velg Egenandel:");
-
-
         //Registrer knapp & Label
         Label regLabel = new Label();
         regLabel.setText("");
@@ -152,26 +144,28 @@ public class KundesideBåt implements ComboBoxConverter{
             regLabel.setText("Båtforsikring Registrert!");
 
             int effekt = 0;
+            double verdi = 0;
 
             try{
+                verdi = Double.parseDouble(tfVerdi.getText());
                 effekt = Integer.parseInt(tfYtelse.getText());
             }catch(NumberFormatException nfe){
                 System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
                         "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
             }
             
-            kontroll.setBåtForsikring(0, convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
+            kontroll.setBåtForsikring(verdi, tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
             regLabel.setText("Bilforsikring Registrert!");
         });
 
         grid.add(lbBåt, 0, 0);
-        grid.add(tfRegnr, 0, 1);
-        grid.add(tfÅrsmodell, 0, 2);
-        grid.add(tfBåtmodell, 0, 3);
-        grid.add(tfAntfor, 0, 4);
-        grid.add(tfMotormerke, 0, 5);
-        grid.add(tfYtelse, 0, 6);
-        grid.add(cbEgenandel, 0, 7);
+        grid.add(tfVerdi,0, 1);
+        grid.add(tfRegnr, 0, 2);
+        grid.add(tfÅrsmodell, 0, 3);
+        grid.add(tfBåtmodell, 0, 4);
+        grid.add(tfAntfor, 0, 5);
+        grid.add(tfMotormerke, 0, 6);
+        grid.add(tfYtelse, 0, 7);
         grid.add(rbtSeilbåt, 0, 8);
         grid.add(rbtMotorbåt, 0, 9);
         grid.add(btnSjekkpris, 0, 10);
