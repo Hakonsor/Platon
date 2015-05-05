@@ -10,6 +10,7 @@ import java.util.Calendar;
 
 
 /**
+ * Inneholder det som er unikt for reiseskademeldinger, foreløpig bare en toString().
  *
  * @author Therese
  */

@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
+ * 
  */
 package Forsikring;
 
@@ -9,7 +8,10 @@ import Person.Person;
 import java.io.Serializable;
 
 /**
- *
+  Denne klassen representerer bilforsikringer,og inneholder data om bilen, og hvorvidt det er en annen person registrert som eier, enn kunden.
+ * den beregner premien utifra egenandel og bonus. 
+ * Den inneholder også metoder som setter ned bonusen etter skade og øker premien.
+ * I tillegg inneholder den metoder som beregner utbetaling ved skadetilfelle.
  * @author Therese, Håkon
  */
 public class BilForsikring extends Kjoretoy implements Serializable {
@@ -17,20 +19,27 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     private int kjorelengde;
     private int kmStand;
     private double bonusTilGodkjenning;
-                            //(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
+    private Person person;
+
+    //(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
+
     public BilForsikring(double bonus, double egenandel, int kjorelengde, String regNr, String type, String bilModell, String arsModell, int kmStand) {
         super(bonus, egenandel, regNr, type, bilModell, arsModell);
         this.kjorelengde = kjorelengde;
         this.kmStand = kmStand;
         premie = (premie(egenandel, bonus));// premien settes
     }
+    
+    /* legger på peker på et nytt personobjekt, i tilfelle det er 
+        en annen person som er registert som eier av bilen*/
+    public void setPerson(Person p){
+        person = p;
+    }
 
     public int getKjorelengde() {
         return kjorelengde;
     }
 
-
-    // angir hvor mye kunden får utbetalt, dersom uhellet skulle være ute.
     public int utbetal(int km, double kostnad) {
         double delta = 0; // angir hvor stor andel av skaden som dekkes
         double belop;
@@ -61,35 +70,19 @@ public class BilForsikring extends Kjoretoy implements Serializable {
 
         return (int) utbetales;
 
-    }// end of 
+    }// end of method utbetal
+
     
-    public void nyBonusTilGodkjenning(double bonusEtterSkade){
-    bonusTilGodkjenning =bonusEtterSkade; 
-} 
-    
-    public void bonusGodkjent(){
+    //lagrer ny bonus etter skade, i påvente av at skaden skal bli behandlet
+    public void nyBonusTilGodkjenning(double bonusEtterSkade) {
+        bonusTilGodkjenning = bonusEtterSkade;
+    }
+
+    //Setter den nye bonusen når konsulenten har behandlet skaden
+    public void bonusGodkjent() {
         bonus = bonusTilGodkjenning;
     }
 
-    /* // beregner premien på nyregisterte biler
-     public double bonusNyRegBil(int skadeFrieAar){       
-     double bonus = 0;
-      
-     if(skadeFrieAar <= 7){
-     bonus = skadeFrieAar *0.1;
-     }
-     else if(skadeFrieAar <= 12){
-     bonus = 0.7;
-     }
-     else if(skadeFrieAar > 12){
-     bonus = 0.75;
-     }
-                
-     return bonus;
-       
-     }// end of method 
-
-     */
     // beregner bonusen etter skaden. parameteren angir hva bonusen var før skaden
     public double bonusEtterSkade(double bonus) {
         if (bonus == 0) {
@@ -133,19 +126,12 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     }// end of method premie
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(super.toString());
-        sb.append("Kjørelengde: ");
-        sb.append(kjorelengde);
-        sb.append(" km");
-        sb.append("\n");
-        sb.append("KM-Stand: ");
-        sb.append(kmStand);
-        sb.append(" km");
+        String s;
+        s = super.toString() +
+        "Kjørelengde: " + kjorelengde +
+        "\nKM-Stand: " + kmStand +" km" ;
 
-
-        return sb.toString();
+     return s;
     }// end of toString()
-
 
 }// end of class BilForsikring.

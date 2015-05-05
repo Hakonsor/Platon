@@ -8,6 +8,10 @@ package Forsikring;
 import java.io.Serializable;
 
 /**
+ * Inneholder datafelter og metoder som er felles for bolig og fritidsbolig.
+ * Klassen heter bygg, da det er hovedsakelig bygg metodene baserer seg på.
+ * Men lagrer også forsikringssum for innbo. Inneholder metoder som beregner premie,
+ * egenandel avhengig av skadetype og premier som følge av at skade er blitt meldt inn
  *
  * @author Therese
  */
@@ -22,6 +26,7 @@ abstract class Bygg extends Forsikringer implements Serializable {
     protected double byggSum;
     protected double innboSum;
     protected boolean utleie;
+    protected double forsikringSum;
 
     public Bygg(boolean utleie, double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
@@ -32,7 +37,6 @@ abstract class Bygg extends Forsikringer implements Serializable {
         this.byggeår = byggeår;
         this.byggSum = byggSum;
         this.innboSum = inboSum;
-        System.out.println("innbosum" + this.innboSum);
         this.materiale = materiale;
         this.standard = standard;
         this.utleie = utleie;

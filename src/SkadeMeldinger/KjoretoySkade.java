@@ -10,7 +10,9 @@ import java.util.Calendar;
 
 
 /**
- *
+ *Denne klassen er laget slik at man kan legge til flere kjøretøysskademeldinger, 
+ * med lignende informasjon.
+ * 
  * @author Therese
  */
 public class KjoretoySkade extends SkadeMelding implements Serializable{

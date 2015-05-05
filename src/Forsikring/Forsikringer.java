@@ -13,7 +13,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
+/**Inneholder datafelter og metoder som er felles for alle forsikringene. 
+ * Og er øverste klasse(abstract) i hierarkiet av forsikringer.
+ *
+ * 
  *
  * @author Therese, Håkon
  */
@@ -27,7 +30,6 @@ public abstract class Forsikringer implements Serializable{
     protected double egenandel;
     protected Calendar startDato;
     protected Calendar utløpsDato;
-    protected double forsikringSum;
 
      
     
@@ -62,9 +64,7 @@ public abstract class Forsikringer implements Serializable{
     public void nyPremieOk(){
         premie = premieTilGodkjenning;
     }
-    public double getForsikringssum(){
-        return forsikringSum;
-    }
+    
     // legger peker til kunden som har denne forsikringen
     public void setKunde(Kunde kunde){
         this.kunde = kunde;

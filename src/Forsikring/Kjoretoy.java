@@ -9,7 +9,7 @@ import Person.Person;
 import java.io.Serializable;
 
 /**
- *
+ *Inneholder alt det som er likt for kjøretøy, og er superklassen til bil. 
  * @author Therese, Håkon
  */
 public abstract class Kjoretoy extends Forsikringer implements Serializable{

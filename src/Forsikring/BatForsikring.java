@@ -5,17 +5,20 @@
  */
 package Forsikring;
 
-import Person.Person;
+
 import java.io.Serializable;
 
-/**
- *
+/** Denne klassen representerer båtfosrikringer. Den inneholder data om båtene 
+ * En båtforsikring inneholder metoder som beregner premie og egenandel , i tillegg et datafelt som 
+ * øker premien etter et skadetilfelle som har ført til godkjent skademelding.
+ * utifra om båten har motor eller ikke.
  * @author Therese, Håkon
  */
 public class BatForsikring extends Forsikringer implements Serializable{
     
     private int lendgeFot, motorStyrke;
     private String regNo, motorMerke, type;
+    private double forsikringSum;
     
     public BatForsikring(double forSum, int lendgeFot,String regNr , String type, String modell, String arsModell){
     super(0, 0); 

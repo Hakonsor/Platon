@@ -108,7 +108,7 @@ public abstract class SkadeMelding implements Serializable {
        DateFormat df = new SimpleDateFormat("dd.MM.yyyy"); 
        String dato = df.format(dt);
        String s = "Skadedato: " 
-                + dato + "\tSkadeNr: " + skadeNr + "\nForsikringsum: " + forsikring.getForsikringssum() +"\nSkadebeløp: "
+                + dato + "\tSkadeNr: " + skadeNr  +"\nSkadebeløp: "
                 + skadeSum + "\t\t Utbetaling: " + utbetaling + "\nSkadebeskrivelse: \n" 
                 + skadeBeskrivelse;
         return s;

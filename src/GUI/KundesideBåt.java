@@ -161,20 +161,20 @@ public class KundesideBåt implements ComboBoxConverter {
                 String fot = tfAntfor.getText();
 
                 if (!fot.matches(regex) || fot.length() > 4) {
-                    tfAntfor.setId("error");
+                    tfAntfot.setId("error");
                 } else {
-                    tfAntfor.setId("valid");
+                    tfAntfot.setId("valid");
                 }
                 if (fot.length() == 0) {
-                    tfAntfor.setId("promtfix");
+                    tfAntfot.setId("promtfix");
                 }
             }
         });
 
-        TranslateTransition ttAntfor = new TranslateTransition(Duration.millis(100), tfAntfor);
-        ttAntfor.setFromX(500);
-        ttAntfor.setToX(0);
-        ttAntfor.setCycleCount(1);
+        TranslateTransition ttAntfor = new TranslateTransition(Duration.millis(100), tfAntfot);
+        ttAntfot.setFromX(500);
+        ttAntfot.setToX(0);
+        ttAntfot.setCycleCount(1);
 
         TextField tfMotormerke = new TextField();
         tfMotormerke.setPromptText("Motormerke");
@@ -320,9 +320,6 @@ public class KundesideBåt implements ComboBoxConverter {
                 double verdi = 0;
                 int lengdeFot = 0;
                 String regNo = tf
-                String Båttype = type;
-                String modell = tfModell.getText();
-                String årsModell = tfÅrsModell.getText();
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     lengdeFot = Integer.parseInt(tfYtelse.getText());

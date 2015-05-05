@@ -13,6 +13,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * I denne klassen settes skademeldingene først i kø, 
+ * når de er behandlet av skadebehandler, så legges de i registeret. I registeret 
+ * legges både godkjente og avviste skademeldinger.
+ * 
+ * Her er det også metoder som henter ut informasjon om skademeldingene til bruk 
+ * ved å beregne statistikk, utgifter
  *
  * @author Therese
  * @author Håkon
@@ -168,4 +174,4 @@ public class SkadeMeldingRegister implements Serializable {
 
 
     
-}
+}// end of class SkadeMeldingregister
