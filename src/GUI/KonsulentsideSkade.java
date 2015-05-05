@@ -55,7 +55,7 @@ public class KonsulentsideSkade {
         btnVenstre.setFitWidth(32);
 
         ImageView btnHøyre = new ImageView(new Image(right));
-        btnHøyre.setId("btnHøyre");
+        btnHøyre.setId("btnHoyre");
         btnHøyre.setPreserveRatio(true);
         btnHøyre.setFitWidth(32);
 
@@ -129,7 +129,7 @@ public class KonsulentsideSkade {
 
         btnHøyre.setOnMouseClicked((MouseEvent event) -> {
             if (skade != null) {
-                
+
                 skade = kontroll.visNesteIKø();
                 tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                 taLes.setText(skade.toString());
@@ -170,7 +170,7 @@ public class KonsulentsideSkade {
             }
 
         });
-
+        borderPane.getStylesheets().add("CSS/konsulentskade.css");
         return borderPane;
     }
 

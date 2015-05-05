@@ -2,26 +2,25 @@ package GUI;
 
 import Forsikring.FritidsBolig;
 import Kontroller.Kontroller;
-import javafx.geometry.HPos;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import Kontroller.Postregister;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import static javafx.geometry.Pos.TOP_CENTER;
-
 /**
  * Created by Magnus on 21.04.15.
  */
 public class KundesideFribolig {
 
-    public static Pane friboligFane(Kontroller kontroller) {
-        //Group root = new Group();
+    String leie;
+
+    public Pane friboligFane(Kontroller kontroller) {
+
         BorderPane borderPane = new BorderPane();
         HBox vb = new HBox();
         vb.setPadding(new Insets(25, 25, 25, 25));
@@ -44,44 +43,47 @@ public class KundesideFribolig {
         grid.setPrefHeight(50);
         grid.setPrefWidth(800);
 
-        //Bolig
+        //FritidsBolig
         Label lbBolig = new Label();
-        lbBolig.setText("Bolig innformasjon");
+        lbBolig.setText("Informasjon om din fritidsbolig");
         lbBolig.setAlignment(Pos.CENTER);
-
-        TextField tfPostnr = new TextField();
-        tfPostnr.setPromptText("Postnummer");
-        tfPostnr.setMinWidth(200);
 
         TextField tfAdresse = new TextField();
         tfAdresse.setPromptText("Adresse");
+        tfAdresse.setId("promtfix");
         tfAdresse.setMinWidth(200);
 
         TextField tfByggeår = new TextField();
-        tfByggeår.setPromptText("Byggår");
+        tfByggeår.setPromptText("Byggeår");
+        tfByggeår.setId("promtfix");
         tfByggeår.setMinWidth(200);
 
         TextField tfKvadrat = new TextField();
         tfKvadrat.setPromptText("Kvadratmeter");
+        tfKvadrat.setId("promtfix");
         tfKvadrat.setMinWidth(200);
 
         TextField tfByggSum = new TextField();
         tfByggSum.setPromptText("Bolig verdi");
+        tfByggSum.setId("promtfix");
         tfByggSum.setMinWidth(200);
 
         TextField tfInnboSum = new TextField();
         tfInnboSum.setPromptText("Innbo verdi");
+        tfInnboSum.setId("promtfix");
         tfInnboSum.setMinWidth(200);
 
-        ComboBox<String> cbEgenandel = new ComboBox<>();
-        cbEgenandel.setEditable(false);
-        cbEgenandel.setMinWidth(200);
-        cbEgenandel.getItems().addAll(
-                "Egenandel: 10 000,-",
-                "Egenandel: 15 000,-",
-                "Egenandel: 20 000,-"
-        );
-        cbEgenandel.setValue("Velg Egenandel:");
+        TextField tfPostnr = new TextField();
+        tfPostnr.setPromptText("PostNr");
+        tfPostnr.setId("promtfix");
+        tfPostnr.setMinWidth(200);
+
+        TextField postSted = new TextField();
+        postSted.setPromptText("PostSted");
+        postSted.setId("promtfix");
+        postSted.setEditable(false);
+        postSted.setMinWidth(200);
+
 
         ComboBox<String> cbBoligtype = new ComboBox<>();
         cbBoligtype.setEditable(false);
@@ -105,17 +107,31 @@ public class KundesideFribolig {
         );
         cbStandard.setValue("Velg Standard:");
 
-        ComboBox<String> cbMateriale = new ComboBox<>();
-        cbMateriale.setEditable(false);
-        cbMateriale.setMinWidth(200);
-        cbMateriale.getItems().addAll(
+        ComboBox<String> cbMatriale = new ComboBox<>();
+        cbMatriale.setEditable(false);
+        cbMatriale.setMinWidth(200);
+        cbMatriale.getItems().addAll(
                 "Mur",
                 "Tre",
                 "Betong",
                 "Leca",
                 "Laft"
         );
-        cbMateriale.setValue("Velg Byggmatriale:");
+        cbMatriale.setValue("Velg Byggmatriale:");
+
+        CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
+        cbleie.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (cbleie.isSelected() == true) {
+                    leie = "Ja";
+                    System.out.println("Ja");
+                } else {
+                    leie = "Nei";
+                    System.out.println("Nei");
+                }
+            }
+        });
 
         //Registrer knapp & Label
         Label regLabel = new Label();
@@ -127,37 +143,50 @@ public class KundesideFribolig {
         btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
-        
+        btnSjekkpris.setOnAction(e -> {
+            regLabel.setText("Prisen er: " + "getPris()");
+        });
 
         Button btnRegFriboligforsikring = new Button();
         btnRegFriboligforsikring.setText("Registrer Fritidsboligforsikring");
         btnRegFriboligforsikring.setId("btnRegFriboligforsikring");
         btnRegFriboligforsikring.setMinWidth(200);
-       
+
+        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Postregister register = new Postregister();
+                String poststed = register.getPoststed(tfPostnr.getText());
+                if (poststed == null) {
+                    poststed = "Finnes ikke!";
+                }
+                if (tfPostnr.getText().equals("")) {
+                    postSted.setText("");
+                    postSted.setPromptText("PostSted");
+                } else
+                    postSted.setText(poststed);
+            }
+        });
 
         grid.add(lbBolig, 0, 0);
-
-        grid.add(tfPostnr, 0, 1);
-
-        grid.add(tfAdresse, 0, 2);
-
-        grid.add(tfByggeår, 0, 3);
-
-        grid.add(tfKvadrat, 0, 4);
-
-        grid.add(tfByggSum, 0, 5);
-
-        grid.add(tfInnboSum, 0, 6);
-
-        grid.add(cbEgenandel, 0, 7);
+        grid.add(tfAdresse, 0, 1);
+        grid.add(tfPostnr, 0, 2);
+        grid.add(postSted, 0, 3);
+        grid.add(tfByggeår, 0, 4);
+        grid.add(tfKvadrat, 0, 5);
+        grid.add(tfByggSum, 0, 6);
+        grid.add(tfInnboSum, 0, 7);
         grid.add(cbBoligtype, 0, 8);
         grid.add(cbStandard, 0, 9);
-        grid.add(cbMateriale, 0, 10);
+        grid.add(cbMatriale, 0, 10);
+        grid.add(cbleie, 0, 11);
+        grid.add(btnSjekkpris, 0, 12);
+        grid.add(btnRegFriboligforsikring, 0, 13);
+        grid.add(regLabel, 0, 14);
 
-        grid.add(btnSjekkpris, 1, 13);
-        grid.add(btnRegFriboligforsikring, 1, 14);
+        borderPane.setCenter(grid); // CENTER
 
-        grid.add(regLabel, 1, 15);
 
         borderPane.setCenter(grid); // CENTER
         
@@ -167,7 +196,7 @@ public class KundesideFribolig {
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
             String standard = cbStandard.getValue();
-            String materiale = cbMateriale.getValue();
+            String materiale = cbMatriale.getValue();
             String boligType = cbBoligtype.getValue();
             int byggeÅr = 0;
             double kvadrat = 0;
@@ -192,7 +221,7 @@ public class KundesideFribolig {
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
             String standard = cbStandard.getValue();
-            String materiale = cbMateriale.getValue();
+            String materiale = cbMatriale.getValue();
             String boligType = cbBoligtype.getValue();
             int byggeÅr = 0;
             double kvadrat = 0;
@@ -206,13 +235,14 @@ public class KundesideFribolig {
         } catch (NumberFormatException nfe) {
             System.out.println("Feil tallformat.");
         }
-        
 
-        kontroller.setFritidsForsikring(kvadrat, adresse, boligType, byggeÅr,materiale, standard, byggSum, innboSum);
+        kontroller.setFritidsForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
         regLabel.setText("Boligforsikring registrert!");
 
+        });
+
+
+        borderPane.getStylesheets().add("CSS/kundefritidsbolig.css");
+        return borderPane;
     }
-    );
-    return borderPane ;
-}
 }

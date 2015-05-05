@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -28,6 +29,8 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import javax.xml.soap.Node;
 
 /**
  * Created by Magnus on 18.04.15.
@@ -130,11 +133,22 @@ public class Login {
         ftBrukernavn.setFromValue(0.3F);
         ftBrukernavn.setToValue(1.0F);
         ftBrukernavn.setCycleCount(1);
+        ftBrukernavn.play();
 
         TranslateTransition ttb = new TranslateTransition(Duration.millis(1500), tfKundeBrukernavn);
         ttb.setFromX(350);
         ttb.setToX(0);
         ttb.setCycleCount(1);
+        ttb.play();
+
+        TranslateTransition ttbShake = new TranslateTransition(Duration.millis(100), tfKundeBrukernavn);
+        ttbShake.setFromX(0);
+        ttbShake.setToX(30);
+        ttbShake.setFromX(30);
+        ttbShake.setToX(-30);
+        ttbShake.setFromX(-30);
+        ttbShake.setToX(0);
+        ttbShake.setCycleCount(3);
 
         pfKundePassord = new PasswordField();
         pfKundePassord.setPromptText("passord");
@@ -146,11 +160,13 @@ public class Login {
         ftPassord.setFromValue(0.3F);
         ftPassord.setToValue(1.0F);
         ftBrukernavn.setCycleCount(1);
+        ttb.play();
 
         TranslateTransition ttp = new TranslateTransition(Duration.millis(1500), pfKundePassord);
         ttp.setFromX(-350);
         ttp.setToX(0);
         ttp.setCycleCount(1);
+        ttp.play();
 
         TranslateTransition ttpShake = new TranslateTransition(Duration.millis(100), pfKundePassord);
         ttpShake.setFromX(0);
@@ -160,26 +176,6 @@ public class Login {
         ttpShake.setFromX(-30);
         ttpShake.setToX(0);
         ttpShake.setCycleCount(3);
-
-        TranslateTransition ttbShake = new TranslateTransition(Duration.millis(100), tfKundeBrukernavn);
-        ttbShake.setFromX(0);
-        ttbShake.setToX(30);
-        ttbShake.setFromX(30);
-        ttbShake.setToX(-30);
-        ttbShake.setFromX(-30);
-        ttbShake.setToX(0);
-        ttbShake.setCycleCount(3);
-
-        pt = new ParallelTransition();
-        pt.getChildren().addAll(
-                ftBrukernavn,
-                ttb,
-                ftPassord,
-                ttp
-        );
-
-        pt.setCycleCount(1);
-        pt.play();
 
         Label logginnInfo = new Label();
         logginnInfo.setText("");
@@ -205,7 +201,6 @@ public class Login {
 
         try {
             btnKundeLogginn.setOnAction(e -> {
-
                 if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
                     primaryStage.close();
                     kontroll.kundeSide(primaryStage);
@@ -345,9 +340,12 @@ public class Login {
         grid.add(btnKonsulentLogginn, 0, 8);
         grid.add(btnNyKonsulent, 0, 9);
 
+
         return grid;
     }
-    
+
+
+
     public Button getKnappKonsulentLogginn(){
         return btnKonsulentLogginn;
     }

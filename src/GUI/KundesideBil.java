@@ -9,10 +9,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import Kontroller.Postregister;
 
 /**
@@ -25,41 +22,44 @@ public class KundesideBil implements ComboBoxConverter {
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
         borderPane.setId("borderpane");
-        HBox vb = new HBox();
-        vb.setPadding(new Insets(25, 25, 0, 25));
-        vb.setSpacing(100);
-        vb.setAlignment(Pos.CENTER);
+
+        HBox vb2 = new HBox();
+        vb2.setPadding(new Insets(25, 25, 0, 25));
+        vb2.setSpacing(100);
+        vb2.setAlignment(Pos.CENTER);
 
         Label overskrift = new Label();
         overskrift.setText("Her registrerer du bilforsikring");
         overskrift.setId("overskrift");
-        vb.getChildren().addAll(overskrift);
+        vb2.getChildren().addAll(overskrift);
 
-        borderPane.setTop(vb); //TOP
+        borderPane.setTop(vb2); //TOP
 
-        GridPane gridleft = new GridPane();
-        gridleft.setAlignment(Pos.TOP_CENTER);
-        gridleft.setHgap(10);
-        gridleft.setVgap(10);
-        gridleft.setPadding(new Insets(10));
-        gridleft.setPrefHeight(50);
-        gridleft.setPrefWidth(400);
 
-        GridPane gridright = new GridPane();
-        gridright.setAlignment(Pos.TOP_CENTER);
-        gridright.setHgap(10);
-        gridright.setVgap(10);
-        gridright.setPadding(new Insets(10));
-        gridright.setPrefHeight(50);
-        gridright.setPrefWidth(400);
+        HBox hb = new HBox();
+        hb.setAlignment(Pos.CENTER);
+        hb.setSpacing(10);
+
+        GridPane gridBil = new GridPane();
+        gridBil.setAlignment(Pos.TOP_CENTER);
+        gridBil.setHgap(10);
+        gridBil.setVgap(10);
+        gridBil.setPadding(new Insets(3));
+
+        GridPane gridPerson = new GridPane();
+        gridPerson.setAlignment(Pos.TOP_CENTER);
+        gridPerson.setHgap(10);
+        gridPerson.setVgap(10);
+        gridPerson.setPadding(new Insets(3));
+        gridPerson.setVisible(false);
 
         GridPane gridcenter = new GridPane();
         gridcenter.setAlignment(Pos.CENTER);
         gridcenter.setHgap(10);
         gridcenter.setVgap(10);
         gridcenter.setPadding(new Insets(10));
-        gridcenter.setPrefHeight(50);
-        gridcenter.setPrefWidth(200);
+
+        hb.getChildren().addAll(gridBil, gridPerson);
 
         //Person
         Label lbPerson = new Label();
@@ -69,30 +69,37 @@ public class KundesideBil implements ComboBoxConverter {
 
         TextField tfFornavn = new TextField();
         tfFornavn.setPromptText("Fornavn");
+        tfFornavn. setId("promtfix");
         tfFornavn.setMinWidth(200);
 
         TextField tfEtternavn = new TextField();
         tfEtternavn.setPromptText("Etternavn");
+        tfEtternavn.setId("promtfix");
         tfEtternavn.setMinWidth(200);
 
         TextField tfPersonnr = new TextField();
         tfPersonnr.setPromptText("PersonNr");
+        tfPersonnr.setId("promtfix");
         tfPersonnr.setMinWidth(200);
 
         TextField tfAdresse = new TextField();
         tfAdresse.setPromptText("Adresse");
+        tfAdresse.setId("promtfix");
         tfAdresse.setMinWidth(200);
 
         TextField tfPostnr = new TextField();
         tfPostnr.setPromptText("PostNr");
+        tfPostnr.setId("promtfix");
         tfPostnr.setMinWidth(200);
 
         TextField tfTelefon = new TextField();
         tfTelefon.setPromptText("Telefon");
+        tfTelefon.setId("promtfix");
         tfTelefon.setMinWidth(200);
 
         TextField postSted = new TextField();
         postSted.setPromptText("PostSted");
+        postSted.setId("promtfix");
         postSted.setEditable(false);
         postSted.setMinWidth(200);
 
@@ -103,32 +110,45 @@ public class KundesideBil implements ComboBoxConverter {
                 Postregister register = new Postregister();
                 String poststed = register.getPoststed(tfPostnr.getText());
                 if (poststed == null) {
-                    poststed = "Eksisterer ikke!";
+                    poststed = "Finnes ikke!";
                 }
-                postSted.setText(poststed);
+                if (tfPostnr.getText().equals("")) {
+                    postSted.setText("");
+                    postSted.setPromptText("PostSted");
+                } else
+                    postSted.setText(poststed);
             }
         });
 
         //Bil
         Label lbBil = new Label();
         lbBil.setText("Bil innformasjon");
-        lbBil.setId("lbBil");
+        lbBil.setId("promtfix");
         lbBil.setAlignment(Pos.CENTER);
 
         TextField tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr");
+        tfRegnr.setId("promtfix");
         tfRegnr.setMinWidth(200);
 
         TextField tfÅrsmodell = new TextField();
         tfÅrsmodell.setPromptText("Årsmodell");
+        tfÅrsmodell.setId("promtfix");
         tfÅrsmodell.setMinWidth(200);
 
-        TextField tfBiltype = new TextField();
-        tfBiltype.setPromptText("Biltype eks (BMW 3-serie)");
-        tfBiltype.setMinWidth(200);
+        TextField tfMerke = new TextField();
+        tfMerke.setPromptText("eks (BMW)");
+        tfMerke.setId("promtfix");
+        tfMerke.setMinWidth(200);
+
+        TextField tfModell = new TextField();
+        tfModell.setPromptText("eks (5-serie 530xd)");
+        tfModell.setId("promtfix");
+        tfModell.setMinWidth(200);
 
         TextField tfKmstand = new TextField();
         tfKmstand.setPromptText("Km-stand");
+        tfKmstand.setId("promtfix");
         tfKmstand.setMinWidth(200);
 
         ComboBox<String> cbKjørelengde = new ComboBox<>();
@@ -182,10 +202,9 @@ public class KundesideBil implements ComboBoxConverter {
         RadioButton rbtJa = new RadioButton("JA");
         rbtJa.setToggleGroup(eiere);
         rbtJa.setId("rbtJa");
-        rbtJa.setSelected(true);
+        rbtJa.setSelected(false);
         rbtJa.setOnAction(e -> {
-            borderPane.setRight(gridright);
-            System.out.println("Du har valgt Ja! =D");
+            gridPerson.setVisible(true);
         });
 
         RadioButton rbtNei = new RadioButton("NEI");
@@ -193,8 +212,7 @@ public class KundesideBil implements ComboBoxConverter {
         rbtNei.setId("rbtNei");
         rbtNei.setSelected(true);
         rbtNei.setOnAction(e -> {
-            borderPane.setRight(null);
-            System.out.println("Du har valgt Nei");
+            gridPerson.setVisible(false);
         });
 
         Label regLabel = new Label();
@@ -227,7 +245,8 @@ public class KundesideBil implements ComboBoxConverter {
             int kjøreLengde = 0;
             String regNo = tfRegnr.getText();
             String årsModell = tfÅrsmodell.getText();
-            String bilType = tfBiltype.getText();
+            String bilMerke = tfMerke.getText();
+            String bilModell = tfModell.getText();
             int kmStand = 0;
             try {
                 bonus = convertDou(cbBonus.getValue());
@@ -238,42 +257,49 @@ public class KundesideBil implements ComboBoxConverter {
             } catch (NumberFormatException nfe) {
                 System.out.println("Feil tallformat");
             }
-            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, årsModell, bilType, kmStand);
+            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
             kontroll.setBilForsikring(bil, person);
             regLabel.setText("Bilforsikring Registrert!");
 
         });
 
-        gridleft.add(lbBil, 0, 0);
-        gridleft.add(tfRegnr, 0, 1);
-        gridleft.add(tfÅrsmodell, 0, 2);
-        gridleft.add(tfBiltype, 0, 3);
-        gridleft.add(tfKmstand, 0, 4);
-        gridleft.add(cbBonus, 0, 5);
-        gridleft.add(cbEgenandel, 0, 6);
-        gridleft.add(cbKjørelengde, 0, 7);
-        gridleft.add(lbvelgEier, 0, 8);
-        gridleft.add(rbtJa, 0, 9);
-        gridleft.add(rbtNei, 0, 10);
+        gridBil.add(lbBil, 0, 0);
+        gridBil.add(tfRegnr, 0, 1);
+        gridBil.add(tfÅrsmodell, 0, 2);
+        gridBil.add(tfMerke, 0, 3);
+        gridBil.add(tfModell, 0, 4);
+        gridBil.add(tfKmstand, 0, 5);
+        gridBil.add(cbBonus, 0, 6);
+        gridBil.add(cbEgenandel, 0, 7);
+        gridBil.add(cbKjørelengde, 0, 8);
+        gridBil.add(lbvelgEier, 0, 9);
+        gridBil.add(rbtJa, 0, 10);
+        gridBil.add(rbtNei, 0, 11);
 
-        gridright.add(lbPerson, 0, 0);
-        gridright.add(tfFornavn, 0, 1);
-        gridright.add(tfEtternavn, 0, 2);
-        gridright.add(tfPersonnr, 0, 3);
-        gridright.add(tfTelefon, 0, 4);
-        gridright.add(tfAdresse, 0, 5);
-        gridright.add(tfPostnr, 0, 6);
-        gridright.add(postSted, 0, 7);
+        gridPerson.add(lbPerson, 0, 0);
+        gridPerson.add(tfFornavn, 0, 1);
+        gridPerson.add(tfEtternavn, 0, 2);
+        gridPerson.add(tfPersonnr, 0, 3);
+        gridPerson.add(tfTelefon, 0, 4);
+        gridPerson.add(tfAdresse, 0, 5);
+        gridPerson.add(tfPostnr, 0, 6);
+        gridPerson.add(postSted, 0, 7);
 
-        gridcenter.add(btnSjekkpris, 0, 11);
-        gridcenter.add(btnRegBilforsikring, 0, 12);
-        gridcenter.add(regLabel, 0, 13);
+        //gridBil.setGridLinesVisible(true);
+        //gridPerson.setGridLinesVisible(true);
 
-        borderPane.setLeft(gridleft); // Left
 
-        borderPane.setCenter(gridcenter); //Center
 
-        //borderPane.setRight(gridright); //Right
+
+        VBox vb = new VBox();
+        vb.setAlignment(Pos.CENTER);
+        vb.setSpacing(10);
+        //vb.setStyle("-fx-border-color: red;");
+        vb.getChildren().addAll(hb, btnSjekkpris, btnRegBilforsikring, regLabel);
+
+        borderPane.setCenter(vb); //Center
+
+        //borderPane.setRight(gridPerson); //Right
         borderPane.getStylesheets().add("CSS/kundeBil.css");
 
         return borderPane;
