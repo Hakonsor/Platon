@@ -3,6 +3,7 @@ package GUI;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import Person.Person;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
