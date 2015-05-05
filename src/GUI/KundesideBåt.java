@@ -41,7 +41,6 @@ public class KundesideBåt implements ComboBoxConverter{
 
         borderPane.setTop(vb); //TOP
 
-
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
@@ -77,39 +76,7 @@ public class KundesideBåt implements ComboBoxConverter{
         gridcenter.setPrefWidth(200);
 
 
-        //Person
-
-        Label lbPerson = new Label();
-        lbPerson.setText("Bileier innformasjon");
-        lbPerson.setAlignment(Pos.CENTER);
-
-        TextField tfFornavn = new TextField();
-        tfFornavn.setPromptText("Fornavn");
-        tfFornavn.setMinWidth(200);
-
-        TextField tfEtternavn = new TextField();
-        tfEtternavn.setPromptText("Etternavn");
-        tfEtternavn.setMinWidth(200);
-
-        TextField tfPersonnr = new TextField();
-        tfPersonnr.setPromptText("PersonNr");
-        tfPersonnr.setMinWidth(200);
-
-        TextField tfAdresse = new TextField();
-        tfAdresse.setPromptText("Adresse");
-        tfAdresse.setMinWidth(200);
-
-        TextField tfPostnr = new TextField();
-        tfPostnr.setPromptText("PostNr");
-        tfPostnr.setMinWidth(200);
-
-        TextField tfTelefon = new TextField();
-        tfTelefon.setPromptText("Telefon");
-        tfTelefon.setMinWidth(200);
-
-
         //Båt
-
         Label lbBåt = new Label();
         lbBåt.setText("Båt innformasjon");
         lbBåt.setAlignment(Pos.CENTER);
@@ -139,9 +106,6 @@ public class KundesideBåt implements ComboBoxConverter{
         tfYtelse.setMinWidth(200);
 
         ToggleGroup båtType = new ToggleGroup();
-
-
-
         RadioButton rbtSeilbåt = new RadioButton("Seilbåt");
         rbtSeilbåt.setToggleGroup(båtType);
         rbtSeilbåt.setSelected(true);
@@ -149,58 +113,13 @@ public class KundesideBåt implements ComboBoxConverter{
             type = "Seilbåt";
         });
 
-        RadioButton rbtYacht = new RadioButton("Yacht");
-        rbtYacht.setToggleGroup(båtType);
-        rbtYacht.setSelected(true);
-        rbtYacht.setOnAction(e -> {
-            type = "Yacht";
+        RadioButton rbtMotorbåt = new RadioButton("Motorbåt");
+        rbtMotorbåt.setToggleGroup(båtType);
+        rbtMotorbåt.setSelected(true);
+        rbtMotorbåt.setOnAction(e -> {
+            type = "Motorbåt";
         });
 
-        RadioButton rbtSnekke = new RadioButton("Snekke");
-        rbtSnekke.setToggleGroup(båtType);
-        rbtSnekke.setSelected(true);
-        rbtSnekke.setOnAction(e -> {
-            type = "Snekke";
-        });
-
-        RadioButton rbtDaycruiser = new RadioButton("Daycruiser");
-        rbtDaycruiser.setToggleGroup(båtType);
-        rbtDaycruiser.setSelected(true);
-        rbtDaycruiser.setOnAction(e -> {
-            type = "Daycruiser";
-        });
-
-        RadioButton rbtCabincruiser = new RadioButton("Cabincruiser");
-        rbtCabincruiser.setToggleGroup(båtType);
-        rbtCabincruiser.setSelected(true);
-        rbtCabincruiser.setOnAction(e -> {
-            type = "Cabin cruiser";
-        });
-
-        RadioButton rbtAndre = new RadioButton("Annet");
-        rbtAndre.setToggleGroup(båtType);
-        rbtAndre.setSelected(true);
-        rbtAndre.setOnAction(e -> {
-            type = "Annet";
-        });
-
-        ComboBox<String> cbBonus = new ComboBox<>();
-        cbBonus.setEditable(false);
-        cbBonus.setMinWidth(200);
-        cbBonus.getItems().addAll(
-                "Bonus: -20%",
-                "Bonus: -10%",
-                "Bonus: 0%",
-                "Bonus: 10%",
-                "Bonus: 20%",
-                "Bonus: 30%",
-                "Bonus: 40%",
-                "Bonus: 50%",
-                "Bonus: 60%",
-                "Bonus: 70%",
-                "Bonus: 75%"
-        );
-        cbBonus.setValue("Velg Bonus:");
 
         ComboBox<String> cbEgenandel = new ComboBox<>();
         cbEgenandel.setEditable(false);
@@ -212,32 +131,12 @@ public class KundesideBåt implements ComboBoxConverter{
         );
         cbEgenandel.setValue("Velg Egenandel:");
 
-        //Registrer knapp & Label
 
+        //Registrer knapp & Label
         Label regLabel = new Label();
         regLabel.setText("");
         regLabel.setId("regLabel");
         regLabel.setAlignment(Pos.CENTER);
-
-        ToggleGroup eiere = new ToggleGroup();
-
-        RadioButton rbtJa = new RadioButton("JA");
-        rbtJa.setToggleGroup(eiere);
-        rbtJa.setId("rbtJa");
-        rbtJa.setSelected(true);
-        rbtJa.setOnAction(e -> {
-            borderPane.setRight(gridright);
-            System.out.println("Du har valgt Ja! =D");
-        });
-
-        RadioButton rbtNei = new RadioButton("NEI");
-        rbtNei.setToggleGroup(eiere);
-        rbtNei.setId("rbtNei");
-        rbtNei.setSelected(true);
-        rbtNei.setOnAction(e -> {
-            borderPane.setRight(null);
-            System.out.println("Du har valgt Nei");
-        });
 
         Button btnSjekkpris = new Button();
         btnSjekkpris.setText("Sjekk Pris");
@@ -253,12 +152,6 @@ public class KundesideBåt implements ComboBoxConverter{
         btnRegBåtforsikring.setMinWidth(200);
         btnRegBåtforsikring.setOnAction(e -> {
             regLabel.setText("Båtforsikring Registrert!");
-            Person person;
-            if (rbtJa.selectedProperty().getValue())
-                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
-            else
-                person = null;
-
 
             int effekt = 0;
 
@@ -269,56 +162,23 @@ public class KundesideBåt implements ComboBoxConverter{
                         "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
             }
             
-            kontroll.setBåtForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , person);
+            kontroll.setBåtForsikring(0, convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
             regLabel.setText("Bilforsikring Registrert!");
         });
 
-        /*
-        setForsikring(double bonus, double egenandel,
-                              String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person){
-
-         */
-
         grid.add(lbBåt, 0, 0);
-        grid.add(lbPerson, 2, 0);
-
         grid.add(tfRegnr, 0, 1);
-        grid.add(tfFornavn, 2, 1);
-
         grid.add(tfÅrsmodell, 0, 2);
-        grid.add(tfEtternavn, 2, 2);
-
         grid.add(tfBåtmodell, 0, 3);
-        grid.add(tfPersonnr, 2, 3);
-
         grid.add(tfAntfor, 0, 4);
-        grid.add(tfTelefon, 2, 4);
-
         grid.add(tfMotormerke, 0, 5);
-        grid.add(tfAdresse, 2, 5);
-
         grid.add(tfYtelse, 0, 6);
-
         grid.add(cbEgenandel, 0, 7);
-        grid.add(tfPostnr, 2, 6);
-
-        grid.add(cbBonus, 0, 8);
-
-        grid.add(rbtCabincruiser, 1, 1);
-        grid.add(rbtDaycruiser, 1, 2);
-        grid.add(rbtSeilbåt, 1, 3);
-        grid.add(rbtSnekke, 1, 4);
-        grid.add(rbtYacht, 1, 5);
-        grid.add(rbtAndre, 1, 6);
-
-
-        grid.add(btnSjekkpris, 1, 13);
-        grid.add(btnRegBåtforsikring, 1, 14);
-
-        grid.add(regLabel, 1, 15);
-
-
-
+        grid.add(rbtSeilbåt, 0, 8);
+        grid.add(rbtMotorbåt, 0, 9);
+        grid.add(btnSjekkpris, 0, 10);
+        grid.add(btnRegBåtforsikring, 0, 11);
+        grid.add(regLabel, 0, 12);
 
         borderPane.setCenter(grid); // CENTER
 
