@@ -72,7 +72,7 @@ public class KundesideSkade {
         grid.setPrefWidth(800);
 
         //Skjema
-        ComboBox<String> forsikringComboBox = new ComboBox<String>();
+        ComboBox<String> forsikringComboBox = new ComboBox<>();
         forsikringComboBox.setEditable(false);
         forsikringComboBox.getItems().addAll(
                 "Alle",

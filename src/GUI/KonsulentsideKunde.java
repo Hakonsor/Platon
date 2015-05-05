@@ -793,12 +793,14 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         taLes.setEditable(false);
 
         listView.getSelectionModel().selectedItemProperty().addListener(eA -> {
-
-            Forsikringer s = kontroll.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
+            String polisNr = listView.getSelectionModel().getSelectedItem();
+            if(polisNr == null){
+            polisNr = polisNr.substring(0,6);
+            }
+            Forsikringer s = kontroll.getForsikring(Integer.parseInt(polisNr));
             if (s != null) {
                 taLes.setText(s.toString());
             }
-
         });
 
 
