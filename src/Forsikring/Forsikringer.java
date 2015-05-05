@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -25,7 +26,7 @@ public abstract class Forsikringer implements Serializable{
     protected double premieTilGodkjenning;
     protected double egenandel;
     protected Calendar startDato;
-    protected Calendar sluttDato;
+    protected Calendar utløpsDato;
     protected double forsikringSum;
 
      
@@ -42,6 +43,7 @@ public abstract class Forsikringer implements Serializable{
        this.egenandel = egenandel;
        aktiv = true;
        startDato = Calendar.getInstance();
+       utløpsDato = new GregorianCalendar(startDato.get(Calendar.YEAR)+ 1, startDato.get(Calendar.MONTH), startDato.get(Calendar.MONTH));
     }
     public static int getStaticPolisnr(){
         return nestePoliseNr;
@@ -51,7 +53,7 @@ public abstract class Forsikringer implements Serializable{
         nestePoliseNr = nyNesteNr;
     }
     
-    // mottar en premie som skal bli den nye premien når skaden er gokjent
+    // mottar en premie som skal bli den nye premien når skaden er godkjent
     public void  premieTilGodkjenning(double nyPremie){
         premieTilGodkjenning = nyPremie;  
     }
@@ -97,7 +99,7 @@ public abstract class Forsikringer implements Serializable{
     }
    
     public void setSluttDato( Calendar sluttDato ){
-       this.sluttDato = sluttDato;
+       this.utløpsDato = sluttDato;
        
     }
    
@@ -108,7 +110,7 @@ public abstract class Forsikringer implements Serializable{
    
     // returnerer en uformattert sluttdato
     public Calendar getSluttDato(){
-       return sluttDato;
+       return utløpsDato;
    } 
     
     public String toString(){
@@ -116,9 +118,13 @@ public abstract class Forsikringer implements Serializable{
        DateFormat df = new SimpleDateFormat("dd.MM.yyyy"); 
        String dato = df.format(dt);
        
+       Date da = utløpsDato.getTime();
+       DateFormat datf = new SimpleDateFormat("dd.MM.yyyy"); 
+       String date = datf.format(da);
+       
         String s = "Polisenummer: " + poliseNr + "\nPremie: "
         + premie + "\nEgenandel: " + egenandel  +
-        "\nGjelder fra: " +  dato;
+        "\nGjelder fra: " +  dato +" Utløper: " + date;
             return s;
     }
     

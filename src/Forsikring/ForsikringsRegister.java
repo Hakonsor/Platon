@@ -28,10 +28,66 @@ public class ForsikringsRegister implements Serializable {
     public void settInn(Kunde k, Forsikringer f) {
         f.setKunde(k);
         register.add(f);
-        System.out.println(register.contains(f));
     }
 
-     // metoden returnerer en liste med forsikringer til en bestemt kunde. 
+    // finner summen av alle premieinntekter iløpet av et år
+     public double finnInntekterAlleFors(int år) {
+       double sum = 0;
+       sum = register.stream().map((f) -> f.getPremie()).reduce(sum, (accumulator, item) -> accumulator + item);
+        return sum; 
+    }
+    
+     
+    // finner summen av alle inntektene på boligforsikring iløpet av et år
+    public double finnInntekterBoligForsikring(int år) {
+        
+        double sum = 0;
+        sum = register.stream().filter((f) -> (f instanceof BoligForsikring && f.getStartDato().get(Calendar.YEAR ) == år))
+                .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        return sum;
+        
+    }
+    // finner summen av alle inntekter på fritidsbolig i løpet av et år
+    public double finnInntekterFritidsBolig(int år) {
+        
+       double sum = 0;
+        sum = register.stream().filter((f) -> (f instanceof FritidsBolig)&& f.getStartDato().get(Calendar.YEAR ) == år)
+                .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        return sum; 
+        
+    }
+    
+    // finner summen av alle inntekter på bil i løpet av et år
+    public double finnInntekterBil(int år) {
+        
+       double sum = 0;
+        sum = register.stream().filter((f) -> (f instanceof BilForsikring)&& f.getStartDato().get(Calendar.YEAR ) == år)
+                .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        return sum; 
+        
+    }
+    
+    // finner summen av alle inntekter på bil i løpet av et år
+    public double finnInntekterBåt(int år) {
+        
+       double sum = 0;
+        sum = register.stream().filter((f) -> (f instanceof BatForsikring)&& f.getStartDato().get(Calendar.YEAR ) == år)
+                .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        return sum; 
+        
+    }
+    
+    // finner summen av alle inntekter på reiseforsikring iløpet av et år
+    public double finnInntekterReiseFors(int år) {
+       double sum = 0;
+        sum = register.stream().filter((f) -> (f instanceof ReiseForsikring)&& f.getStartDato().get(Calendar.YEAR ) == år)
+                .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        return sum; 
+    }
+    
+    
+
+    // metoden returnerer en liste med forsikringer til en bestemt kunde. 
     // avhengig av valg: av en type eller av alle typer.
     public List finnForsikring(Kunde kunde, int forsType) {
 
@@ -63,8 +119,6 @@ public class ForsikringsRegister implements Serializable {
         }
         return liste;
     }// end of method  finnForsKunde
-
-    
 
     // henter ut alle forsikringene som er kjøpt et gitt år
     public List finnForsikringer(Calendar c) {

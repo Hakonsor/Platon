@@ -1,12 +1,20 @@
 package GUI;
 
-
+import Forsikring.ForsikringsRegister;
 import Kontroller.Kontroller;
+import SkadeMeldinger.SkadeMeldingRegister;
+import java.text.DecimalFormat;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * Created by Magnus on 27.04.15.
@@ -19,9 +27,9 @@ public class KonsulentsideStatistikk {
 
         TabPane tabPane = new TabPane();
 
-        //Inntakter
+        //Inntekter
         Tab tabInnUt = new Tab();
-        tabInnUt.setText("Inntekter & Utfigter");
+        tabInnUt.setText("Inntekter & Utgifter");
         tabInnUt.setClosable(false);
         tabInnUt.setContent(innUt());
 
@@ -37,7 +45,6 @@ public class KonsulentsideStatistikk {
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(40);
         vb.setPadding(new Insets(100));
-
 
         ComboBox<String> cb = new ComboBox<>();
         cb.setValue("Velg År:");
@@ -58,10 +65,7 @@ public class KonsulentsideStatistikk {
         grid.setMaxWidth(680);
         grid.setMaxHeight(400);
 
-
-
         //Inntekter ----------------------------------------------->
-
         Label lbInntekter = new Label();
         lbInntekter.setText("Inntekter fordelt på forsikringstype");
         lbInntekter.setId("h1");
@@ -88,6 +92,7 @@ public class KonsulentsideStatistikk {
 
         Label lbBilforsikringVerdiInn = new Label();
         lbBilforsikringVerdiInn.setText("123456" + " Kr");
+        lbBoligVerdiInn.setText("123456" + " Kr");
         lbBilforsikringVerdiInn.setId("lbBilforsikringVerdi");
 
         Label lbReiseforsikringInn = new Label();
@@ -114,9 +119,7 @@ public class KonsulentsideStatistikk {
         lbTotalVerdiInn.setText("9991919" + " Kr");
         lbTotalVerdiInn.setId("lbTotalVerdiInn");
 
-
         //Utgifter------------------------------------------------->
-
         Label lbUtgifter = new Label();
         lbUtgifter.setText("Utgifter fordelt på forsikringstype");
         lbUtgifter.setId("h1");
@@ -167,56 +170,137 @@ public class KonsulentsideStatistikk {
 
         Label lbTotalVerdiUt = new Label();
         lbTotalVerdiUt.setText("2356543" + "Kr");
+        lbBåtForsikringVerdiUt.setText("123456" + " Kr");
         lbTotalVerdiUt.setId("lbTotalVerdiUt");
 
-
         //Differanse
-
         Label lbDifferanse = new Label();
         lbDifferanse.setText("Differanse:");
         lbDifferanse.setId("h2");
 
         Label lbDifferanseVerdi = new Label();
         lbDifferanseVerdi.setText("56565654" + " Kr");
+        lbTotalVerdiUt.setText("2356543" + "Kr");
+        lbBåtForsikringVerdiUt.setText("123456" + " Kr");
         lbDifferanseVerdi.setId("h2");
 
-
         //Rad 0
-
         //Rad 1
-        grid.add(lbInntekter, 0, 1, 2, 1); grid.add(lbUtgifter, 2, 1, 2, 1);
+        grid.add(lbInntekter, 0, 1, 2, 1);
+        grid.add(lbUtgifter, 2, 1, 2, 1);
 
         //Rad 2
-        grid.add(lbBoligInn, 0, 2); grid.add(lbBoligVerdiInn, 1, 2);
-        grid.add(lbBoligUt, 2, 2); grid.add(lbBoligVerdiUt, 3, 2);
+        grid.add(lbBoligInn, 0, 2);
+        grid.add(lbBoligVerdiInn, 1, 2);
+        grid.add(lbBoligUt, 2, 2);
+        grid.add(lbBoligVerdiUt, 3, 2);
 
         //Rad 3
-        grid.add(lbFritidsboligInn, 0, 3); grid.add(lbFritidsboligVerdiInn, 1, 3);
-        grid.add(lbFritidsboligUt, 2, 3); grid.add(lbFritidsboligVerdiUt, 3, 3);
+        grid.add(lbFritidsboligInn, 0, 3);
+        grid.add(lbFritidsboligVerdiInn, 1, 3);
+        grid.add(lbFritidsboligUt, 2, 3);
+        grid.add(lbFritidsboligVerdiUt, 3, 3);
 
         //Rad 4
-        grid.add(lbBilforsikringInn, 0, 4); grid.add(lbBilforsikringVerdiInn, 1, 4);
-        grid.add(lbBilforsikringUt, 2, 4); grid.add(lbBilforsikringVerdiUt, 3, 4);
+        grid.add(lbBilforsikringInn, 0, 4);
+        grid.add(lbBilforsikringVerdiInn, 1, 4);
+        grid.add(lbBilforsikringUt, 2, 4);
+        grid.add(lbBilforsikringVerdiUt, 3, 4);
 
         //Rad 5
-        grid.add(lbReiseforsikringInn, 0, 5); grid.add(lbReiseForsikringVerdiInn, 1, 5);
-        grid.add(lbReiseforsikringUt, 2, 5); grid.add(lbReiseForsikringVerdiUt, 3, 5);
+        grid.add(lbReiseforsikringInn, 0, 5);
+        grid.add(lbReiseForsikringVerdiInn, 1, 5);
+        grid.add(lbReiseforsikringUt, 2, 5);
+        grid.add(lbReiseForsikringVerdiUt, 3, 5);
 
         //Rad 6
-        grid.add(lbBåtForsikringInn, 0, 6); grid.add(lbBåtForsikringVerdiInn, 1, 6);
-        grid.add(lbBåtForsikringUt, 2, 6); grid.add(lbBåtForsikringVerdiUt, 3, 6);
+        grid.add(lbBåtForsikringInn, 0, 6);
+        grid.add(lbBåtForsikringVerdiInn, 1, 6);
+        grid.add(lbBåtForsikringUt, 2, 6);
+        grid.add(lbBåtForsikringVerdiUt, 3, 6);
 
         //Rad 7
-        grid.add(lbTotalInn, 0, 7); grid.add(lbTotalVerdiInn, 1, 7);
-        grid.add(lbTotalUt, 2, 7); grid.add(lbTotalVerdiUt, 3, 7);
+        grid.add(lbTotalInn, 0, 7);
+        grid.add(lbTotalVerdiInn, 1, 7);
+        grid.add(lbTotalUt, 2, 7);
+        grid.add(lbTotalVerdiUt, 3, 7);
 
         //Rad 8
-        grid.add(lbDifferanse, 1, 8); grid.add(lbDifferanseVerdi, 2, 8);
+        grid.add(lbDifferanse, 1, 8);
+        grid.add(lbDifferanseVerdi, 2, 8);
 
         grid.setGridLinesVisible(false);
 
         vb.getChildren().addAll(cb, grid);
 
+        cb.setOnAction((ActionEvent e) -> {
+            ForsikringsRegister fRegister = null;
+            SkadeMeldingRegister sRegister = null;
+            String år = cb.getSelectionModel().getSelectedItem();
+            int aar = 2013;
+            switch (år) {
+                case "2013":
+                    aar = 2013;
+                    break;
+                case "2014":
+                    aar = 2014;
+                    break;
+                case "2015":
+                    aar = 2015;
+                    break;
+            }
+            double reiseInn = 0;
+            double boligInn = 0;
+            double fritidInn = 0;
+            double båtInn = 0;
+            double bilInn = 0;
+
+            double reiseUt = 0;
+            double boligUt = 0;
+            double fritidUt = 0;
+            double båtUt = 0;
+            double bilUt = 0;
+            
+            
+            double inntekt = 0;
+            double utgift = 0;
+            
+
+            if (fRegister != null) {
+                reiseInn = fRegister.finnInntekterReiseFors(aar);
+                boligInn = fRegister.finnInntekterBoligForsikring(aar);
+                fritidInn = fRegister.finnInntekterFritidsBolig(aar);
+                båtInn = fRegister.finnInntekterBåt(aar);
+                bilInn = fRegister.finnInntekterBil(aar);
+                
+                // totale inntekter
+                inntekt = fRegister.finnInntekterAlleFors(aar);
+            }
+            if (sRegister != null) {
+
+            }
+            String form = "0.00";
+            DecimalFormat tall = new DecimalFormat(form);
+// Inntekter  per forsikringstype________________________________________________
+            lbBåtForsikringVerdiInn.setText(tall.format(båtInn) + " Kr");
+            lbReiseForsikringVerdiInn.setText(tall.format(reiseInn) + " Kr");
+            lbBilforsikringVerdiInn.setText(tall.format(bilInn) + " Kr");
+            lbBoligVerdiInn.setText(tall.format(boligInn) + " Kr");
+            lbFritidsboligVerdiInn.setText(tall.format(fritidInn) + " Kr");
+
+            
+            lbTotalVerdiUt.setText("2356543" + "Kr");
+// Utgifter  per forsikringstype________________________________________________
+            lbBåtForsikringVerdiUt.setText(tall.format(båtUt) + " Kr");
+            lbReiseForsikringVerdiUt.setText(tall.format(reiseUt) + " Kr");
+            lbBilforsikringVerdiUt.setText(tall.format(bilUt) + " Kr");
+            lbFritidsboligVerdiUt.setText(tall.format(fritidUt) + " Kr");
+            lbBoligVerdiUt.setText(tall.format(boligUt) + " Kr");
+
+//differanse____________________________________________________________________
+            
+            lbDifferanseVerdi.setText( tall.format(inntekt - utgift)+ " Kr");
+        });
         return vb;
     }
 
