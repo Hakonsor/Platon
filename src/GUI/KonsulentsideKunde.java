@@ -469,7 +469,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                         + "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
             }
 
-            kontroll.setBåtForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
+            kontroll.setBåtForsikring( tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
             regLabelB.setText("Bilforsikring Registrert!");
         });
 

@@ -99,7 +99,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //båt forsikring, oppretter båtforsikring og setter den inn i registeret
-    public void setBåtForsikring(double bonus, double egenandel,
+    public void setBåtForsikring(
             String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person) {
         int fot = 0;
         if (person == null) {
@@ -114,7 +114,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BatForsikring(egenandel, motor, fot, ytelse, regNr, type, modell, arsmodell, person));
+            forsikringsregister.settInn(kunde, new BatForsikring( motor, fot, ytelse, regNr, type, modell, arsmodell, person));
         } catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }

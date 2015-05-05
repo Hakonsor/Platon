@@ -18,8 +18,8 @@ public class BatForsikring extends Forsikringer implements Serializable{
     private String motorType;
     private String regNo;
     
-    public BatForsikring(double egenandel, String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
-    super(egenandel, 0); 
+    public BatForsikring(String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
+    super(0, 0); 
     this.lendgeFot = lendgeFot;
     this.motorStyrke = motorStyrke;
     this.motorType = motorType;

@@ -118,18 +118,6 @@ public class KundesideBåt implements ComboBoxConverter{
             type = "Motorbåt";
         });
 
-
-        ComboBox<String> cbEgenandel = new ComboBox<>();
-        cbEgenandel.setEditable(false);
-        cbEgenandel.setMinWidth(200);
-        cbEgenandel.getItems().addAll(
-                "Egenandel:  4 000,-",
-                "Egenandel:  6 000,-",
-                "Egenandel: 10 000,-"
-        );
-        cbEgenandel.setValue("Velg Egenandel:");
-
-
         //Registrer knapp & Label
         Label regLabel = new Label();
         regLabel.setText("");
@@ -160,7 +148,7 @@ public class KundesideBåt implements ComboBoxConverter{
                         "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
             }
             
-            kontroll.setBåtForsikring(0, convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
+            kontroll.setBåtForsikring( tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
             regLabel.setText("Bilforsikring Registrert!");
         });
 
@@ -171,12 +159,11 @@ public class KundesideBåt implements ComboBoxConverter{
         grid.add(tfAntfor, 0, 4);
         grid.add(tfMotormerke, 0, 5);
         grid.add(tfYtelse, 0, 6);
-        grid.add(cbEgenandel, 0, 7);
-        grid.add(rbtSeilbåt, 0, 8);
-        grid.add(rbtMotorbåt, 0, 9);
-        grid.add(btnSjekkpris, 0, 10);
-        grid.add(btnRegBåtforsikring, 0, 11);
-        grid.add(regLabel, 0, 12);
+        grid.add(rbtSeilbåt, 0, 7);
+        grid.add(rbtMotorbåt, 0, 8);
+        grid.add(btnSjekkpris, 0, 9);
+        grid.add(btnRegBåtforsikring, 0, 10);
+        grid.add(regLabel, 0, 11);
 
         borderPane.setCenter(grid); // CENTER
 
