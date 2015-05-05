@@ -230,6 +230,32 @@ public class KundesideBåt implements ComboBoxConverter{
         ttYtelse.setToX(0);
         ttYtelse.setCycleCount(1);
 
+        TextField tfVerdi = new TextField();
+        tfVerdi.setPromptText("Verdi på båten");
+        tfVerdi.setMinWidth(200);
+        tfVerdi.setId("promtfix");
+        tfVerdi.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String verdi = tfVerdi.getText();
+
+                if (!verdi.matches(regex) || verdi.length() > 13) {
+                    tfVerdi.setId("error");
+                } else {
+                    tfVerdi.setId("valid");
+                }
+                if (verdi.length() == 0) {
+                    tfVerdi.setId("promtfix");
+                }
+            }
+        });
+
+        TranslateTransition ttVerdi = new TranslateTransition(Duration.millis(100), tfVerdi);
+        ttVerdi.setFromX(500);
+        ttVerdi.setToX(0);
+        ttVerdi.setCycleCount(1);
+
         ToggleGroup båtType = new ToggleGroup();
         RadioButton rbtSeilbåt = new RadioButton("Seilbåt");
         rbtSeilbåt.setToggleGroup(båtType);
@@ -300,29 +326,31 @@ public class KundesideBåt implements ComboBoxConverter{
             regLabel.setText("Båtforsikring Registrert!");
 
             if (
-                tfRegnr.getId().equals("valid") &&
-                tfÅrsmodell.getId().equals("valid") &&
-                tfBåtmodell.getId().equals("valid") &&
-                tfAntfor.getId().equals("valid") &&
-                tfMotormerke.getId().equals("valid") &&
-                tfYtelse.getId().equals("valid")
+                    tfRegnr.getId().equals("valid") &&
+                            tfÅrsmodell.getId().equals("valid") &&
+                            tfBåtmodell.getId().equals("valid") &&
+                            tfAntfor.getId().equals("valid") &&
+                            tfMotormerke.getId().equals("valid") &&
+                            tfYtelse.getId().equals("valid") &&
+                            tfVerdi.getId().equals("valid")
                     ) {
                 double verdi = 0;
                 int effekt = 0;
 
-                try{
+                try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     effekt = Integer.parseInt(tfYtelse.getText());
-                }catch(NumberFormatException nfe){
+                } catch (NumberFormatException nfe) {
                     System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
                             "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
                 }
 
-                kontroll.setBåtForsikring(verdi, tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
+                kontroll.setBåtForsikring(verdi, tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
                 regLabel.setText("Bilforsikring Registrert!");
-            
-            } else{
-            regLabel.setText("Fargeblind bro?!");
+
+            } else {
+                regLabel.setText("Fargeblind bro?!");
+            }
         });
 
         FadeTransition ftBestill = new FadeTransition(Duration.millis(100), btnRegBåtforsikring);
@@ -330,16 +358,16 @@ public class KundesideBåt implements ComboBoxConverter{
         ftBestill.setToValue(1.0F);
         ftBestill.setCycleCount(1);
 
-        SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfor, ttMotormerke, ttYtelse, ttEgenandel, ttSeilbåt, ttMotor, ftPris, ftBestill);
+        SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfor, ttMotormerke, ttYtelse, ttVerdi, ttEgenandel, ttSeilbåt, ttMotor, ftPris, ftBestill);
         st.play();
 
-        //grid.add(lbBåt, 0, 0);
-        grid.add(tfRegnr, 0, 1);
-        grid.add(tfÅrsmodell, 0, 2);
-        grid.add(tfBåtmodell, 0, 3);
-        grid.add(tfAntfor, 0, 4);
-        grid.add(tfMotormerke, 0, 5);
-        grid.add(tfYtelse, 0, 6);
+        grid.add(tfRegnr, 0, 0);
+        grid.add(tfÅrsmodell, 0, 1);
+        grid.add(tfBåtmodell, 0, 2);
+        grid.add(tfAntfor, 0, 3);
+        grid.add(tfMotormerke, 0, 4);
+        grid.add(tfYtelse, 0, 5);
+        grid.add(tfVerdi, 0, 6);
         grid.add(cbEgenandel, 0, 7);
         grid.add(rbtSeilbåt, 0, 8);
         grid.add(rbtMotorbåt, 0, 9);
