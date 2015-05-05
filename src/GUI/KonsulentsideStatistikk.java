@@ -19,7 +19,7 @@ public class KonsulentsideStatistikk {
 
         TabPane tabPane = new TabPane();
 
-        //Inntakter
+        //Inntekter
         Tab tabInnUt = new Tab();
         tabInnUt.setText("Inntekter & Utfigter");
         tabInnUt.setClosable(false);
@@ -31,7 +31,7 @@ public class KonsulentsideStatistikk {
         return borderPane;
     }
 
-    public static Pane innUt() {
+    public Pane innUt() {
 
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);

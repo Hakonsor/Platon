@@ -8,14 +8,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import static javafx.geometry.Pos.TOP_CENTER;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import Kontroller.Postregister;
+
 
 /**
  * Created by Magnus on 21.04.15.
  */
 public class KundesideBolig {
 
-    public static Pane boligFane(Kontroller kontroller) {
+    String leie;
+
+    public Pane boligFane(Kontroller kontroller) {
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
         HBox vb = new HBox();
@@ -44,29 +49,42 @@ public class KundesideBolig {
         lbBolig.setText("Informasjon om din bolig");
         lbBolig.setAlignment(Pos.CENTER);
 
-        TextField tfPostnr = new TextField();
-        tfPostnr.setPromptText("Postnummer");
-        tfPostnr.setMinWidth(200);
-
         TextField tfAdresse = new TextField();
         tfAdresse.setPromptText("Adresse");
+        tfAdresse.setId("promtfix");
         tfAdresse.setMinWidth(200);
 
         TextField tfByggeår = new TextField();
         tfByggeår.setPromptText("Byggeår");
+        tfByggeår.setId("promtfix");
         tfByggeår.setMinWidth(200);
 
         TextField tfKvadrat = new TextField();
         tfKvadrat.setPromptText("Kvadratmeter");
+        tfKvadrat.setId("promtfix");
         tfKvadrat.setMinWidth(200);
 
         TextField tfByggSum = new TextField();
         tfByggSum.setPromptText("Bolig verdi");
+        tfByggSum.setId("promtfix");
         tfByggSum.setMinWidth(200);
 
         TextField tfInnboSum = new TextField();
         tfInnboSum.setPromptText("Innbo verdi");
+        tfInnboSum.setId("promtfix");
         tfInnboSum.setMinWidth(200);
+
+        TextField tfPostnr = new TextField();
+        tfPostnr.setPromptText("PostNr");
+        tfPostnr.setId("promtfix");
+        tfPostnr.setMinWidth(200);
+
+        TextField postSted = new TextField();
+        postSted.setPromptText("PostSted");
+        postSted.setId("promtfix");
+        postSted.setEditable(false);
+        postSted.setMinWidth(200);
+
 
         ComboBox<String> cbBoligtype = new ComboBox<>();
         cbBoligtype.setEditable(false);
@@ -102,6 +120,20 @@ public class KundesideBolig {
         );
         cbMatriale.setValue("Byggematriale:");
 
+        CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
+        cbleie.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (cbleie.isSelected() == true) {
+                    leie = "Ja";
+                    System.out.println("Ja");
+                } else {
+                    leie = "Nei";
+                    System.out.println("Nei");
+                }
+            }
+        });
+
         //Registrer knapp & Label
         Label regLabel = new Label();
         regLabel.setText("");
@@ -121,28 +153,38 @@ public class KundesideBolig {
         btnRegBoligforsikring.setId("btnRegBoligforsikring");
         btnRegBoligforsikring.setMinWidth(200);
 
+        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Postregister register = new Postregister();
+                String poststed = register.getPoststed(tfPostnr.getText());
+                if (poststed == null) {
+                    poststed = "Finnes ikke!";
+                }
+                if (tfPostnr.getText().equals("")) {
+                    postSted.setText("");
+                    postSted.setPromptText("PostSted");
+                } else
+                    postSted.setText(poststed);
+            }
+        });
+
         grid.add(lbBolig, 0, 0);
-
-        grid.add(tfPostnr, 0, 1);
-
-        grid.add(tfAdresse, 0, 2);
-
-        grid.add(tfByggeår, 0, 3);
-
-        grid.add(tfKvadrat, 0, 4);
-
-        grid.add(tfByggSum, 0, 5);
-
-        grid.add(tfInnboSum, 0, 6);
-
-        grid.add(cbBoligtype, 0, 7);
-        grid.add(cbStandard, 0, 8);
-        grid.add(cbMatriale, 0, 9);
-
-        grid.add(btnSjekkpris, 1, 13);
-        grid.add(btnRegBoligforsikring, 1, 14);
-
-        grid.add(regLabel, 1, 15);
+        grid.add(tfAdresse, 0, 1);
+        grid.add(tfPostnr, 0, 2);
+        grid.add(postSted, 0, 3);
+        grid.add(tfByggeår, 0, 4);
+        grid.add(tfKvadrat, 0, 5);
+        grid.add(tfByggSum, 0, 6);
+        grid.add(tfInnboSum, 0, 7);
+        grid.add(cbBoligtype, 0, 8);
+        grid.add(cbStandard, 0, 9);
+        grid.add(cbMatriale, 0, 10);
+        grid.add(cbleie, 0, 11);
+        grid.add(btnSjekkpris, 0, 12);
+        grid.add(btnRegBoligforsikring, 0, 13);
+        grid.add(regLabel, 0, 14);
 
         borderPane.setCenter(grid); // CENTER
 
@@ -171,6 +213,8 @@ public class KundesideBolig {
             regLabel.setText("Boligforsikring registrert!");
 
         });
+
+        borderPane.getStylesheets().add("CSS/kundebolig.css");
         return borderPane;
     }
 }

@@ -15,11 +15,13 @@ import java.io.Serializable;
 public class BilForsikring extends Kjoretoy implements Serializable {
 
     private int kjorelengde;
+    private int kmStand;
     private double bonusTilGodkjenning;
-
-    public BilForsikring(double bonus, double egenandel, int kjorelengde, String regNr, String type, String arsModell, int kmStand) {
-        super(bonus, egenandel, regNr, type, arsModell, null);
+                            //(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
+    public BilForsikring(double bonus, double egenandel, int kjorelengde, String regNr, String type, String bilModell, String arsModell, int kmStand) {
+        super(bonus, egenandel, regNr, type, bilModell, arsModell);
         this.kjorelengde = kjorelengde;
+        this.kmStand = kmStand;
         premie = (premie(egenandel, bonus));// premien settes
     }
 
@@ -135,6 +137,12 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         sb.append(super.toString());
         sb.append("Kjørelengde: ");
         sb.append(kjorelengde);
+        sb.append(" km");
+        sb.append("\n");
+        sb.append("KM-Stand: ");
+        sb.append(kmStand);
+        sb.append(" km");
+
 
         return sb.toString();
     }// end of toString()

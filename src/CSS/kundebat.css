@@ -1,0 +1,35 @@
+#promtfix, #promtfix:focused {
+    -fx-prompt-text-fill:darkgray;
+    -fx-background-radius: 0;
+}
+
+#borderpane {
+    -fx-background-image: url("Bilder/batback.png");
+}
+
+#btnSjekkpris {
+    -fx-background-color: rgb(126, 155, 210);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#btnSjekkpris:hover, #btnSjekkpris:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#btnRegBatforsikring {
+    -fx-background-color: rgb(126, 155, 210);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+
+}
+
+#btnRegBatforsikring:hover, #btnRegBatforsikring:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#egenandel, #egenandel:focused {
+    -fx-background-radius: 0;
+}

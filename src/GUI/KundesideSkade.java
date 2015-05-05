@@ -103,7 +103,7 @@ public class KundesideSkade {
         listView.setId("listview");
         listView.setEditable(false);
 
-        data.addAll("Trykk på meg :)");
+        data.addAll("   ");
 
         listView.setItems(data);
         listView.setCellFactory(ComboBoxListCell.forListView(data));
