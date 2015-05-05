@@ -150,11 +150,11 @@ public class KundesideBåt implements ComboBoxConverter {
         ttBåtmodell.setToX(0);
         ttBåtmodell.setCycleCount(1);
 
-        TextField tfAntfor = new TextField();
-        tfAntfor.setPromptText("Antall fot");
-        tfAntfor.setMinWidth(200);
-        tfAntfor.setId("promtfix");
-        tfAntfor.textProperty().addListener(new ChangeListener<String>() {
+        TextField tfAntfot= new TextField();
+        tfAntfot.setPromptText("Antall fot");
+        tfAntfot.setMinWidth(200);
+        tfAntfot.setId("promtfix");
+        tfAntfot.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 String regex = "[0-9]+";
@@ -295,7 +295,7 @@ public class KundesideBåt implements ComboBoxConverter {
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
         btnSjekkpris.setOnAction(e -> {
-            regLabel.setText("Prisen er: " + "getPris()");
+            regLabel.setText("Premien er: " + "getPris()");
         });
 
         FadeTransition ftPris = new FadeTransition(Duration.millis(100), btnSjekkpris);
@@ -313,7 +313,7 @@ public class KundesideBåt implements ComboBoxConverter {
             if (tfRegnr.getId().equals("valid")
                     && tfÅrsmodell.getId().equals("valid")
                     && tfBåtmodell.getId().equals("valid")
-                    && tfAntfor.getId().equals("valid")
+                    && tfAntfot.getId().equals("valid")
                     && tfMotormerke.getId().equals("valid")
                     && tfYtelse.getId().equals("valid")
                     && tfVerdi.getId().equals("valid")) {
@@ -326,7 +326,8 @@ public class KundesideBåt implements ComboBoxConverter {
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     lengdeFot = Integer.parseInt(tfYtelse.getText());
-                    BatForsikring båt = new BåtForsikring();
+                    BatForsikring båt = new BatForsikring();
+                    båt
                 } catch (NumberFormatException nfe) {
                     System.out.println("Feil tallformat");
                 }

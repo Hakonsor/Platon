@@ -104,7 +104,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
             forsikringsregister.settInn(kunde, båt);
-        } catch (ClassCastException cce) {//double forSum, int lendgeFot,String regNr , boolean type, String modell, String arsModell
+        } catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
     }
