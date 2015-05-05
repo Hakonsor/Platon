@@ -552,11 +552,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         cbMatriale.setValue("Byggematriale:");
 
         CheckBox cbleie = new CheckBox(" UtleieBolig? ");
-        cbleie.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                utLeie = cbleie.isSelected() == true;
-            }
+        cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            utLeie = cbleie.isSelected() == true;
         });
 
         //Registrer knapp & Label
@@ -728,7 +725,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 System.out.println("Feil tallformat.");
             }
 
-            kontroll.setFritidsForsikring(kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
+            kontroll.setFritidsForsikring( utLeie,kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
             regLabelF.setText("FritidsBoligforsikring registrert!");
         });
 
