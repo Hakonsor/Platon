@@ -280,19 +280,7 @@ public class KundesideBåt implements ComboBoxConverter{
         ttMotor.setFromX(500);
         ttMotor.setToX(0);
         ttMotor.setCycleCount(1);
-
-
-        ComboBox<String> cbEgenandel = new ComboBox<>();
-        cbEgenandel.setEditable(false);
-        cbEgenandel.setId("egenandel");
-        cbEgenandel.setMinWidth(200);
-        cbEgenandel.getItems().addAll(
-                "Egenandel:  4 000,-",
-                "Egenandel:  6 000,-",
-                "Egenandel: 10 000,-"
-        );
-        cbEgenandel.setValue("Velg Egenandel:");
-
+        
         TranslateTransition ttEgenandel = new TranslateTransition(Duration.millis(100), cbEgenandel);
         ttEgenandel.setFromX(500);
         ttEgenandel.setToX(0);
@@ -335,17 +323,16 @@ public class KundesideBåt implements ComboBoxConverter{
                             tfVerdi.getId().equals("valid")
                     ) {
                 double verdi = 0;
-                int effekt = 0;
+                int  = 0;
 
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
-                    effekt = Integer.parseInt(tfYtelse.getText());
+                     = Integer.parseInt(tfYtelse.getText());
                 } catch (NumberFormatException nfe) {
-                    System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
-                            "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
+                    System.out.println("Feil tallformat");
                 }
 
-                kontroll.setBåtForsikring(verdi, tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
+                kontroll.setBåtForsikring(båt);
                 regLabel.setText("Bilforsikring Registrert!");
 
             } else {
