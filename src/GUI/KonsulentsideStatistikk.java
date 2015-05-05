@@ -21,6 +21,9 @@ import javafx.scene.layout.VBox;
  */
 public class KonsulentsideStatistikk {
 
+    private ForsikringsRegister fRegister;
+    private SkadeMeldingRegister sRegister;
+
     public Pane statFane(Kontroller kontroll) {
 
         BorderPane borderPane = new BorderPane();
@@ -39,7 +42,7 @@ public class KonsulentsideStatistikk {
         return borderPane;
     }
 
-    public static Pane innUt() {
+    public Pane innUt() {
 
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
@@ -234,8 +237,7 @@ public class KonsulentsideStatistikk {
         vb.getChildren().addAll(cb, grid);
 
         cb.setOnAction((ActionEvent e) -> {
-            ForsikringsRegister fRegister = null;
-            SkadeMeldingRegister sRegister = null;
+
             String år = cb.getSelectionModel().getSelectedItem();
             int aar = 2013;
             switch (år) {
@@ -260,11 +262,9 @@ public class KonsulentsideStatistikk {
             double fritidUt = 0;
             double båtUt = 0;
             double bilUt = 0;
-            
-            
+
             double inntekt = 0;
             double utgift = 0;
-            
 
             if (fRegister != null) {
                 reiseInn = fRegister.finnInntekterReiseFors(aar);
@@ -272,34 +272,38 @@ public class KonsulentsideStatistikk {
                 fritidInn = fRegister.finnInntekterFritidsBolig(aar);
                 båtInn = fRegister.finnInntekterBåt(aar);
                 bilInn = fRegister.finnInntekterBil(aar);
-                
-                // totale inntekter
                 inntekt = fRegister.finnInntekterAlleFors(aar);
             }
             if (sRegister != null) {
-
+                reiseUt = sRegister.finnUtgiftReise(aar);
+                boligUt = sRegister.finnUtgiftBolig(aar);
+                fritidUt = sRegister.finnUtgiftFritid(aar);
+                båtUt = sRegister.finnUtgiftBåt(aar);
+                bilUt = sRegister.finnUtgiftBil(aar);
+                utgift = sRegister.finnUtgiftTotal(aar);
             }
+
             String form = "0.00";
             DecimalFormat tall = new DecimalFormat(form);
-// Inntekter  per forsikringstype________________________________________________
+// Inntekter  ________________________________________________
             lbBåtForsikringVerdiInn.setText(tall.format(båtInn) + " Kr");
             lbReiseForsikringVerdiInn.setText(tall.format(reiseInn) + " Kr");
             lbBilforsikringVerdiInn.setText(tall.format(bilInn) + " Kr");
             lbBoligVerdiInn.setText(tall.format(boligInn) + " Kr");
             lbFritidsboligVerdiInn.setText(tall.format(fritidInn) + " Kr");
 
-            
-            lbTotalVerdiUt.setText("2356543" + "Kr");
-// Utgifter  per forsikringstype________________________________________________
+            lbTotalVerdiInn.setText(tall.format(inntekt) + "Kr");
+// Utgifter ________________________________________________
             lbBåtForsikringVerdiUt.setText(tall.format(båtUt) + " Kr");
             lbReiseForsikringVerdiUt.setText(tall.format(reiseUt) + " Kr");
             lbBilforsikringVerdiUt.setText(tall.format(bilUt) + " Kr");
             lbFritidsboligVerdiUt.setText(tall.format(fritidUt) + " Kr");
             lbBoligVerdiUt.setText(tall.format(boligUt) + " Kr");
 
+            lbTotalVerdiUt.setText(tall.format(utgift) + "Kr");
 //differanse____________________________________________________________________
-            
-            lbDifferanseVerdi.setText( tall.format(inntekt - utgift)+ " Kr");
+
+            lbDifferanseVerdi.setText(tall.format(inntekt - utgift) + " Kr");
         });
         return vb;
     }

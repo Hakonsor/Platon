@@ -139,7 +139,7 @@ public class SkadeMeldingRegister implements Serializable {
     public double finnUtgiftFritid( int år ) {
         double sum = 0;
         for(SkadeMelding s : register){
-            if(s instanceof FritidsBoligMelding && s.datoInnmeldt.get(Calendar.YEAR)== år )
+            if(s instanceof FritidsBoligMelding && (s.datoInnmeldt.get(Calendar.YEAR)== år) )
                 sum+= s.getUtbetaling();
         }
         return sum;
@@ -149,11 +149,23 @@ public class SkadeMeldingRegister implements Serializable {
     public double finnUtgiftReise( int år ) {
         double sum = 0;
         for(SkadeMelding s : register){
-            if(s instanceof ReiseSkadeMelding && s.datoInnmeldt.get(Calendar.YEAR)== år )
+            if(s instanceof ReiseSkadeMelding &&  ( s.datoInnmeldt.get(Calendar.YEAR)== år ))
                 sum+= s.getUtbetaling();
         }
         return sum;
     }
+    
+    
+    // finner totale utgifter for et gitt år
+    public double finnUtgiftTotal( int år ) {
+        double sum = 0;
+        for( SkadeMelding s : register ){
+            if( s.datoInnmeldt.get(Calendar.YEAR)== år )
+                sum+= s.getUtbetaling();
+        }
+        return sum;
+    }
+
 
     
 }
