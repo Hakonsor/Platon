@@ -18,11 +18,12 @@ public class BatForsikring extends Forsikringer implements Serializable{
     private String motorType;
     private String regNo;
     
-    public BatForsikring(String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
+    public BatForsikring(double forSum, String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
     super(0, 0); 
     this.lendgeFot = lendgeFot;
     this.motorStyrke = motorStyrke;
     this.motorType = motorType;
+    this.forsikringSum = forSum;
     }
     
     public String getRegNo(){
@@ -40,5 +41,26 @@ public class BatForsikring extends Forsikringer implements Serializable{
     
     public String toString(){
         return "s";
+    }
+    
+    // metoden setter egenandel utifra om båten har motor eller ikke.
+    public double beregnEgenAndel(boolean motor){
+        if(motor){
+           egenandel = 3000;
+        }
+        else{
+            egenandel= 2000;
+        }
+        return egenandel; 
+    }
+    
+    // beregner premie utifra forsikringssum
+    public void beregnPremie(){
+        double deltaForsSum = 0.02;
+        premie =( forsikringSum*deltaForsSum);
+    }
+    
+    public void premieEtterSkade(){
+        
     }
 }

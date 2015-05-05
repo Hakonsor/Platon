@@ -144,15 +144,17 @@ public class KundesideBåt implements ComboBoxConverter{
             regLabel.setText("Båtforsikring Registrert!");
 
             int effekt = 0;
+            double verdi = 0;
 
             try{
+                verdi = Double.parseDouble(tfVerdi.getText());
                 effekt = Integer.parseInt(tfYtelse.getText());
             }catch(NumberFormatException nfe){
                 System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
                         "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
             }
             
-            kontroll.setBåtForsikring( tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
+            kontroll.setBåtForsikring(verdi, tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type , null);
             regLabel.setText("Bilforsikring Registrert!");
         });
 

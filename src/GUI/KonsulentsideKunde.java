@@ -1,25 +1,30 @@
 package GUI;
 
 import Forsikring.BilForsikring;
-import Kontroller.Kontroller;
+import Forsikring.Forsikringer;
 import Kontroller.ComboBoxConverter;
+import Kontroller.Kontroller;
+import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import Forsikring.Forsikringer;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by Magnus on 27.04.15.
@@ -371,6 +376,10 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBåt.add(lbbåt, 0, 0);
 
         //Båt
+        TextField tfVerdi = new TextField();
+        tfVerdi.setPromptText("Båtens verdi");
+        tfVerdi.setMinWidth(200);
+        
         TextField tfRegnrB = new TextField();
         tfRegnrB.setPromptText("Reg.Nr");
         tfRegnrB.setMinWidth(200);
@@ -411,34 +420,6 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             type = "Motorbåt";
         });
 
-        ComboBox<String> cbBonusB = new ComboBox<>();
-        cbBonusB.setEditable(false);
-        cbBonusB.setMinWidth(200);
-        cbBonusB.getItems().addAll(
-                "Bonus: -20%",
-                "Bonus: -10%",
-                "Bonus: 0%",
-                "Bonus: 10%",
-                "Bonus: 20%",
-                "Bonus: 30%",
-                "Bonus: 40%",
-                "Bonus: 50%",
-                "Bonus: 60%",
-                "Bonus: 70%",
-                "Bonus: 75%"
-        );
-        cbBonusB.setValue("Velg Bonus:");
-
-        ComboBox<String> cbEgenandelB = new ComboBox<>();
-        cbEgenandelB.setEditable(false);
-        cbEgenandelB.setMinWidth(200);
-        cbEgenandelB.getItems().addAll(
-                "Egenandel:  4 000,-",
-                "Egenandel:  6 000,-",
-                "Egenandel: 10 000,-"
-        );
-        cbEgenandelB.setValue("Velg Egenandel:");
-
         //Registrer knapp & Label
         Label regLabelB = new Label();
         regLabelB.setText("");
@@ -461,31 +442,32 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             regLabelB.setText("Båtforsikring Registrert!");
 
             int effekt = 0;
+            double verdi = 0;
 
             try {
                 effekt = Integer.parseInt(tfYtelse.getText());
+                verdi = Double.parseDouble(tfVerdi.getText());
             } catch (NumberFormatException nfe) {
                 System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n"
                         + "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
             }
 
-            kontroll.setBåtForsikring( tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
+            kontroll.setBåtForsikring( verdi,tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
             regLabelB.setText("Bilforsikring Registrert!");
         });
 
-        gridBåt.add(tfRegnrB, 0, 0);
-        gridBåt.add(tfÅrsmodellB, 0, 1);
-        gridBåt.add(tfBåtmodell, 0, 2);
-        gridBåt.add(tfAntfor, 0, 3);
-        gridBåt.add(tfMotormerke, 0, 4);
-        gridBåt.add(tfYtelse, 0, 5);
-        gridBåt.add(cbEgenandelB, 0, 6);
-        gridBåt.add(cbBonusB, 0, 7);
-        gridBåt.add(rbtMotorbåt, 0, 8);
-        gridBåt.add(rbtSeilbåt, 0, 9);
-        gridBåt.add(btnSjekkprisB, 0, 10);
-        gridBåt.add(btnRegBåtforsikring, 0, 11);
-        gridBåt.add(regLabelB, 0, 12);
+        gridBåt.add(tfVerdi, 0, 0);
+        gridBåt.add(tfRegnrB, 0, 1);
+        gridBåt.add(tfÅrsmodellB, 0, 2);
+        gridBåt.add(tfBåtmodell, 0, 3);
+        gridBåt.add(tfAntfor, 0, 4);
+        gridBåt.add(tfMotormerke, 0, 5);
+        gridBåt.add(tfYtelse, 0, 6);
+        gridBåt.add(rbtMotorbåt, 0, 7);
+        gridBåt.add(rbtSeilbåt, 0, 8);
+        gridBåt.add(btnSjekkprisB, 0, 9);
+        gridBåt.add(btnRegBåtforsikring, 0, 10);
+        gridBåt.add(regLabelB, 0, 11);
 
         //Bolig
         gridBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
