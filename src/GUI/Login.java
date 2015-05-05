@@ -159,7 +159,7 @@ public class Login {
         FadeTransition ftPassord = new FadeTransition(Duration.millis(1500), pfKundePassord);
         ftPassord.setFromValue(0.3F);
         ftPassord.setToValue(1.0F);
-        ftBrukernavn.setCycleCount(1);
+        ftPassord.setCycleCount(1);
         ttb.play();
 
         TranslateTransition ttp = new TranslateTransition(Duration.millis(1500), pfKundePassord);

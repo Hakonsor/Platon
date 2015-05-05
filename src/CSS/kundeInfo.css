@@ -1,0 +1,19 @@
+#borderpane {
+    -fx-background-image: url("Bilder/minsideback.png");
+}
+
+#hei {
+    -fx-font: 30px "Myriad";
+}
+
+#navn {
+    -fx-font: 30px "Myriad";
+}
+
+#epost {
+    -fx-font: 16px "Myriad";
+}
+
+#kundenr {
+    -fx-font: 16px "Myriad";
+}

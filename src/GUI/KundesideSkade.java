@@ -252,8 +252,6 @@ public class KundesideSkade {
                 lbSkade.setText("Vennligst sett en gyldig dato");
                 return;
             }
-            Forsikringer fors = kontroll.getForsikring( Integer.parseInt( polisNr ) );
-            
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
                 if (fors instanceof BilForsikring) {

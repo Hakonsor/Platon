@@ -33,3 +33,21 @@
 #egenandel, #egenandel:focused {
     -fx-background-radius: 0;
 }
+
+#error {
+    -fx-text-fill: red;
+    -fx-border-color: red;
+    -fx-background-image:url("Bilder/cross.png");
+    -fx-background-size: 32px 32px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+
+}
+
+#valid {
+    -fx-text-fill: green;
+    -fx-background-image:url("Bilder/check.png");
+    -fx-background-size: 32px 32px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+}
