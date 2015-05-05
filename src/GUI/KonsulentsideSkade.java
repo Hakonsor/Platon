@@ -1,8 +1,13 @@
 package GUI;
 
 import Forsikring.BilForsikring;
+import Forsikring.BoligForsikring;
 import Kontroller.Kontroller;
+import SkadeMeldinger.BatSkadeMelding;
 import SkadeMeldinger.BilSkadeMelding;
+import SkadeMeldinger.BoligSkadeMelding;
+import SkadeMeldinger.FritidsBoligMelding;
+import SkadeMeldinger.ReiseSkadeMelding;
 import SkadeMeldinger.SkadeMelding;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -120,8 +125,28 @@ public class KonsulentsideSkade {
             if (skade != null) {
                 
                 skade = kontroll.visForrigeIKø();
+                if(skade instanceof BilSkadeMelding){
+                   BilSkadeMelding s = (BilSkadeMelding) skade;
+                   taLes.setText(s.melding());
+                }
+                else if(skade instanceof BatSkadeMelding){
+                    BatSkadeMelding s = (BatSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof BoligSkadeMelding){
+                    BoligSkadeMelding s = (BoligSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof FritidsBoligMelding){
+                    FritidsBoligMelding s = (FritidsBoligMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof ReiseSkadeMelding){
+                    ReiseSkadeMelding s = (ReiseSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
                 tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                taLes.setText(skade.toString());
+                
             } else {
                 taLes.setText("Det er ikke registrert noen flere skademeldinger.");
             }
@@ -131,6 +156,26 @@ public class KonsulentsideSkade {
             if (skade != null) {
 
                 skade = kontroll.visNesteIKø();
+                if(skade instanceof BilSkadeMelding){
+                   BilSkadeMelding s = (BilSkadeMelding) skade;
+                   taLes.setText(s.melding());
+                }
+                else if(skade instanceof BatSkadeMelding){
+                    BatSkadeMelding s = (BatSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof BoligSkadeMelding){
+                    BoligSkadeMelding s = (BoligSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof FritidsBoligMelding){
+                    FritidsBoligMelding s = (FritidsBoligMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof ReiseSkadeMelding){
+                    ReiseSkadeMelding s = (ReiseSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
                 tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
                 taLes.setText(skade.toString());
             } else {
