@@ -15,15 +15,13 @@ import java.io.Serializable;
 public class BatForsikring extends Forsikringer implements Serializable{
     
     private int lendgeFot, motorStyrke;
-    private String motorType;
-    private String regNo;
+    private String regNo, motorMerke, type;
     
-    public BatForsikring(double forSum, String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
+    public BatForsikring(double forSum, int lendgeFot,String regNr , String type, String modell, String arsModell){
     super(0, 0); 
     this.lendgeFot = lendgeFot;
-    this.motorStyrke = motorStyrke;
-    this.motorType = motorType;
     this.forsikringSum = forSum;
+    this.type = type;
     }
     
     public String getRegNo(){
@@ -35,8 +33,8 @@ public class BatForsikring extends Forsikringer implements Serializable{
     public int getMotorStyrke(){
      return motorStyrke;
     }
-    public String getMotorType(){
-     return motorType;
+    public String motorMerke(){
+     return motorMerke;
     }
     
     public String toString(){
@@ -44,23 +42,29 @@ public class BatForsikring extends Forsikringer implements Serializable{
     }
     
     // metoden setter egenandel utifra om båten har motor eller ikke.
-    public double beregnEgenAndel(boolean motor){
-        if(motor){
+    public void beregnEgenAndel(){
+        if(type.equals("Motorbåt")){
            egenandel = 3000;
         }
         else{
             egenandel= 2000;
-        }
-        return egenandel; 
+        } 
     }
     
     // beregner premie utifra forsikringssum
     public void beregnPremie(){
         double deltaForsSum = 0.02;
         premie =( forsikringSum*deltaForsSum);
+        
+        if(type.equals("Motorbåt")){
+            double motorTillegg = 300;
+            premie += motorTillegg;
+        }
     }
     
-    public void premieEtterSkade(){
-        
+    // beregner ny premie etter skade
+    public void premieEtterSkade(double gmlPremie){
+        double tillegg = 500;
+        premieTilGodkjenning = gmlPremie + tillegg;  
     }
 }
