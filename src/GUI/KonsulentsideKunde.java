@@ -208,9 +208,15 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         tfÅrsmodell.setPromptText("Årsmodell");
         tfÅrsmodell.setMinWidth(200);
 
-        TextField tfBiltype = new TextField();
-        tfBiltype.setPromptText("Biltype eks (BMW 3-serie)");
-        tfBiltype.setMinWidth(200);
+        TextField tfMerke = new TextField();
+        tfMerke.setPromptText("eks (BMW)");
+        tfMerke.setId("promtfix");
+        tfMerke.setMinWidth(200);
+
+        TextField tfModell = new TextField();
+        tfModell.setPromptText("eks (5-serie 530xd)");
+        tfModell.setId("promtfix");
+        tfModell.setMinWidth(200);
 
         TextField tfKmstand = new TextField();
         tfKmstand.setPromptText("Km-stand");
@@ -274,7 +280,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             int kjøreLengde = 0;
             String regNo = tfRegnr.getText();
             String årsModell = tfÅrsmodell.getText();
-            String bilType = tfBiltype.getText();
+            String bilMerke = tfMerke.getText();
+            String bilModell = tfModell.getText();
             int kmStand = 0;
             try {
                 bonus = convertDou(cbBonus.getValue());
@@ -285,7 +292,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             } catch (NumberFormatException nfe) {
                 System.out.println("Feil tallformat");
             }
-            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, årsModell, bilType, kmStand);
+            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
             kontroll.setBilForsikring(bil, null);
             regLabelBil.setText("Bilforsikring Registrert!");
         });
@@ -293,13 +300,14 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBil.add(tfRegnr, 0, 0);
         gridBil.add(tfKmstand, 0, 1);
         gridBil.add(tfÅrsmodell, 0, 2);
-        gridBil.add(tfBiltype, 0, 3);
-        gridBil.add(cbKjørelengde, 0, 4);
-        gridBil.add(cbBonus, 0, 5);
-        gridBil.add(cbEgenandel, 0, 6);
-        gridBil.add(btnSjekkprisBil, 0, 7);
-        gridBil.add(btnRegBilforsikring, 0, 8);
-        gridBil.add(regLabelBil, 0, 9);
+        gridBil.add(tfMerke, 0, 3);
+        gridBil.add(tfModell, 0, 4);
+        gridBil.add(cbKjørelengde, 0, 5);
+        gridBil.add(cbBonus, 0, 6);
+        gridBil.add(cbEgenandel, 0, 7);
+        gridBil.add(btnSjekkprisBil, 0, 8);
+        gridBil.add(btnRegBilforsikring, 0, 9);
+        gridBil.add(regLabelBil, 0, 10);
 
         //Reise
         Label lbInfo = new Label();
