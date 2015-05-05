@@ -28,10 +28,9 @@ import java.io.SequenceInputStream;
 /**
  * Created by Magnus on 21.04.15.
  */
-public class KundesideBåt implements ComboBoxConverter{
+public class KundesideBåt implements ComboBoxConverter {
 
     private String type;
-
 
     public Pane båtFane(Kontroller kontroll) {
 
@@ -47,7 +46,7 @@ public class KundesideBåt implements ComboBoxConverter{
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(200,260,10,10));//top/right/bottom/left
+        grid.setPadding(new Insets(200, 260, 10, 10));//top/right/bottom/left
 
         GridPane gridleft = new GridPane();
         gridleft.setAlignment(Pos.TOP_CENTER);
@@ -72,7 +71,6 @@ public class KundesideBåt implements ComboBoxConverter{
         gridcenter.setPadding(new Insets(10));
         gridcenter.setPrefHeight(50);
         gridcenter.setPrefWidth(200);
-
 
         //Båt
         Label lbBåt = new Label();
@@ -280,12 +278,11 @@ public class KundesideBåt implements ComboBoxConverter{
         ttMotor.setFromX(500);
         ttMotor.setToX(0);
         ttMotor.setCycleCount(1);
-        
+
         TranslateTransition ttEgenandel = new TranslateTransition(Duration.millis(100), cbEgenandel);
         ttEgenandel.setFromX(500);
         ttEgenandel.setToX(0);
         ttEgenandel.setCycleCount(1);
-
 
         //Registrer knapp & Label
         Label regLabel = new Label();
@@ -313,21 +310,23 @@ public class KundesideBåt implements ComboBoxConverter{
         btnRegBåtforsikring.setOnAction(e -> {
             regLabel.setText("Båtforsikring Registrert!");
 
-            if (
-                    tfRegnr.getId().equals("valid") &&
-                            tfÅrsmodell.getId().equals("valid") &&
-                            tfBåtmodell.getId().equals("valid") &&
-                            tfAntfor.getId().equals("valid") &&
-                            tfMotormerke.getId().equals("valid") &&
-                            tfYtelse.getId().equals("valid") &&
-                            tfVerdi.getId().equals("valid")
-                    ) {
+            if (tfRegnr.getId().equals("valid")
+                    && tfÅrsmodell.getId().equals("valid")
+                    && tfBåtmodell.getId().equals("valid")
+                    && tfAntfor.getId().equals("valid")
+                    && tfMotormerke.getId().equals("valid")
+                    && tfYtelse.getId().equals("valid")
+                    && tfVerdi.getId().equals("valid")) {
                 double verdi = 0;
-                int  = 0;
-
+                int lengdeFot = 0;
+                String regNo = tf
+                String Båttype = type;
+                String modell = tfModell.getText();
+                String årsModell = tfÅrsModell.getText();
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
-                     = Integer.parseInt(tfYtelse.getText());
+                    lengdeFot = Integer.parseInt(tfYtelse.getText());
+                    BatForsikring båt = new BåtForsikring();
                 } catch (NumberFormatException nfe) {
                     System.out.println("Feil tallformat");
                 }
@@ -344,21 +343,21 @@ public class KundesideBåt implements ComboBoxConverter{
         ftBestill.setFromValue(0.0F);
         ftBestill.setToValue(1.0F);
         ftBestill.setCycleCount(1);
-
-        SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfor, ttMotormerke, ttYtelse, ttVerdi, ttEgenandel, ttSeilbåt, ttMotor, ftPris, ftBestill);
+SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfor, ttMotormerke, ttYtelse, ttVerdi, ttEgenandel, ttSeilbåt, ttMotor, ftPris, ftBestill);
         st.play();
+        
 
         grid.add(tfRegnr, 0, 0);
-        grid.add(tfÅrsmodell, 0, 1);
-        grid.add(tfBåtmodell, 0, 2);
-        grid.add(tfAntfor, 0, 3);
-        grid.add(tfMotormerke, 0, 4);
-        grid.add(tfYtelse, 0, 5);
-        grid.add(tfVerdi, 0, 6);
-        grid.add(cbEgenandel, 0, 7);
+        grid.add(tfRegnr, 0, 1);
+        grid.add(tfÅrsmodell, 0, 2);
+        grid.add(tfBåtmodell, 0, 3);
+        grid.add(tfAntfor, 0, 4);
+        grid.add(tfMotormerke, 0, 5);
+        grid.add(tfYtelse, 0, 6);
+        grid.add(tfVerdi, 0, 7);
         grid.add(rbtSeilbåt, 0, 8);
         grid.add(rbtMotorbåt, 0, 9);
-        grid.add(btnSjekkpris, 0, 10);
+        grid.add(btnSjekkpris, 0,10 );
         grid.add(btnRegBåtforsikring, 0, 11);
         grid.add(regLabel, 0, 12);
 
