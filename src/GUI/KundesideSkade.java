@@ -210,18 +210,21 @@ public class KundesideSkade {
             if (forsikringliste == null) {
                 data.clear();
                 data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+                listView.setEditable(false);
             } else {
                 data.setAll(forsikringliste);
+                listView.setEditable(true);
             }
         });
 
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
             int poisnr = -1;
-            if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem().isEmpty()) {
+            skriveOmråde.clear();
+            if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem().isEmpty() == false) {
                 
-                poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
+                poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem().substring(0, 6).replaceAll("[^0-9]","0"));
             }
-
+            
             Forsikringer fors = kontroll.getForsikring(poisnr);
             if (fors != null) {
                 skriveOmråde.setEditable( true );
@@ -245,15 +248,17 @@ public class KundesideSkade {
         // først når konsulenten har godkjent beløpet/ skademeldingen.
         btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
-            if (polisNr == null) {
-                return;
+            if (polisNr != null) {
+                polisNr = polisNr.substring(0, 6);
             }
-            if(dato.after(Calendar.getInstance())){
+            if(dato == null || dato.after(Calendar.getInstance())){
                 lbSkade.setText("Vennligst sett en gyldig dato");
                 return;
             }
             Forsikringer fors = kontroll.getForsikring( Integer.parseInt( polisNr ) );
+            
             try {
+                skriveOmråde.clear();
                 if ( fors instanceof BilForsikring ) {
 
                     BilForsikring f = ( BilForsikring ) fors;
@@ -315,6 +320,7 @@ public class KundesideSkade {
             }
             
             lbSkade.setText("Skademelding er sendt inn");
+            
         });
         
         return borderPane;
