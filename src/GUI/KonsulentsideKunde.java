@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 /**
  * Created by Magnus on 27.04.15.
  */
-public class KonsulentsideKunde implements ComboBoxConverter{
+public class KonsulentsideKunde implements ComboBoxConverter {
 
     public static TextField tfKundenavn = new TextField();
 
@@ -56,10 +56,9 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         });
 
         /*
-        kontroll.registrerBruker(this.getKunde());
-            vindu.close();
+         kontroll.registrerBruker(this.getKunde());
+         vindu.close();
          */
-
         Button btnRegKunde = new Button();
         btnRegKunde.setText("Reg. kunde");
         btnRegKunde.setId("regKunde");
@@ -118,34 +117,44 @@ public class KonsulentsideKunde implements ComboBoxConverter{
             ArrayList<String> forsikringliste = kontroll.getInfoForsikringListe(forsikringComboBox.getItems().indexOf(forsikringComboBox.getValue()));
             if (forsikringComboBox.getValue().equals("Bilforsikring")) {
                 gridBil.setVisible(true);
-            } else gridBil.setVisible(false);
+            } else {
+                gridBil.setVisible(false);
+            }
 
             if (forsikringComboBox.getValue().equals("Reiseforsikring")) {
                 gridReise.setVisible(true);
-            } else gridReise.setVisible(false);
+            } else {
+                gridReise.setVisible(false);
+            }
 
             if (forsikringComboBox.getValue().equals("Båtforsikring")) {
                 gridBåt.setVisible(true);
-            } else gridBåt.setVisible(false);
+            } else {
+                gridBåt.setVisible(false);
+            }
 
             if (forsikringComboBox.getValue().equals("Boligforsikring")) {
                 gridBolig.setVisible(true);
-            } else gridBolig.setVisible(false);
+            } else {
+                gridBolig.setVisible(false);
+            }
 
             if (forsikringComboBox.getValue().equals("Fri.Boligforsikring")) {
                 gridFriBolig.setVisible(true);
-            } else gridFriBolig.setVisible(false);
+            } else {
+                gridFriBolig.setVisible(false);
+            }
 
             if (forsikringComboBox.getValue().equals("Alle")) {
                 gridAlle.setVisible(true);
-            } else gridAlle.setVisible(false);
-
+            } else {
+                gridAlle.setVisible(false);
+            }
 
             if (forsikringliste == null) {
                 navn.clear();
                 navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
-            }
-            else {
+            } else {
                 navn.setAll(forsikringliste);
             }
         });
@@ -162,29 +171,26 @@ public class KonsulentsideKunde implements ComboBoxConverter{
 
         /*
 
-        listView.setItems(navn);
-        listView.setCellFactory(ComboBoxListCell.forListView(navn));
+         listView.setItems(navn);
+         listView.setCellFactory(ComboBoxListCell.forListView(navn));
 
-        TextArea textArea = new TextArea();
-        //listView.setOnMouseClicked(e -> { visElemnt();   });
-        listView.getSelectionModel().selectedItemProperty().addListener(e -> {
+         TextArea textArea = new TextArea();
+         //listView.setOnMouseClicked(e -> { visElemnt();   });
+         listView.getSelectionModel().selectedItemProperty().addListener(e -> {
 
-            Forsikringer s = kontroller.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
-            if (s != null) {
-                textArea.setText(s.toString());
-            }
+         Forsikringer s = kontroller.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
+         if (s != null) {
+         textArea.setText(s.toString());
+         }
 
-        });
+         });
          */
-
-
         gridLeft.add(forsikringComboBox, 0, 0);
         gridLeft.add(listView, 0, 1);
 
         borderPane.setLeft(gridLeft);
 
         //RIGHT --------------------------------------------------------->>
-
         //Bil
         gridBil.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBil.setVgap(10);
@@ -303,9 +309,7 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         gridBil.add(btnRegBilforsikring, 0, 9);
         gridBil.add(regLabelBil, 0, 10);
 
-
         //Reise
-
         Label lbInfo = new Label();
         lbInfo.setText("Velg reiseforsikringstype:");
         lbInfo.setId("lbInfo");
@@ -365,7 +369,7 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         gridReise.add(rbtnNorden, 0, 3);
         gridReise.add(btnBeregn, 0, 4);
         gridReise.add(btnBestill, 0, 5);
-        gridReise.add(lbPrint,0,6);
+        gridReise.add(lbPrint, 0, 6);
 
         gridReise.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridReise.setVgap(20);
@@ -373,13 +377,11 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         gridReise.setAlignment(Pos.CENTER);
         gridReise.setGridLinesVisible(false);
 
-
         //Båt
         gridBåt.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBåt.setVgap(10);
         gridBåt.setHgap(10);
         gridBåt.setAlignment(Pos.CENTER);
-
 
         Label lbbåt = new Label("Test tekst, du har vlagt Båt");
         gridBåt.add(lbbåt, 0, 0);
@@ -425,8 +427,6 @@ public class KonsulentsideKunde implements ComboBoxConverter{
             type = "Motorbåt";
         });
 
-
-
         ComboBox<String> cbBonusB = new ComboBox<>();
         cbBonusB.setEditable(false);
         cbBonusB.setMinWidth(200);
@@ -456,12 +456,10 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         cbEgenandelB.setValue("Velg Egenandel:");
 
         //Registrer knapp & Label
-
         Label regLabelB = new Label();
         regLabelB.setText("");
         regLabelB.setId("regLabel");
         regLabelB.setAlignment(Pos.CENTER);
-
 
         Button btnSjekkprisB = new Button();
         btnSjekkprisB.setText("Sjekk Pris");
@@ -483,8 +481,8 @@ public class KonsulentsideKunde implements ComboBoxConverter{
             try {
                 effekt = Integer.parseInt(tfYtelse.getText());
             } catch (NumberFormatException nfe) {
-                System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n" +
-                        "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
+                System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n"
+                        + "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
             }
 
             kontroll.setBåtForsikring(convertDou(cbBonus.getValue()), convertDou(cbEgenandel.getValue()), tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
@@ -504,9 +502,6 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         gridBåt.add(btnSjekkprisB, 0, 10);
         gridBåt.add(btnRegBåtforsikring, 0, 11);
         gridBåt.add(regLabelB, 0, 12);
-
-
-
 
         //Bolig
         gridBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
@@ -614,7 +609,6 @@ public class KonsulentsideKunde implements ComboBoxConverter{
             int byggeår = 0;
             String mertiale = cbMatriale.getValue();
 
-
             try {
                 kvadrat = Double.parseDouble(tfKvadrat.getText());
                 byggSum = Double.parseDouble(tfByggSum.getText());
@@ -632,13 +626,13 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         gridBolig.add(tfAdresse, 0, 1);
         gridBolig.add(tfByggeår, 0, 2);
         gridBolig.add(tfKvadrat, 0, 3);
-        gridBolig.add(tfByggSum,0,4);
-        gridBolig.add(tfInnboSum,0,5);
-        gridBolig.add(cbBoligtype,0,6);
-        gridBolig.add(cbStandard,0,7);
-        gridBolig.add(cbMatriale,0,8);
+        gridBolig.add(tfByggSum, 0, 4);
+        gridBolig.add(tfInnboSum, 0, 5);
+        gridBolig.add(cbBoligtype, 0, 6);
+        gridBolig.add(cbStandard, 0, 7);
+        gridBolig.add(cbMatriale, 0, 8);
         gridBolig.add(cbleie, 0, 9);
-        gridBolig.add(btnSjekkpris,0,10);
+        gridBolig.add(btnSjekkpris, 0, 10);
         gridBolig.add(btnRegBoligforsikring, 0, 11);
         gridBolig.add(regLabelBo, 0, 12);
 
@@ -646,8 +640,6 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         gridBolig.setVgap(10);
         gridBolig.setHgap(10);
         gridBolig.setAlignment(Pos.CENTER);
-
-
 
         //FritidsBolig
         gridFriBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
@@ -720,8 +712,7 @@ public class KonsulentsideKunde implements ComboBoxConverter{
                 if (cbleieF.isSelected() == true) {
                     leie = "Ja";
                     System.out.println("Ja");
-                }
-                else {
+                } else {
                     leie = "Nei";
                     System.out.println("Nei");
                 }
@@ -756,7 +747,6 @@ public class KonsulentsideKunde implements ComboBoxConverter{
             int byggeår = 0;
             String mertiale = cbMatriale.getValue();
 
-
             try {
                 kvadrat = Double.parseDouble(tfKvadrat.getText());
                 byggSum = Double.parseDouble(tfByggSum.getText());
@@ -774,13 +764,13 @@ public class KonsulentsideKunde implements ComboBoxConverter{
         gridFriBolig.add(tfAdresseF, 0, 1);
         gridFriBolig.add(tfByggeårF, 0, 2);
         gridFriBolig.add(tfKvadratF, 0, 3);
-        gridFriBolig.add(tfByggSumF,0,4);
-        gridFriBolig.add(tfInnboSumF,0,5);
-        gridFriBolig.add(cbBoligtypeF,0,6);
-        gridFriBolig.add(cbStandardF,0,7);
-        gridFriBolig.add(cbMatrialeF,0,8);
+        gridFriBolig.add(tfByggSumF, 0, 4);
+        gridFriBolig.add(tfInnboSumF, 0, 5);
+        gridFriBolig.add(cbBoligtypeF, 0, 6);
+        gridFriBolig.add(cbStandardF, 0, 7);
+        gridFriBolig.add(cbMatrialeF, 0, 8);
         gridFriBolig.add(cbleieF, 0, 9);
-        gridFriBolig.add(btnSjekkprisF,0,10);
+        gridFriBolig.add(btnSjekkprisF, 0, 10);
         gridFriBolig.add(btnRegBoligforsikringF, 0, 11);
         gridFriBolig.add(regLabelF, 0, 12);
 
@@ -802,20 +792,18 @@ public class KonsulentsideKunde implements ComboBoxConverter{
 
         listView.getSelectionModel().selectedItemProperty().addListener(eA -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
-            if(polisNr == null){
-            polisNr = polisNr.substring(0,6);
+            if (polisNr != null) {
+                Forsikringer s = kontroll.getForsikring(Integer.parseInt(polisNr.substring(0, 6).replaceAll("[^0-9]", "0")));
+                if (s != null) {
+                    taLes.setText(s.toString());
+                }
             }
-            Forsikringer s = kontroll.getForsikring(Integer.parseInt(polisNr));
-            if (s != null) {
-                taLes.setText(s.toString());
-            }
+
         });
 
-
         Label lballe = new Label("Test tekst, du har vlagt Alle");
-        gridAlle.add(lballe,0,0);
-        gridAlle.add(taLes,0,1);
-
+        gridAlle.add(lballe, 0, 0);
+        gridAlle.add(taLes, 0, 1);
 
         //Buttons ---------------------------------->
         GridPane gridButtons = new GridPane();
@@ -840,7 +828,6 @@ public class KonsulentsideKunde implements ComboBoxConverter{
 
         //gridButtons.add(btnSlett, 0, 0);
         //gridButtons.add(btnRegForsikring, 1, 0);
-
         GridPane gridRight = new GridPane();
         gridLeft.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridRight.add(gridBil, 0, 0);

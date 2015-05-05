@@ -210,19 +210,26 @@ public class KundesideSkade {
             if (forsikringliste == null) {
                 data.clear();
                 data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+                
             } else {
                 data.setAll(forsikringliste);
+                
             }
         });
 
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
-            int poisnr = -1;
-            if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem().isEmpty()) {
-                
-                poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
-            }
 
-            Forsikringer fors = kontroll.getForsikring(poisnr);
+            skriveOmråde.clear();
+            if (listView.getSelectionModel().getSelectedItem() == null || listView.getSelectionModel().getSelectedItem().isEmpty() == false) {
+                return;
+            }
+            //heter inn en string brukeren har stykketpå og kutter av alt etter 6 tegn og fjerner alle bokstaver og leter etter en forsikring med det som er igjen
+            Forsikringer fors = kontroll.getForsikring(
+                    Integer.parseInt(
+                            listView.getSelectionModel().
+                                    getSelectedItem().
+                                        substring(0, 6).
+                                            replaceAll("[^0-9]","0")));
             if (fors != null) {
                 skriveOmråde.setEditable(true);
                 if (fors instanceof BoligForsikring || fors instanceof FritidsBolig) {
@@ -245,18 +252,18 @@ public class KundesideSkade {
         // først når konsulenten har godkjent beløpet/ skademeldingen.
         btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
-            if (polisNr == null) {
-                return;
+            if (polisNr != null) {
+                polisNr = polisNr.substring(0, 6);
             }
-            if(dato.after(Calendar.getInstance())){
+            if(dato == null || dato.after(Calendar.getInstance())){
                 lbSkade.setText("Vennligst sett en gyldig dato");
                 return;
             }
             Forsikringer fors = kontroll.getForsikring( Integer.parseInt( polisNr ) );
             
-            Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
-                if (fors instanceof BilForsikring) {
+                skriveOmråde.clear();
+                if ( fors instanceof BilForsikring ) {
 
                     BilForsikring f = (BilForsikring) fors;
                     BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
@@ -310,6 +317,7 @@ public class KundesideSkade {
                 lbFeilFormat.setVisible(true);
             }
             lbSkade.setText("Skademelding er sendt inn");
+            
         });
         return borderPane;
     }

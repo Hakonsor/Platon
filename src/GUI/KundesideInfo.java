@@ -94,8 +94,7 @@ public class KundesideInfo implements ComboBoxConverter {
             String polisnr = listView.getSelectionModel().getSelectedItem();
             if (polisnr != null) {
                 polisnr = polisnr.substring(0,6);
-                System.out.println(polisnr);
-                Forsikringer s = kontroller.getForsikring(Integer.parseInt(polisnr));
+                Forsikringer s = kontroller.getForsikring(Integer.parseInt(polisnr.replaceAll("[^0-9]","0")));
                 if (s != null) {
                     textArea.setText(s.toString());
                 }
