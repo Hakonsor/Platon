@@ -801,7 +801,6 @@ public class KonsulentsideKunde implements ComboBoxConverter{
             if (s != null) {
                 taLes.setText(s.toString());
             }
-
         });
 
 

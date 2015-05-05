@@ -133,15 +133,13 @@ public class KundesideSkade {
         });
         rbtBrann.setVisible(false);
 
-
         GridPane radioGrid = new GridPane();
         radioGrid.add(rbtBrann, 0, 0);
         radioGrid.add(rbtRør, 0, 1);
-        radioGrid.add(rbtVann,0, 2);
+        radioGrid.add(rbtVann, 0, 2);
         radioGrid.setVgap(30);
 
         hb.getChildren().addAll(listView, skriveOmråde, radioGrid);
-
 
         Label lbSkadebeløp = new Label();
         lbSkadebeløp.setText("Samlet skadebeløp:");
@@ -219,7 +217,7 @@ public class KundesideSkade {
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
             int poisnr = -1;
             if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem().isEmpty()) {
-                
+
                 poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem());
             }
 
@@ -239,15 +237,14 @@ public class KundesideSkade {
                 skriveOmråde.setEditable(false);
             }
         });
-        
-        
+
         // finner ut hvilken forsikring det er og legger skademeldingen i køen,
         // her beregnes også skadesummen samt nye premier, men premien settes endelig,
         // først når konsulenten har godkjent beløpet/ skademeldingen.
         btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
-            if(polisNr != null){
-            polisNr = polisNr.substring(0,6);
+            if (polisNr != null) {
+                polisNr = polisNr.substring(0, 6);
             }
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
@@ -292,28 +289,28 @@ public class KundesideSkade {
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
-                    
+
                 } else if (fors instanceof ReiseForsikring) {
-                    
+
                     ReiseForsikring f = (ReiseForsikring) fors;
                     ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     f.nyPremieTilGodkjenning();
                     kontroll.addSkade(reise);
                     skriveOmråde.setText(reise.melding());
-                    
+
                 }
 
             } catch (NumberFormatException nfe) {
-                
+
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);
-                
+
             }
-            
+
             lbSkade.setText("Skademelding er sendt inn");
         });
-        
+
         return borderPane;
     }
 }
