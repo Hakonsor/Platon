@@ -35,10 +35,9 @@ import javafx.stage.Stage;
 /**
  * Created by Magnus on 27.04.15.
  *
- * @author Therese
+ * @author Therese, Håkon
  *
- * public static Calendar DateToCalendar(Date date){ Calendar cal =
- * Calendar.getInstance(); cal.setTime(date); return cal; }
+ * 
  */
 public class KundesideSkade {
 
@@ -198,7 +197,6 @@ public class KundesideSkade {
             {
                 LocalDate date = dpDato.getValue();
                 Date dat = Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-                System.err.println("Selected date: " + date);
                 dato = Calendar.getInstance();
                 dato.setTime(dat);
             }
@@ -240,6 +238,11 @@ public class KundesideSkade {
                 skriveOmråde.setEditable(false);
             }
         });
+        
+        
+        // finner ut hvilken forsikring det er og legger skademeldingen i køen,
+        // her beregnes også skadesummen samt nye premier, men premien settes endelig,
+        // først når konsulenten har godkjent beløpet/ skademeldingen.
         btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
             

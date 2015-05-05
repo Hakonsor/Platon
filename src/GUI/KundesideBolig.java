@@ -1,5 +1,6 @@
 package GUI;
 
+import Forsikring.BoligForsikring;
 import Kontroller.Kontroller;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,7 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import Kontroller.Postregister;
-
 
 /**
  * Created by Magnus on 21.04.15.
@@ -144,9 +144,6 @@ public class KundesideBolig {
         btnSjekkpris.setText("Beregn pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
-        btnSjekkpris.setOnAction(e -> {
-            regLabel.setText("Prisen er: " + "getPris()");
-        });
 
         Button btnRegBoligforsikring = new Button();
         btnRegBoligforsikring.setText("Registrer Boligforsikring");
@@ -186,19 +183,62 @@ public class KundesideBolig {
         grid.add(btnRegBoligforsikring, 0, 13);
         grid.add(regLabel, 0, 14);
 
-        borderPane.setCenter(grid); // CENTER
+        grid.add(tfByggeår, 0, 3);
 
-        // lyttere 
+        grid.add(tfKvadrat, 0, 4);
+
+        grid.add(tfByggSum, 0, 5);
+
+        grid.add(tfInnboSum, 0, 6);
+
+        grid.add(cbBoligtype, 0, 7);
+        grid.add(cbStandard, 0, 8);
+        grid.add(cbMatriale, 0, 9);
+
+        grid.add(btnSjekkpris, 1, 13);
+        grid.add(btnRegBoligforsikring, 1, 14);
+
+        grid.add(regLabel, 1, 15);
+
+        borderPane.setCenter(grid); // CENTER
+        
+        //Oppretter en forsikring, slik at man kan sjekke pris. Objektet lagres ikke,
+        //men hvis man trykker på kjøp rett etter vil det opprettes et nytt objekt som lagres
+        btnSjekkpris.setOnAction(e -> {
+             String postNr = tfPostnr.getText();
+            String adresse = tfAdresse.getText();
+            String standard = cbStandard.getValue();
+            String materiale = cbMateriale.getValue();
+            String boligType = cbBoligtype.getValue();
+            int byggeÅr = 0;
+            double kvadrat = 0;
+            double byggSum = 0;
+            double innboSum= 0;
+        try {
+            kvadrat = Double.parseDouble(tfKvadrat.getText());
+            byggSum = Double.parseDouble(tfByggSum.getText());
+            innboSum = Double.parseDouble(tfInnboSum.getText());
+            byggeÅr = Integer.parseInt(tfByggeår.getText());
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat.");
+        }
+         BoligForsikring f = new BoligForsikring(kvadrat,adresse,boligType,byggeÅr,
+                  materiale, standard, byggSum,innboSum);
+           
+            regLabel.setText("Årlig premie: " + f.getPremie() );
+        });
+        //registrerer boligforsikring og setter sen inn i forsikringsregisteret.
         btnRegBoligforsikring.setOnAction(e -> {
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
             String byggeÅr = tfByggeår.getText();
+            String standard = cbStandard.getValue();
+            String materiale = cbMateriale.getValue();
+            String boligType = cbBoligtype.getValue();
             double kvadrat = 0;
             double byggSum = 0;
-            double innboSum= 0;
+            double innboSum = 0;
             int byggeår = 0;
-            String materiale = cbMatriale.getValue();
-            
 
             try {
                 kvadrat = Double.parseDouble(tfKvadrat.getText());
@@ -209,7 +249,7 @@ public class KundesideBolig {
                 System.out.println("Feil tallformat.");
             }
 
-            kontroller.setBoligForsikring(kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
+            kontroller.setBoligForsikring(kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
             regLabel.setText("Boligforsikring registrert!");
 
         });

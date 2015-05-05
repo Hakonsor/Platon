@@ -1,26 +1,24 @@
 package GUI;
 
+import Forsikring.ReiseForsikring;
 import Kontroller.Kontroller;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.*;
-
-import java.awt.*;
-
-import static javafx.geometry.Pos.BOTTOM_CENTER;
-import static javafx.geometry.Pos.TOP_CENTER;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * Created by Magnus on 21.04.15.
  */
 public class KundesideReise {
 
-    String type;
+    String type = "Verden";
 
     public Pane reiseFane(Kontroller kontroller) {
 
@@ -88,6 +86,11 @@ public class KundesideReise {
         btnBestill.setMinWidth(100);
         btnBestill.setId("bestill");
         btnBestill.setOnAction(e -> {
+          ReiseForsikring f=  new ReiseForsikring(); 
+          f.setType(type);
+          f.setPremie(type);
+          kontroller.setReiseForsikring(f);
+          
             lbPrint.setText("Reiseforsikring bestilt!");
         });
 

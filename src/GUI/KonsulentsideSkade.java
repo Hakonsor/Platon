@@ -1,22 +1,23 @@
 package GUI;
 
-import Forsikring.BatForsikring;
 import Forsikring.BilForsikring;
-import Forsikring.BoligForsikring;
-import Forsikring.FritidsBolig;
 import Kontroller.Kontroller;
 import SkadeMeldinger.BilSkadeMelding;
-import javafx.scene.input.MouseEvent;
-import javafx.event.EventHandler;
-
 import SkadeMeldinger.SkadeMelding;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * Created by Magnus on 27.04.15. author@ Therese
@@ -54,7 +55,7 @@ public class KonsulentsideSkade {
         btnVenstre.setFitWidth(32);
 
         ImageView btnHøyre = new ImageView(new Image(right));
-        btnHøyre.setId("btnHoyre");
+        btnHøyre.setId("btnHøyre");
         btnHøyre.setPreserveRatio(true);
         btnHøyre.setFitWidth(32);
 
@@ -115,31 +116,25 @@ public class KonsulentsideSkade {
         borderPane.setCenter(vb); // CENTER
 
         // går tilbake i køen over skademeldinger.
-        btnVenstre.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (skade != null) {
-
-                    skade = kontroll.visForrigeIKø();
-                    tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                    taLes.setText(skade.toString());
-                } else {
-                    taLes.setText("Det er ikke registrert noen flere skademeldinger.");
-                }
+        btnVenstre.setOnMouseClicked((MouseEvent event) -> {
+            if (skade != null) {
+                
+                skade = kontroll.visForrigeIKø();
+                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                taLes.setText(skade.toString());
+            } else {
+                taLes.setText("Det er ikke registrert noen flere skademeldinger.");
             }
         });
 
-        btnHøyre.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (skade != null) {
-
-                    skade = kontroll.visNesteIKø();
-                    tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                    taLes.setText(skade.toString());
-                } else {
-                    taLes.setText("Det er ikke registrert noen nye skademeldinger.");
-                }
+        btnHøyre.setOnMouseClicked((MouseEvent event) -> {
+            if (skade != null) {
+                
+                skade = kontroll.visNesteIKø();
+                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                taLes.setText(skade.toString());
+            } else {
+                taLes.setText("Det er ikke registrert noen nye skademeldinger.");
             }
         });
         
@@ -155,7 +150,9 @@ public class KonsulentsideSkade {
                 skade.getForsikring().nyPremieOk();
                 if(skade instanceof BilSkadeMelding){
                     BilForsikring bil = (BilForsikring)skade.getForsikring();
-                        bil.bonusGodkjent();
+                       System.out.println("Gammel bonus: " + bil.getBonus());
+                    bil.bonusGodkjent();
+                        System.out.println("Ny bonus: " + bil.getBonus());
                 }
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
@@ -167,13 +164,13 @@ public class KonsulentsideSkade {
             if (skade != null) {
                 kontroll.ferdigBehandlet(skade);
                 skade.avvis();
+                taLes.setText("Skaden er avvist.");
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }
 
         });
 
-        borderPane.getStylesheets().add("CSS/konsulentskade.css");
         return borderPane;
     }
 

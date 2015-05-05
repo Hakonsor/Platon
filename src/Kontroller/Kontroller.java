@@ -55,7 +55,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //GUI
-
     public void loginVindu(Stage primaryStage) {
         innLoggetBruker = null;
         try {
@@ -94,12 +93,12 @@ public class Kontroller implements EventHandler<ActionEvent> {
         Registrer regVindu = new Registrer(new Stage(), this);
     }
 
-    //Forsikring
-    public void setForsikring(Forsikringer forsikring) {
+    // setter reiseforsikringen i registeret
+    public void setReiseForsikring(Forsikringer forsikring) {
         forsikringsregister.settInn((Kunde) innLoggetBruker, forsikring);
     }
 
-    //båt forsikring
+    //båt forsikring, oppretter båtforsikring og setter den inn i registeret
     public void setBåtForsikring(double bonus, double egenandel,
             String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person) {
         int fot = 0;
@@ -121,7 +120,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
     }
 
-    // bolig forsikring
+    // bolig forsikring, metode som oppretter boligforsikringer og setter de inn i registeret.
     public void setBoligForsikring(double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
         try {
@@ -134,7 +133,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     }
 
-    //Forsikring
+    //FritidsForsikring, metode som oppretter fritidsbolig forsikringer og setter de inn i registeret.
     public void setFritidsForsikring(double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
         try {
@@ -146,13 +145,13 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
 
     }
-
+// Bilforsikring, oppretter bilforsikringsobjekter og setter de inn i registeret.
     public void setBilForsikring(BilForsikring bil, Person person) {
         Kunde kunde = null;
         try {
             kunde = (Kunde) innLoggetBruker;
 
-              //  forsikringsregister.settInn(kunde,);
+            //  forsikringsregister.settInn(kunde,);
         } catch (ClassCastException cce) {
             System.out.println(" Innlogget kunde er ikke av type kunde");
         }
@@ -182,6 +181,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         return skademeldingregister.visForrigeIKø();
     }
 
+    // metode som henter indexen på køen av skademeldinger til behandling.
     public int visSkadeIndex() {
         return skademeldingregister.visIndex();
     }
@@ -276,7 +276,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     //infosiden
     // Finner alle forsikringene til en gitt kunde, legger i liste, returnerer null hvis kunden ikke har noen forsikring.
-
     public ArrayList<Forsikringer> finnForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
@@ -287,48 +286,47 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
-
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
-        
+
         if (a == null || a.isEmpty()) {
             return null;
         }
         String infoliste = "";
         ArrayList<String> liste = new ArrayList<>();
         Iterator<? extends Forsikringer> iterator = a.iterator();
-        
+
         if (i == 0) {
             while (iterator.hasNext()) {
                 liste.add(Integer.toString(iterator.next().getPoliseNr()));
             }
         } else if (a.get(0) instanceof BilForsikring) {
-             while(iterator.hasNext()) {
-                BilForsikring b = (BilForsikring)iterator.next();
-                infoliste = b.getPoliseNr()+" Regnr: "+b.getRegNr();
+            while (iterator.hasNext()) {
+                BilForsikring b = (BilForsikring) iterator.next();
+                infoliste = b.getPoliseNr() + " Regnr: " + b.getRegNr();
                 liste.add(infoliste);
             }
             return liste;
         } else if (a.get(0) instanceof BatForsikring) {
             while (iterator.hasNext()) {
-                BatForsikring b = (BatForsikring)iterator.next();
-                liste.add(Integer.toString(b.getPoliseNr())+" Regnr: "+b.getRegNr());
+                BatForsikring b = (BatForsikring) iterator.next();
+                liste.add(Integer.toString(b.getPoliseNr()) + " Regnr: " + b.getRegNr());
             }
         } else if (a.get(0) instanceof BoligForsikring) {
             while (iterator.hasNext()) {
-                BoligForsikring b = (BoligForsikring)iterator.next();
-                liste.add(Integer.toString(b.getPoliseNr())+" Adresse: "+b.adresse());
+                BoligForsikring b = (BoligForsikring) iterator.next();
+                liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
             }
         } else if (a.get(0) instanceof FritidsBolig) {
             while (iterator.hasNext()) {
-                FritidsBolig b = (FritidsBolig)iterator.next();
-                liste.add(Integer.toString(b.getPoliseNr())+" Adresse: "+b.adresse());
+                FritidsBolig b = (FritidsBolig) iterator.next();
+                liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
             }
         } else if (a.get(0) instanceof ReiseForsikring) {
             while (iterator.hasNext()) {
-                ReiseForsikring b = (ReiseForsikring)iterator.next();
-                liste.add(Integer.toString(b.getPoliseNr())+" "+b.getType());
+                ReiseForsikring b = (ReiseForsikring) iterator.next();
+                liste.add(Integer.toString(b.getPoliseNr()) + " " + b.getType());
             }
         }
         return liste;

@@ -1,5 +1,6 @@
 package GUI;
 
+import Forsikring.FritidsBolig;
 import Kontroller.Kontroller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -104,7 +105,7 @@ public class KundesideFribolig {
                 "Over gjennomsnitt",
                 "Svært Høy"
         );
-        cbStandard.setValue("Standard:");
+        cbStandard.setValue("Velg Standard:");
 
         ComboBox<String> cbMatriale = new ComboBox<>();
         cbMatriale.setEditable(false);
@@ -116,7 +117,7 @@ public class KundesideFribolig {
                 "Leca",
                 "Laft"
         );
-        cbMatriale.setValue("Byggematriale:");
+        cbMatriale.setValue("Velg Byggmatriale:");
 
         CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
         cbleie.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -139,7 +140,7 @@ public class KundesideFribolig {
         regLabel.setAlignment(Pos.CENTER);
 
         Button btnSjekkpris = new Button();
-        btnSjekkpris.setText("Beregn pris");
+        btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
         btnSjekkpris.setOnAction(e -> {
@@ -147,7 +148,7 @@ public class KundesideFribolig {
         });
 
         Button btnRegFriboligforsikring = new Button();
-        btnRegFriboligforsikring.setText("Registrer Boligforsikring");
+        btnRegFriboligforsikring.setText("Registrer Fritidsboligforsikring");
         btnRegFriboligforsikring.setId("btnRegFriboligforsikring");
         btnRegFriboligforsikring.setMinWidth(200);
 
@@ -187,24 +188,56 @@ public class KundesideFribolig {
         borderPane.setCenter(grid); // CENTER
 
 
-        btnRegFriboligforsikring.setOnAction(e -> {
+        borderPane.setCenter(grid); // CENTER
+        
+        // oppretter en forsikring som kan settes inn i registeret dersom de trykker kjøp rett
+        // etter at de har sjekket prisen, hvis ikke forsvinner objektet.
+        btnSjekkpris.setOnAction(e -> {
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
+            String standard = cbStandard.getValue();
+            String materiale = cbMateriale.getValue();
+            String boligType = cbBoligtype.getValue();
             int byggeÅr = 0;
             double kvadrat = 0;
             double byggSum = 0;
-            double innboSum = 0;
-            try {
-                kvadrat = Double.parseDouble(tfKvadrat.getText());
-                byggSum = Double.parseDouble(tfByggSum.getText());
-                innboSum = Double.parseDouble(tfInnboSum.getText());
-                byggeÅr = Integer.parseInt(tfByggeår.getText());
-            } catch (NumberFormatException nfe) {
-                System.out.println("Feil tallformat.");
-            }
+            double innboSum= 0;
+        try {
+            kvadrat = Double.parseDouble(tfKvadrat.getText());
+            byggSum = Double.parseDouble(tfByggSum.getText());
+            innboSum = Double.parseDouble(tfInnboSum.getText());
+            byggeÅr = Integer.parseInt(tfByggeår.getText());
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat.");
+        }
+         FritidsBolig f = new FritidsBolig(false,
+         kvadrat,adresse, boligType,byggeÅr,
+         materiale, standard, byggSum,innboSum);
+            regLabel.setText("Årlig premie: " + f.getPremie());
+        });
+        
+        // oppretter og setter fritidsboligforsikring inn i registeret
+        btnRegFriboligforsikring.setOnAction(e -> {
+            String postNr = tfPostnr.getText();
+            String adresse = tfAdresse.getText();
+            String standard = cbStandard.getValue();
+            String materiale = cbMateriale.getValue();
+            String boligType = cbBoligtype.getValue();
+            int byggeÅr = 0;
+            double kvadrat = 0;
+            double byggSum = 0;
+            double innboSum= 0;
+        try {
+            kvadrat = Double.parseDouble(tfKvadrat.getText());
+            byggSum = Double.parseDouble(tfByggSum.getText());
+            innboSum = Double.parseDouble(tfInnboSum.getText());
+            byggeÅr = Integer.parseInt(tfByggeår.getText());
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat.");
+        }
 
-            kontroller.setFritidsForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
-            regLabel.setText("Fritidsboligforsikring registrert!");
+        kontroller.setFritidsForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
+        regLabel.setText("Boligforsikring registrert!");
 
         });
 

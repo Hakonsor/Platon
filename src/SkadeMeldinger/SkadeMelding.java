@@ -74,8 +74,8 @@ public abstract class SkadeMelding implements Serializable {
         return skadeBeskrivelse;
     }
     
-    public Calendar getdatoSkade(){
-        return skadeDato;
+    public Calendar getdatoInnmeldt(){
+        return datoInnmeldt;
     }
     
     public void setDatoSkade(Calendar skadeDato){
