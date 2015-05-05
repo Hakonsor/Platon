@@ -19,15 +19,56 @@ import javafx.scene.text.Text;
  */
 public class KundesideInfo implements ComboBoxConverter {
 
-    public static Pane infoFane(Kontroller kontroller) {
-        //Group root = new Group();
+    public Pane infoFane(Kontroller kontroller) {
         BorderPane borderPane = new BorderPane();
-        borderPane.setId("haha");
-        HBox vb = new HBox();
-        vb.setId("border");
-        vb.setPadding(new Insets(25, 25, 25, 25));
-        vb.setSpacing(100);
+        borderPane.setId("borderpane");
+
+        VBox vb = new VBox();
+        vb.setSpacing(10);
         vb.setAlignment(Pos.CENTER);
+
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 40, 10));//top/right/bottom/left
+        grid.setVgap(5);
+        grid.setHgap(10);
+        grid.setAlignment(Pos.CENTER);
+        grid.setGridLinesVisible(false);
+
+        Label lbhei = new Label();
+        lbhei.setId("hei");
+        lbhei.setText("Hei");
+        lbhei.setAlignment(Pos.CENTER_RIGHT);
+
+        Label lbnavn = new Label();
+        lbnavn.setId("navn");
+        lbnavn.setText("Navn Navnesen");
+        lbnavn.setAlignment(Pos.CENTER_LEFT);
+
+        Label lbkundenr = new Label();
+        lbkundenr.setId("kundenr");
+
+        lbkundenr.setText("kundenr: " + "1");
+        lbkundenr.setAlignment(Pos.CENTER);
+
+        Label lbepost = new Label();
+        lbepost.setId("epost");
+        lbepost.setText("fornavn.etternavn@mail.com");
+        lbepost.setAlignment(Pos.CENTER);
+
+        grid.add(lbhei, 0, 0);
+        grid.add(lbnavn, 1, 0);
+        grid.add(lbepost, 1, 1);
+        grid.add(lbkundenr, 1, 2);
+
+
+        HBox hbKnapper = new HBox();
+        hbKnapper.setSpacing(90);
+        hbKnapper.setAlignment(Pos.CENTER);
+
+        ComboBox<String> forsikringComboBox = new ComboBox<>();
+        forsikringComboBox.setEditable(false);
+        forsikringComboBox.getItems().addAll("Alle", "Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
+        forsikringComboBox.setValue("Velg Forsikring:");
 
         Button btnSlett = new Button();
         btnSlett.setText("Slett");
@@ -43,51 +84,41 @@ public class KundesideInfo implements ComboBoxConverter {
         btnStatus.setText("Status");
         btnStatus.setId("status");
         btnStatus.setMaxWidth(200);
-        vb.getChildren().addAll(btnSlett, btnUtbetalinger, btnStatus);
 
-        borderPane.setTop(vb);
+        hbKnapper.getChildren().addAll(forsikringComboBox, btnSlett, btnUtbetalinger, btnStatus);
 
-        //CENTER
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(50, 50, 50, 50));
-        grid.setVgap(50);
-        grid.setHgap(10);
-        grid.setAlignment(Pos.CENTER);
+        HBox hbFelter = new HBox();
+        hbFelter.setSpacing(10);
+        hbFelter.setAlignment(Pos.CENTER);
 
         ObservableList<String> navn = FXCollections.observableArrayList();
         ObservableList<String> data = FXCollections.observableArrayList();
 
-        ComboBox<String> forsikringComboBox = new ComboBox<>();
-        forsikringComboBox.setEditable(false);
-        forsikringComboBox.getItems().addAll("Alle", "Båtforsikring", "Reiseforsikring", "Bilforsikring", "Boligforsikring", "Fri.Boligforsikring");
-        forsikringComboBox.setValue("Velg Forsikring:");
-        
-
         ListView<String> listView = new ListView<>(data);
-        listView.setPrefSize(300, 400);
+        listView.setPrefSize(300, 300);
         listView.setId("listview");
         listView.setEditable(false);
 
-        //navn.addAll("Honda CRV", "Ferrari Enzo", "VW Golf");
         data.addAll("Dobbel klikk for å velge:");
 
         listView.setItems(navn);
         listView.setCellFactory(ComboBoxListCell.forListView(navn));
         TextArea textArea = new TextArea();
-        //listView.setOnMouseClicked(e -> { visElemnt();   });
-        
 
-        textArea.setPrefSize(300, 400);
+        textArea.setPrefSize(300, 300);
         textArea.setId("textarea");
         textArea.setEditable(false);
-
-        grid.add(forsikringComboBox, 0, 0);
-        grid.add(listView, 0, 1);
-        grid.add(textArea, 2, 1);
-
-        borderPane.setCenter(grid);
-
-        borderPane.getStylesheets().add("CSS/kundeInfo.css");
+        
+        btnSlett.setOnAction(e -> {
+            String polisNr = listView.getSelectionModel().getSelectedItem();
+            if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+                polisNr = polisNr.substring(0, 6);
+            }else{
+                return;
+            }
+            kontroller.slettForsikring(Integer.parseInt(polisNr));
+        
+        });
         
         listView.getSelectionModel().selectedItemProperty().addListener(e -> {
 
@@ -113,7 +144,14 @@ public class KundesideInfo implements ComboBoxConverter {
                 navn.setAll(forsikringliste);
             }
         });
-        
+
+        hbFelter.getChildren().addAll(listView, textArea);
+
+        vb.getChildren().addAll(grid, hbKnapper, hbFelter);
+
+        borderPane.setCenter(vb);
+
+        borderPane.getStylesheets().add("CSS/kundeInfo.css");
         return borderPane;
     }
 

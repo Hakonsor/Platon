@@ -211,10 +211,8 @@ public class KundesideSkade {
             if (forsikringliste == null) {
                 data.clear();
                 data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
-                
             } else {
                 data.setAll(forsikringliste);
-                
             }
         });
 
@@ -263,11 +261,8 @@ public class KundesideSkade {
                 lbSkade.setText("Vennligst sett en gyldig dato");
                 return;
             }
-
-            Forsikringer fors = kontroll.getForsikring(
-                    Integer.parseInt(
-                            polisNr));
             
+            Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
                 skriveOmråde.clear();
                 if ( fors instanceof BilForsikring ) {
@@ -326,7 +321,6 @@ public class KundesideSkade {
                 return;
             }
             lbSkade.setText("Skademelding er sendt inn");
-            
         });
         return borderPane;
     }

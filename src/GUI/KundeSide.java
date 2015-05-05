@@ -55,7 +55,7 @@ public class KundeSide {
         tabInfo.setClosable(false);
         KundesideInfo info = new KundesideInfo();
         tabInfo.setOnSelectionChanged(e -> {
-        tabInfo.setContent(KundesideInfo.infoFane(kontroll));
+        tabInfo.setContent(info.infoFane(kontroll));
         });
         //Båtforsikring
         Tab tabBåt = new Tab();

@@ -275,12 +275,11 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return new ArrayList<>(a);
     }
-
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
-
+        
         if (a == null || a.isEmpty()) {
             return null;
         }
@@ -290,34 +289,47 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
         if (i == 0) {
             while (iterator.hasNext()) {
-                liste.add(Integer.toString(iterator.next().getPoliseNr()));
+                Forsikringer f = iterator.next();
+                if(f.getAktiv()){
+                liste.add(Integer.toString(f.getPoliseNr()));
+                }
             }
         } else if (a.get(0) instanceof BilForsikring) {
             while (iterator.hasNext()) {
                 BilForsikring b = (BilForsikring) iterator.next();
-                infoliste = b.getPoliseNr() + " Regnr: " + b.getRegNr();
-                liste.add(infoliste);
+                if(b.getAktiv()){
+                    infoliste = b.getPoliseNr() + " Regnr: " + b.getRegNr();
+                    liste.add(infoliste);
+                }
             }
             return liste;
         } else if (a.get(0) instanceof BatForsikring) {
             while (iterator.hasNext()) {
                 BatForsikring b = (BatForsikring) iterator.next();
-                liste.add(Integer.toString(b.getPoliseNr()) + " Regnr: " + b.getRegNo());
+                if(b.getAktiv()){
+                liste.add(Integer.toString(b.getPoliseNr()) + " Regnr: " + b.getRegNr());
+                }
             }
         } else if (a.get(0) instanceof BoligForsikring) {
             while (iterator.hasNext()) {
                 BoligForsikring b = (BoligForsikring) iterator.next();
+                if(b.getAktiv()){
                 liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
+                }
             }
         } else if (a.get(0) instanceof FritidsBolig) {
             while (iterator.hasNext()) {
                 FritidsBolig b = (FritidsBolig) iterator.next();
+                if(b.getAktiv()){
                 liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
+                }
             }
         } else if (a.get(0) instanceof ReiseForsikring) {
             while (iterator.hasNext()) {
                 ReiseForsikring b = (ReiseForsikring) iterator.next();
+                if(b.getAktiv()){
                 liste.add(Integer.toString(b.getPoliseNr()) + " " + b.getType());
+                }
             }
         }
         return liste;
@@ -334,5 +346,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public Kunde getKunde(String id) {
         return brukerRegister.getKunde(id);
+    }
+
+    public void slettForsikring(int polisnr) {
+        forsikringsregister.fjernForsikring(polisnr);
     }
 }
