@@ -103,21 +103,17 @@ public class KundesideBil implements ComboBoxConverter {
         postSted.setEditable(false);
         postSted.setMinWidth(200);
 
-        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                Postregister register = new Postregister();
-                String poststed = register.getPoststed(tfPostnr.getText());
-                if (poststed == null) {
-                    poststed = "Finnes ikke!";
-                }
-                if (tfPostnr.getText().equals("")) {
-                    postSted.setText("");
-                    postSted.setPromptText("PostSted");
-                } else
-                    postSted.setText(poststed);
+        tfPostnr.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            Postregister register = new Postregister();
+            String poststed = register.getPoststed(tfPostnr.getText());
+            if (poststed == null) {
+                poststed = "Finnes ikke!";
             }
+            if (tfPostnr.getText().equals("")) {
+                postSted.setText("");
+                postSted.setPromptText("PostSted");
+            } else
+                postSted.setText(poststed);
         });
 
         //Bil

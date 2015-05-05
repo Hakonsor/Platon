@@ -120,16 +120,13 @@ public class KundesideFribolig {
         cbMatriale.setValue("Velg Byggmatriale:");
 
         CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
-        cbleie.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (cbleie.isSelected() == true) {
-                    leie = "Ja";
-                    System.out.println("Ja");
-                } else {
-                    leie = "Nei";
-                    System.out.println("Nei");
-                }
+        cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (cbleie.isSelected() == true) {
+                leie = "Ja";
+                System.out.println("Ja");
+            } else {
+                leie = "Nei";
+                System.out.println("Nei");
             }
         });
 
