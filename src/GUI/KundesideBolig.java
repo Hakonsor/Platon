@@ -2,6 +2,7 @@ package GUI;
 
 import Forsikring.BoligForsikring;
 import Kontroller.Kontroller;
+import java.text.DecimalFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -166,8 +167,9 @@ public class KundesideBolig {
         }
          BoligForsikring f = new BoligForsikring(kvadrat,adresse,boligType,byggeÅr,
                   materiale, standard, byggSum,innboSum);
-           
-            regLabel.setText("Årlig premie: " + f.getPremie() );
+           String form = "0.00";
+            DecimalFormat tall = new DecimalFormat(form);
+            regLabel.setText("Årlig premie: " + tall.format(f.getPremie()) + " kr" );
         });
         //registrerer boligforsikring og setter sen inn i forsikringsregisteret.
         btnRegBoligforsikring.setOnAction(e -> {
