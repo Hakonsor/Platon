@@ -121,25 +121,27 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     // bolig forsikring, metode som oppretter boligforsikringer og setter de inn i registeret.
-    public void setBoligForsikring(double kvadrat, String adresse, String boligType, int byggeår,
+    public void setBoligForsikring( boolean utLeie, double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
+        
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
             System.out.println("innlogget bruker");
-            forsikringsregister.settInn(kunde, new BoligForsikring(kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
+            forsikringsregister.settInn(kunde, new BoligForsikring(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
         } catch (ClassCastException cce) {
+            
             System.out.println("Feil med bruker");
         }
 
     }
 
     //FritidsForsikring, metode som oppretter fritidsbolig forsikringer og setter de inn i registeret.
-    public void setFritidsForsikring(double kvadrat, String adresse, String boligType, int byggeår,
+    public void setFritidsForsikring(boolean utLeie, double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
             System.out.println("innlogget bruker");
-            forsikringsregister.settInn(kunde, new FritidsBolig(false, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
+            forsikringsregister.settInn(kunde, new FritidsBolig(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
         } catch (ClassCastException cce) {
             System.out.println("Feil med bruker");
         }

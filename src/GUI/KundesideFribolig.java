@@ -18,7 +18,7 @@ import javafx.scene.layout.Pane;
  */
 public class KundesideFribolig {
 
-    String leie;
+    private boolean utLeie;
 
     public Pane friboligFane(Kontroller kontroller) {
 
@@ -122,13 +122,7 @@ public class KundesideFribolig {
 
         CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
         cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if (cbleie.isSelected() == true) {
-                leie = "Ja";
-                System.out.println("Ja");
-            } else {
-                leie = "Nei";
-                System.out.println("Nei");
-            }
+            utLeie = cbleie.isSelected() == true;
         });
 
         //Registrer knapp & Label
@@ -233,7 +227,7 @@ public class KundesideFribolig {
             System.out.println("Feil tallformat.");
         }
 
-        kontroller.setFritidsForsikring(kvadrat, adresse, boligType, byggeÅr, materiale,standard, byggSum, innboSum);
+        kontroller.setFritidsForsikring(utLeie,kvadrat, adresse, boligType, byggeÅr, materiale,standard, byggSum, innboSum);
         regLabel.setText("Boligforsikring registrert!");
 
         });

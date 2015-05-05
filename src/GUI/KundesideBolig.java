@@ -19,7 +19,7 @@ import Kontroller.Postregister;
  */
 public class KundesideBolig {
 
-    String leie;
+    private boolean utLeie;
 
     public Pane boligFane(Kontroller kontroller) {
         //Group root = new Group();
@@ -124,10 +124,10 @@ public class KundesideBolig {
         CheckBox cbleie = new CheckBox( "Er dette utleiebolig ? ");
         cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (cbleie.isSelected() == true) {
-                leie = "Ja";
-                System.out.println("Ja");
+                utLeie = true;
+                
             } else {
-                leie = "Nei";
+                utLeie = false;
                 System.out.println("Nei");
             }
         });
@@ -203,7 +203,7 @@ public class KundesideBolig {
         } catch (NumberFormatException nfe) {
             System.out.println("Feil tallformat.");
         }
-         BoligForsikring f = new BoligForsikring(kvadrat,adresse,boligType,byggeÅr,
+         BoligForsikring f = new BoligForsikring(utLeie,kvadrat,adresse,boligType,byggeÅr,
                   materiale, standard, byggSum,innboSum);
            String form = "0.00";
             DecimalFormat tall = new DecimalFormat(form);
@@ -231,7 +231,7 @@ public class KundesideBolig {
                 System.out.println("Feil tallformat.");
             }
 
-            kontroller.setBoligForsikring(kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
+            kontroller.setBoligForsikring(utLeie,kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
             regLabel.setText("Boligforsikring registrert!");
 
         });

@@ -29,7 +29,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     public static TextField tfKundenavn = new TextField();
 
     String type;
-    String leie;
+    private boolean utLeie;
 
     public Pane kundeFane(Kontroller kontroll) {
 
@@ -89,7 +89,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 "Reiseforsikring",
                 "Bilforsikring",
                 "Boligforsikring",
-                "Fri.Boligforsikring"
+                "Fritidsbolig"
         );
 
         // Forskjellige forsikringer vises
@@ -169,22 +169,6 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         listView.setItems(navn);
         listView.setCellFactory(ComboBoxListCell.forListView(navn));
 
-        /*
-
-         listView.setItems(navn);
-         listView.setCellFactory(ComboBoxListCell.forListView(navn));
-
-         TextArea textArea = new TextArea();
-         //listView.setOnMouseClicked(e -> { visElemnt();   });
-         listView.getSelectionModel().selectedItemProperty().addListener(e -> {
-
-         Forsikringer s = kontroller.getForsikring(Integer.parseInt(listView.getSelectionModel().getSelectedItem()));
-         if (s != null) {
-         textArea.setText(s.toString());
-         }
-
-         });
-         */
         gridLeft.add(forsikringComboBox, 0, 0);
         gridLeft.add(listView, 0, 1);
 
@@ -567,18 +551,9 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbMatriale.setValue("Byggematriale:");
 
-        CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
-        cbleie.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (cbleie.isSelected() == true) {
-                    leie = "Ja";
-                    System.out.println("Ja");
-                } else {
-                    leie = "Nei";
-                    System.out.println("Nei");
-                }
-            }
+        CheckBox cbleie = new CheckBox(" UtleieBolig? ");
+        cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            utLeie = cbleie.isSelected() == true;
         });
 
         //Registrer knapp & Label
@@ -618,7 +593,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 System.out.println("Feil tallformat.");
             }
 
-            kontroll.setBoligForsikring(kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
+            kontroll.setBoligForsikring(utLeie, kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
             regLabelBo.setText("Boligforsikring registrert!");
         });
 
@@ -709,13 +684,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         cbleieF.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (cbleieF.isSelected() == true) {
-                    leie = "Ja";
-                    System.out.println("Ja");
-                } else {
-                    leie = "Nei";
-                    System.out.println("Nei");
-                }
+                utLeie = cbleie.isSelected() == true;
             }
         });
 
@@ -756,7 +725,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 System.out.println("Feil tallformat.");
             }
 
-            kontroll.setFritidsForsikring(kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
+            kontroll.setFritidsForsikring( utLeie,kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
             regLabelF.setText("FritidsBoligforsikring registrert!");
         });
 
