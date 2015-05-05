@@ -210,22 +210,26 @@ public class KundesideSkade {
             if (forsikringliste == null) {
                 data.clear();
                 data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
-                listView.setEditable(false);
+                
             } else {
                 data.setAll(forsikringliste);
-                listView.setEditable(true);
+                
             }
         });
 
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
-            int poisnr = -1;
+
             skriveOmråde.clear();
-            if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem().isEmpty() == false) {
-                
-                poisnr = Integer.parseInt(listView.getSelectionModel().getSelectedItem().substring(0, 6).replaceAll("[^0-9]","0"));
+            if (listView.getSelectionModel().getSelectedItem() == null || listView.getSelectionModel().getSelectedItem().isEmpty() == false) {
+                return;
             }
-            
-            Forsikringer fors = kontroll.getForsikring(poisnr);
+            //heter inn en string brukeren har stykketpå og kutter av alt etter 6 tegn og fjerner alle bokstaver og leter etter en forsikring med det som er igjen
+            Forsikringer fors = kontroll.getForsikring(
+                    Integer.parseInt(
+                            listView.getSelectionModel().
+                                    getSelectedItem().
+                                        substring(0, 6).
+                                            replaceAll("[^0-9]","0")));
             if (fors != null) {
                 skriveOmråde.setEditable(true);
                 if (fors instanceof BoligForsikring || fors instanceof FritidsBolig) {
