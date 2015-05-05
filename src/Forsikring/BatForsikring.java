@@ -26,7 +26,7 @@ public class BatForsikring extends Forsikringer implements Serializable{
     this.forsikringSum = forSum;
     }
     
-    public String getRegNo(){
+    public String getRegNr(){
         return regNo;
     }
     public int getLendgeFot(){
