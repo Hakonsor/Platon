@@ -114,7 +114,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BatForsikring(bonus, egenandel, motor, fot, ytelse, regNr, type, modell, arsmodell, person));
+            forsikringsregister.settInn(kunde, new BatForsikring(egenandel, motor, fot, ytelse, regNr, type, modell, arsmodell, person));
         } catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
@@ -313,7 +313,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         } else if (a.get(0) instanceof BatForsikring) {
             while (iterator.hasNext()) {
                 BatForsikring b = (BatForsikring) iterator.next();
-                liste.add(Integer.toString(b.getPoliseNr()) + " Regnr: " + b.getRegNr());
+                liste.add(Integer.toString(b.getPoliseNr()) + " Regnr: " + b.getRegNo());
             }
         } else if (a.get(0) instanceof BoligForsikring) {
             while (iterator.hasNext()) {

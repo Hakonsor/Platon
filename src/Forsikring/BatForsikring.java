@@ -12,18 +12,22 @@ import java.io.Serializable;
  *
  * @author Therese, Håkon
  */
-public class BatForsikring extends Kjoretoy implements Serializable{
+public class BatForsikring extends Forsikringer implements Serializable{
     
     private int lendgeFot, motorStyrke;
     private String motorType;
+    private String regNo;
     
-    public BatForsikring( double bonus,double egenandel, String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
-    super( bonus,egenandel, regNr ,type,modell,arsModell); 
+    public BatForsikring(double egenandel, String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
+    super(egenandel, 0); 
     this.lendgeFot = lendgeFot;
     this.motorStyrke = motorStyrke;
     this.motorType = motorType;
     }
     
+    public String getRegNo(){
+        return regNo;
+    }
     public int getLendgeFot(){
      return lendgeFot;
     }
