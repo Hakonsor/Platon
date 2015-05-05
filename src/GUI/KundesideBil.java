@@ -3,16 +3,24 @@ package GUI;
 import Forsikring.BilForsikring;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
+import Kontroller.Postregister;
 import Person.Person;
-import javafx.beans.value.ChangeListener;
+import java.text.DecimalFormat;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import Kontroller.Postregister;
-import java.text.DecimalFormat;
-import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * Created by Magnus on 21.04.15.
