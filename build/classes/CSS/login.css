@@ -21,9 +21,38 @@
 }
 
 #logginnInfo {
-    -fx-text-fill: red;
-        -fx-font-size: 12px;
-        -fx-font-family: Avenir Light;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-family: Avenir Light;
+    -fx-background-color: black;
+}
+
+#tfkundenr {
+      -fx-background-image:url("Bilder/login.png");
+      -fx-background-size: 24px 24px;
+      -fx-background-repeat: no-repeat;
+      -fx-background-position: right center;
+}
+
+#pfKundePassord {
+    -fx-background-image:url("Bilder/lock.png");
+    -fx-background-size: 28px 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+}
+
+#tfbrukernavn {
+      -fx-background-image:url("Bilder/login.png");
+      -fx-background-size: 24px 24px;
+      -fx-background-repeat: no-repeat;
+      -fx-background-position: right center;
+}
+
+#pfbrukernavn {
+    -fx-background-image:url("Bilder/lock.png");
+    -fx-background-size: 28px 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
 }
 
 #tfkundenr, #tfkundenr:focused {
@@ -41,5 +70,26 @@
 #pfbrukernavn, #pfkundenr:focused {
     -fx-prompt-text-fill:darkgray;
 }
+
+#error1 {
+    -fx-prompt-text-fill:red;
+    -fx-border-color: red;
+    -fx-border-width: 1px;
+    -fx-background-image:url("Bilder/login.png");
+    -fx-background-size: 24px 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+}
+
+#error2 {
+    -fx-prompt-text-fill:red;
+    -fx-border-color: red;
+    -fx-border-width: 1px;
+    -fx-background-image:url("Bilder/lock.png");
+    -fx-background-size: 28px 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+}
+
 
 
