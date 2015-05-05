@@ -1,7 +1,6 @@
 package GUI;
 
 import Forsikring.BilForsikring;
-import Forsikring.BoligForsikring;
 import Kontroller.Kontroller;
 import SkadeMeldinger.BatSkadeMelding;
 import SkadeMeldinger.BilSkadeMelding;
@@ -75,9 +74,37 @@ public class KonsulentsideSkade {
         taLes.setEditable(true);
         taLes.setPromptText("");
         taLes.setPrefSize(700, 400);
+        
+        // angir den første skademeldingen som vises.
         if (skade != null) {
-            taLes.setText(skade.toString());
+            // viser den spesifikke skademeldingen
+            if(skade instanceof BilSkadeMelding){
+                   BilSkadeMelding s = (BilSkadeMelding) skade;
+                   taLes.setText(s.melding());
+                }
+                else if(skade instanceof BatSkadeMelding){
+                    BatSkadeMelding s = (BatSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof BoligSkadeMelding){
+                    BoligSkadeMelding s = (BoligSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof FritidsBoligMelding){
+                    FritidsBoligMelding s = (FritidsBoligMelding)skade;
+                    taLes.setText(s.melding());
+                }
+                else if(skade instanceof ReiseSkadeMelding){
+                    ReiseSkadeMelding s = (ReiseSkadeMelding)skade;
+                    taLes.setText(s.melding());
+                }
+    }
+        else{
+            taLes.setText("Ingen registrerte skademeldinger.");
         }
+      
+        
+        
         Label lbPris = new Label();
         lbPris.setText("Skadebeløp:");
         lbPris.setId("lbPris");
