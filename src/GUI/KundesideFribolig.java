@@ -233,7 +233,7 @@ public class KundesideFribolig {
             System.out.println("Feil tallformat.");
         }
 
-        kontroller.setFritidsForsikring(kvadrat, adresse, "hei", byggeÅr, "tre", "dårlig", byggSum, innboSum);
+        kontroller.setFritidsForsikring(kvadrat, adresse, boligType, byggeÅr, materiale,standard, byggSum, innboSum);
         regLabel.setText("Boligforsikring registrert!");
 
         });
