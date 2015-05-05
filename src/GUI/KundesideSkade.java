@@ -191,6 +191,7 @@ public class KundesideSkade {
         grid.add(lbSkade, 0, 9);
 
         borderPane.setCenter(grid); // CENTER
+        
 
         // henter datoen og konverterer den til Calendar
         dpDato.setOnAction((ActionEvent e) -> {
@@ -220,16 +221,16 @@ public class KundesideSkade {
         listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
 
             skriveOmråde.clear();
-            if (listView.getSelectionModel().getSelectedItem() == null || listView.getSelectionModel().getSelectedItem().isEmpty() == false) {
+            String polisNr = listView.getSelectionModel().getSelectedItem();
+            if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+                polisNr = polisNr.substring(0, 6);
+            }else{
+                lbSkade.setText("Vennligst velg en forsikring");
                 return;
             }
             //heter inn en string brukeren har stykketpå og kutter av alt etter 6 tegn og fjerner alle bokstaver og leter etter en forsikring med det som er igjen
             Forsikringer fors = kontroll.getForsikring(
-                    Integer.parseInt(
-                            listView.getSelectionModel().
-                                    getSelectedItem().
-                                        substring(0, 6).
-                                            replaceAll("[^0-9]","0")));
+                    Integer.parseInt(polisNr));
             if (fors != null) {
                 skriveOmråde.setEditable(true);
                 if (fors instanceof BoligForsikring || fors instanceof FritidsBolig) {
@@ -252,14 +253,20 @@ public class KundesideSkade {
         // først når konsulenten har godkjent beløpet/ skademeldingen.
         btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
-            if (polisNr != null) {
+            if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
+            }else{
+                lbSkade.setText("Vennligst velg en forsikring");
+                return;
             }
             if(dato == null || dato.after(Calendar.getInstance())){
                 lbSkade.setText("Vennligst sett en gyldig dato");
                 return;
             }
-            Forsikringer fors = kontroll.getForsikring( Integer.parseInt( polisNr ) );
+
+            Forsikringer fors = kontroll.getForsikring(
+                    Integer.parseInt(
+                            polisNr));
             
             try {
                 skriveOmråde.clear();
@@ -315,6 +322,8 @@ public class KundesideSkade {
             } catch (NumberFormatException nfe) {
                 lbFeilFormat.setText("Kun hele tall.");
                 lbFeilFormat.setVisible(true);
+                lbSkade.setText("Ugyldig skadebeløp");
+                return;
             }
             lbSkade.setText("Skademelding er sendt inn");
             
