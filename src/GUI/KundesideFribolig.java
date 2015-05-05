@@ -5,6 +5,7 @@ import Kontroller.Kontroller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import Kontroller.Postregister;
+import java.text.DecimalFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -140,10 +141,7 @@ public class KundesideFribolig {
         btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
-        btnSjekkpris.setOnAction(e -> {
-            regLabel.setText("Prisen er: " + "getPris()");
-        });
-
+       
         Button btnRegFriboligforsikring = new Button();
         btnRegFriboligforsikring.setText("Registrer Fritidsboligforsikring");
         btnRegFriboligforsikring.setId("btnRegFriboligforsikring");
@@ -190,6 +188,8 @@ public class KundesideFribolig {
         // oppretter en forsikring som kan settes inn i registeret dersom de trykker kjøp rett
         // etter at de har sjekket prisen, hvis ikke forsvinner objektet.
         btnSjekkpris.setOnAction(e -> {
+            String form = "0.00";
+            DecimalFormat tall = new DecimalFormat(form);
             String postNr = tfPostnr.getText();
             String adresse = tfAdresse.getText();
             String standard = cbStandard.getValue();
@@ -210,7 +210,7 @@ public class KundesideFribolig {
          FritidsBolig f = new FritidsBolig(false,
          kvadrat,adresse, boligType,byggeÅr,
          materiale, standard, byggSum,innboSum);
-            regLabel.setText("Årlig premie: " + f.getPremie());
+        regLabel.setText("Årlig premie: " + tall.format(f.getPremie()) + " kr");
         });
         
         // oppretter og setter fritidsboligforsikring inn i registeret

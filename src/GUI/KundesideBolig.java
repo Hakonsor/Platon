@@ -121,7 +121,7 @@ public class KundesideBolig {
         );
         cbMatriale.setValue("Byggematriale:");
 
-        CheckBox cbleie = new CheckBox("Merk om du har utleiemulighet");
+        CheckBox cbleie = new CheckBox( "Er dette utleiebolig ? ");
         cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (cbleie.isSelected() == true) {
                 leie = "Ja";
