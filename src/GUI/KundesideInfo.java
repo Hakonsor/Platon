@@ -34,6 +34,7 @@ public class KundesideInfo implements ComboBoxConverter {
         btnSlett.setId("slett");
         btnSlett.setMaxWidth(200);
 
+
         Button btnUtbetalinger = new Button();
         btnUtbetalinger.setText("Utbetalinger");
         btnUtbetalinger.setId("utbetalinger");
@@ -88,6 +89,17 @@ public class KundesideInfo implements ComboBoxConverter {
         borderPane.setCenter(grid);
 
         borderPane.getStylesheets().add("CSS/kundeInfo.css");
+        
+        btnSlett.setOnAction(e -> {
+            String polisNr = listView.getSelectionModel().getSelectedItem();
+            if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+                polisNr = polisNr.substring(0, 6);
+            }else{
+                return;
+            }
+            kontroller.slettForsikring(Integer.parseInt(polisNr));
+        
+        });
         
         listView.getSelectionModel().selectedItemProperty().addListener(e -> {
 

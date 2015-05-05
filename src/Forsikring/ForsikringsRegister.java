@@ -157,5 +157,10 @@ public class ForsikringsRegister implements Serializable {
         return null;
     }// end of method finnForsPolise
 
+    public void fjernForsikring(int poliseNr) {
+        finnForsPolise(poliseNr).setInaktiv();
+        System.out.println(finnForsPolise(poliseNr).aktiv);
+    }
+
 }// end of class ForsikringsRegister
 

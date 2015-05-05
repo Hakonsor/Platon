@@ -211,7 +211,6 @@ public class KundesideSkade {
             if (forsikringliste == null) {
                 data.clear();
                 data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
-                
             } else {
                 data.setAll(forsikringliste);
                 
@@ -265,8 +264,7 @@ public class KundesideSkade {
             }
 
             Forsikringer fors = kontroll.getForsikring(
-                    Integer.parseInt(
-                            polisNr));
+                    Integer.parseInt(polisNr));
             
             try {
                 skriveOmråde.clear();
