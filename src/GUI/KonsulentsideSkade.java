@@ -204,7 +204,7 @@ public class KonsulentsideSkade {
                     taLes.setText(s.melding());
                 }
                 tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-                taLes.setText(skade.toString());
+               
             } else {
                 taLes.setText("Det er ikke registrert noen nye skademeldinger.");
             }

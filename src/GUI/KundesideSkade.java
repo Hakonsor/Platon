@@ -264,7 +264,7 @@ public class KundesideSkade {
             
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
-                skriveOmråde.clear();
+                //skriveOmråde.clear();
                 if ( fors instanceof BilForsikring ) {
 
                     BilForsikring f = (BilForsikring) fors;
