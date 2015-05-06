@@ -57,15 +57,14 @@ public class Kunde extends Bruker implements Serializable {
     public String getNøkkel() {
         return Integer.toString(kundeNr);
     }
-
     
     public int getKundeNr(){
         return kundeNr;
     }
     
-
     @Override
     public boolean sjekkPassord(String passord) {
+        System.out.println(this.passord +""+passord);
         return (this.passord.equals(passord) && aktiv);
     }
 

@@ -26,7 +26,7 @@ import java.util.LinkedList;
         this.etternavn = etternavn;
         this.passord = passord;
     }
-    public Bruker( String fornavn, String etternavn,String personNr,String gateAdr, String postNr, String passord, String telefon){
+    public Bruker( String fornavn, String etternavn, String personNr, String gateAdr, String postNr, String passord, String telefon){
       super(fornavn, etternavn, personNr, gateAdr, postNr, telefon);
         this.passord = passord;
        // opprettetDato = Calendar.getInstance();
@@ -35,8 +35,10 @@ import java.util.LinkedList;
         //forsikringListe.add(forsikring);
     
     public boolean sjekkPassord(String passord){
+        System.out.println(this.passord +" "+passord);
     return (this.passord.equals(passord));
     }
+    
     abstract public String getNøkkel();
     
         /*

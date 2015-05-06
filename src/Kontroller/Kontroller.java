@@ -19,6 +19,7 @@ import GUI.Registrer;
 import GUI.*;
 import Person.Bruker;
 import Person.BrukerRegister;
+import Person.Konsulent;
 import Person.Kunde;
 import Person.Person;
 import SkadeMeldinger.SkadeMelding;
@@ -47,6 +48,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     private BrukerRegister brukerRegister = new BrukerRegister();
     private Bruker innLoggetBruker = null;
+    private Bruker innloggetKonsulent = null;
     private SkadeMeldingRegister skademeldingregister = new SkadeMeldingRegister();
     private ForsikringsRegister forsikringsregister = new ForsikringsRegister();
 
@@ -95,15 +97,13 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     // setter reiseforsikringen i registeret
     public void setReiseForsikring(Forsikringer forsikring) {
-        try{
-            Kunde kunde = ( Kunde ) innLoggetBruker;
-            forsikringsregister.settInn(kunde, forsikring );
-        }
-        catch( ClassCastException cce ){
+        try {
+            Kunde kunde = (Kunde) innLoggetBruker;
+            forsikringsregister.settInn(kunde, forsikring);
+        } catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
     }
-    
 
     //båt forsikring, oppretter båtforsikring og setter den inn i registeret
     public void setBåtForsikring(BatForsikring båt) {
@@ -191,25 +191,28 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     //Bruker
-    public void setInnloggetBruker(String nokkel) {
-        innLoggetBruker = brukerRegister.getKunde(nokkel);
+    public void setInnloggetBruker(String nøkkel) {
+        Bruker bruker = brukerRegister.getBruker(nøkkel);
+        if (bruker instanceof Kunde) {
+            innLoggetBruker = brukerRegister.getKunde(nøkkel);
+        } else if (bruker instanceof Konsulent){
+            innloggetKonsulent = brukerRegister.getKonsulent(nøkkel);
+        }
+
     }
 
     public Bruker getInnloggetBruker() {
         return innLoggetBruker;
+    }
+    public Bruker getInnloggetKonsulent() {
+        return innloggetKonsulent;
     }
 
     public Bruker finnBruker(String Bruker) {
         return brukerRegister.getBruker(Bruker);
     }
 
-    public boolean sjekkPassord(String bruker, String passord) {
-        Bruker sjekkBruker = finnBruker(bruker);
-        if (sjekkBruker == null) {
-            return false;
-        }
-        return sjekkBruker.sjekkPassord(passord);
-    }
+
 
     //Kunde
     public void registrerBruker(Bruker b) {
@@ -366,24 +369,28 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public double finnInntekterReiseFors(int aar) {
         return forsikringsregister.finnInntekterReiseFors(aar);
     }
-    
+
     // finner Inntekter boligforsikring
     public double finnInntekterBoligForsikring(int aar) {
         return forsikringsregister.finnInntekterReiseFors(aar);
     }
 //  finner inntekter fritidsbolig
+
     public double finnInntekterFritidsBolig(int aar) {
         return forsikringsregister.finnInntekterFritidsBolig(aar);
     }
 // finner inntekter båt
+
     public double finnInntekterBåt(int aar) {
         return forsikringsregister.finnInntekterBåt(aar);
     }
 // finner inntekter bil
+
     public double finnInntekterBil(int aar) {
         return forsikringsregister.finnInntekterBil(aar);
     }
 // finner den totale inntekten for alle forsikringer
+
     public double finnInntekterAlleForsikringer(int aar) {
         return forsikringsregister.finnInntekterAlleFors(aar);
     }
@@ -419,6 +426,26 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public double finnUtgiftTotal(int år) {
         return skademeldingregister.finnUtgiftTotal(år);
     }
+
+    public boolean sjekkPassordKunde(String bruker, String passord) {
+        Bruker sjekkBruker = finnBruker(bruker);
+        if (sjekkBruker == null || sjekkBruker instanceof Konsulent) {
+            return false;
+        }
+        return sjekkBruker.sjekkPassord(passord);
+    }
+
+    public boolean sjekkPassordKonsulent(String bruker, String passord) {
+        Bruker sjekkBruker = finnBruker(bruker);
+        if (sjekkBruker == null || sjekkBruker instanceof Kunde) {
+            System.out.println(sjekkBruker+""+sjekkBruker.sjekkPassord(passord));
+            return false;
+            
+        }
+        System.out.println("konsulentS");
+        return sjekkBruker.sjekkPassord(passord);
+    }
+
 
 }// end of class kontroller
 

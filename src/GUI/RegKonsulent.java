@@ -23,7 +23,6 @@ import static javafx.geometry.Pos.TOP_CENTER;
 public class RegKonsulent {
 
     private final String LoginBilde = "Bilder/add_user.png";
-
     private final Button btnRegKonsulent;
     private final Label nyKonsulent;
     private final TextField fornavn;
@@ -41,6 +40,7 @@ public class RegKonsulent {
         if(velgpassord.getText().equals(gjentapassord.getText())){
             return new Konsulent(brukernavn.getText(), velgpassord.getText(), fornavn.getText(), etternavn.getText());
         } else {
+            System.out.println("feilpassord");
             //pop opp melding hvis ordene ikke er like
         }
         return null;
@@ -101,7 +101,7 @@ public class RegKonsulent {
         btnRegKonsulent.setId("btNyKunde");
         btnRegKonsulent.setMaxWidth(200);
         btnRegKonsulent.setOnAction(e -> {
-              kontroll.registrerBruker(this.getKonsulent());
+            kontroll.registrerBruker(this.getKonsulent());
             vindu.close();
         });
 

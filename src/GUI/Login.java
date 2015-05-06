@@ -1,6 +1,5 @@
 package GUI;
 
-
 import Kontroller.Kontroller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +35,7 @@ import javax.xml.soap.Node;
  * Created by Magnus on 18.04.15.
  */
 public class Login {
+
     private String LoginBilde = "Bilder/user.png";
 
     private Stage primaryStage;
@@ -45,11 +45,11 @@ public class Login {
     private Button btnKonsulentLogginn;
     private Button btnKundeLogginn;
     private Button btnNyKonsulent;
-    
+
     TextField tfKundeBrukernavn;
-    PasswordField pfKundePassord; 
+    PasswordField pfKundePassord;
     TextField tfKonsulentBrukernavn;
-    PasswordField pfKonsulentPassord; 
+    PasswordField pfKonsulentPassord;
 
     public Login(Stage primaryStage, Kontroller k) throws Exception {
 
@@ -77,13 +77,11 @@ public class Login {
         primaryStage.show();
     }
 
-    private void closeLogin(){
+    private void closeLogin() {
         primaryStage.hide();
     }
 
-   
-    private Pane kundeFane(){
-
+    private Pane kundeFane() {
 
         final Rectangle rect1 = new Rectangle(10, 10, 100, 100);
         rect1.setArcHeight(50);
@@ -189,7 +187,7 @@ public class Login {
         GridPane.setHalignment(btnNyKunde, HPos.CENTER);
         try {
             btnNyKunde.setOnAction(e -> kontroll.regVindu());
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -198,16 +196,14 @@ public class Login {
         btnKundeLogginn.setMaxWidth(200);
         GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
 
-
         try {
             btnKundeLogginn.setOnAction(e -> {
-                if(kontroll.sjekkPassord(tfKundeBrukernavn.getText(), pfKundePassord.getText())){
+                if (kontroll.sjekkPassordKunde(tfKundeBrukernavn.getText(), pfKundePassord.getText())) {
                     primaryStage.close();
                     kontroll.kundeSide(primaryStage);
                     kontroll.setInnloggetBruker(tfKundeBrukernavn.getText());
 
-                }
-                else if (!logginnInfo.isVisible()) {
+                } else if (!logginnInfo.isVisible()) {
                     ttpShake.play();
                     ttbShake.play();
                     logginnInfo.setText("Feil passord/brukernavn");
@@ -216,10 +212,9 @@ public class Login {
                     pfKundePassord.setId("error2");
                 }
             });
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
         grid.add(loginImg, 0, 0);
         grid.add(velkommen, 0, 1);
@@ -269,9 +264,7 @@ public class Login {
         pfKonsulentPassord.setMaxWidth(200);
         GridPane.setHalignment(pfKonsulentPassord, HPos.CENTER);
 
-
         //Animasjon
-
         TranslateTransition ttpShake = new TranslateTransition(Duration.millis(100), pfKonsulentPassord);
         ttpShake.setFromX(0);
         ttpShake.setToX(30);
@@ -290,7 +283,6 @@ public class Login {
         ttbShake.setToX(0);
         ttbShake.setCycleCount(3);
 
-
         Label logginnInfo = new Label();
         logginnInfo.setText("");
         logginnInfo.setVisible(false);
@@ -301,25 +293,20 @@ public class Login {
         btnKonsulentLogginn.setId("btnlogginn");
         btnKonsulentLogginn.setMaxWidth(200);
         GridPane.setHalignment(btnKonsulentLogginn, HPos.CENTER);
-        try {
-            btnKonsulentLogginn.setOnAction(e -> {
-                if (kontroll.sjekkPassord(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
-                    primaryStage.close();
-                    kontroll.konsulentSide(primaryStage);
-                    kontroll.setInnloggetBruker(tfKonsulentBrukernavn.getText());
-                }
-                else if (!logginnInfo.isVisible()) {
-                    ttpShake.play();
-                    ttbShake.play();
-                    logginnInfo.setText("Feil passord/brukernavn");
-                    logginnInfo.setVisible(true);
-                    tfKonsulentBrukernavn.setId("error1");
-                    pfKonsulentPassord.setId("error2");
-                }
-            });
-        }catch (Exception ex) {
-            Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        btnKonsulentLogginn.setOnAction(e -> {
+            if (kontroll.sjekkPassordKonsulent(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
+                primaryStage.close();
+                kontroll.konsulentSide(primaryStage);
+                kontroll.setInnloggetBruker(tfKonsulentBrukernavn.getText());
+            } else if (!logginnInfo.isVisible()) {
+                ttpShake.play();
+                ttbShake.play();
+                logginnInfo.setText("Feil passord/brukernavn");
+                logginnInfo.setVisible(true);
+                tfKonsulentBrukernavn.setId("error1");
+                pfKonsulentPassord.setId("error2");
+            }
+        });
 
         btnNyKonsulent = new Button("Ny Konsulent");
         btnNyKonsulent.setId("btNyKonsulent");
@@ -327,7 +314,7 @@ public class Login {
         GridPane.setHalignment(btnNyKonsulent, HPos.CENTER);
         try {
             btnNyKonsulent.setOnAction(e -> kontroll.regKonsulent());
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -340,37 +327,36 @@ public class Login {
         grid.add(btnKonsulentLogginn, 0, 8);
         grid.add(btnNyKonsulent, 0, 9);
 
-
         return grid;
     }
 
-
-
-    public Button getKnappKonsulentLogginn(){
+    public Button getKnappKonsulentLogginn() {
         return btnKonsulentLogginn;
     }
-    public Button getKnappKundeLogginn(){
-        return btnKundeLogginn;  
+
+    public Button getKnappKundeLogginn() {
+        return btnKundeLogginn;
     }
-    public Button getKnappNyKonsulent(){
+
+    public Button getKnappNyKonsulent() {
         return btnNyKonsulent;
-    }    
-    public String getKunde(){
+    }
+
+    public String getKunde() {
         return tfKundeBrukernavn.getText();
     }
-    public String getPassordKunde(){
+
+    public String getPassordKunde() {
         return pfKundePassord.getText();
-    } 
-    public String getKunsulent(){
+    }
+
+    public String getKunsulent() {
         return tfKonsulentBrukernavn.getText();
     }
-    public String getKunsulentPassord(){
+
+    public String getKunsulentPassord() {
         return pfKonsulentPassord.getText();
-    } 
-    
-    
-
-
+    }
 
 }//End of class
 
