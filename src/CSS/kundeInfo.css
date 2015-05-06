@@ -17,3 +17,57 @@
 #kundenr {
     -fx-font: 16px "Myriad";
 }
+
+#slett {
+    -fx-background-color: rgb(166, 133, 114);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#slett:hover, #slett:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#velg {
+    -fx-background-color: rgb(166, 133, 114);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#velg:hover, #velg:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#utbetalinger {
+    -fx-background-color: rgb(166, 133, 114);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#utbetalinger:hover, #utbetalinger:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#status {
+    -fx-background-color: rgb(166, 133, 114);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#status:hover, #status:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#listview {
+    -fx-border-color: rgb(166, 133, 114);
+    -fx-border-width: 2px;
+}
+
+#textarea {
+    -fx-border-color: rgb(166, 133, 114);
+    -fx-border-width: 2px;
+}
