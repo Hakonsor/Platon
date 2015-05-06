@@ -67,8 +67,6 @@ public abstract class SkadeMelding implements Serializable {
     public void avvis(){
         utbetaling = 0;
     }
-    
-    // henter summen av alle innbetalinger 
    
      public String getSkadeBeskrivelse(){ 
         return skadeBeskrivelse;

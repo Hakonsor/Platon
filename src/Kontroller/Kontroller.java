@@ -95,8 +95,15 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     // setter reiseforsikringen i registeret
     public void setReiseForsikring(Forsikringer forsikring) {
-        forsikringsregister.settInn((Kunde) innLoggetBruker, forsikring);
+        try{
+            Kunde kunde = ( Kunde ) innLoggetBruker;
+            forsikringsregister.settInn(kunde, forsikring );
+        }
+        catch( ClassCastException cce ){
+            System.out.println("Innlogget kunde er ikke av type kunde");
+        }
     }
+    
 
     //båt forsikring, oppretter båtforsikring og setter den inn i registeret
     public void setBåtForsikring(BatForsikring båt) {

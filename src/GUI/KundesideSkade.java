@@ -306,10 +306,14 @@ public class KundesideSkade {
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
+                    
                 } else if (fors instanceof ReiseForsikring) {
+                    
                     ReiseForsikring f = (ReiseForsikring) fors;
                     ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                    reise.setForsikring(f);
                     reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
+                    f.premieTilGodkjenning();
                     kontroll.addSkade(reise);
                     skriveOmråde.setText(reise.melding());
                 }
