@@ -48,28 +48,31 @@ public class KundeSide {
         borderPane.setTop(menuBar);
 
         TabPane tabPane = new TabPane();
+        tabPane.setId("tabpane");
 
         //Info
         Tab tabInfo = new Tab();
+        tabInfo.setId("tabinfo");
         tabInfo.setText("Min side");
         tabInfo.setClosable(false);
         KundesideInfo info = new KundesideInfo();
         tabInfo.setOnSelectionChanged(e -> {
         tabInfo.setContent(info.infoFane(kontroll));
         });
+
         //Båtforsikring
         Tab tabBåt = new Tab();
+        tabBåt.setId("tabbat");
         tabBåt.setText("Båtforsikring");
         tabBåt.setClosable(false);
         KundesideBåt båt = new KundesideBåt();
         tabBåt.setOnSelectionChanged(e -> {
         tabBåt.setContent(båt.båtFane(kontroll));
         });
-        
-       
 
         //Reiseforsikring
         Tab tabReise = new Tab();
+        tabReise.setId("tabreise");
         tabReise.setText("Reiseforsikring");
         tabReise.setClosable(false);
         KundesideReise reise = new KundesideReise();
@@ -79,6 +82,7 @@ public class KundeSide {
 
         //Bilforsikring
         Tab tabBil = new Tab();
+        tabBil.setId("tabbil");
         tabBil.setText("Bilforsikring");
         tabBil.setClosable(false);
         KundesideBil bil = new KundesideBil();
@@ -88,6 +92,7 @@ public class KundeSide {
 
         //Boligforsikring
         Tab tabBolig = new Tab();
+        tabBolig.setId("tabbolig");
         tabBolig.setText("Boligforsikring");
         tabBolig.setClosable(false);
         KundesideBolig bolig = new KundesideBolig();
@@ -97,6 +102,7 @@ public class KundeSide {
 
         //Fri.Boligforsikring
         Tab tabFriBolig = new Tab();
+        tabFriBolig.setId("tabfri");
         tabFriBolig.setText("Fritidsboligforsikring");
         tabFriBolig.setClosable(false);
         KundesideFribolig fribolig = new KundesideFribolig();
@@ -105,6 +111,7 @@ public class KundeSide {
         });
         //SkadeMelding
         Tab tabSkade = new Tab();
+        tabSkade.setId("tabskade");
         tabSkade.setText("Skademelding");
         tabSkade.setClosable(false);
         KundesideSkade skade = new KundesideSkade();

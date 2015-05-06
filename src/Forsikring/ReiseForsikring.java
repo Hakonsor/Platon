@@ -55,9 +55,9 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
     public String toString() {
         String s;
         s = "ReiseForsikring:" + "\nForsikringen gjelder for: " + type
-                + "PoliseNr: " + poliseNr
-                + "Gjelder fra: " + startDato + "\ttil: " + utløpsDato
-                + "Forsikringsum: " + forsikringSum;
+                + "\nPoliseNr: " + poliseNr
+                + "\nGjelder fra: " + startDato + "\ttil: " + utløpsDato
+                + "\nForsikringsum: " + forsikringSum;
         return s;
     }
 

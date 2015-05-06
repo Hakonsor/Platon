@@ -258,7 +258,7 @@ public class KundesideBåt implements ComboBoxConverter {
         ToggleGroup båtType = new ToggleGroup();
         RadioButton rbtSeilbåt = new RadioButton("Seilbåt");
         rbtSeilbåt.setToggleGroup(båtType);
-        rbtSeilbåt.setSelected(true);
+        rbtSeilbåt.setSelected(false);
         rbtSeilbåt.setOnAction(e -> {
             type = "Seilbåt";
         });
@@ -270,7 +270,7 @@ public class KundesideBåt implements ComboBoxConverter {
 
         RadioButton rbtMotorbåt = new RadioButton("Motorbåt");
         rbtMotorbåt.setToggleGroup(båtType);
-        rbtMotorbåt.setSelected(true);
+        rbtMotorbåt.setSelected(false);
         rbtMotorbåt.setOnAction(e -> {
             type = "Motorbåt";
         });
@@ -338,7 +338,8 @@ public class KundesideBåt implements ComboBoxConverter {
         ftBestill.setFromValue(0.0F);
         ftBestill.setToValue(1.0F);
         ftBestill.setCycleCount(1);
-SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfot, ttMotormerke, ttYtelse, ttVerdi, ttSeilbåt, ttMotor, ftPris, ftBestill);
+
+        SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfot, ttMotormerke, ttYtelse, ttVerdi, ttSeilbåt, ttMotor, ftPris, ftBestill);
         st.play();
         
 

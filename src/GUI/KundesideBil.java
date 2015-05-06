@@ -6,6 +6,10 @@ import Kontroller.Kontroller;
 import Kontroller.Postregister;
 import Person.Person;
 import java.text.DecimalFormat;
+
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -21,6 +25,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * Created by Magnus on 21.04.15.
@@ -33,18 +38,6 @@ public class KundesideBil implements ComboBoxConverter {
         BorderPane borderPane = new BorderPane();
         borderPane.setId("borderpane");
 
-        HBox vb2 = new HBox();
-        vb2.setPadding(new Insets(25, 25, 0, 25));
-        vb2.setSpacing(100);
-        vb2.setAlignment(Pos.CENTER);
-
-        Label overskrift = new Label();
-        overskrift.setText("Her registrerer du bilforsikring");
-        overskrift.setId("overskrift");
-        vb2.getChildren().addAll(overskrift);
-
-        borderPane.setTop(vb2); //TOP
-
         HBox hb = new HBox();
         hb.setAlignment(Pos.CENTER);
         hb.setSpacing(10);
@@ -53,20 +46,14 @@ public class KundesideBil implements ComboBoxConverter {
         gridBil.setAlignment(Pos.TOP_CENTER);
         gridBil.setHgap(10);
         gridBil.setVgap(10);
-        gridBil.setPadding(new Insets(3));
+        //gridBil.setPadding(new Insets(3));
 
         GridPane gridPerson = new GridPane();
         gridPerson.setAlignment(Pos.TOP_CENTER);
         gridPerson.setHgap(10);
         gridPerson.setVgap(10);
-        gridPerson.setPadding(new Insets(3));
+        //gridPerson.setPadding(new Insets(3));
         gridPerson.setVisible(false);
-
-        GridPane gridcenter = new GridPane();
-        gridcenter.setAlignment(Pos.CENTER);
-        gridcenter.setHgap(10);
-        gridcenter.setVgap(10);
-        gridcenter.setPadding(new Insets(10));
 
         hb.getChildren().addAll(gridBil, gridPerson);
 
@@ -137,25 +124,50 @@ public class KundesideBil implements ComboBoxConverter {
         tfRegnr.setId("promtfix");
         tfRegnr.setMinWidth(200);
 
+        TranslateTransition ttRegnr = new TranslateTransition(Duration.millis(100), tfRegnr);
+        ttRegnr.setFromX(800);
+        ttRegnr.setToX(0);
+        ttRegnr.setCycleCount(1);
+
         TextField tfÅrsmodell = new TextField();
         tfÅrsmodell.setPromptText("Årsmodell");
         tfÅrsmodell.setId("promtfix");
         tfÅrsmodell.setMinWidth(200);
+
+        TranslateTransition ttÅrsmodell = new TranslateTransition(Duration.millis(100), tfÅrsmodell);
+        ttÅrsmodell.setFromX(800);
+        ttÅrsmodell.setToX(0);
+        ttÅrsmodell.setCycleCount(1);
 
         TextField tfMerke = new TextField();
         tfMerke.setPromptText("eks (BMW)");
         tfMerke.setId("promtfix");
         tfMerke.setMinWidth(200);
 
+        TranslateTransition ttMerke = new TranslateTransition(Duration.millis(100), tfMerke);
+        ttMerke.setFromX(800);
+        ttMerke.setToX(0);
+        ttMerke.setCycleCount(1);
+
         TextField tfModell = new TextField();
         tfModell.setPromptText("eks (5-serie 530xd)");
         tfModell.setId("promtfix");
         tfModell.setMinWidth(200);
 
+        TranslateTransition ttModell = new TranslateTransition(Duration.millis(100), tfModell);
+        ttModell.setFromX(800);
+        ttModell.setToX(0);
+        ttModell.setCycleCount(1);
+
         TextField tfKmstand = new TextField();
         tfKmstand.setPromptText("Km-stand");
         tfKmstand.setId("promtfix");
         tfKmstand.setMinWidth(200);
+
+        TranslateTransition ttKmstand = new TranslateTransition(Duration.millis(100), tfKmstand);
+        ttKmstand.setFromX(800);
+        ttKmstand.setToX(0);
+        ttKmstand.setCycleCount(1);
 
         ComboBox<String> cbKjørelengde = new ComboBox<>();
         cbKjørelengde.setEditable(false);
@@ -168,6 +180,11 @@ public class KundesideBil implements ComboBoxConverter {
                 "Kjørelengde: Ubegrenset"
         );
         cbKjørelengde.setValue("Velg Kjørelengde:");
+
+        TranslateTransition ttKjørelengde = new TranslateTransition(Duration.millis(100), cbKjørelengde);
+        ttKjørelengde.setFromX(800);
+        ttKjørelengde.setToX(0);
+        ttKjørelengde.setCycleCount(1);
 
         ComboBox<String> cbBonus = new ComboBox<>();
         cbBonus.setEditable(false);
@@ -187,6 +204,11 @@ public class KundesideBil implements ComboBoxConverter {
         );
         cbBonus.setValue("Velg Bonus:");
 
+        TranslateTransition ttBonus = new TranslateTransition(Duration.millis(100), cbBonus);
+        ttBonus.setFromX(800);
+        ttBonus.setToX(0);
+        ttBonus.setCycleCount(1);
+
         ComboBox<String> cbEgenandel = new ComboBox<>();
         cbEgenandel.setEditable(false);
         cbEgenandel.setMinWidth(200);
@@ -197,11 +219,21 @@ public class KundesideBil implements ComboBoxConverter {
         );
         cbEgenandel.setValue("Velg Egenandel:");
 
+        TranslateTransition ttEgenandel = new TranslateTransition(Duration.millis(100), cbEgenandel);
+        ttEgenandel.setFromX(800);
+        ttEgenandel.setToX(0);
+        ttEgenandel.setCycleCount(1);
+
         //Registrer knapp & Label & Toggle
         Label lbvelgEier = new Label();
         lbvelgEier.setText("Annen eier?");
         lbvelgEier.setId("velgeier");
         lbvelgEier.setAlignment(Pos.CENTER);
+
+        TranslateTransition ttVelgEier = new TranslateTransition(Duration.millis(100), lbvelgEier);
+        ttVelgEier.setFromX(800);
+        ttVelgEier.setToX(0);
+        ttVelgEier.setCycleCount(1);
 
         ToggleGroup eiere = new ToggleGroup();
 
@@ -213,6 +245,11 @@ public class KundesideBil implements ComboBoxConverter {
             gridPerson.setVisible(true);
         });
 
+        TranslateTransition ttJa = new TranslateTransition(Duration.millis(100), rbtJa);
+        ttJa.setFromX(800);
+        ttJa.setToX(0);
+        ttJa.setCycleCount(1);
+
         RadioButton rbtNei = new RadioButton("NEI");
         rbtNei.setToggleGroup(eiere);
         rbtNei.setId("rbtNei");
@@ -221,19 +258,29 @@ public class KundesideBil implements ComboBoxConverter {
             gridPerson.setVisible(false);
         });
 
+        TranslateTransition ttNei = new TranslateTransition(Duration.millis(100), rbtNei);
+        ttNei.setFromX(800);
+        ttNei.setToX(0);
+        ttNei.setCycleCount(1);
+
         Label regLabel = new Label();
         regLabel.setText("");
         regLabel.setId("regLabel");
         regLabel.setAlignment(Pos.CENTER);
 
         Button btnSjekkpris = new Button();
-        btnSjekkpris.setText("Beregn Pris");
+        btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
+
+        FadeTransition ftSjekkpris = new FadeTransition(Duration.millis(100), btnSjekkpris);
+        ftSjekkpris.setFromValue(0.0F);
+        ftSjekkpris.setToValue(1.0F);
+        ftSjekkpris.setCycleCount(1);
         
 
         Button btnRegBilforsikring = new Button();
-        btnRegBilforsikring.setText("Registrer Bilforsikring");
+        btnRegBilforsikring.setText("Bestill");
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
 
@@ -294,7 +341,15 @@ public class KundesideBil implements ComboBoxConverter {
 
         });
 
-        gridBil.add(lbBil, 0, 0);
+        FadeTransition ftBestill = new FadeTransition(Duration.millis(100), btnRegBilforsikring);
+        ftBestill.setFromValue(0.0F);
+        ftBestill.setToValue(1.0F);
+        ftBestill.setCycleCount(1);
+
+        SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttMerke, ttModell, ttKmstand, ttBonus, ttEgenandel, ttKjørelengde, ttVelgEier, ttJa, ttNei, ftSjekkpris, ftBestill);
+        st.play();
+
+        //gridBil.add(lbBil, 0, 0);
         gridBil.add(tfRegnr, 0, 1);
         gridBil.add(tfÅrsmodell, 0, 2);
         gridBil.add(tfMerke, 0, 3);
@@ -307,7 +362,7 @@ public class KundesideBil implements ComboBoxConverter {
         gridBil.add(rbtJa, 0, 10);
         gridBil.add(rbtNei, 0, 11);
 
-        gridPerson.add(lbPerson, 0, 0);
+        //gridPerson.add(lbPerson, 0, 0);
         gridPerson.add(tfFornavn, 0, 1);
         gridPerson.add(tfEtternavn, 0, 2);
         gridPerson.add(tfPersonnr, 0, 3);
@@ -318,13 +373,20 @@ public class KundesideBil implements ComboBoxConverter {
 
         //gridBil.setGridLinesVisible(true);
         //gridPerson.setGridLinesVisible(true);
+
+        HBox hbKnapper = new HBox();
+        hbKnapper.setAlignment(Pos.CENTER);
+        hbKnapper.setSpacing(10);
+        hbKnapper.getChildren().addAll(btnSjekkpris, btnRegBilforsikring);
+
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(10);
         //vb.setStyle("-fx-border-color: red;");
-        vb.getChildren().addAll(hb, btnSjekkpris, btnRegBilforsikring, regLabel);
+        vb.setPadding(new Insets(50, 120, 10, 10));//top/right/bottom/left
+        vb.getChildren().addAll(hb, hbKnapper, regLabel);
 
-        borderPane.setCenter(vb); //Center
+        borderPane.setRight(vb); //Center
 
         //borderPane.setRight(gridPerson); //Right
         borderPane.getStylesheets().add("CSS/kundeBil.css");

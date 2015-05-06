@@ -3,16 +3,17 @@ package GUI;
 import Forsikring.ReiseForsikring;
 import Kontroller.Kontroller;
 import java.text.DecimalFormat;
+
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 /**
  * Created by Magnus on 21.04.15.
@@ -24,19 +25,31 @@ public class KundesideReise {
     public Pane reiseFane(Kontroller kontroller) {
 
         BorderPane borderPane = new BorderPane();
+        borderPane.setId("borderpane");
 
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
-        vb.setSpacing(40);
-        vb.setPadding(new Insets(40));
+        vb.setSpacing(30);
+        vb.setPadding(new Insets(120, 10, 10, 160));//top/right/bottom/left
         vb.setStyle("-fx-border-color: red;");
-        vb.setMaxWidth(400);
-        vb.setMaxHeight(300);
+        //vb.setMaxWidth(400);
+        //vb.setMaxHeight(300);
+
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.TOP_CENTER);
+        grid.setHgap(10);
+        grid.setVgap(20);
+        grid.setPadding(new Insets(210, 10, 10, 160));//top/right/bottom/left
 
         Label lbInfo = new Label();
         lbInfo.setText("Velg reiseforsikringstype:");
         lbInfo.setId("lbInfo");
-        lbInfo.setAlignment(Pos.CENTER_LEFT);
+        lbInfo.setAlignment(Pos.CENTER);
+
+        FadeTransition ftInfo = new FadeTransition(Duration.millis(100), lbInfo);
+        ftInfo.setFromValue(0.0F);
+        ftInfo.setToValue(1.0F);
+        ftInfo.setCycleCount(1);
 
         Label lbPrint = new Label();
         lbPrint.setId("print");
@@ -48,42 +61,65 @@ public class KundesideReise {
         RadioButton rbtnVerden = new RadioButton("Veden");
         rbtnVerden.setId("verden");
         rbtnVerden.setToggleGroup(reise);
-        rbtnVerden.setSelected(true);
-        rbtnVerden.setAlignment(Pos.CENTER_LEFT);
+        rbtnVerden.setSelected(false);
+        rbtnVerden.setAlignment(Pos.CENTER);
         rbtnVerden.setOnAction(e -> {
             type = "Verden";
         });
 
+        FadeTransition ftVerden = new FadeTransition(Duration.millis(100), rbtnVerden);
+        ftVerden.setFromValue(0.0F);
+        ftVerden.setToValue(1.0F);
+        ftVerden.setCycleCount(1);
+
         RadioButton rbtnEuropa = new RadioButton("Europa");
         rbtnEuropa.setId("europa");
         rbtnEuropa.setToggleGroup(reise);
-        rbtnEuropa.setSelected(true);
+        rbtnEuropa.setSelected(false);
         rbtnEuropa.setOnAction(e -> {
             type = "Europa";
         });
 
+        FadeTransition ftEuropa = new FadeTransition(Duration.millis(100), rbtnEuropa);
+        ftEuropa.setFromValue(0.0F);
+        ftEuropa.setToValue(1.0F);
+        ftEuropa.setCycleCount(1);
+
         RadioButton rbtnNorden = new RadioButton("Norden");
         rbtnNorden.setId("norden");
         rbtnNorden.setToggleGroup(reise);
-        rbtnNorden.setSelected(true);
+        rbtnNorden.setSelected(false);
         rbtnNorden.setOnAction(e -> {
             type = "Norden";
         });
 
-        HBox hb = new HBox();
-        hb.setAlignment(Pos.CENTER);
-        hb.setSpacing(10);
+        FadeTransition ftNorden = new FadeTransition(Duration.millis(100), rbtnNorden);
+        ftNorden.setFromValue(0.0F);
+        ftNorden.setToValue(1.0F);
+        ftNorden.setCycleCount(1);
 
         Button btnBeregn = new Button();
         btnBeregn.setText("Beregn pris");
-        btnBeregn.setMinWidth(100);
+        btnBeregn.setMinWidth(200);
         btnBeregn.setId("beregn");
-        
+
+        FadeTransition ftBeregn = new FadeTransition(Duration.millis(100), btnBeregn);
+        ftBeregn.setFromValue(0.0F);
+        ftBeregn.setToValue(1.0F);
+        ftBeregn.setCycleCount(1);
 
         Button btnBestill = new Button();
         btnBestill.setText("Bestill");
-        btnBestill.setMinWidth(100);
+        btnBestill.setMinWidth(200);
         btnBestill.setId("bestill");
+
+        FadeTransition ftBestill = new FadeTransition(Duration.millis(100), btnBestill);
+        ftBestill.setFromValue(0.0F);
+        ftBestill.setToValue(1.0F);
+        ftBestill.setCycleCount(1);
+
+        SequentialTransition st = new SequentialTransition(ftInfo, ftVerden, ftEuropa, ftNorden, ftBeregn, ftBestill);
+        st.play();
 
 
 // lyttere_________________________________________________________________________--
@@ -107,11 +143,17 @@ public class KundesideReise {
             lbPrint.setText("Reiseforsikring bestilt!");
         });
 
-        hb.getChildren().addAll(btnBeregn, btnBestill);
+        grid.add(lbInfo, 0, 0);
+        grid.add(rbtnVerden, 0, 1);
+        grid.add(rbtnEuropa, 0, 2);
+        grid.add(rbtnNorden, 0, 3);
+        grid.add(btnBeregn, 0, 4);
+        grid.add(btnBestill, 0, 5);
+        grid.add(lbPrint, 0, 6);
+        grid.setGridLinesVisible(false);
 
-        vb.getChildren().addAll(lbInfo, rbtnVerden, rbtnEuropa, rbtnNorden, hb, lbPrint);
-
-        borderPane.setCenter(vb);
+        borderPane.getStylesheets().add("CSS/kundereise.css");
+        borderPane.setLeft(grid);
 
         return borderPane;
     }

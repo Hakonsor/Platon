@@ -1,0 +1,41 @@
+#borderpane {
+    -fx-background-image: url("Bilder/reiseback.png");
+}
+
+#lbInfo {
+    -fx-font: 16px "Myriad";
+}
+
+#verden {
+    -fx-font: 16px "Myriad";
+}
+
+#norden {
+    -fx-font: 16px "Myriad";
+}
+
+#europa {
+    -fx-font: 16px "Myriad";
+}
+
+#beregn {
+    -fx-background-color: rgb(199, 136, 223);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#beregn:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#bestill {
+    -fx-background-color: rgb(199, 136, 223);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#bestill:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
