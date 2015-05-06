@@ -1,5 +1,6 @@
 package GUI;
 
+import Forsikring.BatForsikring;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import Person.Person;
@@ -158,7 +159,7 @@ public class KundesideBåt implements ComboBoxConverter {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 String regex = "[0-9]+";
-                String fot = tfAntfor.getText();
+                String fot = tfAntfot.getText();
 
                 if (!fot.matches(regex) || fot.length() > 4) {
                     tfAntfot.setId("error");
@@ -171,7 +172,7 @@ public class KundesideBåt implements ComboBoxConverter {
             }
         });
 
-        TranslateTransition ttAntfor = new TranslateTransition(Duration.millis(100), tfAntfot);
+        TranslateTransition ttAntfot = new TranslateTransition(Duration.millis(100), tfAntfot);
         ttAntfot.setFromX(500);
         ttAntfot.setToX(0);
         ttAntfot.setCycleCount(1);
@@ -279,10 +280,6 @@ public class KundesideBåt implements ComboBoxConverter {
         ttMotor.setToX(0);
         ttMotor.setCycleCount(1);
 
-        TranslateTransition ttEgenandel = new TranslateTransition(Duration.millis(100), cbEgenandel);
-        ttEgenandel.setFromX(500);
-        ttEgenandel.setToX(0);
-        ttEgenandel.setCycleCount(1);
 
         //Registrer knapp & Label
         Label regLabel = new Label();
@@ -319,17 +316,17 @@ public class KundesideBåt implements ComboBoxConverter {
                     && tfVerdi.getId().equals("valid")) {
                 double verdi = 0;
                 int lengdeFot = 0;
-                String regNo = tf
+                String regNo = tfRegNr;
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     lengdeFot = Integer.parseInt(tfYtelse.getText());
-                    BatForsikring båt = new BatForsikring();
-                    båt
+                    BatForsikring båt = new BatForsikring(verdi,lengdeFot,regNo , type,"modell","årsModell");
+                    kontroll.setBåtForsikring(båt);
                 } catch (NumberFormatException nfe) {
                     System.out.println("Feil tallformat");
                 }
 
-                kontroll.setBåtForsikring(båt);
+                
                 regLabel.setText("Bilforsikring Registrert!");
 
             } else {
@@ -341,15 +338,15 @@ public class KundesideBåt implements ComboBoxConverter {
         ftBestill.setFromValue(0.0F);
         ftBestill.setToValue(1.0F);
         ftBestill.setCycleCount(1);
-SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfor, ttMotormerke, ttYtelse, ttVerdi, ttEgenandel, ttSeilbåt, ttMotor, ftPris, ftBestill);
+SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfot, ttMotormerke, ttYtelse, ttVerdi, ttSeilbåt, ttMotor, ftPris, ftBestill);
         st.play();
         
 
-        grid.add(tfRegnr, 0, 0);
+       
         grid.add(tfRegnr, 0, 1);
         grid.add(tfÅrsmodell, 0, 2);
         grid.add(tfBåtmodell, 0, 3);
-        grid.add(tfAntfor, 0, 4);
+        grid.add(tfAntfot, 0, 4);
         grid.add(tfMotormerke, 0, 5);
         grid.add(tfYtelse, 0, 6);
         grid.add(tfVerdi, 0, 7);
