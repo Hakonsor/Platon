@@ -41,27 +41,60 @@ import javafx.stage.Stage;
  */
 public class KundesideSkade {
 
+    Kontroller  kontroll;
     private Calendar dato;
     private String skade = "BrannSkade";
+    
+    private ObservableList<String> data = FXCollections.observableArrayList();
+    private ListView<String> listView = new ListView<>(data);
+    private TextField tfBeløp;
+    private BorderPane borderPane;
+    private HBox vb;
+    
+    private Label overskrift;
+    private GridPane grid;
+    
+    private ComboBox<String> forsikringComboBox;
+    private Label lbInfo;
+    
+    private HBox hb;
+    private TextArea skriveOmråde;
+    
+    ToggleGroup skadeType;
+    RadioButton rbtVann;
+    RadioButton rbtRør;
+    RadioButton rbtBrann;
+    
+    GridPane radioGrid;
+    Label lbSkadebeløp;
+    Label lbDato;
+    DatePicker dpDato;
+    FileChooser fileChooser;
+    Button btnÅpnefil;
+    Label lbSkade;
+    Button btnRapSkade;
+    Label lbFeilFormat;
+ 
+    
 
     public Pane skadeFane(Kontroller kontroll) {
-
+        this.kontroll = kontroll;
         //Group root = new Group();
-        TextField tfBeløp = new TextField();
-        BorderPane borderPane = new BorderPane();
-        HBox vb = new HBox();
+        tfBeløp = new TextField();
+        borderPane = new BorderPane();
+        vb = new HBox();
         vb.setPadding(new Insets(25, 25, 0, 25));
         vb.setSpacing(100);
         vb.setAlignment(Pos.CENTER);
 
-        Label overskrift = new Label();
+        overskrift = new Label();
         overskrift.setText("Her oppretter du en Skademelding");
         overskrift.setId("overskrift");
         vb.getChildren().addAll(overskrift);
 
         borderPane.setTop(vb); //TOP
 
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
 
@@ -72,7 +105,7 @@ public class KundesideSkade {
         grid.setPrefWidth(800);
 
         //Skjema
-        ComboBox<String> forsikringComboBox = new ComboBox<String>();
+        forsikringComboBox = new ComboBox<String>();
         forsikringComboBox.setEditable(false);
         forsikringComboBox.getItems().addAll(
                 "Alle",
@@ -82,22 +115,23 @@ public class KundesideSkade {
                 "Boligforsikring",
                 "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
+        forsikringComboBox.setOnAction(e -> {SkrivListe();});
 
-        Label lbInfo = new Label();
+        lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
         lbInfo.setId("lbInfo");
 
-        HBox hb = new HBox();
+        hb = new HBox();
         hb.setSpacing(20);
         hb.setAlignment(Pos.CENTER);
 
-        TextArea skriveOmråde = new TextArea();
+        skriveOmråde = new TextArea();
         skriveOmråde.setEditable(true);
         skriveOmråde.setPromptText("Skriv innformasjon om skaden");
         skriveOmråde.setPrefSize(400, 400);
 
-        ObservableList<String> data = FXCollections.observableArrayList();
-        ListView<String> listView = new ListView<>(data);
+        
+       
         listView.setPrefSize(300, 400);
         listView.setId("listview");
         listView.setEditable(false);
@@ -106,9 +140,10 @@ public class KundesideSkade {
 
         listView.setItems(data);
         listView.setCellFactory(ComboBoxListCell.forListView(data));
+        listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> { settKnapper();});
 
-        ToggleGroup skadeType = new ToggleGroup();
-        RadioButton rbtVann = new RadioButton("Vannskade");
+        skadeType = new ToggleGroup();
+        rbtVann = new RadioButton("Vannskade");
         rbtVann.setToggleGroup(skadeType);
         rbtVann.setSelected(true);
         rbtVann.setOnAction(e -> {
@@ -116,7 +151,7 @@ public class KundesideSkade {
         });
         rbtVann.setVisible(false);
 
-        RadioButton rbtRør = new RadioButton("Rørskade");
+        rbtRør = new RadioButton("Rørskade");
         rbtRør.setToggleGroup(skadeType);
         rbtRør.setSelected(true);
         rbtRør.setOnAction(e -> {
@@ -124,7 +159,7 @@ public class KundesideSkade {
         });
         rbtRør.setVisible(false);
 
-        RadioButton rbtBrann = new RadioButton("Brannskade");
+        rbtBrann = new RadioButton("Brannskade");
         rbtBrann.setToggleGroup(skadeType);
         rbtBrann.setSelected(true);
         rbtBrann.setOnAction(e -> {
@@ -133,7 +168,7 @@ public class KundesideSkade {
         rbtBrann.setVisible(false);
 
 
-        GridPane radioGrid = new GridPane();
+        radioGrid = new GridPane();
         radioGrid.add(rbtBrann, 0, 0);
         radioGrid.add(rbtRør, 0, 1);
         radioGrid.add(rbtVann,0, 2);
@@ -142,7 +177,7 @@ public class KundesideSkade {
         hb.getChildren().addAll(listView, skriveOmråde, radioGrid);
 
 
-        Label lbSkadebeløp = new Label();
+        lbSkadebeløp = new Label();
         lbSkadebeløp.setText("Samlet skadebeløp:");
         lbSkadebeløp.setId("lbSkadebeløp");
 
@@ -150,31 +185,33 @@ public class KundesideSkade {
         tfBeløp.setAlignment(Pos.CENTER_LEFT);
         tfBeløp.setPromptText("Beløp:");
 
-        Label lbDato = new Label();
+        lbDato = new Label();
         lbDato.setText("Velg dato for hendelsen:");
         lbDato.setId("lbDato");
 
-        DatePicker dpDato = new DatePicker();
+        dpDato = new DatePicker();
         dpDato.setPromptText("Format eks. 12.02.2015");
+        dpDato.setOnAction((ActionEvent e) -> {sjekkDate();});
 
-        FileChooser fileChooser = new FileChooser();
+        fileChooser = new FileChooser();
 
-        Button btnÅpnefil = new Button("Velg fil");
+        btnÅpnefil = new Button("Velg fil");
         btnÅpnefil.setMaxWidth(200);
         btnÅpnefil.setOnAction(e -> {
             fileChooser.showOpenMultipleDialog(new Stage());
         });
 
-        Label lbSkade = new Label();
+        lbSkade = new Label();
         lbSkade.setText("");
         lbSkade.setId("lbskade");
 
-        Button btnRapSkade = new Button();
+        btnRapSkade = new Button();
         btnRapSkade.setText("Raporter skade");
         btnRapSkade.setId("btnRapSkade");
         btnRapSkade.setMinWidth(200);
+        btnRapSkade.setOnAction((ActionEvent e) -> {repSkade();});
 
-        Label lbFeilFormat = new Label();
+        lbFeilFormat = new Label();
         lbFeilFormat.setVisible(false);
 
         grid.add(forsikringComboBox, 0, 0);
@@ -193,18 +230,21 @@ public class KundesideSkade {
         borderPane.setCenter(grid); // CENTER
         
 
-        // henter datoen og konverterer den til Calendar
-        dpDato.setOnAction((ActionEvent e) -> {
-            {
+        // finner ut hvilken forsikring det er og legger skademeldingen i køen,
+        // her beregnes også skadesummen samt nye premier, men premien settes endelig,
+        // først når konsulenten har godkjent beløpet/ skademeldingen.
+
+        return borderPane;
+    }
+      // henter datoen og konverterer den til Calendar
+    private void sjekkDate(){
                 LocalDate date = dpDato.getValue();
                 Date dat = Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
                 dato = Calendar.getInstance();
                 dato.setTime(dat);
-            }
-        });
-
-        forsikringComboBox.setOnAction(e -> {
-
+    }
+    private void SkrivListe(){
+        skriveOmråde.clear();
             ArrayList<String> forsikringliste = kontroll.
                     getInfoForsikringListe(forsikringComboBox.getItems().
                             indexOf(forsikringComboBox.getValue()));
@@ -213,11 +253,10 @@ public class KundesideSkade {
                 data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
             } else {
                 data.setAll(forsikringliste);
-            }
-        });
-
-        listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
-
+        }
+    }
+    private void settKnapper(){
+    
             skriveOmråde.clear();
             String polisNr = listView.getSelectionModel().getSelectedItem();
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
@@ -243,13 +282,10 @@ public class KundesideSkade {
             } else {
                 skriveOmråde.setEditable(false);
             }
-        });
-        
-        
-        // finner ut hvilken forsikring det er og legger skademeldingen i køen,
-        // her beregnes også skadesummen samt nye premier, men premien settes endelig,
-        // først når konsulenten har godkjent beløpet/ skademeldingen.
-        btnRapSkade.setOnAction((ActionEvent e) -> {
+    
+    }
+    private void repSkade(){
+    
             String polisNr = listView.getSelectionModel().getSelectedItem();
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
@@ -325,7 +361,7 @@ public class KundesideSkade {
                 return;
             }
             lbSkade.setText("Skademelding er sendt inn");
-        });
-        return borderPane;
+    
+    
     }
 }
