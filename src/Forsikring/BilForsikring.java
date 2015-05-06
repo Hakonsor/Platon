@@ -40,6 +40,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         return kjorelengde;
     }
 
+    // har pris per kilometer
     public int utbetal(int km, double kostnad) {
         double delta = 0; // angir hvor stor andel av skaden som dekkes
         double belop;
@@ -127,11 +128,12 @@ public class BilForsikring extends Kjoretoy implements Serializable {
 
     public String toString() {
         String s;
-        s = super.toString() +
-        "Kjørelengde: " + kjorelengde +
-        "\nKM-Stand: " + kmStand +" km" ;
-
-     return s;
+        s = "BilForsikring:" + "\nForsikringen gjelder for reg.nr: " + regNr 
+                + "\nPoliseNr: " + poliseNr
+                + "Gjelder fra: " + startDato + "\ttil: " + utløpsDato
+                + "\nMerke: " + modell + "\tÅrsmodell: " + arsModell
+                +"\n";
+        return s;
     }// end of toString()
 
 }// end of class BilForsikring.

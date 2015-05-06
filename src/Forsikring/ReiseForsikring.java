@@ -46,11 +46,7 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
         }
     }
 
-    public double egenAndel() {
-        egenandel = 300;
-        return egenandel;
-    }
-
+    
     public void premieTilGodkjenning() {
         int premieøkning = 200;
         premieTilGodkjenning = premie +premieøkning;
