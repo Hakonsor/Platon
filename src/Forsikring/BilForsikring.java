@@ -85,20 +85,20 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     }
 
     // beregner bonusen etter skaden. parameteren angir hva bonusen var før skaden
-    public double bonusEtterSkade(double bonus) {
-        if (bonus == 0) {
-            bonus -= 40;
+    public double bonusEtterSkade(double boNus) {
+        if (boNus == 0) {
+            boNus -= 40;
         }
-        if (bonus >= 10 && bonus <= 60) {
+        if (boNus >= 10 && boNus <= 60) {
             bonus -= 30;
         }
-        if (bonus == 70) {
-            bonus -= 30;
+        if (boNus == 70) {
+            boNus -= 30;
         }
-        if (bonus == 75) {
+        if (boNus == 75) {
             bonus -= 15;
         }
-        return bonus;
+        return boNus;
     }// end of method
 
     // beregner premien basert på bonus etter en skade.
@@ -119,13 +119,15 @@ public class BilForsikring extends Kjoretoy implements Serializable {
             rabatt = 10;
         } else if (egenandel == 4000) {
             rabatt = 0;
-        }
+        }// end of if else
 
         premium = (100 - rabatt - bonus) / 100 * grunnPremie;
 
         return premium;
     }// end of method premie
 
+    
+    // skriver ut informasjon om bilen og bilforsikringen
     public String toString() {
         String s;
         s = "BilForsikring:" + "\nForsikringen gjelder for reg.nr: " + regNr 
