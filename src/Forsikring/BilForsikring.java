@@ -108,20 +108,20 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     }// end of method
 
     // bestemmer premien utifra hva som velges som egenandel. 
-    public double premie(double egenandel, double bonus) {
+    public double premie(double egenAndel, double boNus) {
         double grunnPremie = 20000;
         double premium;
         double rabatt = 0;
 
-        if (egenandel == 10000) {
+        if (egenAndel == 10000) {
             rabatt = 15;
-        } else if (egenandel == 6000) {
+        } else if (egenAndel == 6000) {
             rabatt = 10;
-        } else if (egenandel == 4000) {
+        } else if (egenAndel == 4000) {
             rabatt = 0;
         }// end of if else
 
-        premium = (100 - rabatt - bonus) / 100 * grunnPremie;
+        premium = (100 - rabatt - boNus) / 100 * grunnPremie;
 
         return premium;
     }// end of method premie
