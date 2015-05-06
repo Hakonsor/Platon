@@ -454,7 +454,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 verdi = Double.parseDouble(tfVerdi.getText());
                 motorYtelse = Integer.parseInt(tfYtelse.getText());
                 lengdeFot = Integer.parseInt(tfAntfot.getText());
-                BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo,type, modell, årsModell);
+                BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo,type, modell, årsModell, motorYtelse,motorMerke);
                 kontroll.setBåtForsikring(båt);
             } catch (NumberFormatException nfe) {
                 System.out.println("Feil tallformat");

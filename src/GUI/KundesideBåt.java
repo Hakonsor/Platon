@@ -320,7 +320,7 @@ public class KundesideBåt implements ComboBoxConverter {
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     lengdeFot = Integer.parseInt(tfYtelse.getText());
-                    BatForsikring båt = new BatForsikring(verdi,lengdeFot,regNo , type,"modell","årsModell");
+                    BatForsikring båt = new BatForsikring(verdi,lengdeFot,regNo , type,"modell","årsModell",10 , "motormerke");
                     kontroll.setBåtForsikring(båt);
                 } catch (NumberFormatException nfe) {
                     System.out.println("Feil tallformat");

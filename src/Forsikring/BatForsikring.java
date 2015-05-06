@@ -20,11 +20,13 @@ public class BatForsikring extends Forsikringer implements Serializable{
     private String regNo, motorMerke, type;
     private double forsikringSum;
     
-    public BatForsikring(double forSum, int lendgeFot,String regNr , String type, String modell, String arsModell){
+    public BatForsikring(double forSum, int lendgeFot,String regNr , String type, String modell, String arsModell, int motorstyrke, String motormerke){
     super(0, 0); 
     this.lendgeFot = lendgeFot;
     this.forsikringSum = forSum;
     this.type = type;
+    this.motorStyrke = motorstyrke;
+    this.motorMerke = motormerke;
     }
     
     public String getRegNr(){
