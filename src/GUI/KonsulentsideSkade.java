@@ -34,7 +34,6 @@ public class KonsulentsideSkade {
     private SkadeMelding skade;
 
     public Pane skadeFane(Kontroller kontroll) {
-
         skade = kontroll.getFørste();
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();

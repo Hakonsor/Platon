@@ -1,8 +1,6 @@
 package GUI;
 
-import Forsikring.ForsikringsRegister;
 import Kontroller.Kontroller;
-import SkadeMeldinger.SkadeMeldingRegister;
 import java.text.DecimalFormat;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -21,8 +19,7 @@ import javafx.scene.layout.VBox;
  */
 public class KonsulentsideStatistikk {
 
-    private ForsikringsRegister fRegister;
-    private SkadeMeldingRegister sRegister;
+Kontroller kontroll;
 
     public Pane statFane(Kontroller kontroll) {
 
@@ -251,43 +248,39 @@ public class KonsulentsideStatistikk {
                     aar = 2015;
                     break;
             }
-            double reiseInn = 0;
-            double boligInn = 0;
-            double fritidInn = 0;
-            double båtInn = 0;
-            double bilInn = 0;
+            double reiseInn;
+            double boligInn;
+            double fritidInn;
+            double båtInn;
+            double bilInn;
 
-            double reiseUt = 0;
-            double boligUt = 0;
-            double fritidUt = 0;
-            double båtUt = 0;
-            double bilUt = 0;
+            double reiseUt;
+            double boligUt;
+            double fritidUt;
+            double båtUt;
+            double bilUt;
 
-            double inntekt = 0;
-            double utgift = 0;
+            double inntekt;
+            double utgift;
+            //reiseInn = kontroll.finnInntekterReiseFors(aar);
+            boligInn = kontroll.finnInntekterBoligForsikring(aar);
+            fritidInn = kontroll.finnInntekterFritidsBolig(aar);
+            båtInn = kontroll.finnInntekterBåt(aar);
+            bilInn = kontroll.finnInntekterBil(aar);
+            inntekt = kontroll.finnInntekterAlleForsikringer(aar);
 
-            if (fRegister != null) {
-                reiseInn = fRegister.finnInntekterReiseFors(aar);
-                boligInn = fRegister.finnInntekterBoligForsikring(aar);
-                fritidInn = fRegister.finnInntekterFritidsBolig(aar);
-                båtInn = fRegister.finnInntekterBåt(aar);
-                bilInn = fRegister.finnInntekterBil(aar);
-                inntekt = fRegister.finnInntekterAlleFors(aar);
-            }
-            if (sRegister != null) {
-                reiseUt = sRegister.finnUtgiftReise(aar);
-                boligUt = sRegister.finnUtgiftBolig(aar);
-                fritidUt = sRegister.finnUtgiftFritid(aar);
-                båtUt = sRegister.finnUtgiftBåt(aar);
-                bilUt = sRegister.finnUtgiftBil(aar);
-                utgift = sRegister.finnUtgiftTotal(aar);
-            }
+            reiseUt = kontroll.finnUtgiftReise(aar);
+            boligUt = kontroll.finnUtgiftBolig(aar);
+            fritidUt = kontroll.finnUtgiftFritid(aar);
+            båtUt = kontroll.finnUtgiftBåt(aar);
+            bilUt = kontroll.finnUtgiftBil(aar);
+            utgift = kontroll.finnUtgiftTotal(aar);
 
             String form = "0.00";
             DecimalFormat tall = new DecimalFormat(form);
 // Inntekter  ________________________________________________
             lbBåtForsikringVerdiInn.setText(tall.format(båtInn) + " Kr");
-            lbReiseForsikringVerdiInn.setText(tall.format(reiseInn) + " Kr");
+            //lbReiseForsikringVerdiInn.setText(tall.format(reiseInn) + " Kr");
             lbBilforsikringVerdiInn.setText(tall.format(bilInn) + " Kr");
             lbBoligVerdiInn.setText(tall.format(boligInn) + " Kr");
             lbFritidsboligVerdiInn.setText(tall.format(fritidInn) + " Kr");
