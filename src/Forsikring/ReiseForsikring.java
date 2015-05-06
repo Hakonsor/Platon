@@ -40,7 +40,7 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
         } else if (type.equalsIgnoreCase("Europa")) {
             premie = 1400;
             forsikringSum = 1000000; 
-        } else if (type.equalsIgnoreCase("Europa")) {
+        } else if (type.equalsIgnoreCase("Norden")) {
             premie = 900;
             forsikringSum = 1000000;
         }

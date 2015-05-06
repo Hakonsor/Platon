@@ -438,7 +438,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public boolean sjekkPassordKonsulent(String bruker, String passord) {
         Bruker sjekkBruker = finnBruker(bruker);
         if (sjekkBruker == null || sjekkBruker instanceof Kunde) {
-            System.out.println(sjekkBruker+""+sjekkBruker.sjekkPassord(passord));
             return false;
             
         }

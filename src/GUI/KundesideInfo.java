@@ -13,9 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxListCell;
-import javafx.scene.effect.Reflection;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
@@ -23,28 +21,28 @@ import javafx.util.Duration;
  */
 public class KundesideInfo implements ComboBoxConverter {
 
-    ObservableList<String> navn = FXCollections.observableArrayList();
-    ObservableList<String> data = FXCollections.observableArrayList();
+    private ObservableList<String> navn = FXCollections.observableArrayList();
+    private ObservableList<String> data = FXCollections.observableArrayList();
     
-    Kontroller kontroller;
-    ComboBox<String> forsikringComboBox;
-    VBox vb;
-    GridPane grid;
+    private Kontroller kontroller;
+    private ComboBox<String> forsikringComboBox;
+    private VBox vb;
+    private GridPane grid;
     
-    Label lbhei;
-    Label lbnavn;
-    Label lbkundenr;
-    Label lbepost;
+    private Label lbhei;
+    private Label lbnavn;
+    private Label lbkundenr;
+    private Label lbepost;
 
-    Button btnSlett;
-    Button btnUtbetalinger;
-    Button btnStatus;
+    private Button btnSlett;
+    private Button btnUtbetalinger;
+    private Button btnStatus;
     
-    HBox hbKnapper;
-    HBox hbFelter;
+    private HBox hbKnapper;
+    private HBox hbFelter;
     
-    ListView<String> listView;
-    TextArea textArea;
+    private ListView<String> listView;
+    private TextArea textArea;
 
     public Pane infoFane(Kontroller kontroller) {
         this.kontroller = kontroller;
@@ -151,11 +149,14 @@ public class KundesideInfo implements ComboBoxConverter {
         listView.setId("listview");
         listView.setEditable(false);
 
+        navn.clear();
         navn.addAll("Velg en forsikring fra listen over.");
 
         listView.setItems(navn);
         listView.setCellFactory(ComboBoxListCell.forListView(navn));
-        listView.getSelectionModel().selectedItemProperty().addListener(e -> {skrivTilArea(); });
+        listView.getSelectionModel().selectedItemProperty().addListener(e -> {
+            skrivTilArea();
+        });
         
         textArea = new TextArea();
         textArea.setPrefSize(300, 300);
@@ -198,12 +199,14 @@ public class KundesideInfo implements ComboBoxConverter {
         }
     }
 
-        vb.getChildren().addAll(grid, hbKnapper, hbFelter);
-
-        borderPane.setCenter(vb);
-
-        borderPane.getStylesheets().add("CSS/kundeInfo.css");
-        return borderPane;
+    public void slettForsikring() {
+        String polisNr = listView.getSelectionModel().getSelectedItem();
+        if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+            polisNr = polisNr.substring(0, 6);
+        } else {
+            return;
+        }
+        kontroller.slettForsikring(Integer.parseInt(polisNr));
+        settListe();
     }
-
 }
