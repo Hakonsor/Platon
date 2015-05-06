@@ -8,13 +8,15 @@ package Forsikring;
 import java.io.Serializable;
 
 /**
+ * Inneholder en svært enkel mal for reiseforsikring, der premien og egenandelen settes
+ * på svært enkle grunnlag. men kan utvides ved at den forgreines og blir mer spsifikk.
  *
  * @author Therese, Håkon
  */
 public class ReiseForsikring extends Forsikringer implements Serializable {
 
     private String type;
-
+    private double forsikringSum;
     public ReiseForsikring() {
         super(0, 0);
 
@@ -44,21 +46,17 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
         }
     }
 
-    public double egenAndel() {
-        egenandel = 300;
-        return egenandel;
-    }
-
+    
     public void premieTilGodkjenning() {
-        int tillegg = 200;
-        premieTilGodkjenning = premie +tillegg;
+        int premieøkning = 200;
+        premieTilGodkjenning = premie +premieøkning;
     }
 
     public String toString() {
         String s;
         s = "ReiseForsikring:" + "\nForsikringen gjelder for: " + type
                 + "PoliseNr: " + poliseNr
-                + "Gjelder fra: " + startDato + " til: " + utløpsDato
+                + "Gjelder fra: " + startDato + "\ttil: " + utløpsDato
                 + "Forsikringsum: " + forsikringSum;
         return s;
     }

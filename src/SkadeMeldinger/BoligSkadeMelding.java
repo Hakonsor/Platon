@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- *
+ *Inneholder det som er unikt for boligskademelding, foreløpig
+ * er deet bare en melding
  * @author Therese
  */
 public class BoligSkadeMelding extends ByggSkade implements Serializable {
@@ -21,7 +22,7 @@ public class BoligSkadeMelding extends ByggSkade implements Serializable {
 
     }
     
-    
+    // denne meldingen vises i vinduet for skadebehandleren
     public String melding(){
         String s;
         s = "Boligskademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"

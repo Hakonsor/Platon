@@ -1,13 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package Forsikring;
 
 import java.io.Serializable;
 
 /**
+ * Inneholder ingen egne datafelter.
+ * Men er laget som individuell klasse for å kunne skille mellom 
+ * fritidsbolig og bolig forsikringer, men også for å gjøre 
+ * utvidelsesmulighetene enkle og synlige
  *
  * @author Therese
  */

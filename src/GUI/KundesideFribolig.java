@@ -179,8 +179,8 @@ public class KundesideFribolig {
 
         borderPane.setCenter(grid); // CENTER
         
-        // oppretter en forsikring som kan settes inn i registeret dersom de trykker kjøp rett
-        // etter at de har sjekket prisen, hvis ikke forsvinner objektet.
+        /* oppretter en forsikring som kan settes inn i registeret dersom de trykker kjøp rett
+         etter at de har sjekket prisen, hvis ikke forsvinner objektet.*/
         btnSjekkpris.setOnAction(e -> {
             String form = "0.00";
             DecimalFormat tall = new DecimalFormat(form);

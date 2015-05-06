@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- *
+ *Klassen inneholder det som er unikt for fritidsboligskademelding, nå er det bare en melding.
  * @author Therese
  */
 public class FritidsBoligMelding extends ByggSkade implements Serializable {
@@ -20,6 +20,8 @@ public class FritidsBoligMelding extends ByggSkade implements Serializable {
         super(skadeBeskrivelse, utbetal, skadeDato);
         
     }
+    
+    // melding som vises i vinduet når skadebehandleren behandler skader.
     public String melding(){
         String s;
         s = "Fritidshus skademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"

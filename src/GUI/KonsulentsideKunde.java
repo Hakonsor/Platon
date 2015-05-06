@@ -1,5 +1,6 @@
 package GUI;
 
+import Forsikring.BatForsikring;
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
 import Kontroller.ComboBoxConverter;
@@ -379,7 +380,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         TextField tfVerdi = new TextField();
         tfVerdi.setPromptText("Båtens verdi");
         tfVerdi.setMinWidth(200);
-        
+
         TextField tfRegnrB = new TextField();
         tfRegnrB.setPromptText("Reg.Nr");
         tfRegnrB.setMinWidth(200);
@@ -392,9 +393,9 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         tfBåtmodell.setPromptText("Båtmodell eks (Ibiza 22");
         tfBåtmodell.setMinWidth(200);
 
-        TextField tfAntfor = new TextField();
-        tfAntfor.setPromptText("Antall fot");
-        tfAntfor.setMinWidth(200);
+        TextField tfAntfot = new TextField();
+        tfAntfot.setPromptText("Antall fot");
+        tfAntfot.setMinWidth(200);
 
         TextField tfMotormerke = new TextField();
         tfMotormerke.setPromptText("Motormerke");
@@ -440,27 +441,31 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         btnRegBåtforsikring.setMinWidth(200);
         btnRegBåtforsikring.setOnAction(e -> {
             regLabelB.setText("Båtforsikring Registrert!");
+            String regNo = tfRegnr.getText();
+            String modell = tfBåtmodell.getText();
+            String årsModell = tfÅrsmodell.getText();
+            String motorMerke = tfMotormerke.getText();
 
-            int effekt = 0;
+            int motorYtelse = 0;
             double verdi = 0;
+            int lengdeFot = 0;
 
             try {
-                effekt = Integer.parseInt(tfYtelse.getText());
                 verdi = Double.parseDouble(tfVerdi.getText());
+                motorYtelse = Integer.parseInt(tfYtelse.getText());
+                lengdeFot = Integer.parseInt(tfAntfot.getText());
+                BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo,type, modell, årsModell, motorYtelse,motorMerke);
+                kontroll.setBåtForsikring(båt);
             } catch (NumberFormatException nfe) {
-                System.out.println("Dette er en feilmelding opprettet i KundesideBåt.java\n"
-                        + "En feil ved parsing av motoreffekt fra string til tall har oppstått\n" + nfe.toString());
+                System.out.println("Feil tallformat");
             }
-
-            kontroll.setBåtForsikring( verdi,tfRegnr.getText(), tfÅrsmodell.getText(), tfBåtmodell.getText(), tfAntfor.getText(), tfMotormerke.getText(), effekt, type, null);
-            regLabelB.setText("Bilforsikring Registrert!");
         });
 
         gridBåt.add(tfVerdi, 0, 0);
         gridBåt.add(tfRegnrB, 0, 1);
         gridBåt.add(tfÅrsmodellB, 0, 2);
         gridBåt.add(tfBåtmodell, 0, 3);
-        gridBåt.add(tfAntfor, 0, 4);
+        gridBåt.add(tfAntfot, 0, 4);
         gridBåt.add(tfMotormerke, 0, 5);
         gridBåt.add(tfYtelse, 0, 6);
         gridBåt.add(rbtMotorbåt, 0, 7);
@@ -707,7 +712,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 System.out.println("Feil tallformat.");
             }
 
-            kontroll.setFritidsForsikring( utLeie,kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
+            kontroll.setFritidsForsikring(utLeie, kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
             regLabelF.setText("FritidsBoligforsikring registrert!");
         });
 

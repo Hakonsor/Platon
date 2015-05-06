@@ -9,8 +9,11 @@ import java.io.Serializable;
 
 
 
-/**
- *
+/**Inneholder ingen egne datafelter.
+ * Men er laget som individuell klasse for å kunne skille mellom 
+ * fritidsbolig og bolig forsikringer, men også for å gjøre 
+ * utvidelsesmulighetene enkle og synlige
+ * 
  * @author Therese, Håkon
  */
 public class FritidsBolig extends Bygg implements Serializable{

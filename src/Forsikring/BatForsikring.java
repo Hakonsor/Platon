@@ -5,25 +5,28 @@
  */
 package Forsikring;
 
-import Person.Person;
+
 import java.io.Serializable;
 
-/**
- *
+/** Denne klassen representerer båtfosrikringer. Den inneholder data om båtene 
+ * En båtforsikring inneholder metoder som beregner premie og egenandel , i tillegg et datafelt som 
+ * øker premien etter et skadetilfelle som har ført til godkjent skademelding.
+ * utifra om båten har motor eller ikke.
  * @author Therese, Håkon
  */
 public class BatForsikring extends Forsikringer implements Serializable{
     
     private int lendgeFot, motorStyrke;
-    private String motorType;
-    private String regNo;
+    private String regNo, motorMerke, type;
+    private double forsikringSum;
     
-    public BatForsikring(double forSum, String motorType, int lendgeFot, int motorStyrke,String regNr , String type, String modell, String arsModell, Person person){
+    public BatForsikring(double forSum, int lendgeFot,String regNr , String type, String modell, String arsModell, int motorstyrke, String motormerke){
     super(0, 0); 
     this.lendgeFot = lendgeFot;
-    this.motorStyrke = motorStyrke;
-    this.motorType = motorType;
     this.forsikringSum = forSum;
+    this.type = type;
+    this.motorStyrke = motorstyrke;
+    this.motorMerke = motormerke;
     }
     
     public String getRegNr(){
@@ -35,8 +38,8 @@ public class BatForsikring extends Forsikringer implements Serializable{
     public int getMotorStyrke(){
      return motorStyrke;
     }
-    public String getMotorType(){
-     return motorType;
+    public String motorMerke(){
+     return motorMerke;
     }
     
     public String toString(){
@@ -44,23 +47,29 @@ public class BatForsikring extends Forsikringer implements Serializable{
     }
     
     // metoden setter egenandel utifra om båten har motor eller ikke.
-    public double beregnEgenAndel(boolean motor){
-        if(motor){
+    public void beregnEgenAndel(){
+        if(type.equals("Motorbåt")){
            egenandel = 3000;
         }
         else{
             egenandel= 2000;
-        }
-        return egenandel; 
+        } 
     }
     
     // beregner premie utifra forsikringssum
     public void beregnPremie(){
         double deltaForsSum = 0.02;
         premie =( forsikringSum*deltaForsSum);
+        
+        if(type.equals("Motorbåt")){
+            double motorTillegg = 300;
+            premie += motorTillegg;
+        }
     }
     
-    public void premieEtterSkade(){
-        
+    // beregner ny premie etter skade
+    public void premieEtterSkade(double gmlPremie){
+        double tillegg = 500;
+        premieTilGodkjenning = gmlPremie + tillegg;  
     }
 }

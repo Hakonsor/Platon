@@ -9,18 +9,28 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
+ * Klassen skal representere det som er unikt for en båtskademelding, så langt er det 
+ * bare en toStringmetode, men kan utvides til å inneholde mer. Funksjonen klassen har nå er at
+ * man kan bruke polymorfisme til å kjenne den igjen og instansiere.
  *
  * @author Therese
  */
-public class BatSkadeMelding extends KjoretoySkade implements Serializable{
+public class BatSkadeMelding extends SkadeMelding implements Serializable{
    
     
     public BatSkadeMelding(String skadeBeskrivelse, int utbetal, Calendar skadeDato) {
         super(skadeBeskrivelse, utbetal, skadeDato);
     }
-        
+    
+    
+    // teksten som skal vises i vinduet når skademeldingen er registrert.
     public String melding(){
-        String s = "Båtskademelding";
+        String s;
+        s = "Båtskademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() 
+                +" "+super.getForsikring().getKunde().getEtternavn()+"\n"+
+                
+                super.toString();
+        
         return s;
     }
     

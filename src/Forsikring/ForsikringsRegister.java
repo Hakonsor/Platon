@@ -13,7 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *
+ *Inneholder alle forsikringer, og metoder som kan hente ut informasjon om forsikringsobjekene.
+ * som premier, og forsikringsnummer og hvem forsikringen tilhører
  * @author Therese
  */
 public class ForsikringsRegister implements Serializable {

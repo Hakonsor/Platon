@@ -95,41 +95,37 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     // setter reiseforsikringen i registeret
     public void setReiseForsikring(Forsikringer forsikring) {
-        forsikringsregister.settInn((Kunde) innLoggetBruker, forsikring);
+        try{
+            Kunde kunde = ( Kunde ) innLoggetBruker;
+            forsikringsregister.settInn(kunde, forsikring );
+        }
+        catch( ClassCastException cce ){
+            System.out.println("Innlogget kunde er ikke av type kunde");
+        }
     }
+    
 
     //båt forsikring, oppretter båtforsikring og setter den inn i registeret
-    public void setBåtForsikring(double verdi,
-            String regNr, String arsmodell, String modell, String tffot, String motor, int ytelse, String type, Person person) {
-        int fot = 0;
-        if (person == null) {
-            person = innLoggetBruker;
-        }
+    public void setBåtForsikring(BatForsikring båt) {
 
         try {
-            fot = Integer.parseInt(tffot);
-        } catch (NumberFormatException nfe) {
-            System.out.println("Kun heltall er lov!");
-            return;
-        }
-        try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            forsikringsregister.settInn(kunde, new BatForsikring(verdi, motor, fot, ytelse, regNr, type, modell, arsmodell, person));
+            forsikringsregister.settInn(kunde, båt);
         } catch (ClassCastException cce) {
             System.out.println("Innlogget kunde er ikke av type kunde");
         }
     }
 
     // bolig forsikring, metode som oppretter boligforsikringer og setter de inn i registeret.
-    public void setBoligForsikring( boolean utLeie, double kvadrat, String adresse, String boligType, int byggeår,
+    public void setBoligForsikring(boolean utLeie, double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
-        
+
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
             System.out.println("innlogget bruker");
             forsikringsregister.settInn(kunde, new BoligForsikring(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
         } catch (ClassCastException cce) {
-            
+
             System.out.println("Feil med bruker");
         }
 
@@ -148,6 +144,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     }
 // Bilforsikring, oppretter bilforsikringsobjekter og setter de inn i registeret.
+
     public void setBilForsikring(BilForsikring bil, Person person) {
         Kunde kunde = null;
         try {
@@ -286,11 +283,12 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
         return new ArrayList<>(a);
     }
+
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
         List a = forsikringsregister.finnForsikring(k, i);
-        
+
         if (a == null || a.isEmpty()) {
             return null;
         }
@@ -301,14 +299,14 @@ public class Kontroller implements EventHandler<ActionEvent> {
         if (i == 0) {
             while (iterator.hasNext()) {
                 Forsikringer f = iterator.next();
-                if(f.getAktiv()){
-                liste.add(Integer.toString(f.getPoliseNr()));
+                if (f.getAktiv()) {
+                    liste.add(Integer.toString(f.getPoliseNr()));
                 }
             }
         } else if (a.get(0) instanceof BilForsikring) {
             while (iterator.hasNext()) {
                 BilForsikring b = (BilForsikring) iterator.next();
-                if(b.getAktiv()){
+                if (b.getAktiv()) {
                     infoliste = b.getPoliseNr() + " Regnr: " + b.getRegNr();
                     liste.add(infoliste);
                 }
@@ -317,29 +315,29 @@ public class Kontroller implements EventHandler<ActionEvent> {
         } else if (a.get(0) instanceof BatForsikring) {
             while (iterator.hasNext()) {
                 BatForsikring b = (BatForsikring) iterator.next();
-                if(b.getAktiv()){
-                liste.add(Integer.toString(b.getPoliseNr()) + " Regnr: " + b.getRegNr());
+                if (b.getAktiv()) {
+                    liste.add(Integer.toString(b.getPoliseNr()) + " Regnr: " + b.getRegNr());
                 }
             }
         } else if (a.get(0) instanceof BoligForsikring) {
             while (iterator.hasNext()) {
                 BoligForsikring b = (BoligForsikring) iterator.next();
-                if(b.getAktiv()){
-                liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
+                if (b.getAktiv()) {
+                    liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
                 }
             }
         } else if (a.get(0) instanceof FritidsBolig) {
             while (iterator.hasNext()) {
                 FritidsBolig b = (FritidsBolig) iterator.next();
-                if(b.getAktiv()){
-                liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
+                if (b.getAktiv()) {
+                    liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
                 }
             }
         } else if (a.get(0) instanceof ReiseForsikring) {
             while (iterator.hasNext()) {
                 ReiseForsikring b = (ReiseForsikring) iterator.next();
-                if(b.getAktiv()){
-                liste.add(Integer.toString(b.getPoliseNr()) + " " + b.getType());
+                if (b.getAktiv()) {
+                    liste.add(Integer.toString(b.getPoliseNr()) + " " + b.getType());
                 }
             }
         }
@@ -362,4 +360,65 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public void slettForsikring(int polisnr) {
         forsikringsregister.fjernForsikring(polisnr);
     }
-}
+
+//Statistikk konsulentsiden___________________________________________________________________
+// metodene finner inntekter for et år
+    public double finnInntekterReiseFors(int aar) {
+        return forsikringsregister.finnInntekterReiseFors(aar);
+    }
+    
+    // finner Inntekter boligforsikring
+    public double finnInntekterBoligForsikring(int aar) {
+        return forsikringsregister.finnInntekterReiseFors(aar);
+    }
+//  finner inntekter fritidsbolig
+    public double finnInntekterFritidsBolig(int aar) {
+        return forsikringsregister.finnInntekterFritidsBolig(aar);
+    }
+// finner inntekter båt
+    public double finnInntekterBåt(int aar) {
+        return forsikringsregister.finnInntekterBåt(aar);
+    }
+// finner inntekter bil
+    public double finnInntekterBil(int aar) {
+        return forsikringsregister.finnInntekterBil(aar);
+    }
+// finner den totale inntekten for alle forsikringer
+    public double finnInntekterAlleForsikringer(int aar) {
+        return forsikringsregister.finnInntekterAlleFors(aar);
+    }
+//____________slutt inntekt per år____________________________________
+
+    //Utgifter per år____________________________________________________
+    // finner utgifter på bilforsikringer
+    public double finnUtgiftBil(int år) {
+        return skademeldingregister.finnUtgiftBil(år);
+    }
+
+    // finner utgifter på båt.
+    public double finnUtgiftBåt(int år) {
+        return skademeldingregister.finnUtgiftBåt(år);
+    }
+
+    //finner utgifter på bolig
+    public double finnUtgiftBolig(int år) {
+        return skademeldingregister.finnUtgiftBolig(år);
+    }
+
+    //finner utgifter på fritidsbolig
+    public double finnUtgiftFritid(int år) {
+        return skademeldingregister.finnUtgiftFritid(år);
+    }
+
+    // finner utgifter på reise
+    public double finnUtgiftReise(int år) {
+        return skademeldingregister.finnUtgiftReise(år);
+    }
+
+    // finner totale utgifter for et gitt år
+    public double finnUtgiftTotal(int år) {
+        return skademeldingregister.finnUtgiftTotal(år);
+    }
+
+}// end of class kontroller
+
