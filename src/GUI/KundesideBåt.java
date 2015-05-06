@@ -316,7 +316,7 @@ public class KundesideBåt implements ComboBoxConverter {
                     && tfVerdi.getId().equals("valid")) {
                 double verdi = 0;
                 int lengdeFot = 0;
-                String regNo = tfRegNr;
+                String regNo = tfRegnr.getText();
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     lengdeFot = Integer.parseInt(tfYtelse.getText());
