@@ -15,7 +15,7 @@ public class Konsulent extends Bruker implements Serializable {
     private String brukernavn;
 
     public Konsulent(String brukernavn, String passord, String fornavn, String etternavn ){
-        super(fornavn, etternavn, passord);
+        super(passord, fornavn, etternavn);
         this.brukernavn = brukernavn;
         System.out.println(brukernavn);
     }

@@ -35,6 +35,7 @@ public class KundeSide {
         menu.getItems().addAll(left);
         left.setOnAction(e -> {
             primaryStage.close();
+            kontroll.setInnloggetBruker(null);
             kontroll.loginVindu(primaryStage);
         });
 

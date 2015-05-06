@@ -43,8 +43,6 @@ import java.util.Map;
         }
         return liste;
     }
-    
-
     public Kunde getKunde(String id) {
         return (Kunde) register.get(id);
     }
@@ -54,9 +52,11 @@ import java.util.Map;
     public void registrerBruker( Bruker b) {
         register.put(b.getNøkkel(), b);
     }
-
     public boolean inneholderBruker(String kundenr) {
        return register.containsKey(kundenr);
+    }
+    public Bruker getKonsulent(String nøkkel) {
+       return (Konsulent) register.get(nøkkel);
     }
     
     
