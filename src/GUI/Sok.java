@@ -140,6 +140,7 @@ public class Sok {
         if (k != null) {
             kontroll.setInnloggetBruker(k.getNøkkel());
             KonsulentsideKunde.tfKundenavn.setText(kontroll.getInnloggetBruker().getFornavn() + " " + kontroll.getInnloggetBruker().getEtternavn());
+            kontroll.opptaterListeKonsulent();
             vindu.close();
         }
 

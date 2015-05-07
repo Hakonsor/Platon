@@ -51,7 +51,12 @@ public class Kontroller implements EventHandler<ActionEvent> {
     private Bruker innloggetKonsulent = null;
     private SkadeMeldingRegister skademeldingregister = new SkadeMeldingRegister();
     private ForsikringsRegister forsikringsregister = new ForsikringsRegister();
-
+    private RegKonsulent regKonsulent;
+    private Sok sok;
+    private KonsulentSide nyKunsulentSide;
+    private KundeSide nyside;
+    private Registrer regVindu;
+    
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
     }
@@ -67,11 +72,11 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     public void regKonsulent() {
-        RegKonsulent regKonsulent = new RegKonsulent(new Stage(), this);
+        regKonsulent = new RegKonsulent(new Stage(), this);
     }
 
     public void sok() {
-        Sok sok = new Sok(new Stage(), this);
+        sok = new Sok(new Stage(), this);
     }
 
     // legger skade i skademeldingskøen. slik at den kan bli behandlet av konsulenten.
@@ -84,15 +89,15 @@ public class Kontroller implements EventHandler<ActionEvent> {
     }
 
     public void konsulentSide(Stage primaryStage) {
-        KonsulentSide nySide = new KonsulentSide(primaryStage, this);
+        nyKunsulentSide = new KonsulentSide(primaryStage, this);
     }
 
     public void kundeSide(Stage primaryStage) {
-        KundeSide nyside = new KundeSide(primaryStage, this);
+        nyside = new KundeSide(primaryStage, this);
     }
 
     public void regVindu() {
-        Registrer regVindu = new Registrer(new Stage(), this);
+        regVindu = new Registrer(new Stage(), this);
     }
 
     // setter reiseforsikringen i registeret
@@ -195,7 +200,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         Bruker bruker = brukerRegister.getBruker(nøkkel);
         if (bruker instanceof Kunde) {
             innLoggetBruker = brukerRegister.getKunde(nøkkel);
-        } else if (bruker instanceof Konsulent){
+        } else if (bruker instanceof Konsulent) {
             innloggetKonsulent = brukerRegister.getKonsulent(nøkkel);
         }
 
@@ -204,6 +209,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public Bruker getInnloggetBruker() {
         return innLoggetBruker;
     }
+
     public Bruker getInnloggetKonsulent() {
         return innloggetKonsulent;
     }
@@ -211,8 +217,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public Bruker finnBruker(String Bruker) {
         return brukerRegister.getBruker(Bruker);
     }
-
-
 
     //Kunde
     public void registrerBruker(Bruker b) {
@@ -290,6 +294,9 @@ public class Kontroller implements EventHandler<ActionEvent> {
     // Henter opp en forklaring(liste) på hvilke forsikringer kunden har.
     public ArrayList<String> getInfoForsikringListe(int i) {
         Kunde k = (Kunde) innLoggetBruker;
+        if (k == null) {
+            return null;
+        }
         List a = forsikringsregister.finnForsikring(k, i);
 
         if (a == null || a.isEmpty()) {
@@ -439,12 +446,14 @@ public class Kontroller implements EventHandler<ActionEvent> {
         Bruker sjekkBruker = finnBruker(bruker);
         if (sjekkBruker == null || sjekkBruker instanceof Kunde) {
             return false;
-            
+
         }
         System.out.println("konsulentS");
         return sjekkBruker.sjekkPassord(passord);
     }
-
+    public void opptaterListeKonsulent(){
+        nyKunsulentSide.opptatterListeKunde();
+    }
 
 }// end of class kontroller
 
