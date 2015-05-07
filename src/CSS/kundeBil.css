@@ -4,6 +4,12 @@
 
 #promtfix, #promtfix:focused {
     -fx-prompt-text-fill:darkgray;
+    -fx-background-radius: 0;
+}
+
+#combobox {
+    -fx-background-color: rgb(0, 178, 124);
+    -fx-background-radius: 0;
 }
 
 #btnSjekkpris {
@@ -28,9 +34,6 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
     -fx-border-color: black;
 }
-
-
-
 
 
 #error {

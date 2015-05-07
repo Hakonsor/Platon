@@ -1,6 +1,7 @@
 package GUI;
 
 import Forsikring.BilForsikring;
+import Forsikring.Forsikringer;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import Kontroller.Postregister;
@@ -10,6 +11,7 @@ import java.text.DecimalFormat;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -32,68 +34,197 @@ import javafx.util.Duration;
  */
 public class KundesideBil implements ComboBoxConverter {
 
-    public Pane bilFane(Kontroller kontroll) {
 
-        //Group root = new Group();
-        BorderPane borderPane = new BorderPane();
+    private BorderPane borderPane;
+    private HBox hb;
+    private GridPane gridBil;
+    private GridPane gridPerson;
+    private Label lbPerson;
+    private TextField tfFornavn;
+    private TextField tfEtternavn;
+    private TextField tfPersonnr;
+    private TextField tfAdresse;
+    private TextField tfPostnr;
+    private TextField tfTelefon;
+    private TextField postSted;
+    private Label lbBil;
+    private TextField tfRegnr;
+    private TextField tfÅrsmodell;
+    private TextField tfMerke;
+    private TextField tfModell;
+    private TextField tfKmstand;
+    private ComboBox<String> cbKjørelengde;
+    private ComboBox<String> cbBonus;
+    private ComboBox<String> cbEgenandel;
+    private Label lbvelgEier;
+    private ToggleGroup eiere;
+    private RadioButton rbtJa;
+    private RadioButton rbtNei;
+    private Label regLabel;
+    private Button btnSjekkpris;
+    private Button btnRegBilforsikring;
+    private HBox hbKnapper;
+    private VBox vb;
+    private Kontroller kontroller;
+
+
+
+
+    public Pane bilFane(Kontroller kontroll) {
+        this.kontroller = kontroll;
+        borderPane = new BorderPane();
         borderPane.setId("borderpane");
 
-        HBox hb = new HBox();
+        hb = new HBox();
         hb.setAlignment(Pos.CENTER);
         hb.setSpacing(10);
 
-        GridPane gridBil = new GridPane();
+        gridBil = new GridPane();
         gridBil.setAlignment(Pos.TOP_CENTER);
         gridBil.setHgap(10);
         gridBil.setVgap(10);
-        //gridBil.setPadding(new Insets(3));
 
-        GridPane gridPerson = new GridPane();
+        gridPerson = new GridPane();
         gridPerson.setAlignment(Pos.TOP_CENTER);
         gridPerson.setHgap(10);
         gridPerson.setVgap(10);
-        //gridPerson.setPadding(new Insets(3));
         gridPerson.setVisible(false);
 
         hb.getChildren().addAll(gridBil, gridPerson);
 
         //Person
-        Label lbPerson = new Label();
+        lbPerson = new Label();
         lbPerson.setText("Bileier innformasjon");
         lbPerson.setId("lbPerson");
         lbPerson.setAlignment(Pos.CENTER);
 
-        TextField tfFornavn = new TextField();
+        tfFornavn = new TextField();
         tfFornavn.setPromptText("Fornavn");
         tfFornavn.setId("promtfix");
         tfFornavn.setMinWidth(200);
+        tfFornavn.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
+                String fornavn = tfFornavn.getText();
 
-        TextField tfEtternavn = new TextField();
+                if (fornavn.matches(regex)) {
+                    tfFornavn.setId("valid");
+                } else {
+                    tfFornavn.setId("error");
+                }
+                if (fornavn.length() == 0) {
+                    tfFornavn.setId("promtfix");
+                }
+            }
+        });
+
+        tfEtternavn = new TextField();
         tfEtternavn.setPromptText("Etternavn");
         tfEtternavn.setId("promtfix");
         tfEtternavn.setMinWidth(200);
+        tfEtternavn.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
+                String etternavn = tfEtternavn.getText();
 
-        TextField tfPersonnr = new TextField();
+                if (etternavn.matches(regex)) {
+                    tfEtternavn.setId("valid");
+                } else {
+                    tfEtternavn.setId("error");
+                }
+                if (etternavn.length() == 0) {
+                    tfEtternavn.setId("promtfix");
+                }
+            }
+        });
+
+        tfPersonnr = new TextField();
         tfPersonnr.setPromptText("PersonNr");
         tfPersonnr.setId("promtfix");
         tfPersonnr.setMinWidth(200);
+        tfPersonnr.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String personnr = tfPersonnr.getText();
 
-        TextField tfAdresse = new TextField();
+                if (!personnr.matches(regex) || personnr.length() > 11 || personnr.length() < 11) {
+                    tfPersonnr.setId("error");
+                } else {
+                    tfPersonnr.setId("valid");
+                }
+                if (personnr.length() == 0) {
+                    tfPersonnr.setId("promtfix");
+                }
+            }
+        });
+
+        tfAdresse = new TextField();
         tfAdresse.setPromptText("Adresse");
         tfAdresse.setId("promtfix");
         tfAdresse.setMinWidth(200);
+        tfAdresse.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z0-9 _]+";
+                String adresse = tfAdresse.getText();
 
-        TextField tfPostnr = new TextField();
+                if (adresse.matches(regex)) {
+                    tfAdresse.setId("valid");
+                } else {
+                    tfAdresse.setId("error");
+                }
+                if (adresse.length() == 0) {
+                    tfAdresse.setId("promtfix");
+                }
+            }
+        });
+
+        tfPostnr = new TextField();
         tfPostnr.setPromptText("PostNr");
         tfPostnr.setId("promtfix");
         tfPostnr.setMinWidth(200);
+        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String postnr = tfPostnr.getText();
 
-        TextField tfTelefon = new TextField();
+                if (!postnr.matches(regex) || postnr.length() > 4 || postnr.length() < 4) {
+                    tfPostnr.setId("error");
+                } else {
+                    tfPostnr.setId("valid");
+                }
+                if (postnr.length() == 0) {
+                    tfPostnr.setId("promtfix");
+                }
+            }
+        });
+
+        tfTelefon = new TextField();
         tfTelefon.setPromptText("Telefon");
         tfTelefon.setId("promtfix");
         tfTelefon.setMinWidth(200);
+        tfTelefon.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String telefon = tfTelefon.getText();
 
-        TextField postSted = new TextField();
+                if (!telefon.matches(regex) || telefon.length() > 8 || telefon.length() < 8) {
+                    tfTelefon.setId("error");
+                } else {
+                    tfTelefon.setId("valid");
+                }
+                if (telefon.length() == 0) {
+                    tfTelefon.setId("promtfix");
+                }
+            }
+        });
+
+        postSted = new TextField();
         postSted.setPromptText("PostSted");
         postSted.setId("promtfix");
         postSted.setEditable(false);
@@ -114,63 +245,138 @@ public class KundesideBil implements ComboBoxConverter {
         });
 
         //Bil
-        Label lbBil = new Label();
+        lbBil = new Label();
         lbBil.setText("Bil innformasjon");
         lbBil.setId("promtfix");
         lbBil.setAlignment(Pos.CENTER);
 
-        TextField tfRegnr = new TextField();
+        tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr");
         tfRegnr.setId("promtfix");
         tfRegnr.setMinWidth(200);
+        tfRegnr.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "^[a-zA-Z]{2}\\d{5}$";
+                String regnr = tfRegnr.getText();
+
+                if (!regnr.matches(regex)) {
+                    tfRegnr.setId("error");
+                } else {
+                    tfRegnr.setId("valid");
+                }
+                if (regnr.length() == 0) {
+                    tfRegnr.setId("promtfix");
+                }
+            }
+        });
 
         TranslateTransition ttRegnr = new TranslateTransition(Duration.millis(100), tfRegnr);
         ttRegnr.setFromX(800);
         ttRegnr.setToX(0);
         ttRegnr.setCycleCount(1);
 
-        TextField tfÅrsmodell = new TextField();
+        tfÅrsmodell = new TextField();
         tfÅrsmodell.setPromptText("Årsmodell");
         tfÅrsmodell.setId("promtfix");
         tfÅrsmodell.setMinWidth(200);
+        tfÅrsmodell.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String årsmodell = tfÅrsmodell.getText();
+
+                if (!årsmodell.matches(regex) || årsmodell.length() > 4 || årsmodell.length() < 4) {
+                    tfÅrsmodell.setId("error");
+                } else {
+                    tfÅrsmodell.setId("valid");
+                }
+                if (årsmodell.length() == 0) {
+                    tfÅrsmodell.setId("promtfix");
+                }
+            }
+        });
 
         TranslateTransition ttÅrsmodell = new TranslateTransition(Duration.millis(100), tfÅrsmodell);
         ttÅrsmodell.setFromX(800);
         ttÅrsmodell.setToX(0);
         ttÅrsmodell.setCycleCount(1);
 
-        TextField tfMerke = new TextField();
+        tfMerke = new TextField();
         tfMerke.setPromptText("eks (BMW)");
         tfMerke.setId("promtfix");
         tfMerke.setMinWidth(200);
+        tfMerke.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[ÆØÅæøåA-Za-z]+";
+                String merke = tfMerke.getText();
+
+                if (merke.matches(regex)) {
+                    tfMerke.setId("valid");
+                } else {
+                    tfMerke.setId("error");
+                }
+                if (merke.length() == 0) {
+                    tfMerke.setId("promtfix");
+                }
+            }
+        });
 
         TranslateTransition ttMerke = new TranslateTransition(Duration.millis(100), tfMerke);
         ttMerke.setFromX(800);
         ttMerke.setToX(0);
         ttMerke.setCycleCount(1);
 
-        TextField tfModell = new TextField();
+        tfModell = new TextField();
         tfModell.setPromptText("eks (5-serie 530xd)");
         tfModell.setId("promtfix");
         tfModell.setMinWidth(200);
+        tfModell.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (tfModell.getLength() > 0) {
+                    tfModell.setId("valid");
+                } else {
+                    tfModell.setId("promtfix");
+                }
+            }
+        });
 
         TranslateTransition ttModell = new TranslateTransition(Duration.millis(100), tfModell);
         ttModell.setFromX(800);
         ttModell.setToX(0);
         ttModell.setCycleCount(1);
 
-        TextField tfKmstand = new TextField();
+        tfKmstand = new TextField();
         tfKmstand.setPromptText("Km-stand");
         tfKmstand.setId("promtfix");
         tfKmstand.setMinWidth(200);
+        tfKmstand.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String kmstand = tfKmstand.getText();
+
+                if (!kmstand.matches(regex) || kmstand.length() > 6) {
+                    tfKmstand.setId("error");
+                } else {
+                    tfKmstand.setId("valid");
+                }
+                if (kmstand.length() == 0) {
+                    tfKmstand.setId("promtfix");
+                }
+            }
+        });
 
         TranslateTransition ttKmstand = new TranslateTransition(Duration.millis(100), tfKmstand);
         ttKmstand.setFromX(800);
         ttKmstand.setToX(0);
         ttKmstand.setCycleCount(1);
 
-        ComboBox<String> cbKjørelengde = new ComboBox<>();
+        cbKjørelengde = new ComboBox<>();
         cbKjørelengde.setEditable(false);
+        cbKjørelengde.setId("combobox");
         cbKjørelengde.setMinWidth(200);
         cbKjørelengde.getItems().addAll(
                 "Kjørelengde:  5 000 km",
@@ -186,8 +392,9 @@ public class KundesideBil implements ComboBoxConverter {
         ttKjørelengde.setToX(0);
         ttKjørelengde.setCycleCount(1);
 
-        ComboBox<String> cbBonus = new ComboBox<>();
+        cbBonus = new ComboBox<>();
         cbBonus.setEditable(false);
+        cbBonus.setId("combobox");
         cbBonus.setMinWidth(200);
         cbBonus.getItems().addAll(
                 "Bonus: -20%",
@@ -209,8 +416,9 @@ public class KundesideBil implements ComboBoxConverter {
         ttBonus.setToX(0);
         ttBonus.setCycleCount(1);
 
-        ComboBox<String> cbEgenandel = new ComboBox<>();
+        cbEgenandel = new ComboBox<>();
         cbEgenandel.setEditable(false);
+        cbEgenandel.setId("combobox");
         cbEgenandel.setMinWidth(200);
         cbEgenandel.getItems().addAll(
                 "Egenandel:  4 000,-",
@@ -225,7 +433,7 @@ public class KundesideBil implements ComboBoxConverter {
         ttEgenandel.setCycleCount(1);
 
         //Registrer knapp & Label & Toggle
-        Label lbvelgEier = new Label();
+        lbvelgEier = new Label();
         lbvelgEier.setText("Annen eier?");
         lbvelgEier.setId("velgeier");
         lbvelgEier.setAlignment(Pos.CENTER);
@@ -235,9 +443,9 @@ public class KundesideBil implements ComboBoxConverter {
         ttVelgEier.setToX(0);
         ttVelgEier.setCycleCount(1);
 
-        ToggleGroup eiere = new ToggleGroup();
+        eiere = new ToggleGroup();
 
-        RadioButton rbtJa = new RadioButton("JA");
+        rbtJa = new RadioButton("JA");
         rbtJa.setToggleGroup(eiere);
         rbtJa.setId("rbtJa");
         rbtJa.setSelected(false);
@@ -245,12 +453,13 @@ public class KundesideBil implements ComboBoxConverter {
             gridPerson.setVisible(true);
         });
 
+
         TranslateTransition ttJa = new TranslateTransition(Duration.millis(100), rbtJa);
         ttJa.setFromX(800);
         ttJa.setToX(0);
         ttJa.setCycleCount(1);
 
-        RadioButton rbtNei = new RadioButton("NEI");
+        rbtNei = new RadioButton("NEI");
         rbtNei.setToggleGroup(eiere);
         rbtNei.setId("rbtNei");
         rbtNei.setSelected(true);
@@ -263,12 +472,12 @@ public class KundesideBil implements ComboBoxConverter {
         ttNei.setToX(0);
         ttNei.setCycleCount(1);
 
-        Label regLabel = new Label();
+        regLabel = new Label();
         regLabel.setText("");
         regLabel.setId("regLabel");
         regLabel.setAlignment(Pos.CENTER);
 
-        Button btnSjekkpris = new Button();
+        btnSjekkpris = new Button();
         btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
@@ -279,67 +488,59 @@ public class KundesideBil implements ComboBoxConverter {
         ftSjekkpris.setCycleCount(1);
         
 
-        Button btnRegBilforsikring = new Button();
+        btnRegBilforsikring = new Button();
         btnRegBilforsikring.setText("Bestill");
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
 
         btnSjekkpris.setOnAction((ActionEvent e) -> {
+            if (tfRegnr.getId().equals("valid")
+                    && tfÅrsmodell.getId().equals("valid")
+                    && tfMerke.getId().equals("valid")
+                    && tfModell.getId().equals("valid")
+                    && tfKmstand.getId().equals("valid")
+                    && !cbBonus.getValue().equals("Velg Bonus:")
+                    && !cbEgenandel.getValue().equals("Velg Egenandel:")
+                    && !cbKjørelengde.getValue().equals("Velg Kjørelengde:")
+                    ){
 
-            double bonus = 0;
-            double egenandel = 0;
-            int kjøreLengde = 0;
-            String regNo = tfRegnr.getText();
-            String årsModell = tfÅrsmodell.getText();
-            String bilMerke = tfMerke.getText();
-            String bilModell = tfModell.getText();
-            int kmStand = 0;
-            try {
-                bonus = convertDou(cbBonus.getValue());
-                egenandel = convertDou(cbEgenandel.getValue());
-                kjøreLengde = convertInt(cbKjørelengde.getValue());
-                kmStand = Integer.parseInt(tfKmstand.getText());
+                double bonus = 0;
+                double egenandel = 0;
+                int kjøreLengde = 0;
+                String regNo = tfRegnr.getText();
+                String årsModell = tfÅrsmodell.getText();
+                String bilMerke = tfMerke.getText();
+                String bilModell = tfModell.getText();
+                int kmStand = 0;
+                try {
+                    bonus = convertDou(cbBonus.getValue());
+                    egenandel = convertDou(cbEgenandel.getValue());
+                    kjøreLengde = convertInt(cbKjørelengde.getValue());
+                    kmStand = Integer.parseInt(tfKmstand.getText());
 
-            } catch (NumberFormatException nfe) {
-                System.out.println("Feil tallformat");
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat");
+                }
+                BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde,
+                        regNo, bilMerke, bilModell, årsModell, kmStand);
+                String form = "0.00";
+                DecimalFormat tall = new DecimalFormat(form);
+                regLabel.setText("Årlig premie: " + tall.format(bil.getPremie()) + " kr");
             }
-            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde,
-                    regNo, bilMerke, bilModell, årsModell, kmStand);
-            String form = "0.00";
-            DecimalFormat tall = new DecimalFormat(form);
-            regLabel.setText("Årlig premie: " + tall.format(bil.getPremie()) + " kr");
-
+            else {
+                regLabel.setText("Sjekk feil på feltene");
+            }
         });
+
         btnRegBilforsikring.setOnAction(e -> {
-
-            Person person;
-            if (rbtJa.selectedProperty().getValue()) {
-                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
-            } else {
-                person = null;
+            if (rbtJa.isSelected()){
+                ja();
             }
-            double bonus = 0;
-            double egenandel = 0;
-            int kjøreLengde = 0;
-            String regNo = tfRegnr.getText();
-            String årsModell = tfÅrsmodell.getText();
-            String bilMerke = tfMerke.getText();
-            String bilModell = tfModell.getText();
-            int kmStand = 0;
-            try {
-                bonus = convertDou(cbBonus.getValue());
-                egenandel = convertDou(cbEgenandel.getValue());
-                kjøreLengde = convertInt(cbKjørelengde.getValue());
-                kmStand = Integer.parseInt(tfKmstand.getText());
-
-            } catch (NumberFormatException nfe) {
-                System.out.println("Feil tallformat");
+            if (rbtNei.isSelected()){
+                nei();
             }
-            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
-            kontroll.setBilForsikring(bil, person);
-            regLabel.setText("Bilforsikring Registrert!");
-
         });
+
 
         FadeTransition ftBestill = new FadeTransition(Duration.millis(100), btnRegBilforsikring);
         ftBestill.setFromValue(0.0F);
@@ -374,12 +575,12 @@ public class KundesideBil implements ComboBoxConverter {
         //gridBil.setGridLinesVisible(true);
         //gridPerson.setGridLinesVisible(true);
 
-        HBox hbKnapper = new HBox();
+        hbKnapper = new HBox();
         hbKnapper.setAlignment(Pos.CENTER);
         hbKnapper.setSpacing(10);
         hbKnapper.getChildren().addAll(btnSjekkpris, btnRegBilforsikring);
 
-        VBox vb = new VBox();
+        vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(10);
         //vb.setStyle("-fx-border-color: red;");
@@ -393,5 +594,97 @@ public class KundesideBil implements ComboBoxConverter {
 
         return borderPane;
 
+    }
+
+    public void ja() {
+        if (tfRegnr.getId().equals("valid")
+                && tfÅrsmodell.getId().equals("valid")
+                && tfMerke.getId().equals("valid")
+                && tfModell.getId().equals("valid")
+                && tfKmstand.getId().equals("valid")
+                && !cbBonus.getValue().equals("Velg Bonus:")
+                && !cbEgenandel.getValue().equals("Velg Egenandel:")
+                && !cbKjørelengde.getValue().equals("Velg Kjørelengde:")
+                && tfFornavn.getId().equals("valid")
+                && tfEtternavn.getId().equals("valid")
+                && tfPersonnr.getId().equals("valid")
+                && tfTelefon.getId().equals("valid")
+                && tfAdresse.getId().equals("valid")
+                && tfPostnr.getId().equals("valid")
+                ) {
+            Person person;
+            if (rbtJa.selectedProperty().getValue()) {
+                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
+            } else {
+                person = null;
+            }
+            double bonus = 0;
+            double egenandel = 0;
+            int kjøreLengde = 0;
+            String regNo = tfRegnr.getText();
+            String årsModell = tfÅrsmodell.getText();
+            String bilMerke = tfMerke.getText();
+            String bilModell = tfModell.getText();
+            int kmStand = 0;
+            try {
+                bonus = convertDou(cbBonus.getValue());
+                egenandel = convertDou(cbEgenandel.getValue());
+                kjøreLengde = convertInt(cbKjørelengde.getValue());
+                kmStand = Integer.parseInt(tfKmstand.getText());
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Feil tallformat");
+            }
+            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
+            kontroller.setBilForsikring(bil, person);
+            regLabel.setText("Bilforsikring Registrert!");
+
+        } else {
+            regLabel.setText("Sjekk feil på feltene");
+        }
+    }
+
+
+    public void nei(){
+
+        if (tfRegnr.getId().equals("valid")
+                && tfÅrsmodell.getId().equals("valid")
+                && tfMerke.getId().equals("valid")
+                && tfModell.getId().equals("valid")
+                && tfKmstand.getId().equals("valid")
+                && !cbBonus.getValue().equals("Velg Bonus:")
+                && !cbEgenandel.getValue().equals("Velg Egenandel:")
+                && !cbKjørelengde.getValue().equals("Velg Kjørelengde:")
+                ) {
+            Person person;
+            if (rbtJa.selectedProperty().getValue()) {
+                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
+            } else {
+                person = null;
+            }
+            double bonus = 0;
+            double egenandel = 0;
+            int kjøreLengde = 0;
+            String regNo = tfRegnr.getText();
+            String årsModell = tfÅrsmodell.getText();
+            String bilMerke = tfMerke.getText();
+            String bilModell = tfModell.getText();
+            int kmStand = 0;
+            try {
+                bonus = convertDou(cbBonus.getValue());
+                egenandel = convertDou(cbEgenandel.getValue());
+                kjøreLengde = convertInt(cbKjørelengde.getValue());
+                kmStand = Integer.parseInt(tfKmstand.getText());
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Feil tallformat");
+            }
+            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
+            kontroller.setBilForsikring(bil, person);
+            regLabel.setText("Bilforsikring Registrert!");
+
+        } else {
+            regLabel.setText("Sjekk feil på feltene");
+        }
     }
 }

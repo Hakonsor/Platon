@@ -123,7 +123,7 @@ public class KundesideBolig {
 
         CheckBox cbleie = new CheckBox( "Er dette utleiebolig ? ");
         cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if (cbleie.isSelected() == true) {
+            if (cbleie.isSelected()) {
                 utLeie = true;
                 
             } else {
