@@ -26,24 +26,28 @@ import static javafx.geometry.Pos.TOP_CENTER;
  */
 public class Sok {
 
+    private Kontroller kontroll;
+    private ObservableList<String> data = FXCollections.observableArrayList();
     private final String sokBilde = "Bilder/sok.png";
     private final TextField fornavn;
     private final TextField etternavn;
     private final TextField kundeNr;
+    private ListView<String> listView;
     private final Button btnsøk;
     private final Button btnvelg;
     private final Button btnlukk;
     private static Stage vindu;
 
-    public Sok(Stage vindu, Kontroller kontroll)  {
+    public Sok(Stage vindu, Kontroller kontroll) {
 
         this.vindu = vindu;
+        this.kontroll = kontroll;
 
-       ImageView img = new ImageView(new Image(sokBilde));
+        ImageView img = new ImageView(new Image(sokBilde));
         img.setId("loginImg");
         img.setPreserveRatio(true);
         img.setFitWidth(100);
-        GridPane.setHalignment(img , HPos.CENTER);
+        GridPane.setHalignment(img, HPos.CENTER);
 
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
@@ -70,8 +74,7 @@ public class Sok {
         kundeNr.setMaxWidth(200);
         GridPane.setHalignment(kundeNr, HPos.CENTER);
 
-        ObservableList<String> data = FXCollections.observableArrayList();
-        ListView<String> listView = new ListView<>(data);
+        listView = new ListView<>(data);
         listView.setPrefSize(300, 200);
         listView.setEditable(false);
         //data.addAll("Honda CRV", "Ferrari Enzo", "VW Golf");
@@ -79,36 +82,15 @@ public class Sok {
         listView.setItems(data);
         listView.setCellFactory(ComboBoxListCell.forListView(data));
 
-
         btnvelg = new Button("Velg");
         btnvelg.setId("btnvelg");
         btnvelg.setMinWidth(100);
-        btnvelg.setOnAction(e -> {
-            
-            Kunde k = kontroll.getKunde(listView.getSelectionModel().getSelectedItem().replaceAll("\\D", ""));
-            if (k != null) {
-                kontroll.setInnloggetBruker((listView.getSelectionModel().getSelectedItem().replaceAll("\\D", "")));
-                KonsulentsideKunde.tfKundenavn.setText(kontroll.getInnloggetBruker().getFornavn() + " " + kontroll.getInnloggetBruker().getEtternavn());
-                vindu.close();
-            }
-            else
-                System.out.println("Du har ikke valgt en kunde");
-                    
-            //listView.p kundeListe = kontroll.finnKunde(kundeNr.getText(), etternavn.getText(), fornavn.getText());
-            System.out.println("Du har valgt en kunde!");
-        });
+        btnvelg.setOnAction(e -> {velgKunde();});
 
         btnsøk = new Button("Søk");
         btnsøk.setId("btnsøk");
         btnsøk.setMinWidth(100);
-        btnsøk.setOnAction(e -> {
-            data.clear();
-            List<Kunde> list = kontroll.søkeResultater(fornavn.getText(), etternavn.getText(), kundeNr.getText());
-            System.out.println(list.toString());
-            for (Kunde i : list) {
-                data.add(i.getFornavn() + " " + i.getEtternavn() + ", KundeNr: " + i.getNøkkel());
-            }
-        });
+        btnsøk.setOnAction(e -> {søkeResultater();});
 
         btnlukk = new Button("Lukk");
         btnlukk.setId("btnlukk");
@@ -130,7 +112,7 @@ public class Sok {
         VBox vb = new VBox();
         vb.setSpacing(25);
         vb.setAlignment(Pos.CENTER);
-         vb.getChildren().addAll(img, grid);
+        vb.getChildren().addAll(img, grid);
 
         Scene scene = new Scene(vb, 450, 580);
         vindu.setTitle("Søk");
@@ -139,7 +121,28 @@ public class Sok {
         vindu.show();
     }
 
+    private void søkeResultater() {
+        data.clear();
+        List<Kunde> list = kontroll.søkeResultater(fornavn.getText(), etternavn.getText(), kundeNr.getText());
+        list.stream().forEach((i) -> {
+            data.add(i.getFornavn() + " " + i.getEtternavn() + ", KundeNr: " + i.getNøkkel());
+        });
+    }
 
+    private void velgKunde() {
+        String kundenr = listView.getSelectionModel().getSelectedItem();
+        Kunde k = null;
+        System.out.println(kundenr);
+        if (kundenr != null && !kundenr.isEmpty()) {
+            k = kontroll.getKunde(kundenr.replaceAll("\\D", ""));
+        }
 
+        if (k != null) {
+            kontroll.setInnloggetBruker(k.getNøkkel());
+            KonsulentsideKunde.tfKundenavn.setText(kontroll.getInnloggetBruker().getFornavn() + " " + kontroll.getInnloggetBruker().getEtternavn());
+            vindu.close();
+        }
+
+    }
 
 }//End of class
