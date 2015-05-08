@@ -231,7 +231,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
             brukerRegister = (BrukerRegister) innfil.readObject();
             skademeldingregister = (SkadeMeldingRegister) innfil.readObject();
             forsikringsregister = (ForsikringsRegister) innfil.readObject();
-            Forsikringer.setStaticPolisnr(innfil.readInt());
+            Forsikringer.setStaticPolisenr(innfil.readInt());
             SkadeMelding.setStaticSkadeNr(innfil.readInt());
             Kunde.setStaticKundeNr(innfil.readInt());
         } catch (ClassNotFoundException cnfe) {
@@ -261,7 +261,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
             utfil.writeObject(brukerRegister);
             utfil.writeObject(skademeldingregister);
             utfil.writeObject(forsikringsregister);
-            utfil.writeInt(Forsikringer.getStaticPolisnr());
+            utfil.writeInt(Forsikringer.getStaticPolisenr());
             utfil.writeInt(SkadeMelding.getStaticSkadeNr());
             utfil.writeInt(Kunde.getStaticKundeNr());
 
@@ -376,28 +376,24 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public double finnInntekterReiseFors(int aar) {
         return forsikringsregister.finnInntekterReiseFors(aar);
     }
-
+    
     // finner Inntekter boligforsikring
     public double finnInntekterBoligForsikring(int aar) {
         return forsikringsregister.finnInntekterReiseFors(aar);
     }
 //  finner inntekter fritidsbolig
-
     public double finnInntekterFritidsBolig(int aar) {
         return forsikringsregister.finnInntekterFritidsBolig(aar);
     }
 // finner inntekter båt
-
     public double finnInntekterBåt(int aar) {
         return forsikringsregister.finnInntekterBåt(aar);
     }
 // finner inntekter bil
-
     public double finnInntekterBil(int aar) {
         return forsikringsregister.finnInntekterBil(aar);
     }
 // finner den totale inntekten for alle forsikringer
-
     public double finnInntekterAlleForsikringer(int aar) {
         return forsikringsregister.finnInntekterAlleFors(aar);
     }

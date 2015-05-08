@@ -21,15 +21,15 @@ import java.util.GregorianCalendar;
  * @author Therese, Håkon
  */
 public abstract class Forsikringer implements Serializable{
-    protected boolean aktiv;
-    protected Kunde kunde;
-    protected int poliseNr;
-    protected static int nestePoliseNr = 100000;
-    protected double premie;
-    protected double premieTilGodkjenning;
-    protected double egenandel;
-    protected Calendar startDato;
-    protected Calendar utløpsDato;
+    private boolean aktiv;
+    private Kunde kunde;
+    private int poliseNr;
+    private static int nestePoliseNr = 100000;
+    private double premie;
+    private double premieTilGodkjenning;
+    private double egenandel;
+    private Calendar startDato;
+    private Calendar utløpsDato;
 
      
     
@@ -47,11 +47,11 @@ public abstract class Forsikringer implements Serializable{
        startDato = Calendar.getInstance();
        utløpsDato = new GregorianCalendar(startDato.get(Calendar.YEAR)+ 1, startDato.get(Calendar.MONTH), startDato.get(Calendar.MONTH));
     }
-    public static int getStaticPolisnr(){
+    public static int getStaticPolisenr(){
         return nestePoliseNr;
     }
     
-    public static void setStaticPolisnr(int nyNesteNr){
+    public static void setStaticPolisenr(int nyNesteNr){
         nestePoliseNr = nyNesteNr;
     }
     
@@ -93,6 +93,10 @@ public abstract class Forsikringer implements Serializable{
        return egenandel;
    }
     
+    public void setEgenandel(double egenandel){
+        this.egenandel = egenandel;
+    }
+    
     public void setStartDato( Calendar startDato ){
        this.startDato = startDato;
        
@@ -103,12 +107,12 @@ public abstract class Forsikringer implements Serializable{
        
     }
    
-    // returnerer uformattert dato.
+   
     public Calendar getStartDato(){
        return startDato;
    }
    
-    // returnerer en uformattert sluttdato
+    
     public Calendar getSluttDato(){
        return utløpsDato;
    } 
@@ -132,10 +136,6 @@ public abstract class Forsikringer implements Serializable{
     public boolean equals(Forsikringer f){
        return ( f.getPoliseNr() == ( poliseNr) );
        }
-
-    public int utbetal(int i, double d, int i0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public void setInaktiv() {
         aktiv = false;
