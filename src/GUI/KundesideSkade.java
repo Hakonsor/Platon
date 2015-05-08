@@ -17,7 +17,12 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,12 +30,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxListCell;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * Created by Magnus on 27.04.15.
@@ -44,20 +47,15 @@ public class KundesideSkade {
     Kontroller  kontroll;
     private Calendar dato;
     private String skade = "BrannSkade";
-    
     private ObservableList<String> data = FXCollections.observableArrayList();
     private ListView<String> listView = new ListView<>(data);
     private TextField tfBeløp;
     private BorderPane borderPane;
-    private HBox vb;
-    
-    private Label overskrift;
+    private VBox vb;
+    private GridPane gridFelt;
     private GridPane grid;
-    
     private ComboBox<String> forsikringComboBox;
     private Label lbInfo;
-    
-    private HBox hb;
     private TextArea skriveOmråde;
     
     private ToggleGroup skadeType;
@@ -78,34 +76,26 @@ public class KundesideSkade {
 
     public Pane skadeFane(Kontroller kontroll) {
         this.kontroll = kontroll;
-        //Group root = new Group();
-        tfBeløp = new TextField();
+
         borderPane = new BorderPane();
-        vb = new HBox();
-        vb.setPadding(new Insets(25, 25, 0, 25));
-        vb.setSpacing(100);
+        borderPane.setId("borderpane");
+
+        vb = new VBox();
         vb.setAlignment(Pos.CENTER);
-
-        overskrift = new Label();
-        overskrift.setText("Her oppretter du en Skademelding");
-        overskrift.setId("overskrift");
-        vb.getChildren().addAll(overskrift);
-
-        borderPane.setTop(vb); //TOP
+        vb.setSpacing(10);
+        vb.setPadding(new Insets(60, 10, 10, 10));//top/right/bottom/left
+        //vb.setStyle("-fx-border-color: blue;");
 
         grid = new GridPane();
-        grid.setAlignment(Pos.TOP_CENTER);
-        grid.setHgap(10);
-
-        grid.setVgap(10);
-        grid.setPadding(new Insets(10));
-
-        grid.setPrefHeight(50);
-        grid.setPrefWidth(800);
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(20);
+        grid.setVgap(20);
+        //grid.setPadding(new Insets(10));
 
         //Skjema
         forsikringComboBox = new ComboBox<String>();
         forsikringComboBox.setEditable(false);
+        forsikringComboBox.setId("forsikring");
         forsikringComboBox.getItems().addAll(
                 "Alle",
                 "Båtforsikring",
@@ -114,32 +104,56 @@ public class KundesideSkade {
                 "Boligforsikring",
                 "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
-        forsikringComboBox.setOnAction(e -> {SkrivListe();});
+        forsikringComboBox.setOnAction(e -> {
+            SkrivListe();
+        });
+
+        FadeTransition ftcombo = new FadeTransition(Duration.millis(100), forsikringComboBox);
+        ftcombo.setFromValue(0.0F);
+        ftcombo.setToValue(1.0F);
+        ftcombo.setCycleCount(1);
 
         lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
         lbInfo.setId("lbInfo");
+        lbInfo.setVisible(false);
 
-        hb = new HBox();
-        hb.setSpacing(20);
-        hb.setAlignment(Pos.CENTER);
+        gridFelt = new GridPane();
+        gridFelt.setAlignment(Pos.CENTER);
+        gridFelt.setHgap(10);
+        gridFelt.setVgap(10);
 
         skriveOmråde = new TextArea();
         skriveOmråde.setEditable(true);
+        skriveOmråde.setId("felt");
         skriveOmråde.setPromptText("Skriv innformasjon om skaden");
-        skriveOmråde.setPrefSize(400, 400);
-        skriveOmråde.setOnMouseEntered(e -> { skriveOmråde.setPromptText("Skriv innformasjon om skaden");});
-        skriveOmråde.setStyle("-fx-prompt-text-fill: rgba(0, 0, 0)" );
-       
-        listView.setPrefSize(300, 400);
-        listView.setId("listview");
+        skriveOmråde.setPrefSize(300, 300);
+        skriveOmråde.setOnMouseEntered(e -> {
+            skriveOmråde.setPromptText("Skriv innformasjon om skaden");
+        });
+        skriveOmråde.setStyle("-fx-prompt-text-fill: rgba(0, 0, 0)");
+
+        FadeTransition ftskrive = new FadeTransition(Duration.millis(100), skriveOmråde);
+        ftskrive.setFromValue(0.0F);
+        ftskrive.setToValue(1.0F);
+        ftskrive.setCycleCount(1);
+        
+        listView.setPrefSize(200, 300);
+        listView.setId("felt");
         listView.setEditable(false);
 
         data.addAll("   ");
 
         listView.setItems(data);
         listView.setCellFactory(ComboBoxListCell.forListView(data));
-        listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> { settKnapper();});
+        listView.getSelectionModel().selectedItemProperty().addListener((Observable e) -> {
+            settKnapper();
+        });
+
+        FadeTransition ftlist = new FadeTransition(Duration.millis(100), listView);
+        ftlist.setFromValue(0.0F);
+        ftlist.setToValue(1.0F);
+        ftlist.setCycleCount(1);
 
         skadeType = new ToggleGroup();
         rbtVann = new RadioButton("Vannskade");
@@ -166,75 +180,139 @@ public class KundesideSkade {
         });
         rbtBrann.setVisible(false);
 
-
-        radioGrid = new GridPane();
-        radioGrid.add(rbtBrann, 0, 0);
-        radioGrid.add(rbtRør, 0, 1);
-        radioGrid.add(rbtVann,0, 2);
-        radioGrid.setVgap(30);
-
-        hb.getChildren().addAll(listView, skriveOmråde, radioGrid);
-
+        gridFelt.add(forsikringComboBox, 0, 0);
+        gridFelt.add(listView, 0, 1);
+        gridFelt.add(skriveOmråde, 1, 1);
 
         lbSkadebeløp = new Label();
         lbSkadebeløp.setText("Samlet skadebeløp:");
         lbSkadebeløp.setId("lbSkadebeløp");
 
+        FadeTransition ftLabelskadebeløp = new FadeTransition(Duration.millis(100), lbSkadebeløp);
+        ftLabelskadebeløp.setFromValue(0.0F);
+        ftLabelskadebeløp.setToValue(1.0F);
+        ftLabelskadebeløp.setCycleCount(1);
+
+        tfBeløp = new TextField();
         tfBeløp.setMaxWidth(100);
+        tfBeløp.setId("promtfix");
         tfBeløp.setAlignment(Pos.CENTER_LEFT);
         tfBeløp.setPromptText("Beløp:");
+        tfBeløp.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String beløp = tfBeløp.getText();
+
+                if (!beløp.matches(regex) || beløp.length() > 12) {
+                    tfBeløp.setId("error");
+                } else {
+                    tfBeløp.setId("valid");
+                }
+                if (beløp.length() == 0) {
+                    tfBeløp.setId("promtfix");
+                }
+            }
+        });
+
+        FadeTransition ftBeløp = new FadeTransition(Duration.millis(100), tfBeløp);
+        ftBeløp.setFromValue(0.0F);
+        ftBeløp.setToValue(1.0F);
+        ftBeløp.setCycleCount(1);
 
         lbDato = new Label();
         lbDato.setText("Velg dato for hendelsen:");
         lbDato.setId("lbDato");
 
+        FadeTransition ftlbdato = new FadeTransition(Duration.millis(100), lbDato);
+        ftlbdato.setFromValue(0.0F);
+        ftlbdato.setToValue(1.0F);
+        ftlbdato.setCycleCount(1);
+
         dpDato = new DatePicker();
-        dpDato.setPromptText("Format eks. 12.02.2015");
-        dpDato.setOnAction((ActionEvent e) -> {sjekkDate();});
+        dpDato.setId("promtfix");
+        dpDato.setMaxWidth(120);
+        dpDato.setPromptText("dd.mm.åååå");
+        dpDato.setEditable(false);
+        dpDato.setOnAction((ActionEvent e) -> {
+            sjekkDate();
+        });
+        dpDato.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                if (dpDato.getValue() != null) {
+                    dpDato.setId("valid");
+                } else {
+                    dpDato.setId("promtfix");
+                }
+            }
+        });
+
+        FadeTransition ftdato = new FadeTransition(Duration.millis(100), dpDato);
+        ftdato.setFromValue(0.0F);
+        ftdato.setToValue(1.0F);
+        ftdato.setCycleCount(1);
 
         fileChooser = new FileChooser();
 
         btnÅpnefil = new Button("Velg fil");
-        btnÅpnefil.setMaxWidth(200);
+        btnÅpnefil.setMaxWidth(100);
+        btnÅpnefil.setId("fil");
         btnÅpnefil.setOnAction(e -> {
             fileChooser.showOpenMultipleDialog(new Stage());
         });
 
-        lbSkade = new Label();
-        lbSkade.setText("");
-        lbSkade.setId("lbskade");
+        FadeTransition ftfil = new FadeTransition(Duration.millis(100), btnÅpnefil);
+        ftfil.setFromValue(0.0F);
+        ftfil.setToValue(1.0F);
+        ftfil.setCycleCount(1);
 
         btnRapSkade = new Button();
-        btnRapSkade.setText("Raporter skade");
+        btnRapSkade.setText("Meld skade");
         btnRapSkade.setId("btnRapSkade");
-        btnRapSkade.setMinWidth(200);
-        btnRapSkade.setOnAction((ActionEvent e) -> {repSkade();});
+        btnRapSkade.setMinWidth(100);
+        btnRapSkade.setOnAction((ActionEvent e) -> {
+            repSkade();
+        });
 
-        lbFeilFormat = new Label();
-        lbFeilFormat.setVisible(false);
+        FadeTransition ftmeldskade = new FadeTransition(Duration.millis(100), btnRapSkade);
+        ftmeldskade.setFromValue(0.0F);
+        ftmeldskade.setToValue(1.0F);
+        ftmeldskade.setCycleCount(1);
 
-        grid.add(forsikringComboBox, 0, 0);
-        //grid.add(lbInfo, 0, 1);
-        grid.add(hb, 0, 2);
-        grid.add(lbSkadebeløp, 0, 3);
-        grid.add(tfBeløp, 0, 4);
+        SequentialTransition st = new SequentialTransition(ftcombo, ftlist, ftskrive, ftLabelskadebeløp, ftlbdato, ftBeløp, ftdato, ftfil, ftmeldskade);
+        st.play();
 
-        grid.add(lbFeilFormat, 1, 4);
-        grid.add(lbDato, 0, 5);
-        grid.add(dpDato, 0, 6);
-        grid.add(btnÅpnefil, 0, 7);
-        grid.add(btnRapSkade, 0, 8);
-        grid.add(lbSkade, 0, 9);
+        grid.add(rbtBrann, 2, 0);
+        grid.add(rbtRør, 2, 1);
+        grid.add(rbtVann, 2, 2);
 
-        borderPane.setCenter(grid); // CENTER
+        grid.add(lbSkadebeløp, 0, 0);
+        grid.add(tfBeløp, 0, 1);
+        grid.add(btnÅpnefil, 0, 2);
+
+        grid.add(lbDato, 1, 0);
+        grid.add(dpDato, 1, 1);
+        grid.add(btnRapSkade, 1, 2);
+
+        vb.getChildren().addAll(gridFelt, grid, lbInfo);
+
+        gridFelt.setGridLinesVisible(false);
+        grid.setGridLinesVisible(false);
+        borderPane.setCenter(vb); // CENTER
         
 
         // finner ut hvilken forsikring det er og legger skademeldingen i køen,
         // her beregnes også skadesummen samt nye premier, men premien settes endelig,
         // først når konsulenten har godkjent beløpet/ skademeldingen.
 
+        borderPane.getStylesheets().add("CSS/kundeskade.css");
         return borderPane;
     }
+
+
+
+
       // henter datoen og konverterer den til Calendar
     private void sjekkDate(){
                 LocalDate date = dpDato.getValue();
@@ -261,7 +339,7 @@ public class KundesideSkade {
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
             }else{
-                lbSkade.setText("Vennligst velg en forsikring");
+                lbInfo.setText("Vennligst velg en forsikring");
                 return;
             }
             //heter inn en string brukeren har stykketpå og kutter av alt etter 6 tegn og fjerner alle bokstaver og leter etter en forsikring med det som er igjen
@@ -281,21 +359,21 @@ public class KundesideSkade {
             } else {
                 skriveOmråde.setEditable(false);
             }
-        });
+        }
 
         // finner ut hvilken forsikring det er og legger skademeldingen i køen,
         // her beregnes også skadesummen samt nye premier, men premien settes endelig,
         // først når konsulenten har godkjent beløpet/ skademeldingen.
-        btnRapSkade.setOnAction((ActionEvent e) -> {
+        public void repSkade(){
             String polisNr = listView.getSelectionModel().getSelectedItem();
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
-            } else {
-                lbSkade.setText("Vennligst velg en forsikring");
+            }else{
+                lbInfo.setText("Vennligst velg en forsikring");
                 return;
             }
-            if (dato == null || dato.after(Calendar.getInstance())) {
-                lbSkade.setText("Vennligst sett en gyldig dato");
+            if(dato == null || dato.after(Calendar.getInstance())){
+                lbInfo.setText("Vennligst sett en gyldig dato");
                 return;
             }
 
@@ -357,15 +435,14 @@ public class KundesideSkade {
                 }
 
             } catch (NumberFormatException nfe) {
-                lbFeilFormat.setText("Kun hele tall.");
-                lbFeilFormat.setVisible(true);
-                lbSkade.setText("Ugyldig skadebeløp");
+                lbInfo.setVisible(true);
+                lbInfo.setText("Ugyldig skadebeløp");
                 return;
             }
             skriveOmråde.clear();  
             tfBeløp.clear();
-            dato.clear();
-            lbSkade.setText("Skademelding er sendt inn");
+        dato.clear();
+            lbInfo.setText("Skademelding er sendt inn");
     
     
     }
