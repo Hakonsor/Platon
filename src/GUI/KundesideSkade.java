@@ -104,9 +104,7 @@ public class KundesideSkade {
                 "Boligforsikring",
                 "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
-        forsikringComboBox.setOnAction(e -> {
-            SkrivListe();
-        });
+        forsikringComboBox.setOnAction(e -> {SkrivListe();});
 
         FadeTransition ftcombo = new FadeTransition(Duration.millis(100), forsikringComboBox);
         ftcombo.setFromValue(0.0F);
@@ -116,7 +114,6 @@ public class KundesideSkade {
         lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
         lbInfo.setId("lbInfo");
-        lbInfo.setVisible(false);
 
         gridFelt = new GridPane();
         gridFelt.setAlignment(Pos.CENTER);
