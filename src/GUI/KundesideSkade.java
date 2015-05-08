@@ -437,14 +437,13 @@ public class KundesideSkade {
                 }
 
             } catch (NumberFormatException nfe) {
-                lbInfo.setText("Kun hele tall.");
                 lbInfo.setVisible(true);
                 lbInfo.setText("Ugyldig skadebeløp");
                 return;
             }
             skriveOmråde.clear();  
             tfBeløp.clear();
-            dato.clear();
+        dato.clear();
             lbInfo.setText("Skademelding er sendt inn");
     
     
