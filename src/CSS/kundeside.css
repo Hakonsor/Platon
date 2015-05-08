@@ -54,13 +54,13 @@
 }
 
 #tabfri {
-    -fx-background-color: rgb(126, 155, 210);
+    -fx-background-color: rgb(254, 191, 192);
     -fx-background-radius: 0;
     -fx-font: 16px "Myriad";
 }
 
 #tabfri:selected {
-    -fx-border-color: rgb(126, 155, 210);
+    -fx-border-color: rgb(254, 191, 192);
     -fx-border-width: 5px;
 }
 

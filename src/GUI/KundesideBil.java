@@ -528,7 +528,7 @@ public class KundesideBil implements ComboBoxConverter {
                 regLabel.setText("Årlig premie: " + tall.format(bil.getPremie()) + " kr");
             }
             else {
-                regLabel.setText("Sjekk feil på feltene");
+                regLabel.setText("Sjekk feil i feltene ovenfor");
             }
         });
 
@@ -640,7 +640,7 @@ public class KundesideBil implements ComboBoxConverter {
             regLabel.setText("Bilforsikring Registrert!");
 
         } else {
-            regLabel.setText("Sjekk feil på feltene");
+            regLabel.setText("Sjekk feil i feltene ovenfor");
         }
     }
 
@@ -684,7 +684,7 @@ public class KundesideBil implements ComboBoxConverter {
             regLabel.setText("Bilforsikring Registrert!");
 
         } else {
-            regLabel.setText("Sjekk feil på feltene");
+            regLabel.setText("Sjekk feil i feltene ovenfor");
         }
     }
 }

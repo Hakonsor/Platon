@@ -1,3 +1,60 @@
+#borderpane {
+    -fx-background-image: url("Bilder/fritidback.png");
+}
+
 #promtfix, #promtfix:focused {
     -fx-prompt-text-fill:darkgray;
+    -fx-background-radius: 0;
+}
+
+#combobox {
+    -fx-background-color: rgb(254, 191, 192);
+    -fx-background-radius: 0;
+}
+
+#combobox:hover, #combobox:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#btnSjekkpris {
+    -fx-background-color: rgb(254, 191, 192);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#btnSjekkpris:hover, #btnSjekkpris:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#btnRegBoligforsikring {
+    -fx-background-color: rgb(254, 191, 192);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+
+}
+
+#btnRegBoligforsikring:hover, #btnRegBoligforsikring:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+
+#error {
+    -fx-text-fill: red;
+    -fx-border-color: red;
+    -fx-background-image:url("Bilder/cross.png");
+    -fx-background-size: 32px 32px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+
+}
+
+#valid {
+    -fx-text-fill: green;
+    -fx-background-image:url("Bilder/check.png");
+    -fx-background-size: 32px 32px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
 }

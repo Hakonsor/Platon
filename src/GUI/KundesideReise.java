@@ -58,7 +58,7 @@ public class KundesideReise {
 
         ToggleGroup reise = new ToggleGroup();
 
-        RadioButton rbtnVerden = new RadioButton("Veden");
+        RadioButton rbtnVerden = new RadioButton("Verden");
         rbtnVerden.setId("verden");
         rbtnVerden.setToggleGroup(reise);
         rbtnVerden.setSelected(false);
@@ -126,21 +126,32 @@ public class KundesideReise {
        
         // oppretter objekt og henter ut prisen, objektet blir ikke lagret.
         btnBeregn.setOnAction(e -> {
-            String form = "0.00";
-            DecimalFormat tall = new DecimalFormat(form);
-            ReiseForsikring f = new ReiseForsikring();
-            f.setType(type);
-            f.setPremieOgForsSum(type);
-            
-            lbPrint.setText("Prisen er: " + tall.format(f.getPremie()) + " kr");
-        });
-        btnBestill.setOnAction(e -> {
-            ReiseForsikring f = new ReiseForsikring();
-            f.setType(type);
-            f.setPremieOgForsSum(type);
-            kontroller.setReiseForsikring(f);
+           if (reise.getSelectedToggle() != null) {
+               String form = "0.00";
+               DecimalFormat tall = new DecimalFormat(form);
+               ReiseForsikring f = new ReiseForsikring();
+               f.setType(type);
+               f.setPremieOgForsSum(type);
 
-            lbPrint.setText("Reiseforsikring bestilt!");
+               lbPrint.setText("Prisen er: " + tall.format(f.getPremie()) + " kr");
+           }
+            else {
+               lbPrint.setText("Du må velge en forsikringstype");
+           }
+        });
+
+        btnBestill.setOnAction(e -> {
+            if (reise.getSelectedToggle() != null) {
+                ReiseForsikring f = new ReiseForsikring();
+                f.setType(type);
+                f.setPremieOgForsSum(type);
+                kontroller.setReiseForsikring(f);
+
+                lbPrint.setText("Reiseforsikring "+ type + " bestilt!");
+            }
+            else {
+                lbPrint.setText("Du må velge en forsikringstype");
+            }
         });
 
         grid.add(lbInfo, 0, 0);
