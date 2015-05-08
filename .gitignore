@@ -1,9 +1,0 @@
-//
-/Forsikringstest/build/
-/Forsikringstest/dist/
-/dist/
-/build/
-/nbproject/private//nbproject/private/
-*.class
-build/classes/GUI/Login.class
-*.class
