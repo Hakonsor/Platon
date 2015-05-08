@@ -11,24 +11,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  *
  * @author Håkon
  */
-    public class BrukerRegister implements Serializable{
+public class BrukerRegister implements Serializable {
 
+    private Map<String, Bruker> register;
 
-    private Map<String, Bruker> register = new HashMap<>();
-    
-    public BrukerRegister(){
-        
+    public BrukerRegister() {
+        register = new HashMap<>();
     }
+
     public List<Kunde> søkeResultater(String fornavn, String etternavn, String kundernr) {
         List<Kunde> liste = new ArrayList<>();
         Kunde kunde;
-        if (register.containsKey(kundernr)) {
-            liste.add((Kunde) register.get(kundernr));
+        Bruker bruker = register.get(kundernr);
+        if (bruker != null && bruker instanceof Kunde) {
+            liste.add((Kunde) bruker);
             return liste;
         }
         for (Map.Entry<String, Bruker> e : register.entrySet()) {
@@ -43,23 +43,29 @@ import java.util.Map;
         }
         return liste;
     }
+
     public Kunde getKunde(String id) {
-        return (Kunde) register.get(id);
+        Bruker b = register.get(id);
+        if (b instanceof Kunde) {
+            return (Kunde) b;
+        }
+        return null;
     }
+
     public Bruker getBruker(String nøkkel) {
         return register.get(nøkkel);
     }
-    public void registrerBruker( Bruker b) {
+
+    public void registrerBruker(Bruker b) {
         register.put(b.getNøkkel(), b);
     }
+
     public boolean inneholderBruker(String kundenr) {
-       return register.containsKey(kundenr);
+        return register.containsKey(kundenr);
     }
+
     public Bruker getKonsulent(String nøkkel) {
-       return (Konsulent) register.get(nøkkel);
+        return (Konsulent) register.get(nøkkel);
     }
-    
-    
-    
-    
+
 }

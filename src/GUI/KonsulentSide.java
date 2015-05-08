@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 public class KonsulentSide {
 
     private Kontroller kontroll;
+    private KonsulentsideKunde konsulentsideKunde;
+    private KonsulentsideStatistikk konsulentsideStatistikk;
+    private KonsulentsideSkade konsulentsideSkade;
 
     public KonsulentSide(Stage primaryStage, Kontroller k){
         this.kontroll = k;
@@ -47,7 +50,7 @@ public class KonsulentSide {
         Tab tabKunde = new Tab();
         tabKunde.setText("Kunde");
         tabKunde.setClosable(false);
-        KonsulentsideKunde konsulentsideKunde = new KonsulentsideKunde();
+        konsulentsideKunde = new KonsulentsideKunde();
         tabKunde.setOnSelectionChanged(e-> {
         tabKunde.setContent(konsulentsideKunde.kundeFane(kontroll));
         });
@@ -56,7 +59,7 @@ public class KonsulentSide {
         Tab tabStat = new Tab();
         tabStat.setText("Statistikk");
         tabStat.setClosable(false);
-        KonsulentsideStatistikk konsulentsideStatistikk = new KonsulentsideStatistikk();
+        konsulentsideStatistikk = new KonsulentsideStatistikk();
         tabStat.setOnSelectionChanged(e-> {
             tabStat.setContent(konsulentsideStatistikk.statFane(kontroll));
         });
@@ -64,7 +67,7 @@ public class KonsulentSide {
         Tab tabSkade = new Tab();
         tabSkade.setText("Skade");
         tabSkade.setClosable(false);
-        KonsulentsideSkade konsulentsideSkade = new KonsulentsideSkade();
+        konsulentsideSkade = new KonsulentsideSkade();
         tabSkade.setOnSelectionChanged(e-> {
             tabSkade.setContent(konsulentsideSkade.skadeFane(kontroll));
         });
@@ -83,6 +86,9 @@ public class KonsulentSide {
         primaryStage.show();
 
 
+    }
+    public void opptatterListeKunde(){
+        konsulentsideKunde.oppdaterListe();
     }
 
 

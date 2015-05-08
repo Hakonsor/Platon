@@ -58,17 +58,20 @@ public class KundesideSkade {
     private Label lbInfo;
     private TextArea skriveOmråde;
     
-    ToggleGroup skadeType;
-    RadioButton rbtVann;
-    RadioButton rbtRør;
-    RadioButton rbtBrann;
-    Label lbSkadebeløp;
-    Label lbDato;
-    DatePicker dpDato;
-    FileChooser fileChooser;
-    Button btnÅpnefil;
-    Button btnRapSkade;
- 
+    private ToggleGroup skadeType;
+    private RadioButton rbtVann;
+    private RadioButton rbtRør;
+    private RadioButton rbtBrann;
+    
+    private GridPane radioGrid;
+    private Label lbSkadebeløp;
+    private Label lbDato;
+    private DatePicker dpDato;
+    private FileChooser fileChooser;
+    private Button btnÅpnefil;
+    private Label lbSkade;
+    private Button btnRapSkade;
+    private Label lbFeilFormat;
     
 
     public Pane skadeFane(Kontroller kontroll) {
@@ -125,12 +128,16 @@ public class KundesideSkade {
         skriveOmråde.setId("felt");
         skriveOmråde.setPromptText("Skriv innformasjon om skaden");
         skriveOmråde.setPrefSize(300, 300);
+        skriveOmråde.setOnMouseEntered(e -> {
+            skriveOmråde.setPromptText("Skriv innformasjon om skaden");
+        });
+        skriveOmråde.setStyle("-fx-prompt-text-fill: rgba(0, 0, 0)");
 
         FadeTransition ftskrive = new FadeTransition(Duration.millis(100), skriveOmråde);
         ftskrive.setFromValue(0.0F);
         ftskrive.setToValue(1.0F);
         ftskrive.setCycleCount(1);
-
+        
         listView.setPrefSize(200, 300);
         listView.setId("felt");
         listView.setEditable(false);
@@ -367,6 +374,10 @@ public class KundesideSkade {
                 lbInfo.setText("Vennligst sett en gyldig dato");
                 return;
             }
+            if(skriveOmråde.getText() == null || skriveOmråde.getText().isEmpty()){
+                lbSkade.setText("Vennligst beskriv skaden");
+                return;
+            }
             
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
@@ -380,7 +391,7 @@ public class KundesideSkade {
                     f.premieTilGodkjenning(f.premieEtterSkade(f.getPremie(), f.getBonus()));
                     f.nyBonusTilGodkjenning(f.bonusEtterSkade(f.getBonus()));
                     kontroll.addSkade(bil);
-                    skriveOmråde.setText(bil.melding());
+                    skriveOmråde.setPromptText(bil.melding());
 
                 } else if (fors instanceof BatForsikring) {
 
@@ -389,7 +400,7 @@ public class KundesideSkade {
                     bat.setForsikring(f);
                     bat.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     kontroll.addSkade(bat);
-                    skriveOmråde.setText(bat.melding());
+                    skriveOmråde.setPromptText(bat.melding());
 
                 } else if (fors instanceof BoligForsikring) {
 
@@ -400,7 +411,7 @@ public class KundesideSkade {
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(bolig);
-                    skriveOmråde.setText(bolig.melding());
+                    skriveOmråde.setPromptText(bolig.melding());
 
                 } else if (fors instanceof FritidsBolig) {
 
@@ -411,7 +422,7 @@ public class KundesideSkade {
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
-                    skriveOmråde.setText(fri.melding());
+                    skriveOmråde.setPromptText(fri.melding());
                     
                 } else if (fors instanceof ReiseForsikring) {
                     
@@ -421,7 +432,8 @@ public class KundesideSkade {
                     reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     f.premieTilGodkjenning();
                     kontroll.addSkade(reise);
-                    skriveOmråde.setText(reise.melding());
+                    skriveOmråde.setPromptText(reise.melding());
+                    
                 }
 
             } catch (NumberFormatException nfe) {
@@ -430,6 +442,9 @@ public class KundesideSkade {
                 lbInfo.setText("Ugyldig skadebeløp");
                 return;
             }
+            skriveOmråde.clear();  
+            tfBeløp.clear();
+            dato.clear();
             lbInfo.setText("Skademelding er sendt inn");
     
     

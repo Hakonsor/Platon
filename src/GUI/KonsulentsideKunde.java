@@ -34,16 +34,87 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
     public static TextField tfKundenavn = new TextField();
 
-    String type;
+    private Kontroller kontroll;
+    private String type;
     private boolean utLeie;
+    private HBox vb;
+    private Button btnSøk;
+    private Button btnRegKunde;
+    private GridPane gridLeft;
+    private GridPane gridBil;
+    private GridPane gridReise;
+    private GridPane gridBåt;
+    private GridPane gridBolig;
+    private GridPane gridFriBolig;
+    private GridPane gridAlle;
+    private ListView<String> listView;
+    private Label regLabelBil;
+    private TextField tfByggSum;
+    private TextField tfPostnr;
+    private TextField tfRegnr;
+    private TextField tfÅrsmodell;
+    private TextField tfMerke;
+    private TextField tfModell;
+    private TextField tfKmstand;
+    private TextField tfPostnrF;
+    private TextField tfAdresseF;
+    private TextField tfByggeårF;
+    private TextField tfKvadratF;
+    private TextField tfByggSumF;
+    private TextField tfInnboSumF;
+    private TextField tfInnboSum;
+    private TextField tfKvadrat;
+    private TextField tfByggeår;
+    private TextField tfAdresse;
+    private TextField tfYtelse;
+    private TextField tfMotormerke;
+    private TextField tfAntfot;
+    private TextField tfBåtmodell;
+    private TextField tfÅrsmodellB;
+    private TextField tfRegnrB;
+    private TextField tfVerdi;
+    private TextArea taLes;
+    private ComboBox<String> cbKjørelengde;
+    private ComboBox<String> cbBonus;
+    private ComboBox<String> cbEgenandel;
+    private ComboBox<String> cbBoligtypeF;
+    private ComboBox<String> cbStandardF;
+    private ComboBox<String> cbMatrialeF;
+    private ComboBox<String> cbMatriale;
+    private ComboBox<String> cbStandard;
+    private ComboBox<String> cbBoligtype;
+    private Button btnSjekkprisF;
+    private CheckBox cbleieF;
+    private Label regLabelF;
+    private Label lballe;
+    private Label regLabelBo;
+    private Label regLabelB;
+    private Label lbInfo;
+    private Label lbPrint;
+    private Button btnRegBåtforsikring;
+    private Button btnRegBilforsikring;
+    private Button btnSjekkprisBil;
+    private Button btnRegBoligforsikringF;
+    private Button btnSlett;
+    private Button btnRegForsikring;
+    private Button btnRegBoligforsikring;
+    private Button btnSjekkpris;
+    private Button btnSjekkprisB;
+    private CheckBox cbleie;
+
+    private ObservableList<String> navn;
+    private ObservableList<String> data;
+
+    ComboBox<String> forsikringComboBox;
 
     public Pane kundeFane(Kontroller kontroll) {
-
+        this.kontroll = kontroll;
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
-
+        navn = FXCollections.observableArrayList();
+        data = FXCollections.observableArrayList();
         //TOP---------------------------------->
-        HBox vb = new HBox();
+        vb = new HBox();
         vb.setPadding(new Insets(25, 25, 50, 25)); //top/right/bottom/left
         vb.setSpacing(70);
         vb.setAlignment(Pos.CENTER);
@@ -53,7 +124,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         tfKundenavn.setMinWidth(300);
         tfKundenavn.setEditable(false);
 
-        Button btnSøk = new Button();
+        btnSøk = new Button();
         btnSøk.setText("Søk");
         btnSøk.setId("søk");
         btnSøk.setMinWidth(100);
@@ -65,7 +136,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
          kontroll.registrerBruker(this.getKunde());
          vindu.close();
          */
-        Button btnRegKunde = new Button();
+        btnRegKunde = new Button();
         btnRegKunde.setText("Reg. kunde");
         btnRegKunde.setId("regKunde");
         btnRegKunde.setMinWidth(150);
@@ -78,16 +149,13 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         borderPane.setTop(vb);
 
         //LEFT-------------------------------------->
-        GridPane gridLeft = new GridPane();
+        gridLeft = new GridPane();
         gridLeft.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridLeft.setVgap(10);
         gridLeft.setHgap(10);
         gridLeft.setAlignment(Pos.TOP_CENTER);
 
-        ObservableList<String> navn = FXCollections.observableArrayList();
-        ObservableList<String> data = FXCollections.observableArrayList();
-
-        ComboBox<String> forsikringComboBox = new ComboBox<>();
+        forsikringComboBox = new ComboBox<>();
         forsikringComboBox.setEditable(false);
         forsikringComboBox.getItems().addAll(
                 "Alle",
@@ -99,73 +167,30 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
 
         // Forskjellige forsikringer vises
-        GridPane gridBil = new GridPane();
+        gridBil = new GridPane();
         gridBil.setVisible(false);
 
-        GridPane gridReise = new GridPane();
+        gridReise = new GridPane();
         gridReise.setVisible(false);
 
-        GridPane gridBåt = new GridPane();
+        gridBåt = new GridPane();
         gridBåt.setVisible(false);
 
-        GridPane gridBolig = new GridPane();
+        gridBolig = new GridPane();
         gridBolig.setVisible(false);
 
-        GridPane gridFriBolig = new GridPane();
+        gridFriBolig = new GridPane();
         gridFriBolig.setVisible(false);
 
-        GridPane gridAlle = new GridPane();
+        gridAlle = new GridPane();
         gridAlle.setVisible(false);
 
         forsikringComboBox.setValue("Velg Forsikring:");
         forsikringComboBox.setOnAction(e -> {
-
-            ArrayList<String> forsikringliste = kontroll.getInfoForsikringListe(forsikringComboBox.getItems().indexOf(forsikringComboBox.getValue()));
-            if (forsikringComboBox.getValue().equals("Bilforsikring")) {
-                gridBil.setVisible(true);
-            } else {
-                gridBil.setVisible(false);
-            }
-
-            if (forsikringComboBox.getValue().equals("Reiseforsikring")) {
-                gridReise.setVisible(true);
-            } else {
-                gridReise.setVisible(false);
-            }
-
-            if (forsikringComboBox.getValue().equals("Båtforsikring")) {
-                gridBåt.setVisible(true);
-            } else {
-                gridBåt.setVisible(false);
-            }
-
-            if (forsikringComboBox.getValue().equals("Boligforsikring")) {
-                gridBolig.setVisible(true);
-            } else {
-                gridBolig.setVisible(false);
-            }
-
-            if (forsikringComboBox.getValue().equals("Fri.Boligforsikring")) {
-                gridFriBolig.setVisible(true);
-            } else {
-                gridFriBolig.setVisible(false);
-            }
-
-            if (forsikringComboBox.getValue().equals("Alle")) {
-                gridAlle.setVisible(true);
-            } else {
-                gridAlle.setVisible(false);
-            }
-
-            if (forsikringliste == null) {
-                navn.clear();
-                navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
-            } else {
-                navn.setAll(forsikringliste);
-            }
+            ruteVipper();
         });
 
-        ListView<String> listView = new ListView<>(data);
+        listView = new ListView<>(data);
         listView.setPrefSize(300, 400);
         listView.setEditable(false);
 
@@ -187,32 +212,32 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBil.setHgap(10);
         gridBil.setAlignment(Pos.CENTER);
 
-        Label regLabelBil = new Label();
+        regLabelBil = new Label();
         regLabelBil.setText("");
 
-        TextField tfRegnr = new TextField();
+        tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr");
         tfRegnr.setMinWidth(200);
 
-        TextField tfÅrsmodell = new TextField();
+        tfÅrsmodell = new TextField();
         tfÅrsmodell.setPromptText("Årsmodell");
         tfÅrsmodell.setMinWidth(200);
 
-        TextField tfMerke = new TextField();
+        tfMerke = new TextField();
         tfMerke.setPromptText("eks (BMW)");
         tfMerke.setId("promtfix");
         tfMerke.setMinWidth(200);
 
-        TextField tfModell = new TextField();
+        tfModell = new TextField();
         tfModell.setPromptText("eks (5-serie 530xd)");
         tfModell.setId("promtfix");
         tfModell.setMinWidth(200);
 
-        TextField tfKmstand = new TextField();
+        tfKmstand = new TextField();
         tfKmstand.setPromptText("Km-stand");
         tfKmstand.setMinWidth(200);
 
-        ComboBox<String> cbKjørelengde = new ComboBox<>();
+        cbKjørelengde = new ComboBox<>();
         cbKjørelengde.setEditable(false);
         cbKjørelengde.setMinWidth(200);
         cbKjørelengde.getItems().addAll(
@@ -224,7 +249,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbKjørelengde.setValue("Velg Kjørelengde:");
 
-        ComboBox<String> cbBonus = new ComboBox<>();
+        cbBonus = new ComboBox<>();
         cbBonus.setEditable(false);
         cbBonus.setMinWidth(200);
         cbBonus.getItems().addAll(
@@ -242,7 +267,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbBonus.setValue("Velg Bonus:");
 
-        ComboBox<String> cbEgenandel = new ComboBox<>();
+        cbEgenandel = new ComboBox<>();
         cbEgenandel.setEditable(false);
         cbEgenandel.setMinWidth(200);
         cbEgenandel.getItems().addAll(
@@ -252,7 +277,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbEgenandel.setValue("Velg Egenandel:");
 
-        Button btnSjekkprisBil = new Button();
+        btnSjekkprisBil = new Button();
         btnSjekkprisBil.setText("Beregn Pris");
         btnSjekkprisBil.setId("btnSjekkpris");
         btnSjekkprisBil.setMinWidth(200);
@@ -260,31 +285,12 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             regLabelBil.setText("Prisen er: " + "getPris()");
         });
 
-        Button btnRegBilforsikring = new Button();
+        btnRegBilforsikring = new Button();
         btnRegBilforsikring.setText("Registrer Bilforsikring");
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
-            double bonus = 0;
-            double egenandel = 0;
-            int kjøreLengde = 0;
-            String regNo = tfRegnr.getText();
-            String årsModell = tfÅrsmodell.getText();
-            String bilMerke = tfMerke.getText();
-            String bilModell = tfModell.getText();
-            int kmStand = 0;
-            try {
-                bonus = convertDou(cbBonus.getValue());
-                egenandel = convertDou(cbEgenandel.getValue());
-                kjøreLengde = convertInt(cbKjørelengde.getValue());
-                kmStand = Integer.parseInt(tfKmstand.getText());
-
-            } catch (NumberFormatException nfe) {
-                System.out.println("Feil tallformat");
-            }
-            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
-            kontroll.setBilForsikring(bil, null);
-            regLabelBil.setText("Bilforsikring Registrert!");
+            regBilForsikring();
         });
 
         gridBil.add(tfRegnr, 0, 0);
@@ -300,12 +306,12 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBil.add(regLabelBil, 0, 10);
 
         //Reise
-        Label lbInfo = new Label();
+        lbInfo = new Label();
         lbInfo.setText("Velg reiseforsikringstype:");
         lbInfo.setId("lbInfo");
         lbInfo.setAlignment(Pos.CENTER_LEFT);
 
-        Label lbPrint = new Label();
+        lbPrint = new Label();
         lbPrint.setId("print");
         lbPrint.setText("");
         lbPrint.setAlignment(Pos.CENTER_LEFT);
@@ -377,31 +383,31 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBåt.add(lbbåt, 0, 0);
 
         //Båt
-        TextField tfVerdi = new TextField();
+        tfVerdi = new TextField();
         tfVerdi.setPromptText("Båtens verdi");
         tfVerdi.setMinWidth(200);
 
-        TextField tfRegnrB = new TextField();
+        tfRegnrB = new TextField();
         tfRegnrB.setPromptText("Reg.Nr");
         tfRegnrB.setMinWidth(200);
 
-        TextField tfÅrsmodellB = new TextField();
+        tfÅrsmodellB = new TextField();
         tfÅrsmodellB.setPromptText("Årsmodell");
         tfÅrsmodellB.setMinWidth(200);
 
-        TextField tfBåtmodell = new TextField();
+        tfBåtmodell = new TextField();
         tfBåtmodell.setPromptText("Båtmodell eks (Ibiza 22");
         tfBåtmodell.setMinWidth(200);
 
-        TextField tfAntfot = new TextField();
+        tfAntfot = new TextField();
         tfAntfot.setPromptText("Antall fot");
         tfAntfot.setMinWidth(200);
 
-        TextField tfMotormerke = new TextField();
+        tfMotormerke = new TextField();
         tfMotormerke.setPromptText("Motormerke");
         tfMotormerke.setMinWidth(200);
 
-        TextField tfYtelse = new TextField();
+        tfYtelse = new TextField();
         tfYtelse.setPromptText("Ytelse (hk)");
         tfYtelse.setMinWidth(200);
 
@@ -422,12 +428,12 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         });
 
         //Registrer knapp & Label
-        Label regLabelB = new Label();
+        regLabelB = new Label();
         regLabelB.setText("");
         regLabelB.setId("regLabel");
         regLabelB.setAlignment(Pos.CENTER);
 
-        Button btnSjekkprisB = new Button();
+        btnSjekkprisB = new Button();
         btnSjekkprisB.setText("Sjekk Pris");
         btnSjekkprisB.setId("btnSjekkpris");
         btnSjekkprisB.setMinWidth(200);
@@ -435,30 +441,12 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             regLabelB.setText("Prisen er: " + "getPris()");
         });
 
-        Button btnRegBåtforsikring = new Button();
+        btnRegBåtforsikring = new Button();
         btnRegBåtforsikring.setText("Registrer Båtforsikring");
         btnRegBåtforsikring.setId("btnRegBåtforsikring");
         btnRegBåtforsikring.setMinWidth(200);
         btnRegBåtforsikring.setOnAction(e -> {
-            regLabelB.setText("Båtforsikring Registrert!");
-            String regNo = tfRegnr.getText();
-            String modell = tfBåtmodell.getText();
-            String årsModell = tfÅrsmodell.getText();
-            String motorMerke = tfMotormerke.getText();
-
-            int motorYtelse = 0;
-            double verdi = 0;
-            int lengdeFot = 0;
-
-            try {
-                verdi = Double.parseDouble(tfVerdi.getText());
-                motorYtelse = Integer.parseInt(tfYtelse.getText());
-                lengdeFot = Integer.parseInt(tfAntfot.getText());
-                BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo,type, modell, årsModell, motorYtelse,motorMerke);
-                kontroll.setBåtForsikring(båt);
-            } catch (NumberFormatException nfe) {
-                System.out.println("Feil tallformat");
-            }
+            regBåtForsikring();
         });
 
         gridBåt.add(tfVerdi, 0, 0);
@@ -480,31 +468,31 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBolig.setHgap(10);
         gridBolig.setAlignment(Pos.CENTER);
 
-        TextField tfPostnr = new TextField();
+        tfPostnr = new TextField();
         tfPostnr.setPromptText("Postnummer");
         tfPostnr.setMinWidth(200);
 
-        TextField tfAdresse = new TextField();
+        tfAdresse = new TextField();
         tfAdresse.setPromptText("Adresse");
         tfAdresse.setMinWidth(200);
 
-        TextField tfByggeår = new TextField();
+        tfByggeår = new TextField();
         tfByggeår.setPromptText("Byggeår");
         tfByggeår.setMinWidth(200);
 
-        TextField tfKvadrat = new TextField();
+        tfKvadrat = new TextField();
         tfKvadrat.setPromptText("Kvadratmeter");
         tfKvadrat.setMinWidth(200);
 
-        TextField tfByggSum = new TextField();
+        tfByggSum = new TextField();
         tfByggSum.setPromptText("Bolig verdi");
         tfByggSum.setMinWidth(200);
 
-        TextField tfInnboSum = new TextField();
+        tfInnboSum = new TextField();
         tfInnboSum.setPromptText("Innbo verdi");
         tfInnboSum.setMinWidth(200);
 
-        ComboBox<String> cbBoligtype = new ComboBox<>();
+        cbBoligtype = new ComboBox<>();
         cbBoligtype.setEditable(false);
         cbBoligtype.setMinWidth(200);
         cbBoligtype.getItems().addAll(
@@ -515,7 +503,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbBoligtype.setValue("Velg Boligtype:");
 
-        ComboBox<String> cbStandard = new ComboBox<>();
+        cbStandard = new ComboBox<>();
         cbStandard.setEditable(false);
         cbStandard.setMinWidth(200);
         cbStandard.getItems().addAll(
@@ -526,7 +514,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbStandard.setValue("Standard:");
 
-        ComboBox<String> cbMatriale = new ComboBox<>();
+        cbMatriale = new ComboBox<>();
         cbMatriale.setEditable(false);
         cbMatriale.setMinWidth(200);
         cbMatriale.getItems().addAll(
@@ -538,18 +526,18 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbMatriale.setValue("Byggematriale:");
 
-        CheckBox cbleie = new CheckBox(" UtleieBolig? ");
+        cbleie = new CheckBox(" UtleieBolig? ");
         cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             utLeie = cbleie.isSelected() == true;
         });
 
         //Registrer knapp & Label
-        Label regLabelBo = new Label();
+        regLabelBo = new Label();
         regLabelBo.setText("");
         regLabelBo.setId("regLabel");
         regLabelBo.setAlignment(Pos.CENTER);
 
-        Button btnSjekkpris = new Button();
+        btnSjekkpris = new Button();
         btnSjekkpris.setText("Beregn pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
@@ -557,31 +545,12 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             regLabelBo.setText("Prisen er: " + "getPris()");
         });
 
-        Button btnRegBoligforsikring = new Button();
+        btnRegBoligforsikring = new Button();
         btnRegBoligforsikring.setText("Registrer Boligforsikring");
         btnRegBoligforsikring.setId("btnRegBoligforsikring");
         btnRegBoligforsikring.setMinWidth(200);
         btnRegBoligforsikring.setOnAction(eB -> {
-            String postNr = tfPostnr.getText();
-            String adresse = tfAdresse.getText();
-            String byggeÅr = tfByggeår.getText();
-            double kvadrat = 0;
-            double byggSum = 0;
-            double innboSum = 0;
-            int byggeår = 0;
-            String mertiale = cbMatriale.getValue();
-
-            try {
-                kvadrat = Double.parseDouble(tfKvadrat.getText());
-                byggSum = Double.parseDouble(tfByggSum.getText());
-                innboSum = Double.parseDouble(tfInnboSum.getText());
-                byggeår = Integer.parseInt(tfKvadrat.getText());
-            } catch (NumberFormatException nfe) {
-                System.out.println("Feil tallformat.");
-            }
-
-            kontroll.setBoligForsikring(utLeie, kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
-            regLabelBo.setText("Boligforsikring registrert!");
+            regBorligForsikring();
         });
 
         gridBolig.add(tfPostnr, 0, 0);
@@ -609,31 +578,31 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridFriBolig.setHgap(10);
         gridFriBolig.setAlignment(Pos.CENTER);
 
-        TextField tfPostnrF = new TextField();
+        tfPostnrF = new TextField();
         tfPostnrF.setPromptText("Postnummer");
         tfPostnrF.setMinWidth(200);
 
-        TextField tfAdresseF = new TextField();
+        tfAdresseF = new TextField();
         tfAdresseF.setPromptText("Adresse");
         tfAdresseF.setMinWidth(200);
 
-        TextField tfByggeårF = new TextField();
+        tfByggeårF = new TextField();
         tfByggeårF.setPromptText("Byggeår");
         tfByggeårF.setMinWidth(200);
 
-        TextField tfKvadratF = new TextField();
+        tfKvadratF = new TextField();
         tfKvadratF.setPromptText("Kvadratmeter");
         tfKvadratF.setMinWidth(200);
 
-        TextField tfByggSumF = new TextField();
+        tfByggSumF = new TextField();
         tfByggSumF.setPromptText("Bolig verdi");
         tfByggSumF.setMinWidth(200);
 
-        TextField tfInnboSumF = new TextField();
+        tfInnboSumF = new TextField();
         tfInnboSumF.setPromptText("Innbo verdi");
         tfInnboSumF.setMinWidth(200);
 
-        ComboBox<String> cbBoligtypeF = new ComboBox<>();
+        cbBoligtypeF = new ComboBox<>();
         cbBoligtypeF.setEditable(false);
         cbBoligtypeF.setMinWidth(200);
         cbBoligtypeF.getItems().addAll(
@@ -644,7 +613,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbBoligtypeF.setValue("Velg Boligtype:");
 
-        ComboBox<String> cbStandardF = new ComboBox<>();
+        cbStandardF = new ComboBox<>();
         cbStandardF.setEditable(false);
         cbStandardF.setMinWidth(200);
         cbStandardF.getItems().addAll(
@@ -655,7 +624,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbStandardF.setValue("Standard:");
 
-        ComboBox<String> cbMatrialeF = new ComboBox<>();
+        cbMatrialeF = new ComboBox<>();
         cbMatrialeF.setEditable(false);
         cbMatrialeF.setMinWidth(200);
         cbMatrialeF.getItems().addAll(
@@ -667,21 +636,18 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbMatrialeF.setValue("Byggematriale:");
 
-        CheckBox cbleieF = new CheckBox("Merk om du har utleiemulighet");
-        cbleieF.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                utLeie = cbleie.isSelected() == true;
-            }
+        cbleieF = new CheckBox("Merk om du har utleiemulighet");
+        cbleieF.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            utLeie = cbleie.isSelected() == true;
         });
 
         //Registrer knapp & Label
-        Label regLabelF = new Label();
+        regLabelF = new Label();
         regLabelF.setText("");
         regLabelF.setId("regLabel");
         regLabelF.setAlignment(Pos.CENTER);
 
-        Button btnSjekkprisF = new Button();
+        btnSjekkprisF = new Button();
         btnSjekkprisF.setText("Beregn pris");
         btnSjekkprisF.setId("btnSjekkpris");
         btnSjekkprisF.setMinWidth(200);
@@ -689,31 +655,12 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             regLabelF.setText("Prisen er: " + "getPris()");
         });
 
-        Button btnRegBoligforsikringF = new Button();
+        btnRegBoligforsikringF = new Button();
         btnRegBoligforsikringF.setText("Registrer Boligforsikring");
         btnRegBoligforsikringF.setId("btnRegBoligforsikring");
         btnRegBoligforsikringF.setMinWidth(200);
         btnRegBoligforsikringF.setOnAction(eBF -> {
-            String postNr = tfPostnr.getText();
-            String adresse = tfAdresse.getText();
-            String byggeÅr = tfByggeår.getText();
-            double kvadrat = 0;
-            double byggSum = 0;
-            double innboSum = 0;
-            int byggeår = 0;
-            String mertiale = cbMatriale.getValue();
-
-            try {
-                kvadrat = Double.parseDouble(tfKvadrat.getText());
-                byggSum = Double.parseDouble(tfByggSum.getText());
-                innboSum = Double.parseDouble(tfInnboSum.getText());
-                byggeår = Integer.parseInt(tfKvadrat.getText());
-            } catch (NumberFormatException nfe) {
-                System.out.println("Feil tallformat.");
-            }
-
-            kontroll.setFritidsForsikring(utLeie, kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
-            regLabelF.setText("FritidsBoligforsikring registrert!");
+            regFriBorligForsikring();
         });
 
         gridFriBolig.add(tfPostnrF, 0, 0);
@@ -741,23 +688,16 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridAlle.setHgap(10);
         gridAlle.setAlignment(Pos.CENTER);
 
-        TextArea taLes = new TextArea();
+        taLes = new TextArea();
         taLes.setPrefSize(300, 400);
         taLes.setId("taLes");
         taLes.setEditable(false);
 
         listView.getSelectionModel().selectedItemProperty().addListener(eA -> {
-            String polisNr = listView.getSelectionModel().getSelectedItem();
-            if (polisNr != null) {
-                Forsikringer s = kontroll.getForsikring(Integer.parseInt(polisNr.substring(0, 6).replaceAll("[^0-9]", "0")));
-                if (s != null) {
-                    taLes.setText(s.toString());
-                }
-            }
-
+            oppdaterListe();
         });
 
-        Label lballe = new Label("Test tekst, du har vlagt Alle");
+        lballe = new Label("Test tekst, du har vlagt Alle");
         gridAlle.add(lballe, 0, 0);
         gridAlle.add(taLes, 0, 1);
 
@@ -770,13 +710,13 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         //gridButtons.setPrefWidth(1000);
         gridButtons.setAlignment(Pos.CENTER);
 
-        Button btnSlett = new Button();
+        btnSlett = new Button();
         btnSlett.setText("Slett");
         btnSlett.setOnAction(eS -> {
             System.out.println("Du trykket på SLETT!");
         });
 
-        Button btnRegForsikring = new Button();
+        btnRegForsikring = new Button();
         btnRegForsikring.setText("Reg. Forsikring");
         btnRegForsikring.setOnAction(e1 -> {
             System.out.println("RegForsikrings");
@@ -805,4 +745,155 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         return borderPane;
     }
 
+    private void ruteVipper() {
+
+        ArrayList<String> forsikringliste = kontroll.getInfoForsikringListe(forsikringComboBox.getItems().indexOf(forsikringComboBox.getValue()));
+        if (forsikringComboBox.getValue().equals("Bilforsikring")) {
+            gridBil.setVisible(true);
+        } else {
+            gridBil.setVisible(false);
+        }
+
+        if (forsikringComboBox.getValue().equals("Reiseforsikring")) {
+            gridReise.setVisible(true);
+        } else {
+            gridReise.setVisible(false);
+        }
+
+        if (forsikringComboBox.getValue().equals("Båtforsikring")) {
+            gridBåt.setVisible(true);
+        } else {
+            gridBåt.setVisible(false);
+        }
+
+        if (forsikringComboBox.getValue().equals("Boligforsikring")) {
+            gridBolig.setVisible(true);
+        } else {
+            gridBolig.setVisible(false);
+        }
+
+        if (forsikringComboBox.getValue().equals("Fri.Boligforsikring")) {
+            gridFriBolig.setVisible(true);
+        } else {
+            gridFriBolig.setVisible(false);
+        }
+
+        if (forsikringComboBox.getValue().equals("Alle")) {
+            gridAlle.setVisible(true);
+        } else {
+            gridAlle.setVisible(false);
+        }
+
+        if (forsikringliste == null) {
+            navn.clear();
+            navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+        } else {
+            navn.setAll(forsikringliste);
+        }
+    }
+
+    private void regBilForsikring() {
+
+        double bonus = 0;
+        double egenandel = 0;
+        int kjøreLengde = 0;
+        String regNo = tfRegnr.getText();
+        String årsModell = tfÅrsmodell.getText();
+        String bilMerke = tfMerke.getText();
+        String bilModell = tfModell.getText();
+        int kmStand = 0;
+        try {
+            bonus = convertDou(cbBonus.getValue());
+            egenandel = convertDou(cbEgenandel.getValue());
+            kjøreLengde = convertInt(cbKjørelengde.getValue());
+            kmStand = Integer.parseInt(tfKmstand.getText());
+
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat");
+        }
+        BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
+        kontroll.setBilForsikring(bil, null);
+        regLabelBil.setText("Bilforsikring Registrert!");
+    }
+
+    private void regBåtForsikring() {
+
+        regLabelB.setText("Båtforsikring Registrert!");
+        String regNo = tfRegnr.getText();
+        String modell = tfBåtmodell.getText();
+        String årsModell = tfÅrsmodell.getText();
+        String motorMerke = tfMotormerke.getText();
+
+        int motorYtelse = 0;
+        double verdi = 0;
+        int lengdeFot = 0;
+
+        try {
+            verdi = Double.parseDouble(tfVerdi.getText());
+            motorYtelse = Integer.parseInt(tfYtelse.getText());
+            lengdeFot = Integer.parseInt(tfAntfot.getText());
+            BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, type, modell, årsModell, motorYtelse, motorMerke);
+            kontroll.setBåtForsikring(båt);
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat");
+        }
+    }
+
+    private void regBorligForsikring() {
+
+        String postNr = tfPostnr.getText();
+        String adresse = tfAdresse.getText();
+        String byggeÅr = tfByggeår.getText();
+        double kvadrat = 0;
+        double byggSum = 0;
+        double innboSum = 0;
+        int byggeår = 0;
+        String mertiale = cbMatriale.getValue();
+
+        try {
+            kvadrat = Double.parseDouble(tfKvadrat.getText());
+            byggSum = Double.parseDouble(tfByggSum.getText());
+            innboSum = Double.parseDouble(tfInnboSum.getText());
+            byggeår = Integer.parseInt(tfKvadrat.getText());
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat.");
+        }
+
+        kontroll.setBoligForsikring(utLeie, kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
+        regLabelBo.setText("Boligforsikring registrert!");
+    }
+
+    private void regFriBorligForsikring() {
+        String postNr = tfPostnr.getText();
+        String adresse = tfAdresse.getText();
+        String byggeÅr = tfByggeår.getText();
+        double kvadrat = 0;
+        double byggSum = 0;
+        double innboSum = 0;
+        int byggeår = 0;
+        String mertiale = cbMatriale.getValue();
+
+        try {
+            kvadrat = Double.parseDouble(tfKvadrat.getText());
+            byggSum = Double.parseDouble(tfByggSum.getText());
+            innboSum = Double.parseDouble(tfInnboSum.getText());
+            byggeår = Integer.parseInt(tfKvadrat.getText());
+        } catch (NumberFormatException nfe) {
+            System.out.println("Feil tallformat.");
+        }
+
+        kontroll.setFritidsForsikring(utLeie, kvadrat, adresse, "hei", byggeår, "tre", "dårlig", byggSum, innboSum);
+        regLabelF.setText("FritidsBoligforsikring registrert!");
+    }
+
+    public void oppdaterListe() {
+        String polisNr = listView.getSelectionModel().getSelectedItem();
+        if (polisNr != null) {
+            Forsikringer s = kontroll.getForsikring(Integer.parseInt(polisNr.substring(0, 6).replaceAll("[^0-9]", "0")));
+            if (s != null) {
+                taLes.setText(s.toString());
+            }
+        }
+
+    }
 }
