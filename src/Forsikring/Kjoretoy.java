@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @author Therese, Håkon
  */
 public abstract class Kjoretoy extends Forsikringer implements Serializable{
-    protected String regNr , type , modell , arsModell;
-    protected double bonus;
+    private String regNr , type , modell , arsModell;
+    private double bonus;
     private Person person;
     
     public Kjoretoy( double bonus, double egenandel,String regNr , String type, String modell, String arsModell ){

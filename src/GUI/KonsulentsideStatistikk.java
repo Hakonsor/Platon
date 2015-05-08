@@ -19,10 +19,9 @@ import javafx.scene.layout.VBox;
  */
 public class KonsulentsideStatistikk {
 
-Kontroller kontroll;
 
     public Pane statFane(Kontroller kontroll) {
-
+       
         BorderPane borderPane = new BorderPane();
 
         TabPane tabPane = new TabPane();
@@ -31,7 +30,7 @@ Kontroller kontroll;
         Tab tabInnUt = new Tab();
         tabInnUt.setText("Inntekter & Utgifter");
         tabInnUt.setClosable(false);
-        tabInnUt.setContent(innUt());
+        tabInnUt.setContent(innUt(kontroll));
 
         tabPane.getTabs().addAll(tabInnUt);
         borderPane.setTop(tabPane);
@@ -39,8 +38,7 @@ Kontroller kontroll;
         return borderPane;
     }
 
-    public Pane innUt() {
-
+    public Pane innUt(Kontroller kontroll){ 
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(40);

@@ -5,71 +5,82 @@
  */
 package Forsikring;
 
-
 import java.io.Serializable;
 
-/** Denne klassen representerer båtfosrikringer. Den inneholder data om båtene 
- * En båtforsikring inneholder metoder som beregner premie og egenandel , i tillegg et datafelt som 
- * øker premien etter et skadetilfelle som har ført til godkjent skademelding.
- * utifra om båten har motor eller ikke.
+/**
+ * Denne klassen representerer båtfosrikringer. Den inneholder data om båtene En
+ * båtforsikring inneholder metoder som beregner premie og egenandel , i tillegg
+ * et datafelt som øker premien etter et skadetilfelle som har ført til godkjent
+ * skademelding. utifra om båten har motor eller ikke.
+ *
  * @author Therese, Håkon
  */
-public class BatForsikring extends Forsikringer implements Serializable{
-    
+public class BatForsikring extends Forsikringer implements Serializable {
+
     private int lendgeFot, motorStyrke;
     private String regNo, motorMerke, type;
     private double forsikringSum;
+    private final double SKADETILLEGG = 500;
+    private final double  MOTORTILLEGG = 300;
+    private final double DELTAFORSSUM = 0.02;
     
-    public BatForsikring(double forSum, int lendgeFot,String regNr , String type, String modell, String arsModell, int motorstyrke, String motormerke){
-    super(0, 0); 
-    this.lendgeFot = lendgeFot;
-    this.forsikringSum = forSum;
-    this.type = type;
-    this.motorStyrke = motorstyrke;
-    this.motorMerke = motormerke;
+    public BatForsikring(double forSum, int lendgeFot, String regNr, String type, String modell, String arsModell, int motorstyrke, String motormerke) {
+        super(0, 0);
+        this.lendgeFot = lendgeFot;
+        this.forsikringSum = forSum;
+        this.type = type;
+        this.motorStyrke = motorstyrke;
+        this.motorMerke = motormerke;
     }
-    
-    public String getRegNr(){
+
+    public String getRegNr() {
         return regNo;
     }
-    public int getLendgeFot(){
-     return lendgeFot;
+
+    public int getLendgeFot() {
+        return lendgeFot;
     }
-    public int getMotorStyrke(){
-     return motorStyrke;
+
+    public int getMotorStyrke() {
+        return motorStyrke;
     }
-    public String motorMerke(){
-     return motorMerke;
+
+    public String motorMerke() {
+        return motorMerke;
     }
-    
-    public String toString(){
+
+    public String toString() {
         return "s";
     }
-    
+
     // metoden setter egenandel utifra om båten har motor eller ikke.
-    public void beregnEgenAndel(){
-        if(type.equals("Motorbåt")){
-           egenandel = 3000;
+    public void beregnOgSetEgenAndel() {
+        if (type.equals("Motorbåt")) {
+            setEgenandel(3000);
+        } else {
+            setEgenandel(2000);
         }
-        else{
-            egenandel= 2000;
-        } 
     }
-    
+
     // beregner premie utifra forsikringssum
-    public void beregnPremie(){
-        double deltaForsSum = 0.02;
-        premie =( forsikringSum*deltaForsSum);
-        
-        if(type.equals("Motorbåt")){
-            double motorTillegg = 300;
-            premie += motorTillegg;
+    public void beregnOgSetPremie() {
+       
+        setPremie(( forsikringSum*DELTAFORSSUM ));
+
+        if ( type.equals( "Motorbåt" ) ) {
+           
+            double nyPremie = getPremie() + MOTORTILLEGG;
+            setPremie( nyPremie );
         }
     }
-    
-    // beregner ny premie etter skade
-    public void premieEtterSkade(double gmlPremie){
-        double tillegg = 500;
-        premieTilGodkjenning = gmlPremie + tillegg;  
+
+    // beregner og setter ny premie til godkjenning etter skade.
+    public void premieEtterSkade(double gmlPremie) {
+
+        double premieTilGodkjenning = gmlPremie + SKADETILLEGG;
+        premieTilGodkjenning(premieTilGodkjenning);
+        
     }
+    
+    
 }

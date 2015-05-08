@@ -281,48 +281,47 @@ public class KundesideSkade {
             } else {
                 skriveOmråde.setEditable(false);
             }
-    
-    }
-    private void repSkade(){
-    
+        });
+
+        // finner ut hvilken forsikring det er og legger skademeldingen i køen,
+        // her beregnes også skadesummen samt nye premier, men premien settes endelig,
+        // først når konsulenten har godkjent beløpet/ skademeldingen.
+        btnRapSkade.setOnAction((ActionEvent e) -> {
             String polisNr = listView.getSelectionModel().getSelectedItem();
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
-            }else{
+            } else {
                 lbSkade.setText("Vennligst velg en forsikring");
                 return;
             }
-            if(dato == null || dato.after(Calendar.getInstance())){
+            if (dato == null || dato.after(Calendar.getInstance())) {
                 lbSkade.setText("Vennligst sett en gyldig dato");
                 return;
             }
-            if(skriveOmråde.getText() == null || skriveOmråde.getText().isEmpty()){
-                lbSkade.setText("Vennligst beskriv skaden");
-                return;
-            }
-            
+
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
                 //skriveOmråde.clear();
-                if ( fors instanceof BilForsikring ) {
+                if (fors instanceof BilForsikring) {
 
                     BilForsikring f = (BilForsikring) fors;
                     BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bil.setForsikring(f);
                     bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
-                    f.premieTilGodkjenning(f.premieEtterSkade(f.getPremie(), f.getBonus()));
+                    f.premieTilGodkjenning(f.premieEtterSkade(f.getBonus()));
                     f.nyBonusTilGodkjenning(f.bonusEtterSkade(f.getBonus()));
                     kontroll.addSkade(bil);
-                    skriveOmråde.setPromptText(bil.melding());
+                    skriveOmråde.setText(bil.melding());
 
                 } else if (fors instanceof BatForsikring) {
 
                     BatForsikring f = (BatForsikring) fors;
                     BatSkadeMelding bat = new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bat.setForsikring(f);
-                    bat.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
+                    bat.setUtbetaling(Double.parseDouble(tfBeløp.getText()) - f.getEgenAndel());
+                    f.premieEtterSkade(f.getPremie());
                     kontroll.addSkade(bat);
-                    skriveOmråde.setPromptText(bat.melding());
+                    skriveOmråde.setText(bat.melding());
 
                 } else if (fors instanceof BoligForsikring) {
 
@@ -344,18 +343,17 @@ public class KundesideSkade {
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
-                    skriveOmråde.setPromptText(fri.melding());
-                    
+                    skriveOmråde.setText(fri.melding());
+
                 } else if (fors instanceof ReiseForsikring) {
-                    
+
                     ReiseForsikring f = (ReiseForsikring) fors;
                     ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     reise.setForsikring(f);
                     reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     f.premieTilGodkjenning();
                     kontroll.addSkade(reise);
-                    skriveOmråde.setPromptText(reise.melding());
-                    
+                    skriveOmråde.setText(reise.melding());
                 }
 
             } catch (NumberFormatException nfe) {

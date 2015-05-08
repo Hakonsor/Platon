@@ -26,16 +26,16 @@ public abstract class SkadeMelding implements Serializable {
     public static void setStaticSkadeNr(int nyttSkadeNr) {
         nesteSkadeNr = nyttSkadeNr;
     }
-    protected String skadeBeskrivelse;
-    protected Calendar skadeDato;  // når skaden inntraff.
-    protected Calendar datoInnmeldt;
-    protected Object skadeBilde;
-    protected int skadeSum;
-    protected Forsikringer forsikring;
+    private String skadeBeskrivelse;
+    private Calendar skadeDato;  // når skaden inntraff.
+    private Calendar datoInnmeldt;
+    private Object skadeBilde;
+    private int skadeSum;
+    private Forsikringer forsikring;
    // private String forsikringstype;
-    protected static int nesteSkadeNr = 100000;
-    protected int skadeNr;
-    protected int utbetaling;
+    private static int nesteSkadeNr = 100000;
+    private int skadeNr;
+    private double utbetaling;
     private boolean godkjent;
     
     
@@ -53,11 +53,11 @@ public abstract class SkadeMelding implements Serializable {
     }
     
     
-    public void setUtbetaling(int utbetaling){
+    public void setUtbetaling(double utbetaling){
         this.utbetaling = utbetaling;
     }
 
-    public int getUtbetaling(){
+    public double getUtbetaling(){
         return this.utbetaling;
     }
     // viser at skademeldingen er godkjent.
