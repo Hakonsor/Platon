@@ -11,10 +11,41 @@
     -fx-font: 16px "Myriad";
 }
 
+#konsulent {
+    -fx-font: 22px "Myriad";
+}
+
+#combobox {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 13px "Myriad";
+}
+
+#combobox:hover, #combobox:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#advarsel {
+    -fx-text-fill: red;
+    -fx-font: 20px "Myriad";
+}
+
+#comboboxForsikring {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 14px "Myriad";
+}
+
+#comboboxForsikring:hover, #comboboxForsikring:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
 #sok {
     -fx-background-color: rgb(129, 177, 102);
     -fx-background-radius: 0;
-    -fx-font: 16px "Myriad";
+    -fx-font: 14px "Myriad";
 }
 
 #sok:hover, #sok:focused {
@@ -25,7 +56,7 @@
 #slett {
     -fx-background-color: rgb(129, 177, 102);
     -fx-background-radius: 0;
-    -fx-font: 16px "Myriad";
+    -fx-font: 14px "Myriad";
 
 }
 
@@ -37,11 +68,105 @@
 #regKunde {
     -fx-background-color: rgb(129, 177, 102);
     -fx-background-radius: 0;
-    -fx-font: 16px "Myriad";
+    -fx-font: 14px "Myriad";
 
 }
 
 #regKunde:hover, #regKunde:focused {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
     -fx-border-color: black;
+}
+
+#btnSjekkpris {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 14px "Myriad";
+}
+
+#btnSjekkpris:hover, #btnSjekkpris:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#btnRegBilforsikring {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 14px "Myriad";
+
+}
+
+#btnRegBilforsikring:hover, #btnRegBilforsikring:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#btnRegBatforsikring {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 14px "Myriad";
+
+}
+
+#btnRegBatforsikring:hover, #btnRegBatforsikring:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#lbInfo {
+    -fx-font: 16px "Myriad";
+}
+
+#verden {
+    -fx-font: 16px "Myriad";
+}
+
+#norden {
+    -fx-font: 16px "Myriad";
+}
+
+#europa {
+    -fx-font: 16px "Myriad";
+}
+
+#beregn {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#beregn:hover, #beregn:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#bestill {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#bestill:hover, #bestill:focused{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+
+
+
+#error {
+    -fx-text-fill: red;
+    -fx-border-color: red;
+    -fx-background-image:url("Bilder/cross.png");
+    -fx-background-size: 32px 32px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+
+}
+
+#valid {
+    -fx-text-fill: green;
+    -fx-background-image:url("Bilder/check.png");
+    -fx-background-size: 32px 32px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
 }

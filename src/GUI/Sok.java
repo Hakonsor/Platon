@@ -138,7 +138,7 @@ public class Sok {
 
         if (k != null) {
             kontroll.setInnloggetBruker(k.getNøkkel());
-            KonsulentsideKunde.lbKundenavn.setText("Du behandler: " + kontroll.getInnloggetBruker().getFornavn() + " " + kontroll.getInnloggetBruker().getEtternavn() + ", Kundenr: " + kontroll.getInnloggetBruker().getNøkkel());
+            KonsulentsideKunde.lbKundenavn.setText("Valgt kunde: " + kontroll.getInnloggetBruker().getFornavn() + " " + kontroll.getInnloggetBruker().getEtternavn() + ", kundenr: " + kontroll.getInnloggetBruker().getNøkkel());
             kontroll.opptaterListeKonsulent();
             vindu.close();
         }

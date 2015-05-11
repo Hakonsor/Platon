@@ -493,43 +493,8 @@ public class KundesideBil implements ComboBoxConverter {
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
 
-        btnSjekkpris.setOnAction((ActionEvent e) -> {
-            if (tfRegnr.getId().equals("valid")
-                    && tfÅrsmodell.getId().equals("valid")
-                    && tfMerke.getId().equals("valid")
-                    && tfModell.getId().equals("valid")
-                    && tfKmstand.getId().equals("valid")
-                    && !cbBonus.getValue().equals("Velg Bonus:")
-                    && !cbEgenandel.getValue().equals("Velg Egenandel:")
-                    && !cbKjørelengde.getValue().equals("Velg Kjørelengde:")
-                    ){
-
-                double bonus = 0;
-                double egenandel = 0;
-                int kjøreLengde = 0;
-                String regNo = tfRegnr.getText();
-                String årsModell = tfÅrsmodell.getText();
-                String bilMerke = tfMerke.getText();
-                String bilModell = tfModell.getText();
-                int kmStand = 0;
-                try {
-                    bonus = convertDou(cbBonus.getValue());
-                    egenandel = convertDou(cbEgenandel.getValue());
-                    kjøreLengde = convertInt(cbKjørelengde.getValue());
-                    kmStand = Integer.parseInt(tfKmstand.getText());
-
-                } catch (NumberFormatException nfe) {
-                    System.out.println("Feil tallformat");
-                }
-                BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde,
-                        regNo, bilMerke, bilModell, årsModell, kmStand);
-                String form = "0.00";
-                DecimalFormat tall = new DecimalFormat(form);
-                regLabel.setText("Årlig premie: " + tall.format(bil.getPremie()) + " kr");
-            }
-            else {
-                regLabel.setText("Sjekk feil i feltene ovenfor");
-            }
+        btnSjekkpris.setOnAction(e -> {
+            prisSjekk();
         });
 
         btnRegBilforsikring.setOnAction(e -> {
@@ -595,6 +560,46 @@ public class KundesideBil implements ComboBoxConverter {
         return borderPane;
 
     }
+
+    public void prisSjekk() {
+        if (tfRegnr.getId().equals("valid")
+                && tfÅrsmodell.getId().equals("valid")
+                && tfMerke.getId().equals("valid")
+                && tfModell.getId().equals("valid")
+                && tfKmstand.getId().equals("valid")
+                && !cbBonus.getValue().equals("Velg Bonus:")
+                && !cbEgenandel.getValue().equals("Velg Egenandel:")
+                && !cbKjørelengde.getValue().equals("Velg Kjørelengde:")
+                ){
+
+            double bonus = 0;
+            double egenandel = 0;
+            int kjøreLengde = 0;
+            String regNo = tfRegnr.getText();
+            String årsModell = tfÅrsmodell.getText();
+            String bilMerke = tfMerke.getText();
+            String bilModell = tfModell.getText();
+            int kmStand = 0;
+            try {
+                bonus = convertDou(cbBonus.getValue());
+                egenandel = convertDou(cbEgenandel.getValue());
+                kjøreLengde = convertInt(cbKjørelengde.getValue());
+                kmStand = Integer.parseInt(tfKmstand.getText());
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Feil tallformat");
+            }
+            BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde,
+                    regNo, bilMerke, bilModell, årsModell, kmStand);
+            String form = "0.00";
+            DecimalFormat tall = new DecimalFormat(form);
+            regLabel.setText("Årlig premie: " + tall.format(bil.getPremie()) + " kr");
+        }
+        else {
+            regLabel.setText("Sjekk feil i feltene ovenfor");
+        }
+    }
+
 
     public void ja() {
         if (tfRegnr.getId().equals("valid")
