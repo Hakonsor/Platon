@@ -24,7 +24,7 @@
     -fx-font: 16px "Myriad";
 }
 
-#beregn:hover {
+#beregn:hover, #beregn:focused {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
     -fx-border-color: black;
 }
@@ -35,7 +35,7 @@
     -fx-font: 16px "Myriad";
 }
 
-#bestill:hover {
+#bestill:hover, #bestill:focused{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
     -fx-border-color: black;
 }

@@ -105,6 +105,7 @@ public class KundesideSkade {
                 "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
         forsikringComboBox.setOnAction(e -> {
+            skriveOmråde.clear();
             SkrivListe();
         });
 
@@ -128,17 +129,13 @@ public class KundesideSkade {
         skriveOmråde.setId("felt");
         skriveOmråde.setPromptText("Skriv innformasjon om skaden");
         skriveOmråde.setPrefSize(300, 300);
-        skriveOmråde.setOnMouseEntered(e -> {
-            skriveOmråde.setPromptText("Skriv innformasjon om skaden");
-        });
-        skriveOmråde.setStyle("-fx-prompt-text-fill: rgba(0, 0, 0)");
 
         FadeTransition ftskrive = new FadeTransition(Duration.millis(100), skriveOmråde);
         ftskrive.setFromValue(0.0F);
         ftskrive.setToValue(1.0F);
         ftskrive.setCycleCount(1);
         
-        listView.setPrefSize(200, 300);
+        listView.setPrefSize(250, 300);
         listView.setId("felt");
         listView.setEditable(false);
 
@@ -321,7 +318,6 @@ public class KundesideSkade {
                 dato.setTime(dat);
     }
     private void SkrivListe(){
-        skriveOmråde.clear();
             ArrayList<String> forsikringliste = kontroll.
                     getInfoForsikringListe(forsikringComboBox.getItems().
                             indexOf(forsikringComboBox.getValue()));
@@ -333,8 +329,6 @@ public class KundesideSkade {
         }
     }
     private void settKnapper(){
-    
-            skriveOmråde.clear();
             String polisNr = listView.getSelectionModel().getSelectedItem();
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
@@ -364,24 +358,36 @@ public class KundesideSkade {
     private void repSkade(){
     
             String polisNr = listView.getSelectionModel().getSelectedItem();
+            if (forsikringComboBox.getValue().equals("Velg Forsikring:")) {
+                lbInfo.setVisible(true);
+                lbInfo.setText("Vennligst velg forsikringstype");
+                return;
+            }
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
-            }else{
+            }else {
+                lbInfo.setVisible(true);
                 lbInfo.setText("Vennligst velg en forsikring");
                 return;
             }
-            if(dato == null || dato.after(Calendar.getInstance())){
-                lbInfo.setText("Vennligst sett en gyldig dato");
+            if(skriveOmråde.getText() == null || skriveOmråde.getText().isEmpty()){
+                lbInfo.setVisible(true);
+                lbInfo.setText("Vennligst beskriv skaden");
                 return;
             }
-            if(skriveOmråde.getText() == null || skriveOmråde.getText().isEmpty()){
-                lbSkade.setText("Vennligst beskriv skaden");
+            if (tfBeløp.getText() == null || tfBeløp.getText().isEmpty()){
+                lbInfo.setVisible(true);
+                lbInfo.setText("Mangler skadebeløp!");
+                return;
+            }
+            if(dato == null || dato.after(Calendar.getInstance())){
+                lbInfo.setVisible(true);
+                lbInfo.setText("Vennligst sett en gyldig dato");
                 return;
             }
             
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
-                //skriveOmråde.clear();
                 if ( fors instanceof BilForsikring ) {
 
                     BilForsikring f = (BilForsikring) fors;
@@ -391,7 +397,7 @@ public class KundesideSkade {
                     f.premieTilGodkjenning(f.premieEtterSkade(f.getPremie(), f.getBonus()));
                     f.nyBonusTilGodkjenning(f.bonusEtterSkade(f.getBonus()));
                     kontroll.addSkade(bil);
-                    skriveOmråde.setPromptText(bil.melding());
+                    skriveOmråde.setText(bil.melding());
 
                 } else if (fors instanceof BatForsikring) {
 
@@ -400,7 +406,7 @@ public class KundesideSkade {
                     bat.setForsikring(f);
                     bat.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     kontroll.addSkade(bat);
-                    skriveOmråde.setPromptText(bat.melding());
+                    skriveOmråde.setText(bat.melding());
 
                 } else if (fors instanceof BoligForsikring) {
 
@@ -411,7 +417,7 @@ public class KundesideSkade {
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(bolig);
-                    skriveOmråde.setPromptText(bolig.melding());
+                    skriveOmråde.setText(bolig.melding());
 
                 } else if (fors instanceof FritidsBolig) {
 
@@ -422,7 +428,7 @@ public class KundesideSkade {
                     fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
-                    skriveOmråde.setPromptText(fri.melding());
+                    skriveOmråde.setText(fri.melding());
                     
                 } else if (fors instanceof ReiseForsikring) {
                     
@@ -432,7 +438,7 @@ public class KundesideSkade {
                     reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
                     f.premieTilGodkjenning();
                     kontroll.addSkade(reise);
-                    skriveOmråde.setPromptText(reise.melding());
+                    skriveOmråde.setText(reise.melding());
                     
                 }
 
@@ -441,9 +447,9 @@ public class KundesideSkade {
                 lbInfo.setText("Ugyldig skadebeløp");
                 return;
             }
-            skriveOmråde.clear();  
             tfBeløp.clear();
-        dato.clear();
+            dato.clear();
+            data.clear();
             lbInfo.setText("Skademelding er sendt inn");
     
     

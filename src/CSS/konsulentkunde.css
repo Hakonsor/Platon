@@ -1,0 +1,47 @@
+#promtfix, #promtfix:focused {
+    -fx-prompt-text-fill:darkgray;
+    -fx-background-radius: 0;
+}
+
+#borderpane {
+    -fx-background-image: url("Bilder/k-kundeback.png");
+}
+
+#kundenavn {
+    -fx-font: 16px "Myriad";
+}
+
+#sok {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#sok:hover, #sok:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#slett {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+
+}
+
+#slett:hover, #slett:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#regKunde {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+
+}
+
+#regKunde:hover, #regKunde:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}

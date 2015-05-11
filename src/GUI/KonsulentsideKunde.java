@@ -6,7 +6,7 @@ import Forsikring.Forsikringer;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import java.util.ArrayList;
-import javafx.beans.value.ChangeListener;
+
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,24 +22,25 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.ComboBoxListCell;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 /**
  * Created by Magnus on 27.04.15.
  */
 public class KonsulentsideKunde implements ComboBoxConverter {
 
-    public static TextField tfKundenavn = new TextField();
-
+    public static Label lbKundenavn;
     private Kontroller kontroll;
     private String type;
     private boolean utLeie;
-    private HBox vb;
+    private HBox hb;
+    private HBox hBox;
     private Button btnSøk;
     private Button btnRegKunde;
+    private BorderPane borderPane;
+    private GridPane gridRight;
     private GridPane gridLeft;
     private GridPane gridBil;
     private GridPane gridReise;
@@ -105,37 +106,39 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     private ObservableList<String> navn;
     private ObservableList<String> data;
 
-    ComboBox<String> forsikringComboBox;
+    private ComboBox<String> forsikringComboBox;
 
     public Pane kundeFane(Kontroller kontroll) {
         this.kontroll = kontroll;
-        //Group root = new Group();
-        BorderPane borderPane = new BorderPane();
-        navn = FXCollections.observableArrayList();
-        data = FXCollections.observableArrayList();
-        //TOP---------------------------------->
-        vb = new HBox();
-        vb.setPadding(new Insets(25, 25, 50, 25)); //top/right/bottom/left
-        vb.setSpacing(70);
-        vb.setAlignment(Pos.CENTER);
 
-        tfKundenavn.setText("");
-        tfKundenavn.setId("Kundenavn");
-        tfKundenavn.setMinWidth(300);
-        tfKundenavn.setEditable(false);
+        borderPane = new BorderPane();
+        borderPane.setId("borderpane");
+        borderPane.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
+
+
+        //TOP---------------------------------->
+        hb = new HBox();
+        hb.setPadding(new Insets(130, 10, 30, 0)); //top/right/bottom/left
+        hb.setSpacing(70);
+        hb.setAlignment(Pos.CENTER);
+
+        lbKundenavn = new Label();
+        lbKundenavn.setText("Du behandler: \"Ingen kunde er valgt\"");
+        lbKundenavn.setId("kundenavn");
 
         btnSøk = new Button();
-        btnSøk.setText("Søk");
-        btnSøk.setId("søk");
+        btnSøk.setText("Finn kunde");
+        btnSøk.setId("sok");
         btnSøk.setMinWidth(100);
         btnSøk.setOnAction(e -> {
             kontroll.sok();
         });
 
-        /*
-         kontroll.registrerBruker(this.getKunde());
-         vindu.close();
-         */
+        btnSlett = new Button();
+        btnSlett.setText("Slett forsikring");
+        btnSlett.setId("slett");
+        btnSlett.setOnAction(e -> { slettForsikring(); });
+
         btnRegKunde = new Button();
         btnRegKunde.setText("Reg. kunde");
         btnRegKunde.setId("regKunde");
@@ -144,29 +147,11 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             kontroll.regVindu();
         });
 
-        vb.getChildren().addAll(tfKundenavn, btnSøk, btnRegKunde);
+        hb.getChildren().addAll(lbKundenavn, btnSøk, btnSlett, btnRegKunde);
+        borderPane.setTop(hb);
 
-        borderPane.setTop(vb);
 
-        //LEFT-------------------------------------->
-        gridLeft = new GridPane();
-        gridLeft.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
-        gridLeft.setVgap(10);
-        gridLeft.setHgap(10);
-        gridLeft.setAlignment(Pos.TOP_CENTER);
-
-        forsikringComboBox = new ComboBox<>();
-        forsikringComboBox.setEditable(false);
-        forsikringComboBox.getItems().addAll(
-                "Alle",
-                "Båtforsikring",
-                "Reiseforsikring",
-                "Bilforsikring",
-                "Boligforsikring",
-                "Fritidsbolig"
-        );
-
-        // Forskjellige forsikringer vises
+        //GRID RIGHT setVisible(false)---------------->
         gridBil = new GridPane();
         gridBil.setVisible(false);
 
@@ -185,6 +170,22 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridAlle = new GridPane();
         gridAlle.setVisible(false);
 
+
+        //LEFT-------------------------------------->
+
+        navn = FXCollections.observableArrayList();
+        data = FXCollections.observableArrayList();
+        forsikringComboBox = new ComboBox<>();
+        forsikringComboBox.setEditable(false);
+        forsikringComboBox.getItems().addAll(
+                "Alle",
+                "Båtforsikring",
+                "Reiseforsikring",
+                "Bilforsikring",
+                "Boligforsikring",
+                "Fritidsbolig"
+        );
+
         forsikringComboBox.setValue("Velg Forsikring:");
         forsikringComboBox.setOnAction(e -> {
             ruteVipper();
@@ -194,19 +195,17 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         listView.setPrefSize(300, 400);
         listView.setEditable(false);
 
-        //navn.addAll("Honda CRV", "Ferrari Enzo", "VW Golf");
         data.addAll("Dobbel klikk for å velge:");
 
         listView.setItems(navn);
         listView.setCellFactory(ComboBoxListCell.forListView(navn));
 
-        gridLeft.add(forsikringComboBox, 0, 0);
-        gridLeft.add(listView, 0, 1);
 
-        borderPane.setLeft(gridLeft);
+        //RIGHT---------------------------------------------->
 
-        //RIGHT --------------------------------------------------------->>
-        //Bil
+        //>---------GRID av forsikringene --------------<
+
+        //Bil--------------------------------------------------------------------->
         gridBil.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBil.setVgap(10);
         gridBil.setHgap(10);
@@ -305,7 +304,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBil.add(btnRegBilforsikring, 0, 9);
         gridBil.add(regLabelBil, 0, 10);
 
-        //Reise
+        //Reise--------------------------------------------------------------------->
         lbInfo = new Label();
         lbInfo.setText("Velg reiseforsikringstype:");
         lbInfo.setId("lbInfo");
@@ -373,7 +372,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridReise.setAlignment(Pos.CENTER);
         gridReise.setGridLinesVisible(false);
 
-        //Båt
+
+        //Båt--------------------------------------------------------------------->
         gridBåt.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBåt.setVgap(10);
         gridBåt.setHgap(10);
@@ -382,7 +382,6 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         Label lbbåt = new Label("Test tekst, du har vlagt Båt");
         gridBåt.add(lbbåt, 0, 0);
 
-        //Båt
         tfVerdi = new TextField();
         tfVerdi.setPromptText("Båtens verdi");
         tfVerdi.setMinWidth(200);
@@ -462,7 +461,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBåt.add(btnRegBåtforsikring, 0, 10);
         gridBåt.add(regLabelB, 0, 11);
 
-        //Bolig
+
+        //Bolig--------------------------------------------------------------------->
         gridBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBolig.setVgap(10);
         gridBolig.setHgap(10);
@@ -572,7 +572,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBolig.setHgap(10);
         gridBolig.setAlignment(Pos.CENTER);
 
-        //FritidsBolig
+
+        //FritidsBolig--------------------------------------------------------------------->
         gridFriBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridFriBolig.setVgap(10);
         gridFriBolig.setHgap(10);
@@ -682,8 +683,9 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridFriBolig.setHgap(10);
         gridFriBolig.setAlignment(Pos.CENTER);
 
-        //Alle
-        gridAlle.setPadding(new Insets(10, 0, 0, 0)); //top/right/bottom/left
+
+        //Alle--------------------------------------------------------------------->
+        gridAlle.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridAlle.setVgap(10);
         gridAlle.setHgap(10);
         gridAlle.setAlignment(Pos.CENTER);
@@ -697,53 +699,67 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             oppdaterListe();
         });
 
-        lballe = new Label("Test tekst, du har vlagt Alle");
+        lballe = new Label(" ");
         gridAlle.add(lballe, 0, 0);
         gridAlle.add(taLes, 0, 1);
 
-        //Buttons ---------------------------------->
-        GridPane gridButtons = new GridPane();
-        gridButtons.setPadding(new Insets(100, 0, 0, 0)); //top/right/bottom/left
-        gridButtons.setVgap(10);
-        gridButtons.setHgap(10);
-        //gridButtons.setPrefHeight(50);
-        //gridButtons.setPrefWidth(1000);
-        gridButtons.setAlignment(Pos.CENTER);
 
-        btnSlett = new Button();
-        btnSlett.setText("Slett");
-        btnSlett.setOnAction(eS -> {
-            System.out.println("Du trykket på SLETT!");
-        });
+        //--------------------------------------------------------------------------------->>
+        //--------------------------------------------------------------------------------->>
+        //--------------------------------------------------------------------------------->>
+        //--------------------------------------------------------------------------------->>
 
-        btnRegForsikring = new Button();
-        btnRegForsikring.setText("Reg. Forsikring");
-        btnRegForsikring.setOnAction(e1 -> {
-            System.out.println("RegForsikrings");
-        });
-
-        //gridButtons.add(btnSlett, 0, 0);
-        //gridButtons.add(btnRegForsikring, 1, 0);
-        GridPane gridRight = new GridPane();
+        //LEFT
+        gridLeft = new GridPane();
         gridLeft.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
+        gridLeft.setVgap(10);
+        gridLeft.setHgap(10);
+        gridLeft.setAlignment(Pos.TOP_CENTER);
+
+        gridLeft.add(forsikringComboBox, 0, 0);
+        gridLeft.add(listView, 0, 1);
+
+
+
+        //RIGHT
+        gridRight = new GridPane();
+        gridRight.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
+        gridRight.setVgap(10);
+        gridRight.setHgap(10);
+        gridRight.setAlignment(Pos.TOP_CENTER);
+
         gridRight.add(gridBil, 0, 0);
         gridRight.add(gridBåt, 0, 0);
         gridRight.add(gridReise, 0, 0);
         gridRight.add(gridBolig, 0, 0);
         gridRight.add(gridFriBolig, 0, 0);
         gridRight.add(gridAlle, 0, 0);
-        //gridRight.add(gridButtons, 0, 1);
-        gridRight.setAlignment(Pos.CENTER);
 
-        borderPane.setRight(gridRight);
-        borderPane.setPadding(new Insets(10, 200, 200, 100)); //top/right/bottom/left
 
-        gridButtons.setGridLinesVisible(false);
-        gridLeft.setGridLinesVisible(false);
-        gridBil.setGridLinesVisible(false);
 
+        //LEFT(grid) + RIGHT(grid) = CENTER(vBox)
+        hBox = new HBox();
+        hBox.setAlignment(Pos.TOP_CENTER);
+        hBox.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
+        hBox.setSpacing(20);
+        hBox.getChildren().addAll(gridLeft, gridRight);
+
+        borderPane.setCenter(hBox);
+
+        borderPane.getStylesheets().add("CSS/konsulentkunde.css");
         return borderPane;
-    }
+
+
+    }//End of kundeFane
+
+
+
+
+
+
+
+
+    //METODER------------------------------->
 
     private void ruteVipper() {
 
@@ -896,4 +912,30 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         }
 
     }
-}
+
+    public void settListe() {
+        ArrayList<String> forsikringliste = kontroll.
+                getInfoForsikringListe(forsikringComboBox.getItems().
+                        indexOf(forsikringComboBox.getValue()));
+        System.out.println(forsikringliste);
+        if (forsikringliste == null) {
+            navn.clear();
+            navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+        } else {
+            navn.setAll(forsikringliste);
+        }
+    }
+
+
+    public void slettForsikring() {
+        String polisNr = listView.getSelectionModel().getSelectedItem();
+        if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+            polisNr = polisNr.substring(0, 6);
+        } else {
+            return;
+        }
+        kontroll.slettForsikring(Integer.parseInt(polisNr));
+        settListe();
+    }
+
+}//End of class

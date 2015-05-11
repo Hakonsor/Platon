@@ -24,6 +24,7 @@ Kontroller kontroll;
     public Pane statFane(Kontroller kontroll) {
 
         BorderPane borderPane = new BorderPane();
+        borderPane.setId("borderpane");
 
         TabPane tabPane = new TabPane();
 
@@ -36,6 +37,7 @@ Kontroller kontroll;
         tabPane.getTabs().addAll(tabInnUt);
         borderPane.setTop(tabPane);
 
+        borderPane.getStylesheets().add("CSS/konsulentstat.css");
         return borderPane;
     }
 
@@ -298,6 +300,7 @@ Kontroller kontroll;
 
             lbDifferanseVerdi.setText(tall.format(inntekt - utgift) + " Kr");
         });
+
         return vb;
     }
 

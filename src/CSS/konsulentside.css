@@ -11,3 +11,62 @@
 #h2 {
     -fx-font-size: 16px;
 }
+
+
+#tabkunde {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#tabkunde:selected {
+    -fx-border-color: rgb(129, 177, 102);
+    -fx-border-width: 5px;
+}
+
+#tabstat {
+    -fx-background-color: rgb(255, 159, 0);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#tabstat:selected {
+    -fx-border-color: rgb(255, 159, 0);
+    -fx-border-width: 5px;
+}
+
+#tabskade {
+    -fx-background-color: rgb(89, 139, 167);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#tabskade:selected {
+    -fx-border-color: rgb(89, 139, 167);
+    -fx-border-width: 5px;
+}
+
+
+.tab-pane:top *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+ /* -fx-padding: 0.416667em 0.166667em 0.0em 0.833em; /* 5 2 0 10 */
+    -fx-padding: 0.416667em 0.166667em 0.0em 0.0em; /* overriden as 5 2 0 0 */
+}
+
+.tab-pane:bottom *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+ /* -fx-padding: 0.416667em 0.166667em 0.0em 0.833em; /* 5 2 0 10 */
+    -fx-padding: 0.416667em 0.166667em 0.0em 0.0em; /* overriden as 5 2 0 0 */
+}
+
+.tab-pane:left *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+ /* -fx-padding: 0.416667em 0.166667em 0.0em 0.833em; /* 5 2 0 10 */
+    -fx-padding: 0.416667em 0.166667em 0.0em 0.0em; /* overriden as 5 2 0 0 */
+}
+
+.tab-pane:right *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+ /* -fx-padding: 0.416667em 0.166667em 0.0em 0.833em; /* 5 2 0 10 */
+    -fx-padding: 0.416667em 0.166667em 0.0em 0.0em; /* overriden as 5 2 0 0 */
+}

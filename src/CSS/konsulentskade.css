@@ -6,3 +6,34 @@
 #btnHoyre:hover {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
+
+#promtfix, #promtfix:focused {
+    -fx-prompt-text-fill:darkgray;
+    -fx-background-radius: 0;
+}
+
+#borderpane {
+    -fx-background-image: url("Bilder/k-skadeback.png");
+}
+
+#godta {
+    -fx-background-color: rgb(89, 139, 167);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#godta:hover, #godta:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#avvis {
+    -fx-background-color: rgb(89, 139, 167);
+    -fx-background-radius: 0;
+    -fx-font: 16px "Myriad";
+}
+
+#avvis:hover, #avvis:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
