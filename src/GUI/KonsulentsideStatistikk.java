@@ -1,5 +1,6 @@
 package GUI;
 
+import Kontroller.Kakediagram;
 import Kontroller.Kontroller;
 import java.text.DecimalFormat;
 import javafx.event.ActionEvent;
@@ -15,13 +16,46 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
- * Created by Magnus on 27.04.15.
+ * Created by Magnus, Therese, Håkon
  */
 public class KonsulentsideStatistikk {
 
-
+    private Kontroller kontroll;
+    private double reiseInn, boligInn, fritidInn, båtInn, bilInn,
+            reiseUt, boligUt, fritidUt, båtUt, bilUt, inntekt, utgift;
+    private int aar = 2015;
+    private ComboBox<String> cb;
+    private Label lbBoligVerdiInn;
+    private Label lbFritidsboligInn;
+    private Label lbFritidsboligVerdiInn;
+    private Label lbBilforsikringInn;
+    private Label lbBilforsikringVerdiInn;
+    private Label lbReiseforsikringInn;
+    private Label lbReiseForsikringVerdiInn;
+    private Label lbBåtForsikringInn;
+    private Label lbBåtForsikringVerdiInn;
+    private Label lbTotalInn;
+    private Label lbTotalVerdiInn; 
+    private Label lbUtgifter;
+    private Label lbBoligUt;
+    private Label lbBoligVerdiUt;
+    private Label lbFritidsboligUt;
+    private Label lbFritidsboligVerdiUt;
+    private Label lbBilforsikringUt;
+    private Label lbBilforsikringVerdiUt;
+    private Label lbReiseforsikringUt;
+    private Label lbReiseForsikringVerdiUt;
+    private Label lbBåtForsikringUt;
+    private Label lbBåtForsikringVerdiUt;
+    private Label lbTotalUt;
+    private Label lbTotalVerdiUt;
+    private Label lbDifferanse;
+    private Label lbDifferanseVerdi;
+            
     public Pane statFane(Kontroller kontroll) {
-       
+
+        this.kontroll = kontroll;
+        oppdater();
         BorderPane borderPane = new BorderPane();
         borderPane.setId("borderpane");
 
@@ -31,22 +65,80 @@ public class KonsulentsideStatistikk {
         Tab tabInnUt = new Tab();
         tabInnUt.setText("Inntekter & Utgifter");
         tabInnUt.setClosable(false);
-        tabInnUt.setContent(innUt(kontroll));
+        tabInnUt.setOnSelectionChanged(e -> {
+           tabInnUt.setContent(innUt()); 
+        });
+        
+        
+        Tab kakeDiagram = new Tab();
+        kakeDiagram.setText("Kakediagram");
+        kakeDiagram.setClosable(false);
+        kakeDiagram.setOnSelectionChanged(e -> {
+        kakeDiagram.setContent(kakeDiagram());
+        });
+        
+        
 
-        tabPane.getTabs().addAll(tabInnUt);
+        tabPane.getTabs().addAll(tabInnUt, kakeDiagram);
         borderPane.setTop(tabPane);
 
         borderPane.getStylesheets().add("CSS/konsulentstat.css");
         return borderPane;
     }
 
-    public Pane innUt(Kontroller kontroll){ 
+    public Pane kakeDiagram() {
+        VBox vb = new VBox();
+        vb.setAlignment(Pos.CENTER);
+        vb.setSpacing(40);
+        vb.setPadding(new Insets(100));
+        
+        oppdater();
+        Kakediagram innkake = new Kakediagram("Inntekter");
+        innkake.setBil(bilInn);
+        innkake.setBolig(boligInn);
+        innkake.setBåt(båtInn);
+        innkake.setFritids(fritidInn);
+        innkake.setReise(reiseInn);
+        
+        Kakediagram utkake = new Kakediagram("Utgifter");
+        utkake.setBil(bilUt);
+        utkake.setBolig(boligUt);
+        utkake.setBåt(båtUt);
+        utkake.setFritids(fritidUt);
+        utkake.setReise(reiseUt);
+        
+        
+        Kakediagram kake = new Kakediagram("Differanse");
+        kake.setBil(bilInn-bilUt);
+        kake.setBolig(boligInn-boligUt);
+        kake.setBåt(båtInn-båtUt);
+        kake.setFritids(fritidInn-fritidUt);
+        kake.setReise(reiseInn-reiseUt);
+        
+        GridPane grid = new GridPane();
+        grid.add(innkake.hentKake(), 0, 0);
+        grid.add(utkake.hentKake(), 1, 0);
+        
+        vb.getChildren().addAll(grid);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        return vb;
+    }
+
+    public Pane innUt() {
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(40);
         vb.setPadding(new Insets(100));
 
-        ComboBox<String> cb = new ComboBox<>();
+        cb = new ComboBox<>();
         cb.setValue("Velg År:");
         cb.setEditable(false);
         cb.setMinWidth(200);
@@ -74,111 +166,111 @@ public class KonsulentsideStatistikk {
         lbBoligInn.setText("Bolig:");
         lbBoligInn.setId("lbbolig");
 
-        Label lbBoligVerdiInn = new Label();
+        lbBoligVerdiInn = new Label();
         lbBoligVerdiInn.setText("123456" + " Kr");
         lbBoligVerdiInn.setId("lbboligverdi");
 
-        Label lbFritidsboligInn = new Label();
+        lbFritidsboligInn = new Label();
         lbFritidsboligInn.setText("Fritidsbolig:");
         lbFritidsboligInn.setId("lbFritidsbolig");
 
-        Label lbFritidsboligVerdiInn = new Label();
+        lbFritidsboligVerdiInn = new Label();
         lbFritidsboligVerdiInn.setText("123456" + " Kr");
         lbFritidsboligVerdiInn.setId("lbFritidsboligVerdi");
 
-        Label lbBilforsikringInn = new Label();
+        lbBilforsikringInn = new Label();
         lbBilforsikringInn.setText("Bilforsikring:");
         lbBilforsikringInn.setId("lbBilforsikring");
 
-        Label lbBilforsikringVerdiInn = new Label();
+        lbBilforsikringVerdiInn = new Label();
         lbBilforsikringVerdiInn.setText("123456" + " Kr");
         lbBoligVerdiInn.setText("123456" + " Kr");
         lbBilforsikringVerdiInn.setId("lbBilforsikringVerdi");
 
-        Label lbReiseforsikringInn = new Label();
+        lbReiseforsikringInn = new Label();
         lbReiseforsikringInn.setText("Reiseforsikring:");
         lbReiseforsikringInn.setId("lbReiseforsikring");
 
-        Label lbReiseForsikringVerdiInn = new Label();
+        lbReiseForsikringVerdiInn = new Label();
         lbReiseForsikringVerdiInn.setText("123456" + " Kr");
         lbReiseForsikringVerdiInn.setId("lbReiseForsikringVerdi");
 
-        Label lbBåtForsikringInn = new Label();
+        lbBåtForsikringInn = new Label();
         lbBåtForsikringInn.setText("BåtForsikring:");
         lbBåtForsikringInn.setId("lbBåtForsikring");
 
-        Label lbBåtForsikringVerdiInn = new Label();
+        lbBåtForsikringVerdiInn = new Label();
         lbBåtForsikringVerdiInn.setText("123456" + " Kr");
         lbBåtForsikringVerdiInn.setId("lbBåtForsikringVerdi");
 
-        Label lbTotalInn = new Label();
+        lbTotalInn = new Label();
         lbTotalInn.setText("Totalt:");
         lbTotalInn.setId("lbTotalInn");
 
-        Label lbTotalVerdiInn = new Label();
+        lbTotalVerdiInn = new Label();
         lbTotalVerdiInn.setText("9991919" + " Kr");
         lbTotalVerdiInn.setId("lbTotalVerdiInn");
 
         //Utgifter------------------------------------------------->
-        Label lbUtgifter = new Label();
+        lbUtgifter = new Label();
         lbUtgifter.setText("Utgifter fordelt på forsikringstype");
         lbUtgifter.setId("h1");
 
-        Label lbBoligUt = new Label();
+        lbBoligUt = new Label();
         lbBoligUt.setText("Bolig:");
         lbBoligUt.setId("lbbolig");
 
-        Label lbBoligVerdiUt = new Label();
+        lbBoligVerdiUt = new Label();
         lbBoligVerdiUt.setText("123456" + " Kr");
         lbBoligVerdiUt.setId("lbboligverdi");
 
-        Label lbFritidsboligUt = new Label();
+        lbFritidsboligUt = new Label();
         lbFritidsboligUt.setText("Fritidsbolig:");
         lbFritidsboligUt.setId("lbFritidsbolig");
 
-        Label lbFritidsboligVerdiUt = new Label();
+        lbFritidsboligVerdiUt = new Label();
         lbFritidsboligVerdiUt.setText("123456" + " Kr");
         lbFritidsboligVerdiUt.setId("lbFritidsboligVerdi");
 
-        Label lbBilforsikringUt = new Label();
+        lbBilforsikringUt = new Label();
         lbBilforsikringUt.setText("Bilforsikring:");
         lbBilforsikringUt.setId("lbBilforsikring");
 
-        Label lbBilforsikringVerdiUt = new Label();
+        lbBilforsikringVerdiUt = new Label();
         lbBilforsikringVerdiUt.setText("123456" + " Kr");
         lbBilforsikringVerdiUt.setId("lbBilforsikringVerdi");
 
-        Label lbReiseforsikringUt = new Label();
+        lbReiseforsikringUt = new Label();
         lbReiseforsikringUt.setText("Reiseforsikring:");
         lbReiseforsikringUt.setId("lbReiseforsikring");
 
-        Label lbReiseForsikringVerdiUt = new Label();
+        lbReiseForsikringVerdiUt = new Label();
         lbReiseForsikringVerdiUt.setText("123456" + " Kr");
         lbReiseForsikringVerdiUt.setId("lbReiseForsikringVerdi");
 
-        Label lbBåtForsikringUt = new Label();
+        lbBåtForsikringUt = new Label();
         lbBåtForsikringUt.setText("BåtForsikring:");
         lbBåtForsikringUt.setId("lbBåtForsikring");
 
-        Label lbBåtForsikringVerdiUt = new Label();
+        lbBåtForsikringVerdiUt = new Label();
         lbBåtForsikringVerdiUt.setText("123456" + " Kr");
         lbBåtForsikringVerdiUt.setId("lbBåtForsikringVerdi");
 
-        Label lbTotalUt = new Label();
+        lbTotalUt = new Label();
         lbTotalUt.setText("Totalt:");
         lbTotalUt.setId("lbTotalInn");
 
-        Label lbTotalVerdiUt = new Label();
+        lbTotalVerdiUt = new Label();
         lbTotalVerdiUt.setText("2356543" + "Kr");
         lbBåtForsikringVerdiUt.setText("123456" + " Kr");
         lbTotalVerdiUt.setId("lbTotalVerdiUt");
 
         //Differanse
-        Label lbDifferanse = new Label();
+        lbDifferanse = new Label();
         lbDifferanse.setText("Differanse:");
         lbDifferanse.setId("h2");
 
-        Label lbDifferanseVerdi = new Label();
+        lbDifferanseVerdi = new Label();
         lbDifferanseVerdi.setText("56565654" + " Kr");
         lbTotalVerdiUt.setText("2356543" + "Kr");
         lbBåtForsikringVerdiUt.setText("123456" + " Kr");
@@ -232,11 +324,17 @@ public class KonsulentsideStatistikk {
         grid.setGridLinesVisible(false);
 
         vb.getChildren().addAll(cb, grid);
+        oppdaterTabell();
 
         cb.setOnAction((ActionEvent e) -> {
+            velgÅr();
+            oppdaterTabell();
+        });
 
-            String år = cb.getSelectionModel().getSelectedItem();
-            int aar = 2013;
+        return vb;
+    }
+    private void velgÅr(){
+    String år = cb.getSelectionModel().getSelectedItem();
             switch (år) {
                 case "2013":
                     aar = 2013;
@@ -247,44 +345,21 @@ public class KonsulentsideStatistikk {
                 case "2015":
                     aar = 2015;
                     break;
+                default:
+                    aar = 2015;
+                   
             }
-            double reiseInn;
-            double boligInn;
-            double fritidInn;
-            double båtInn;
-            double bilInn;
-
-            double reiseUt;
-            double boligUt;
-            double fritidUt;
-            double båtUt;
-            double bilUt;
-
-            double inntekt;
-            double utgift;
-            //reiseInn = kontroll.finnInntekterReiseFors(aar);
-            boligInn = kontroll.finnInntekterBoligForsikring(aar);
-            fritidInn = kontroll.finnInntekterFritidsBolig(aar);
-            båtInn = kontroll.finnInntekterBåt(aar);
-            bilInn = kontroll.finnInntekterBil(aar);
-            inntekt = kontroll.finnInntekterAlleForsikringer(aar);
-
-            reiseUt = kontroll.finnUtgiftReise(aar);
-            boligUt = kontroll.finnUtgiftBolig(aar);
-            fritidUt = kontroll.finnUtgiftFritid(aar);
-            båtUt = kontroll.finnUtgiftBåt(aar);
-            bilUt = kontroll.finnUtgiftBil(aar);
-            utgift = kontroll.finnUtgiftTotal(aar);
-
-            String form = "0.00";
+        oppdater();
+    }
+    private void oppdaterTabell(){
+                String form = "0.00";
             DecimalFormat tall = new DecimalFormat(form);
 // Inntekter  ________________________________________________
             lbBåtForsikringVerdiInn.setText(tall.format(båtInn) + " Kr");
-            //lbReiseForsikringVerdiInn.setText(tall.format(reiseInn) + " Kr");
+            lbReiseForsikringVerdiInn.setText(tall.format(reiseInn) + " Kr");
             lbBilforsikringVerdiInn.setText(tall.format(bilInn) + " Kr");
             lbBoligVerdiInn.setText(tall.format(boligInn) + " Kr");
             lbFritidsboligVerdiInn.setText(tall.format(fritidInn) + " Kr");
-
             lbTotalVerdiInn.setText(tall.format(inntekt) + "Kr");
 // Utgifter ________________________________________________
             lbBåtForsikringVerdiUt.setText(tall.format(båtUt) + " Kr");
@@ -297,9 +372,23 @@ public class KonsulentsideStatistikk {
 //differanse____________________________________________________________________
 
             lbDifferanseVerdi.setText(tall.format(inntekt - utgift) + " Kr");
-        });
+    
+    }
 
-        return vb;
+    private void oppdater() {
+            reiseInn = kontroll.finnInntekterReiseFors(aar);
+            boligInn = kontroll.finnInntekterBoligForsikring(aar);
+            fritidInn = kontroll.finnInntekterFritidsBolig(aar);
+            båtInn = kontroll.finnInntekterBåt(aar);
+            bilInn = kontroll.finnInntekterBil(aar);
+            inntekt = kontroll.finnInntekterAlleForsikringer(aar);
+
+            reiseUt = kontroll.finnUtgiftReise(aar);
+            boligUt = kontroll.finnUtgiftBolig(aar);
+            fritidUt = kontroll.finnUtgiftFritid(aar);
+            båtUt = kontroll.finnUtgiftBåt(aar);
+            bilUt = kontroll.finnUtgiftBil(aar);
+            utgift = kontroll.finnUtgiftTotal(aar);
     }
 
 }//End of class
