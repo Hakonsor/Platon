@@ -49,6 +49,7 @@ public class KonsulentSide {
         //Kunde
         Tab tabKunde = new Tab();
         tabKunde.setText("Kunde");
+        tabKunde.setId("tabkunde");
         tabKunde.setClosable(false);
         konsulentsideKunde = new KonsulentsideKunde();
         tabKunde.setOnSelectionChanged(e-> {
@@ -58,6 +59,7 @@ public class KonsulentSide {
         //Statistikk
         Tab tabStat = new Tab();
         tabStat.setText("Statistikk");
+        tabStat.setId("tabstat");
         tabStat.setClosable(false);
         konsulentsideStatistikk = new KonsulentsideStatistikk();
         tabStat.setOnSelectionChanged(e-> {
@@ -66,12 +68,12 @@ public class KonsulentSide {
         //Skademelding system
         Tab tabSkade = new Tab();
         tabSkade.setText("Skade");
+        tabSkade.setId("tabskade");
         tabSkade.setClosable(false);
         konsulentsideSkade = new KonsulentsideSkade();
         tabSkade.setOnSelectionChanged(e-> {
             tabSkade.setContent(konsulentsideSkade.skadeFane(kontroll));
         });
-
 
 
         tabPane.getTabs().addAll(tabKunde, tabStat, tabSkade);

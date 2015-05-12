@@ -23,6 +23,7 @@ public class KonsulentsideStatistikk {
     public Pane statFane(Kontroller kontroll) {
        
         BorderPane borderPane = new BorderPane();
+        borderPane.setId("borderpane");
 
         TabPane tabPane = new TabPane();
 
@@ -35,6 +36,7 @@ public class KonsulentsideStatistikk {
         tabPane.getTabs().addAll(tabInnUt);
         borderPane.setTop(tabPane);
 
+        borderPane.getStylesheets().add("CSS/konsulentstat.css");
         return borderPane;
     }
 
@@ -296,6 +298,7 @@ public class KonsulentsideStatistikk {
 
             lbDifferanseVerdi.setText(tall.format(inntekt - utgift) + " Kr");
         });
+
         return vb;
     }
 

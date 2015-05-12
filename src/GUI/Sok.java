@@ -1,7 +1,6 @@
 package GUI;
 
 import Kontroller.Kontroller;
-import Person.Konsulent;
 import Person.Kunde;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -139,7 +138,7 @@ public class Sok {
 
         if (k != null) {
             kontroll.setInnloggetBruker(k.getNøkkel());
-            KonsulentsideKunde.tfKundenavn.setText(kontroll.getInnloggetBruker().getFornavn() + " " + kontroll.getInnloggetBruker().getEtternavn());
+            KonsulentsideKunde.lbKundenavn.setText("Valgt kunde: " + kontroll.getInnloggetBruker().getFornavn() + " " + kontroll.getInnloggetBruker().getEtternavn() + ", kundenr: " + kontroll.getInnloggetBruker().getNøkkel());
             kontroll.opptaterListeKonsulent();
             vindu.close();
         }

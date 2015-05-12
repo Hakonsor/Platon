@@ -105,6 +105,7 @@ public class KundesideSkade {
                 "Fri.Boligforsikring");
         forsikringComboBox.setValue("Velg Forsikring:");
         forsikringComboBox.setOnAction(e -> {
+            skriveOmråde.clear();
             SkrivListe();
         });
 
@@ -113,10 +114,6 @@ public class KundesideSkade {
         ftcombo.setToValue(1.0F);
         ftcombo.setCycleCount(1);
 
-        FadeTransition ftcombo = new FadeTransition(Duration.millis(100), forsikringComboBox);
-        ftcombo.setFromValue(0.0F);
-        ftcombo.setToValue(1.0F);
-        ftcombo.setCycleCount(1);
 
         lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
@@ -133,10 +130,6 @@ public class KundesideSkade {
         skriveOmråde.setId("felt");
         skriveOmråde.setPromptText("Skriv innformasjon om skaden");
         skriveOmråde.setPrefSize(300, 300);
-        skriveOmråde.setOnMouseEntered(e -> {
-            skriveOmråde.setPromptText("Skriv innformasjon om skaden");
-        });
-        skriveOmråde.setStyle("-fx-prompt-text-fill: rgba(0, 0, 0)");
 
         FadeTransition ftskrive = new FadeTransition(Duration.millis(100), skriveOmråde);
         ftskrive.setFromValue(0.0F);
@@ -326,7 +319,6 @@ public class KundesideSkade {
                 dato.setTime(dat);
     }
     private void SkrivListe(){
-        skriveOmråde.clear();
             ArrayList<String> forsikringliste = kontroll.
                     getInfoForsikringListe(forsikringComboBox.getItems().
                             indexOf(forsikringComboBox.getValue()));
@@ -338,8 +330,6 @@ public class KundesideSkade {
         }
     }
     private void settKnapper(){
-    
-            skriveOmråde.clear();
             String polisNr = listView.getSelectionModel().getSelectedItem();
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
@@ -371,6 +361,11 @@ public class KundesideSkade {
         // først når konsulenten har godkjent beløpet/ skademeldingen.
         public void repSkade(){
             String polisNr = listView.getSelectionModel().getSelectedItem();
+            if (forsikringComboBox.getValue().equals("Velg Forsikring:")) {
+                lbInfo.setVisible(true);
+                lbInfo.setText("Vennligst velg forsikringstype");
+                return;
+            }
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
             }else{
@@ -386,7 +381,7 @@ public class KundesideSkade {
             try {
                 //skriveOmråde.clear();
                 if (fors instanceof BilForsikring) {
-
+            
                     BilForsikring f = (BilForsikring) fors;
                     BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bil.setForsikring(f);
@@ -415,7 +410,7 @@ public class KundesideSkade {
                     bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(bolig);
-                    skriveOmråde.setPromptText(bolig.melding());
+                    skriveOmråde.setText(bolig.melding());
 
                 } else if (fors instanceof FritidsBolig) {
 
@@ -446,7 +441,7 @@ public class KundesideSkade {
             }
             skriveOmråde.clear();  
             tfBeløp.clear();
-        dato.clear();
+            dato.clear();
             lbInfo.setText("Skademelding er sendt inn");
     
     

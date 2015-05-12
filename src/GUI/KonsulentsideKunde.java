@@ -3,9 +3,16 @@ package GUI;
 import Forsikring.BatForsikring;
 import Forsikring.BilForsikring;
 import Forsikring.Forsikringer;
+import Forsikring.ReiseForsikring;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,24 +29,29 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.ComboBoxListCell;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.util.Duration;
+
 
 /**
  * Created by Magnus on 27.04.15.
  */
 public class KonsulentsideKunde implements ComboBoxConverter {
 
-    public static TextField tfKundenavn = new TextField();
-
+    public static Label lbKundenavn;
+    public static Label lbKonsulent;
     private Kontroller kontroll;
     private String type;
     private boolean utLeie;
-    private HBox vb;
+    private HBox hb;
+    private HBox hBox;
+    private VBox vBox;
+    private VBox vb;
     private Button btnSøk;
     private Button btnRegKunde;
+    private BorderPane borderPane;
+    private GridPane gridAdvarsel;
+    private GridPane gridRight;
     private GridPane gridLeft;
     private GridPane gridBil;
     private GridPane gridReise;
@@ -72,6 +84,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     private TextField tfBåtmodell;
     private TextField tfÅrsmodellB;
     private TextField tfRegnrB;
+    private TextField tfVerdiB;
     private TextField tfVerdi;
     private TextArea taLes;
     private ComboBox<String> cbKjørelengde;
@@ -86,77 +99,110 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     private Button btnSjekkprisF;
     private CheckBox cbleieF;
     private Label regLabelF;
-    private Label lballe;
     private Label regLabelBo;
     private Label regLabelB;
     private Label lbInfo;
     private Label lbPrint;
+    private Label lbregBil;
+    private Label lbAdvarsel;
     private Button btnRegBåtforsikring;
     private Button btnRegBilforsikring;
     private Button btnSjekkprisBil;
     private Button btnRegBoligforsikringF;
     private Button btnSlett;
+    private Button btnBeregn;
+    private Button btnBestill;
     private Button btnRegForsikring;
     private Button btnRegBoligforsikring;
     private Button btnSjekkpris;
     private Button btnSjekkprisB;
     private CheckBox cbleie;
+    private KundesideBil bil;
+    private ToggleGroup båtType;
+    private ToggleGroup reise;
+    private RadioButton rbtSeilbåt;
+    private RadioButton rbtMotorbåt;
+    private RadioButton rbtnVerden;
+    private RadioButton rbtnEuropa;
+    private RadioButton rbtnNorden;
 
     private ObservableList<String> navn;
     private ObservableList<String> data;
 
-    ComboBox<String> forsikringComboBox;
+    private ComboBox<String> forsikringComboBox;
 
     public Pane kundeFane(Kontroller kontroll) {
         this.kontroll = kontroll;
-        //Group root = new Group();
-        BorderPane borderPane = new BorderPane();
-        navn = FXCollections.observableArrayList();
-        data = FXCollections.observableArrayList();
-        //TOP---------------------------------->
-        vb = new HBox();
-        vb.setPadding(new Insets(25, 25, 50, 25)); //top/right/bottom/left
-        vb.setSpacing(70);
-        vb.setAlignment(Pos.CENTER);
 
-        tfKundenavn.setText("");
-        tfKundenavn.setId("Kundenavn");
-        tfKundenavn.setMinWidth(300);
-        tfKundenavn.setEditable(false);
+        borderPane = new BorderPane();
+        borderPane.setId("borderpane");
+        borderPane.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
+
+
+        //TOP---------------------------------->
+
+        vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(130, 10, 20, 0)); //top/right/bottom/left
+
+        lbKonsulent = new Label();
+        lbKonsulent.setText("Hei " + "Navn Navnesen");
+        lbKonsulent.setId("konsulent");
+
+        lbKundenavn = new Label();
+        lbKundenavn.setText("Valgt kunde: " + "\"Ingen kunde er valgt\"");
+        lbKundenavn.setId("kundenavn");
+
+        FadeTransition ftKunde = new FadeTransition(Duration.millis(1000), lbKundenavn);
+        ftKunde.setFromValue(0.0F);
+        ftKunde.setToValue(1.0F);
+        ftKunde.setCycleCount(7);
 
         btnSøk = new Button();
-        btnSøk.setText("Søk");
-        btnSøk.setId("søk");
+        btnSøk.setText("Finn kunde");
+        btnSøk.setId("sok");
         btnSøk.setMinWidth(100);
         btnSøk.setOnAction(e -> {
             kontroll.sok();
         });
 
-        /*
-         kontroll.registrerBruker(this.getKunde());
-         vindu.close();
-         */
+        FadeTransition ftSøk = new FadeTransition(Duration.millis(200), btnSøk);
+        ftSøk.setFromValue(0.0F);
+        ftSøk.setToValue(1.0F);
+        ftSøk.setCycleCount(1);
+
+        btnSlett = new Button();
+        btnSlett.setText("Slett forsikring");
+        btnSlett.setId("slett");
+        btnSlett.setMaxWidth(150);
+        btnSlett.setOnAction(e -> {
+            slettForsikring();
+        });
+
+        FadeTransition ftSlett = new FadeTransition(Duration.millis(200), btnSlett);
+        ftSlett.setFromValue(0.0F);
+        ftSlett.setToValue(1.0F);
+        ftSlett.setCycleCount(1);
+
         btnRegKunde = new Button();
         btnRegKunde.setText("Reg. kunde");
         btnRegKunde.setId("regKunde");
-        btnRegKunde.setMinWidth(150);
+        btnRegKunde.setMinWidth(100);
         btnRegKunde.setOnAction(e -> {
             kontroll.regVindu();
         });
 
-        vb.getChildren().addAll(tfKundenavn, btnSøk, btnRegKunde);
+        FadeTransition ftReg = new FadeTransition(Duration.millis(200), btnRegKunde);
+        ftReg.setFromValue(0.0F);
+        ftReg.setToValue(1.0F);
+        ftReg.setCycleCount(1);
 
-        borderPane.setTop(vb);
-
-        //LEFT-------------------------------------->
-        gridLeft = new GridPane();
-        gridLeft.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
-        gridLeft.setVgap(10);
-        gridLeft.setHgap(10);
-        gridLeft.setAlignment(Pos.TOP_CENTER);
-
+        navn = FXCollections.observableArrayList();
+        data = FXCollections.observableArrayList();
         forsikringComboBox = new ComboBox<>();
         forsikringComboBox.setEditable(false);
+        forsikringComboBox.setId("comboboxForsikring");
         forsikringComboBox.getItems().addAll(
                 "Alle",
                 "Båtforsikring",
@@ -166,7 +212,37 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 "Fritidsbolig"
         );
 
-        // Forskjellige forsikringer vises
+        FadeTransition ftCombo = new FadeTransition(Duration.millis(200), forsikringComboBox);
+        ftCombo.setFromValue(0.0F);
+        ftCombo.setToValue(1.0F);
+        ftCombo.setCycleCount(1);
+
+        forsikringComboBox.setValue("Velg Forsikring:");
+        forsikringComboBox.setOnAction(e -> {
+            if (!lbKundenavn.getText().equals("Valgt kunde: " + "\"Ingen kunde er valgt\"")) {
+                gridAdvarsel.setVisible(false);
+                ruteVipper();
+            } else {
+                gridAdvarsel.setVisible(true);
+            }
+        });
+
+        hb = new HBox();
+        hb.setSpacing(70);
+        hb.setAlignment(Pos.CENTER);
+
+        hb.getChildren().addAll(forsikringComboBox, btnSlett, btnSøk, btnRegKunde);
+
+        vBox.getChildren().addAll(lbKonsulent, lbKundenavn);
+
+        borderPane.setTop(vBox);
+
+        SequentialTransition st = new SequentialTransition(ftCombo, ftSlett, ftSøk, ftReg, ftKunde);
+        st.play();
+
+
+
+        //GRID RIGHT setVisible(false)---------------->
         gridBil = new GridPane();
         gridBil.setVisible(false);
 
@@ -185,61 +261,134 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridAlle = new GridPane();
         gridAlle.setVisible(false);
 
-        forsikringComboBox.setValue("Velg Forsikring:");
-        forsikringComboBox.setOnAction(e -> {
-            ruteVipper();
-        });
+
+        //LEFT-------------------------------------->
 
         listView = new ListView<>(data);
-        listView.setPrefSize(300, 400);
+        listView.setPrefSize(250, 350);
         listView.setEditable(false);
 
-        //navn.addAll("Honda CRV", "Ferrari Enzo", "VW Golf");
         data.addAll("Dobbel klikk for å velge:");
 
         listView.setItems(navn);
         listView.setCellFactory(ComboBoxListCell.forListView(navn));
 
-        gridLeft.add(forsikringComboBox, 0, 0);
-        gridLeft.add(listView, 0, 1);
 
-        borderPane.setLeft(gridLeft);
+        //RIGHT---------------------------------------------->
 
-        //RIGHT --------------------------------------------------------->>
-        //Bil
+        //>---------GRID av forsikringene --------------<
+
+        //Bil--------------------------------------------------------------------->
         gridBil.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBil.setVgap(10);
         gridBil.setHgap(10);
-        gridBil.setAlignment(Pos.CENTER);
+        gridBil.setAlignment(Pos.TOP_CENTER);
 
-        regLabelBil = new Label();
-        regLabelBil.setText("");
+        bil = new KundesideBil();
 
         tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr");
+        tfRegnr.setId("promtfix");
         tfRegnr.setMinWidth(200);
+        tfRegnr.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "^[a-zA-Z]{2}\\d{5}$";
+                String regnr = tfRegnr.getText();
+
+                if (!regnr.matches(regex)) {
+                    tfRegnr.setId("error");
+                } else {
+                    tfRegnr.setId("valid");
+                }
+                if (regnr.length() == 0) {
+                    tfRegnr.setId("promtfix");
+                }
+            }
+        });
 
         tfÅrsmodell = new TextField();
         tfÅrsmodell.setPromptText("Årsmodell");
+        tfÅrsmodell.setId("promtfix");
         tfÅrsmodell.setMinWidth(200);
+        tfÅrsmodell.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String årsmodell = tfÅrsmodell.getText();
+
+                if (!årsmodell.matches(regex) || årsmodell.length() > 4 || årsmodell.length() < 4) {
+                    tfÅrsmodell.setId("error");
+                } else {
+                    tfÅrsmodell.setId("valid");
+                }
+                if (årsmodell.length() == 0) {
+                    tfÅrsmodell.setId("promtfix");
+                }
+            }
+        });
 
         tfMerke = new TextField();
         tfMerke.setPromptText("eks (BMW)");
         tfMerke.setId("promtfix");
         tfMerke.setMinWidth(200);
+        tfMerke.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[ÆØÅæøåA-Za-z]+";
+                String merke = tfMerke.getText();
+
+                if (merke.matches(regex)) {
+                    tfMerke.setId("valid");
+                } else {
+                    tfMerke.setId("error");
+                }
+                if (merke.length() == 0) {
+                    tfMerke.setId("promtfix");
+                }
+            }
+        });
 
         tfModell = new TextField();
         tfModell.setPromptText("eks (5-serie 530xd)");
         tfModell.setId("promtfix");
         tfModell.setMinWidth(200);
+        tfModell.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (tfModell.getLength() > 0) {
+                    tfModell.setId("valid");
+                } else {
+                    tfModell.setId("promtfix");
+                }
+            }
+        });
 
         tfKmstand = new TextField();
         tfKmstand.setPromptText("Km-stand");
+        tfKmstand.setId("promtfix");
         tfKmstand.setMinWidth(200);
+        tfKmstand.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String kmstand = tfKmstand.getText();
+
+                if (!kmstand.matches(regex) || kmstand.length() > 6) {
+                    tfKmstand.setId("error");
+                } else {
+                    tfKmstand.setId("valid");
+                }
+                if (kmstand.length() == 0) {
+                    tfKmstand.setId("promtfix");
+                }
+            }
+        });
 
         cbKjørelengde = new ComboBox<>();
         cbKjørelengde.setEditable(false);
-        cbKjørelengde.setMinWidth(200);
+        cbKjørelengde.setId("combobox");
+        cbKjørelengde.setMaxWidth(200);
         cbKjørelengde.getItems().addAll(
                 "Kjørelengde:  5 000 km",
                 "Kjørelengde: 10 000 km",
@@ -251,6 +400,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
         cbBonus = new ComboBox<>();
         cbBonus.setEditable(false);
+        cbBonus.setId("combobox");
         cbBonus.setMinWidth(200);
         cbBonus.getItems().addAll(
                 "Bonus: -20%",
@@ -269,6 +419,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
         cbEgenandel = new ComboBox<>();
         cbEgenandel.setEditable(false);
+        cbEgenandel.setId("combobox");
         cbEgenandel.setMinWidth(200);
         cbEgenandel.getItems().addAll(
                 "Egenandel:  4 000,-",
@@ -277,20 +428,94 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbEgenandel.setValue("Velg Egenandel:");
 
+
+        lbregBil = new Label();
+        lbregBil.setText("");
+        lbregBil.setId("regLabel");
+        lbregBil.setAlignment(Pos.CENTER);
+
         btnSjekkprisBil = new Button();
-        btnSjekkprisBil.setText("Beregn Pris");
+        btnSjekkprisBil.setText("Sjekk Pris");
         btnSjekkprisBil.setId("btnSjekkpris");
         btnSjekkprisBil.setMinWidth(200);
-        btnSjekkprisBil.setOnAction(e -> {
-            regLabelBil.setText("Prisen er: " + "getPris()");
-        });
+
 
         btnRegBilforsikring = new Button();
-        btnRegBilforsikring.setText("Registrer Bilforsikring");
+        btnRegBilforsikring.setText("Bestill");
         btnRegBilforsikring.setId("btnRegBilforsikring");
         btnRegBilforsikring.setMinWidth(200);
+
+        btnSjekkprisBil.setOnAction(e -> {
+            if (tfRegnr.getId().equals("valid")
+                    && tfÅrsmodell.getId().equals("valid")
+                    && tfMerke.getId().equals("valid")
+                    && tfModell.getId().equals("valid")
+                    && tfKmstand.getId().equals("valid")
+                    && !cbBonus.getValue().equals("Velg Bonus:")
+                    && !cbEgenandel.getValue().equals("Velg Egenandel:")
+                    && !cbKjørelengde.getValue().equals("Velg Kjørelengde:")
+                    ) {
+                double bonus = 0;
+                double egenandel = 0;
+                int kjøreLengde = 0;
+                String regNo = tfRegnr.getText();
+                String årsModell = tfÅrsmodell.getText();
+                String bilMerke = tfMerke.getText();
+                String bilModell = tfModell.getText();
+                int kmStand = 0;
+                try {
+                    bonus = convertDou(cbBonus.getValue());
+                    egenandel = convertDou(cbEgenandel.getValue());
+                    kjøreLengde = convertInt(cbKjørelengde.getValue());
+                    kmStand = Integer.parseInt(tfKmstand.getText());
+
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat");
+                }
+                BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde,
+                        regNo, bilMerke, bilModell, årsModell, kmStand);
+                String form = "0.00";
+                DecimalFormat tall = new DecimalFormat(form);
+                lbregBil.setText("Årlig premie: " + tall.format(bil.getPremie()) + " kr");
+            } else {
+                lbregBil.setText("Sjekk feil i feltene ovenfor");
+            }
+        });
+
         btnRegBilforsikring.setOnAction(e -> {
-            regBilForsikring();
+            if (tfRegnr.getId().equals("valid")
+                    && tfÅrsmodell.getId().equals("valid")
+                    && tfMerke.getId().equals("valid")
+                    && tfModell.getId().equals("valid")
+                    && tfKmstand.getId().equals("valid")
+                    && !cbBonus.getValue().equals("Velg Bonus:")
+                    && !cbEgenandel.getValue().equals("Velg Egenandel:")
+                    && !cbKjørelengde.getValue().equals("Velg Kjørelengde:")
+                    ) {
+                double bonus = 0;
+                double egenandel = 0;
+                int kjøreLengde = 0;
+                String regNo = tfRegnr.getText();
+                String årsModell = tfÅrsmodell.getText();
+                String bilMerke = tfMerke.getText();
+                String bilModell = tfModell.getText();
+                int kmStand = 0;
+                try {
+                    bonus = convertDou(cbBonus.getValue());
+                    egenandel = convertDou(cbEgenandel.getValue());
+                    kjøreLengde = convertInt(cbKjørelengde.getValue());
+                    kmStand = Integer.parseInt(tfKmstand.getText());
+
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat");
+                }
+                BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
+                kontroll.setBilForsikring(bil, null);
+                lbregBil.setText("Bilforsikring Registrert!");
+
+            } else {
+                lbregBil.setText("Sjekk feil i feltene ovenfor");
+            }
         });
 
         gridBil.add(tfRegnr, 0, 0);
@@ -298,65 +523,89 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBil.add(tfÅrsmodell, 0, 2);
         gridBil.add(tfMerke, 0, 3);
         gridBil.add(tfModell, 0, 4);
-        gridBil.add(cbKjørelengde, 0, 5);
-        gridBil.add(cbBonus, 0, 6);
-        gridBil.add(cbEgenandel, 0, 7);
-        gridBil.add(btnSjekkprisBil, 0, 8);
-        gridBil.add(btnRegBilforsikring, 0, 9);
-        gridBil.add(regLabelBil, 0, 10);
 
-        //Reise
+        gridBil.add(cbBonus, 1, 0);
+        gridBil.add(cbEgenandel, 1, 1);
+        gridBil.add(cbKjørelengde, 1, 2);
+        gridBil.add(btnSjekkprisBil, 1, 3);
+        gridBil.add(btnRegBilforsikring, 1, 4);
+        gridBil.add(lbregBil, 1, 5);
+
+
+        //Reise--------------------------------------------------------------------->
         lbInfo = new Label();
         lbInfo.setText("Velg reiseforsikringstype:");
         lbInfo.setId("lbInfo");
-        lbInfo.setAlignment(Pos.CENTER_LEFT);
+        lbInfo.setAlignment(Pos.CENTER);
 
         lbPrint = new Label();
         lbPrint.setId("print");
         lbPrint.setText("");
         lbPrint.setAlignment(Pos.CENTER_LEFT);
 
-        ToggleGroup reise = new ToggleGroup();
+        reise = new ToggleGroup();
 
-        RadioButton rbtnVerden = new RadioButton("Veden");
+        rbtnVerden = new RadioButton("Verden");
         rbtnVerden.setId("verden");
         rbtnVerden.setToggleGroup(reise);
-        rbtnVerden.setSelected(true);
-        rbtnVerden.setAlignment(Pos.CENTER_LEFT);
+        rbtnVerden.setSelected(false);
+        rbtnVerden.setAlignment(Pos.CENTER);
         rbtnVerden.setOnAction(e -> {
             type = "Verden";
         });
 
-        RadioButton rbtnEuropa = new RadioButton("Europa");
+        rbtnEuropa = new RadioButton("Europa");
         rbtnEuropa.setId("europa");
         rbtnEuropa.setToggleGroup(reise);
-        rbtnEuropa.setSelected(true);
+        rbtnEuropa.setSelected(false);
         rbtnEuropa.setOnAction(e -> {
             type = "Europa";
         });
 
-        RadioButton rbtnNorden = new RadioButton("Norden");
+
+        rbtnNorden = new RadioButton("Norden");
         rbtnNorden.setId("norden");
         rbtnNorden.setToggleGroup(reise);
-        rbtnNorden.setSelected(true);
+        rbtnNorden.setSelected(false);
         rbtnNorden.setOnAction(e -> {
             type = "Norden";
         });
 
-        Button btnBeregn = new Button();
+
+        btnBeregn = new Button();
         btnBeregn.setText("Beregn pris");
-        btnBeregn.setMinWidth(100);
+        btnBeregn.setMinWidth(200);
         btnBeregn.setId("beregn");
         btnBeregn.setOnAction(e -> {
-            lbPrint.setText("Prisen er: getPris()");
+            if (reise.getSelectedToggle() != null) {
+                String form = "0.00";
+                DecimalFormat tall = new DecimalFormat(form);
+                ReiseForsikring f = new ReiseForsikring();
+                f.setType(type);
+                f.setPremieOgForsSum(type);
+
+                lbPrint.setText("Prisen er: " + tall.format(f.getPremie()) + " kr");
+            } else {
+                lbPrint.setText("Du må velge en forsikringstype");
+            }
         });
 
-        Button btnBestill = new Button();
+
+        btnBestill = new Button();
         btnBestill.setText("Bestill");
-        btnBestill.setMinWidth(100);
+        btnBestill.setMinWidth(200);
         btnBestill.setId("bestill");
-        btnBestill.setOnAction(eBestill -> {
-            lbPrint.setText("Reiseforsikring bestilt!");
+        btnBestill.setOnAction(e -> {
+            if (reise.getSelectedToggle() != null) {
+                ReiseForsikring f = new ReiseForsikring();
+                f.setType(type);
+                f.setPremieOgForsSum(type);
+                kontroll.setReiseForsikring(f);
+
+                lbPrint.setText("Reiseforsikring " + type + " bestilt!");
+            } else {
+                lbPrint.setText("Du må velge en forsikringstype");
+            }
         });
 
         gridReise.add(lbInfo, 0, 0);
@@ -370,64 +619,175 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridReise.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridReise.setVgap(20);
         gridReise.setHgap(10);
-        gridReise.setAlignment(Pos.CENTER);
+        gridReise.setAlignment(Pos.TOP_CENTER);
         gridReise.setGridLinesVisible(false);
 
-        //Båt
+
+        //Båt--------------------------------------------------------------------->
         gridBåt.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBåt.setVgap(10);
         gridBåt.setHgap(10);
-        gridBåt.setAlignment(Pos.CENTER);
-
-        Label lbbåt = new Label("Test tekst, du har vlagt Båt");
-        gridBåt.add(lbbåt, 0, 0);
-
-        //Båt
-        tfVerdi = new TextField();
-        tfVerdi.setPromptText("Båtens verdi");
-        tfVerdi.setMinWidth(200);
+        gridBåt.setAlignment(Pos.TOP_CENTER);
 
         tfRegnrB = new TextField();
-        tfRegnrB.setPromptText("Reg.Nr");
+        tfRegnrB.setPromptText("Reg.Nr eks (ABC123)");
         tfRegnrB.setMinWidth(200);
+        tfRegnrB.setId("promtfix");
+        tfRegnrB.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "^[a-zA-Z]{3}\\d{3}$";
+                String regnr = tfRegnrB.getText();
+
+                if (!regnr.matches(regex)) {
+                    tfRegnrB.setId("error");
+                } else {
+                    tfRegnrB.setId("valid");
+                }
+                if (regnr.length() == 0) {
+                    tfRegnrB.setId("promtfix");
+                }
+            }
+        });
 
         tfÅrsmodellB = new TextField();
-        tfÅrsmodellB.setPromptText("Årsmodell");
+        tfÅrsmodellB.setPromptText("Årsmodell 4-tall");
         tfÅrsmodellB.setMinWidth(200);
+        tfÅrsmodellB.setId("promtfix");
+        tfÅrsmodellB.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String årsmodell = tfÅrsmodellB.getText();
+
+                if (!årsmodell.matches(regex) || årsmodell.length() > 4 || årsmodell.length() < 4) {
+                    tfÅrsmodellB.setId("error");
+                } else {
+                    tfÅrsmodellB.setId("valid");
+                }
+                if (årsmodell.length() == 0) {
+                    tfÅrsmodellB.setId("promtfix");
+                }
+            }
+        });
+
 
         tfBåtmodell = new TextField();
-        tfBåtmodell.setPromptText("Båtmodell eks (Ibiza 22");
+        tfBåtmodell.setPromptText("Båtmodell eks (Ibiza 22)");
         tfBåtmodell.setMinWidth(200);
+        tfBåtmodell.setId("promtfix");
+        tfBåtmodell.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (tfBåtmodell.getLength() > 0) {
+                    tfBåtmodell.setId("valid");
+                } else {
+                    tfBåtmodell.setId("promtfix");
+                }
+            }
+        });
 
-        tfAntfot = new TextField();
+
+        tfAntfot= new TextField();
         tfAntfot.setPromptText("Antall fot");
         tfAntfot.setMinWidth(200);
+        tfAntfot.setId("promtfix");
+        tfAntfot.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String fot = tfAntfot.getText();
+
+                if (!fot.matches(regex) || fot.length() > 4) {
+                    tfAntfot.setId("error");
+                } else {
+                    tfAntfot.setId("valid");
+                }
+                if (fot.length() == 0) {
+                    tfAntfot.setId("promtfix");
+                }
+            }
+        });
 
         tfMotormerke = new TextField();
         tfMotormerke.setPromptText("Motormerke");
         tfMotormerke.setMinWidth(200);
+        tfMotormerke.setId("promtfix");
+        tfMotormerke.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[ÆØÅæøåA-Za-z]+";
+                String merke = tfMotormerke.getText();
+
+                if (merke.matches(regex)) {
+                    tfMotormerke.setId("valid");
+                } else {
+                    tfMotormerke.setId("error");
+                }
+                if (merke.length() == 0) {
+                    tfMotormerke.setId("promtfix");
+                }
+            }
+        });
 
         tfYtelse = new TextField();
         tfYtelse.setPromptText("Ytelse (hk)");
         tfYtelse.setMinWidth(200);
+        tfYtelse.setId("promtfix");
+        tfYtelse.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String ytelse = tfYtelse.getText();
 
-        ToggleGroup båtType = new ToggleGroup();
+                if (!ytelse.matches(regex) || ytelse.length() > 5) {
+                    tfYtelse.setId("error");
+                } else {
+                    tfYtelse.setId("valid");
+                }
+                if (ytelse.length() == 0) {
+                    tfYtelse.setId("promtfix");
+                }
+            }
+        });
 
-        RadioButton rbtSeilbåt = new RadioButton("Seilbåt");
+        tfVerdiB = new TextField();
+        tfVerdiB.setPromptText("Verdi på båten");
+        tfVerdiB.setMinWidth(200);
+        tfVerdiB.setId("promtfix");
+        tfVerdiB.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String verdi = tfVerdiB.getText();
+
+                if (!verdi.matches(regex) || verdi.length() > 13) {
+                    tfVerdiB.setId("error");
+                } else {
+                    tfVerdiB.setId("valid");
+                }
+                if (verdi.length() == 0) {
+                    tfVerdiB.setId("promtfix");
+                }
+            }
+        });
+
+        båtType = new ToggleGroup();
+        rbtSeilbåt = new RadioButton("Seilbåt");
         rbtSeilbåt.setToggleGroup(båtType);
-        rbtSeilbåt.setSelected(true);
+        rbtSeilbåt.setSelected(false);
         rbtSeilbåt.setOnAction(e -> {
             type = "Seilbåt";
         });
 
-        RadioButton rbtMotorbåt = new RadioButton("Motorbåt");
+        rbtMotorbåt = new RadioButton("Motorbåt");
         rbtMotorbåt.setToggleGroup(båtType);
-        rbtMotorbåt.setSelected(true);
+        rbtMotorbåt.setSelected(false);
         rbtMotorbåt.setOnAction(e -> {
             type = "Motorbåt";
         });
 
-        //Registrer knapp & Label
+
         regLabelB = new Label();
         regLabelB.setText("");
         regLabelB.setId("regLabel");
@@ -438,31 +798,62 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         btnSjekkprisB.setId("btnSjekkpris");
         btnSjekkprisB.setMinWidth(200);
         btnSjekkprisB.setOnAction(e -> {
-            regLabelB.setText("Prisen er: " + "getPris()");
+            regLabelB.setText("Premien er: " + "getPris()");
         });
+
 
         btnRegBåtforsikring = new Button();
-        btnRegBåtforsikring.setText("Registrer Båtforsikring");
-        btnRegBåtforsikring.setId("btnRegBåtforsikring");
+        btnRegBåtforsikring.setText("Bestill");
+        btnRegBåtforsikring.setId("btnRegBatforsikring");
         btnRegBåtforsikring.setMinWidth(200);
         btnRegBåtforsikring.setOnAction(e -> {
-            regBåtForsikring();
+            regLabelB.setText("Båtforsikring Registrert!");
+
+            if (tfRegnrB.getId().equals("valid")
+                    && tfÅrsmodellB.getId().equals("valid")
+                    && tfBåtmodell.getId().equals("valid")
+                    && tfAntfot.getId().equals("valid")
+                    && tfMotormerke.getId().equals("valid")
+                    && tfYtelse.getId().equals("valid")
+                    && tfVerdiB.getId().equals("valid")) {
+                double verdi = 0;
+                int lengdeFot = 0;
+                String regNo = tfRegnrB.getText();
+                try {
+                    verdi = Double.parseDouble(tfVerdiB.getText());
+                    lengdeFot = Integer.parseInt(tfYtelse.getText());
+                    BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, type, "modell", "årsModell", 10, "motormerke");
+                    kontroll.setBåtForsikring(båt);
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat");
+                }
+
+                regLabelB.setText("Båtforsikring Registrert!");
+
+            } else {
+                regLabelB.setText("Sjekk feil i feltene ovenfor");
+            }
         });
 
-        gridBåt.add(tfVerdi, 0, 0);
-        gridBåt.add(tfRegnrB, 0, 1);
-        gridBåt.add(tfÅrsmodellB, 0, 2);
-        gridBåt.add(tfBåtmodell, 0, 3);
-        gridBåt.add(tfAntfot, 0, 4);
-        gridBåt.add(tfMotormerke, 0, 5);
-        gridBåt.add(tfYtelse, 0, 6);
-        gridBåt.add(rbtMotorbåt, 0, 7);
-        gridBåt.add(rbtSeilbåt, 0, 8);
-        gridBåt.add(btnSjekkprisB, 0, 9);
-        gridBåt.add(btnRegBåtforsikring, 0, 10);
-        gridBåt.add(regLabelB, 0, 11);
+        gridBåt.add(tfRegnrB, 0, 0);
+        gridBåt.add(tfÅrsmodellB, 0, 1);
+        gridBåt.add(tfMotormerke, 0, 2);
+        gridBåt.add(tfVerdiB, 0, 3);
+        gridBåt.add(tfYtelse, 0, 4);
 
-        //Bolig
+
+        gridBåt.add(tfBåtmodell, 1, 0);
+        gridBåt.add(tfAntfot, 1, 1);
+        gridBåt.add(rbtMotorbåt, 1, 2);
+        gridBåt.add(rbtSeilbåt, 1, 3);
+
+        gridBåt.add(btnSjekkprisB, 0, 5);
+        gridBåt.add(btnRegBåtforsikring, 1, 5);
+        gridBåt.add(regLabelB, 1, 6);
+
+
+
+        //Bolig--------------------------------------------------------------------->
         gridBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBolig.setVgap(10);
         gridBolig.setHgap(10);
@@ -572,7 +963,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBolig.setHgap(10);
         gridBolig.setAlignment(Pos.CENTER);
 
-        //FritidsBolig
+
+        //FritidsBolig--------------------------------------------------------------------->
         gridFriBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridFriBolig.setVgap(10);
         gridFriBolig.setHgap(10);
@@ -682,14 +1074,15 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridFriBolig.setHgap(10);
         gridFriBolig.setAlignment(Pos.CENTER);
 
-        //Alle
-        gridAlle.setPadding(new Insets(10, 0, 0, 0)); //top/right/bottom/left
+
+        //Alle--------------------------------------------------------------------->
+        gridAlle.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridAlle.setVgap(10);
         gridAlle.setHgap(10);
-        gridAlle.setAlignment(Pos.CENTER);
+        gridAlle.setAlignment(Pos.TOP_CENTER);
 
         taLes = new TextArea();
-        taLes.setPrefSize(300, 400);
+        taLes.setPrefSize(250, 350);
         taLes.setId("taLes");
         taLes.setEditable(false);
 
@@ -697,53 +1090,80 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             oppdaterListe();
         });
 
-        lballe = new Label("Test tekst, du har vlagt Alle");
-        gridAlle.add(lballe, 0, 0);
-        gridAlle.add(taLes, 0, 1);
+        gridAlle.add(taLes, 0, 0);
 
-        //Buttons ---------------------------------->
-        GridPane gridButtons = new GridPane();
-        gridButtons.setPadding(new Insets(100, 0, 0, 0)); //top/right/bottom/left
-        gridButtons.setVgap(10);
-        gridButtons.setHgap(10);
-        //gridButtons.setPrefHeight(50);
-        //gridButtons.setPrefWidth(1000);
-        gridButtons.setAlignment(Pos.CENTER);
+        gridAdvarsel = new GridPane();
+        gridAdvarsel.setAlignment(Pos.TOP_CENTER);
+        gridAdvarsel.setVisible(false);
 
-        btnSlett = new Button();
-        btnSlett.setText("Slett");
-        btnSlett.setOnAction(eS -> {
-            System.out.println("Du trykket på SLETT!");
-        });
+        lbAdvarsel = new Label();
+        lbAdvarsel.setText("Du må velge en kunde først!");
+        lbAdvarsel.setId("advarsel");
 
-        btnRegForsikring = new Button();
-        btnRegForsikring.setText("Reg. Forsikring");
-        btnRegForsikring.setOnAction(e1 -> {
-            System.out.println("RegForsikrings");
-        });
+        gridAdvarsel.add(lbAdvarsel, 0, 0);
 
-        //gridButtons.add(btnSlett, 0, 0);
-        //gridButtons.add(btnRegForsikring, 1, 0);
-        GridPane gridRight = new GridPane();
+
+        //--------------------------------------------------------------------------------->>
+        //--------------------------------------------------------------------------------->>
+        //--------------------------------------------------------------------------------->>
+        //--------------------------------------------------------------------------------->>
+
+        //LEFT
+        gridLeft = new GridPane();
         gridLeft.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
+        gridLeft.setVgap(10);
+        gridLeft.setHgap(10);
+        gridLeft.setAlignment(Pos.TOP_CENTER);
+
+        gridLeft.add(listView, 0, 0);
+
+
+
+        //RIGHT
+        gridRight = new GridPane();
+        gridRight.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
+        gridRight.setVgap(10);
+        gridRight.setHgap(10);
+        gridRight.setAlignment(Pos.TOP_CENTER);
+
         gridRight.add(gridBil, 0, 0);
         gridRight.add(gridBåt, 0, 0);
         gridRight.add(gridReise, 0, 0);
         gridRight.add(gridBolig, 0, 0);
         gridRight.add(gridFriBolig, 0, 0);
         gridRight.add(gridAlle, 0, 0);
-        //gridRight.add(gridButtons, 0, 1);
-        gridRight.setAlignment(Pos.CENTER);
+        gridRight.add(gridAdvarsel, 0, 0);
 
-        borderPane.setRight(gridRight);
-        borderPane.setPadding(new Insets(10, 200, 200, 100)); //top/right/bottom/left
 
-        gridButtons.setGridLinesVisible(false);
-        gridLeft.setGridLinesVisible(false);
-        gridBil.setGridLinesVisible(false);
+        vb = new VBox();
+        vb.setAlignment(Pos.CENTER);
+        vb.setSpacing(20);
 
+        //LEFT(grid) + RIGHT(grid) = CENTER(vBox)
+        hBox = new HBox();
+        hBox.setAlignment(Pos.TOP_CENTER);
+        hBox.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
+        hBox.setSpacing(20);
+        hBox.getChildren().addAll(gridLeft, gridRight);
+
+        vb.getChildren().addAll(hb, hBox);
+
+        borderPane.setCenter(vb);
+
+        borderPane.getStylesheets().add("CSS/konsulentkunde.css");
         return borderPane;
-    }
+
+
+    }//End of kundeFane
+
+
+
+
+
+
+
+
+    //METODER------------------------------->
 
     private void ruteVipper() {
 
@@ -896,4 +1316,30 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         }
 
     }
-}
+
+    public void settListe() {
+        ArrayList<String> forsikringliste = kontroll.
+                getInfoForsikringListe(forsikringComboBox.getItems().
+                        indexOf(forsikringComboBox.getValue()));
+        System.out.println(forsikringliste);
+        if (forsikringliste == null) {
+            navn.clear();
+            navn.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+        } else {
+            navn.setAll(forsikringliste);
+        }
+    }
+
+
+    public void slettForsikring() {
+        String polisNr = listView.getSelectionModel().getSelectedItem();
+        if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+            polisNr = polisNr.substring(0, 6);
+        } else {
+            return;
+        }
+        kontroll.slettForsikring(Integer.parseInt(polisNr));
+        settListe();
+    }
+
+}//End of class

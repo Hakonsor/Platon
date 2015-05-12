@@ -1,0 +1,8 @@
+#promtfix, #promtfix:focused {
+    -fx-prompt-text-fill:darkgray;
+    -fx-background-radius: 0;
+}
+
+#borderpane {
+    -fx-background-image: url("Bilder/k-statback.png");
+}

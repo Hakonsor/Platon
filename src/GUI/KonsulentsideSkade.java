@@ -2,12 +2,7 @@ package GUI;
 
 import Forsikring.BilForsikring;
 import Kontroller.Kontroller;
-import SkadeMeldinger.BatSkadeMelding;
-import SkadeMeldinger.BilSkadeMelding;
-import SkadeMeldinger.BoligSkadeMelding;
-import SkadeMeldinger.FritidsBoligMelding;
-import SkadeMeldinger.ReiseSkadeMelding;
-import SkadeMeldinger.SkadeMelding;
+import SkadeMeldinger.*;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -37,12 +32,16 @@ public class KonsulentsideSkade {
         skade = kontroll.getFørste();
         //Group root = new Group();
         BorderPane borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(50));
+        borderPane.setId("borderpane");
+        borderPane.setPadding(new Insets(120, 10, 10, 10));//top/right/bottom/left
+
+        SkadeMeldingRegister skadeMeldingRegister = new SkadeMeldingRegister();
 
         //Elementer
-        Label lbAntall = new Label();
-        lbAntall.setText("Nummer:");
-        lbAntall.setId("antall");
+        Label lbNummer = new Label();
+        lbNummer.setText("Nummer:");
+        lbNummer.setId("nummer");
+        lbNummer.setAlignment(Pos.CENTER);
 
         Label lbForrige = new Label();
         lbForrige.setText("Forrige");
@@ -62,17 +61,19 @@ public class KonsulentsideSkade {
         btnHøyre.setPreserveRatio(true);
         btnHøyre.setFitWidth(32);
 
-        TextField tfAntall = new TextField();
-        tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
-        tfAntall.setAlignment(Pos.CENTER);
-        tfAntall.setId("tfantall");
-        tfAntall.setMaxWidth(50);
-        tfAntall.setEditable(false);
+        TextField tfNummer = new TextField();
+        tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
+        tfNummer.setMaxWidth(50);
+        tfNummer.setEditable(false);
+        tfNummer.setAlignment(Pos.CENTER);
 
         TextArea taLes = new TextArea();
-        taLes.setEditable(true);
+        taLes.setEditable(false);
         taLes.setPromptText("");
-        taLes.setPrefSize(700, 400);
+        taLes.setMaxWidth(800);
+        taLes.setMinWidth(800);
+        taLes.setMaxHeight(300);
+        taLes.setMinHeight(300);
 
         // angir den første skademeldingen som vises.
         if (skade != null) {
@@ -97,27 +98,24 @@ public class KonsulentsideSkade {
             taLes.setText("Ingen registrerte skademeldinger.");
         }
 
-        Label lbPris = new Label();
-        lbPris.setText("Skadebeløp:");
-        lbPris.setId("lbPris");
+        Label lbantall = new Label();
+        lbantall.setText("Antall:");
+        lbantall.setId("antall");
 
-        TextField tfBeløp = new TextField();
-        tfBeløp.setMaxWidth(100);
-        tfBeløp.setEditable(false);
-        tfBeløp.setAlignment(Pos.CENTER_RIGHT);
-
-        String beløp = "";
-
-        if (skade != null) {
-            beløp = String.valueOf(skade.getUtbetaling());
-        }
-        tfBeløp.setText(beløp);
+        TextField tfAntall = new TextField();
+        tfAntall.setAlignment(Pos.CENTER);
+        tfAntall.setId("tfantall");
+        tfAntall.setMaxWidth(50);
+        tfAntall.setText(Integer.toString(skadeMeldingRegister.visAntallIKø()));
+        tfAntall.setEditable(false);
 
         Button btnGodta = new Button("Godta");
         btnGodta.setMinWidth(200);
+        btnGodta.setId("godta");
         btnGodta.setAlignment(Pos.CENTER);
 
         Button btnAvvis = new Button("Avvis");
+        btnAvvis.setId("avvis");
         btnAvvis.setMinWidth(200);
         btnAvvis.setAlignment(Pos.CENTER);
 
@@ -129,14 +127,14 @@ public class KonsulentsideSkade {
         HBox hbControll = new HBox();
         hbControll.setSpacing(10);
         hbControll.setAlignment(Pos.CENTER);
-        hbControll.getChildren().addAll(lbForrige, btnVenstre, tfAntall, btnHøyre, lbNeste);
+        hbControll.getChildren().addAll(lbForrige, btnVenstre, tfNummer, btnHøyre, lbNeste);
 
         HBox hbKnapper = new HBox();
         hbKnapper.setSpacing(10);
         hbKnapper.setAlignment(Pos.CENTER);
-        hbKnapper.getChildren().addAll(lbPris, tfBeløp, btnGodta, btnAvvis);
+        hbKnapper.getChildren().addAll(lbantall, tfAntall, btnGodta, btnAvvis);
 
-        vb.getChildren().addAll(lbAntall, hbControll, taLes, hbKnapper);
+        vb.getChildren().addAll(lbNummer, hbControll, taLes, hbKnapper);
         borderPane.setCenter(vb); // CENTER
 
         // går tilbake i køen over skademeldinger.
@@ -160,7 +158,7 @@ public class KonsulentsideSkade {
                     ReiseSkadeMelding s = (ReiseSkadeMelding) skade;
                     taLes.setText(s.melding());
                 }
-                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
 
             } else {
                 taLes.setText("Det er ikke registrert noen flere skademeldinger.");
@@ -187,7 +185,7 @@ public class KonsulentsideSkade {
                     ReiseSkadeMelding s = (ReiseSkadeMelding) skade;
                     taLes.setText(s.melding());
                 }
-                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
 
             } else {
                 taLes.setText("Det er ikke registrert noen nye skademeldinger.");
@@ -228,8 +226,9 @@ public class KonsulentsideSkade {
                     ReiseSkadeMelding s = (ReiseSkadeMelding) skade;
                     taLes.setText(s.melding());
                 }
-                tfAntall.setText(Integer.toString(kontroll.visSkadeIndex()));
+                tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
                 }
+                tfAntall.setText(Integer.toString(skadeMeldingRegister.visAntallIKø()));
                 
                 
             } else {
@@ -246,6 +245,7 @@ public class KonsulentsideSkade {
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }
+            tfAntall.setText(Integer.toString(skadeMeldingRegister.visAntallIKø()));
 
         });
         borderPane.getStylesheets().add("CSS/konsulentskade.css");
