@@ -114,6 +114,7 @@ public class KundesideSkade {
         ftcombo.setToValue(1.0F);
         ftcombo.setCycleCount(1);
 
+
         lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
         lbInfo.setId("lbInfo");
@@ -135,7 +136,7 @@ public class KundesideSkade {
         ftskrive.setToValue(1.0F);
         ftskrive.setCycleCount(1);
         
-        listView.setPrefSize(250, 300);
+        listView.setPrefSize(200, 300);
         listView.setId("felt");
         listView.setEditable(false);
 
@@ -353,10 +354,12 @@ public class KundesideSkade {
             } else {
                 skriveOmråde.setEditable(false);
             }
-    
-    }
-    private void repSkade(){
-    
+        }
+
+        // finner ut hvilken forsikring det er og legger skademeldingen i køen,
+        // her beregnes også skadesummen samt nye premier, men premien settes endelig,
+        // først når konsulenten har godkjent beløpet/ skademeldingen.
+        public void repSkade(){
             String polisNr = listView.getSelectionModel().getSelectedItem();
             if (forsikringComboBox.getValue().equals("Velg Forsikring:")) {
                 lbInfo.setVisible(true);
@@ -365,36 +368,25 @@ public class KundesideSkade {
             }
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
-            }else {
-                lbInfo.setVisible(true);
+            }else{
                 lbInfo.setText("Vennligst velg en forsikring");
                 return;
             }
-            if(skriveOmråde.getText() == null || skriveOmråde.getText().isEmpty()){
-                lbInfo.setVisible(true);
-                lbInfo.setText("Vennligst beskriv skaden");
-                return;
-            }
-            if (tfBeløp.getText() == null || tfBeløp.getText().isEmpty()){
-                lbInfo.setVisible(true);
-                lbInfo.setText("Mangler skadebeløp!");
-                return;
-            }
             if(dato == null || dato.after(Calendar.getInstance())){
-                lbInfo.setVisible(true);
                 lbInfo.setText("Vennligst sett en gyldig dato");
                 return;
             }
-            
+
             Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
             try {
-                if ( fors instanceof BilForsikring ) {
-
+                //skriveOmråde.clear();
+                if (fors instanceof BilForsikring) {
+            
                     BilForsikring f = (BilForsikring) fors;
                     BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bil.setForsikring(f);
                     bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
-                    f.premieTilGodkjenning(f.premieEtterSkade(f.getPremie(), f.getBonus()));
+                    f.premieTilGodkjenning(f.premieEtterSkade(f.getBonus()));
                     f.nyBonusTilGodkjenning(f.bonusEtterSkade(f.getBonus()));
                     kontroll.addSkade(bil);
                     skriveOmråde.setText(bil.melding());
@@ -404,7 +396,8 @@ public class KundesideSkade {
                     BatForsikring f = (BatForsikring) fors;
                     BatSkadeMelding bat = new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bat.setForsikring(f);
-                    bat.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
+                    bat.setUtbetaling(Double.parseDouble(tfBeløp.getText()) - f.getEgenAndel());
+                    f.premieEtterSkade(f.getPremie());
                     kontroll.addSkade(bat);
                     skriveOmråde.setText(bat.melding());
 
@@ -429,9 +422,9 @@ public class KundesideSkade {
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
-                    
+
                 } else if (fors instanceof ReiseForsikring) {
-                    
+
                     ReiseForsikring f = (ReiseForsikring) fors;
                     ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     reise.setForsikring(f);
@@ -439,7 +432,6 @@ public class KundesideSkade {
                     f.premieTilGodkjenning();
                     kontroll.addSkade(reise);
                     skriveOmråde.setText(reise.melding());
-                    
                 }
 
             } catch (NumberFormatException nfe) {
@@ -447,9 +439,9 @@ public class KundesideSkade {
                 lbInfo.setText("Ugyldig skadebeløp");
                 return;
             }
+            skriveOmråde.clear();  
             tfBeløp.clear();
             dato.clear();
-            data.clear();
             lbInfo.setText("Skademelding er sendt inn");
     
     

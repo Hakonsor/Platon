@@ -9,24 +9,39 @@ import java.io.Serializable;
 
 /**
  * Inneholder datafelter og metoder som er felles for bolig og fritidsbolig.
- * Klassen heter bygg, da det er hovedsakelig bygg metodene baserer seg på.
- * Men lagrer også forsikringssum for innbo. Inneholder metoder som beregner premie,
- * egenandel avhengig av skadetype og premier som følge av at skade er blitt meldt inn
+ * Klassen heter bygg, da det er hovedsakelig bygg metodene baserer seg på. Men
+ * lagrer også forsikringssum for innbo. Inneholder metoder som beregner premie,
+ * egenandel avhengig av skadetype og premier som følge av at skade er blitt
+ * meldt inn
  *
  * @author Therese
  */
 abstract class Bygg extends Forsikringer implements Serializable {
 
-    protected double kvadrat;
-    protected String adresse;
-    protected String boligType;
-    protected int byggeår;
-    protected String materiale;
-    protected String standard;
-    protected double byggSum;
-    protected double innboSum;
-    protected boolean utleie;
-    protected double forsikringSum;
+    private double forsikringSum;
+    private double byggSum;
+    private double innboSum;
+    private final double PREMIEØKNING = 500;
+    private final int GRUNNEGENANDEL = 4000;
+    private final int FGGODKJENT = 4000;
+    private final int BRANN = 3000;
+    private final int VANN = 15000;
+    private final int RØR = 25000;
+    double TOTALSKADEGRENSE = 0.75;
+    double FEMÅR = 5;
+    double TIÅR = 10;
+    double DELTA10 = 0.015;
+    double DELTA5 = 0.01;
+    double PRISPERKVADRAT = 0.1;
+    double PRISPERBYGGVERDI = 0.0007;
+    double PRISPERINNBOVERDI = 0.003;
+    private int byggeår;
+    private double kvadrat;
+    private String adresse;
+    private String boligType;
+    private String materiale;
+    private String standard;
+    private boolean utleie;
 
     public Bygg(boolean utleie, double kvadrat, String adresse, String boligType, int byggeår,
             String materiale, String standard, double byggSum, double inboSum) {
@@ -44,7 +59,8 @@ abstract class Bygg extends Forsikringer implements Serializable {
         setPremie(premie(kvadrat, byggSum, innboSum));
 
     }
-    public double getForsikringsSum(){
+
+    public double getForsikringsSum() {
         return forsikringSum;
     }
 
@@ -82,25 +98,19 @@ abstract class Bygg extends Forsikringer implements Serializable {
 
     // beregner egenandelen avhengig av skadetype, og om boligen er fg godkjent.
     public int egenandel(String skadeType, boolean fG) {
-        int egenAndel = 4000;
-        int fGgodkjent = 4000;
-
-        int brann = 3000;
-        int vann = 15000;
-        int ror = 25000;
-
+        int egenAndel = GRUNNEGENANDEL;
         if (fG) {
-            egenAndel -= fGgodkjent;
+            egenAndel -= FGGODKJENT;
         }
         switch (skadeType) {
             case "BrannSkade":
-                egenAndel += brann;
+                egenAndel += BRANN;
                 break;
             case "VannSkade":
-                egenAndel += vann;
+                egenAndel += VANN;
                 break;
             case "RørSkade":
-                egenAndel += ror;
+                egenAndel += RØR;
                 break;
         }
 
@@ -110,32 +120,25 @@ abstract class Bygg extends Forsikringer implements Serializable {
 
     // utbetaling av erstatningsbeløp, med regler, full utbetaling
     public int utbetaling(double skadeBelop, double verdi, int skadeÅr, int egenandel) {
-     
-        double totalSkadeGrense = 0.75;
-        System.out.println("Totalskadegrense" +totalSkadeGrense);
-        double femAar = 5;
-        double tiAar = 10;
-        double delta10 = 0.015;
-        double delta5 = 0.01;
         double sum;
         double byggVerdi;
         int a = 2015;
         int b = 2010;
         int alder;
-        alder = a-b;
+        alder = a - b;
         System.out.println("" + alder);
-        if (alder >= tiAar) {
-            byggVerdi = verdi - alder * verdi * delta10;
-        } else if (alder >= femAar) {
-            byggVerdi = verdi - alder * verdi * delta5;
+        if (alder >= FEMÅR) {
+            byggVerdi = verdi - alder * verdi * DELTA10;
+        } else if (alder >= TIÅR) {
+            byggVerdi = verdi - alder * verdi * DELTA5;
         } else {
             byggVerdi = verdi;
         }
         System.out.println("byggverdi" + byggVerdi);
 
         // laveste skadegrense for totalskade her er det tatt hensyn til byggets alder:    
-        double minTotal = byggVerdi * totalSkadeGrense;
-       
+        double minTotal = byggVerdi * TOTALSKADEGRENSE;
+
         // sjekker om bygget er totalskadet, dvs skaden utgjør minst 75% av verdien til boligen.
         if (skadeBelop < minTotal) {
             sum = skadeBelop - egenandel;
@@ -149,22 +152,17 @@ abstract class Bygg extends Forsikringer implements Serializable {
 
     // beregner premien utifra størrelsen på boligen og verdien på innboet og bygningen
     public int premie(double kvadrat, double byggSum, double innboSum) {
-        double prisPerKvadrat = 0.1;
-        double prisPerByggVerdi = 0.0007;
-        double prisPerInnbo = 0.003;
+
         double premium;
-
-        premium = prisPerKvadrat * kvadrat + prisPerByggVerdi * byggSum + prisPerInnbo * innboSum;
-
+        premium = PRISPERKVADRAT * kvadrat + PRISPERBYGGVERDI * byggSum + PRISPERINNBOVERDI * innboSum;
         return (int) premium;
     }
-    
+
     // beregner ny premie etter skade.
-    public double nyPremie(){
-        double premieØkning = 500;
-        double nyPremie = this.premie + premieØkning;
+    public double nyPremie() {
+        double nyPremie = getPremie() + PREMIEØKNING;
         return nyPremie;
-        
+
     }
 
 }// end of class Bolig.

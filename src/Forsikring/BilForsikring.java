@@ -15,7 +15,13 @@ import java.io.Serializable;
  * @author Therese, Håkon
  */
 public class BilForsikring extends Kjoretoy implements Serializable {
-
+    private double GRUNNPREMIE = 20000;
+    private double RABATT15 = 15;
+    private double RABATT10 = 10;
+    private double EGENANDELLAV = 4000;
+    private double EGENANDELHØY = 10000;
+    private double EGENANDELMEDIUM = 6000;
+    
     private int kjorelengde;
     private int kmStand;
     private double bonusTilGodkjenning;
@@ -27,7 +33,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         super(bonus, egenandel, regNr, type, bilModell, arsModell);
         this.kjorelengde = kjorelengde;
         this.kmStand = kmStand;
-        premie = (premie(egenandel, bonus));// premien settes
+        setPremie((premie(egenandel, bonus)));// premien settes
     }
     
     /* legger på peker på et nytt personobjekt, i tilfelle det er 
@@ -65,7 +71,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
         } else {
             belop = kostnad;
         }
-        if (belop > egenandel) {
+        if (belop > getEgenAndel()) {
             utbetales = belop;
         }
 
@@ -81,7 +87,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
 
     //Setter den nye bonusen når konsulenten har behandlet skaden
     public void bonusGodkjent() {
-        bonus = bonusTilGodkjenning;
+        setBonus(bonusTilGodkjenning);
     }
 
     // beregner bonusen etter skaden. parameteren angir hva bonusen var før skaden
@@ -90,38 +96,38 @@ public class BilForsikring extends Kjoretoy implements Serializable {
             boNus -= 40;
         }
         if (boNus >= 10 && boNus <= 60) {
-            bonus -= 30;
-        }
-        if (boNus == 70) {
             boNus -= 30;
         }
+        if (boNus == 70) {
+            boNus -= 20;
+        }
         if (boNus == 75) {
-            bonus -= 15;
+            boNus -= 15;
         }
         return boNus;
     }// end of method
 
     // beregner premien basert på bonus etter en skade.
-    public double premieEtterSkade(double grunnPremie, double nyBonus) {
-        double nyPremie = (100 - nyBonus) / 100 * grunnPremie;
+    public double premieEtterSkade(double nyBonus) {
+        double nyPremie = getBonus() + (nyBonus) / 100 * GRUNNPREMIE;
         return nyPremie;
     }// end of method
 
     // bestemmer premien utifra hva som velges som egenandel. 
     public double premie(double egenAndel, double boNus) {
-        double grunnPremie = 20000;
+        
         double premium;
         double rabatt = 0;
 
-        if (egenAndel == 10000) {
-            rabatt = 15;
-        } else if (egenAndel == 6000) {
-            rabatt = 10;
-        } else if (egenAndel == 4000) {
+        if (egenAndel == EGENANDELHØY) {
+            rabatt = RABATT15;
+        } else if (egenAndel == EGENANDELMEDIUM) {
+            rabatt = RABATT10;
+        } else if (egenAndel == EGENANDELLAV) {
             rabatt = 0;
         }// end of if else
 
-        premium = (100 - rabatt - boNus) / 100 * grunnPremie;
+        premium = (100 - rabatt - boNus) / 100 * GRUNNPREMIE;
 
         return premium;
     }// end of method premie
@@ -130,10 +136,10 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     // skriver ut informasjon om bilen og bilforsikringen
     public String toString() {
         String s;
-        s = "BilForsikring:" + "\nForsikringen gjelder for reg.nr: " + regNr 
-                + "\nPoliseNr: " + poliseNr
-                + "Gjelder fra: " + startDato + "\ttil: " + utløpsDato
-                + "\nMerke: " + modell + "\tÅrsmodell: " + arsModell
+        s = "BilForsikring:" + "\nForsikringen gjelder for reg.nr: " + getRegNr() 
+                + "\nPoliseNr: " + getPoliseNr()
+                + "Gjelder fra: " + getStartDato() + "\ttil: " + getSluttDato()
+                + "\nMerke: " + getModell() + "\tÅrsmodell: " + getArsModell()
                 +"\n";
         return s;
     }// end of toString()

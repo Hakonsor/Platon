@@ -9,6 +9,7 @@ import Person.Bruker;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -101,6 +102,13 @@ public class SkadeMeldingRegister implements Serializable {
         boolean remove = behandling.remove(skade);
 
     }
+    public List<SkadeMelding> finnGodkjentListe(int år){
+        List<SkadeMelding> list = new LinkedList<>();
+        register.stream().filter((s) -> (s.godkjent() && s.getdatoInnmeldt().get(Calendar.YEAR) == år)).forEach((s) -> {
+            list.add(s);
+        });
+        return list;
+    }
 
     // Metode som henter en liste over alle skademeldinger knyttet en bestemt bruker(kunde)
     public ArrayList<SkadeMelding> getSkadeMelding(Class forsikring, Bruker b) {
@@ -115,7 +123,7 @@ public class SkadeMeldingRegister implements Serializable {
     public double finnUtgiftBil( int år ) {
         double sum = 0;
         for(SkadeMelding s : register){
-            if(s instanceof BilSkadeMelding && s.datoInnmeldt.get(Calendar.YEAR)== år )
+            if(s instanceof BilSkadeMelding && s.getdatoInnmeldt().get(Calendar.YEAR)== år )
                 sum+= s.getUtbetaling();
         }
         return sum;
@@ -125,7 +133,7 @@ public class SkadeMeldingRegister implements Serializable {
     public double finnUtgiftBåt( int år ) {
         double sum = 0;
         for(SkadeMelding s : register){
-            if(s instanceof BatSkadeMelding && s.datoInnmeldt.get(Calendar.YEAR)== år )
+            if(s instanceof BatSkadeMelding && s.getdatoInnmeldt().get(Calendar.YEAR)== år )
                 sum+= s.getUtbetaling();
         }
         return sum;
@@ -135,7 +143,7 @@ public class SkadeMeldingRegister implements Serializable {
     public double finnUtgiftBolig( int år ) {
         double sum = 0;
         for(SkadeMelding s : register){
-            if(s instanceof BoligSkadeMelding && s.datoInnmeldt.get(Calendar.YEAR)== år )
+            if(s instanceof BoligSkadeMelding && s.getdatoInnmeldt().get(Calendar.YEAR)== år )
                 sum+= s.getUtbetaling();
         }
         return sum;
@@ -145,7 +153,7 @@ public class SkadeMeldingRegister implements Serializable {
     public double finnUtgiftFritid( int år ) {
         double sum = 0;
         for(SkadeMelding s : register){
-            if(s instanceof FritidsBoligMelding && (s.datoInnmeldt.get(Calendar.YEAR)== år) )
+            if(s instanceof FritidsBoligMelding && (s.getdatoInnmeldt().get(Calendar.YEAR)== år) )
                 sum+= s.getUtbetaling();
         }
         return sum;
@@ -155,7 +163,7 @@ public class SkadeMeldingRegister implements Serializable {
     public double finnUtgiftReise( int år ) {
         double sum = 0;
         for(SkadeMelding s : register){
-            if(s instanceof ReiseSkadeMelding &&  ( s.datoInnmeldt.get(Calendar.YEAR)== år ))
+            if(s instanceof ReiseSkadeMelding &&  ( s.getdatoInnmeldt().get(Calendar.YEAR)== år ))
                 sum+= s.getUtbetaling();
         }
         return sum;
@@ -166,7 +174,7 @@ public class SkadeMeldingRegister implements Serializable {
     public double finnUtgiftTotal( int år ) {
         double sum = 0;
         for( SkadeMelding s : register ){
-            if( s.datoInnmeldt.get(Calendar.YEAR)== år )
+            if( s.getdatoInnmeldt().get(Calendar.YEAR)== år )
                 sum+= s.getUtbetaling();
         }
         return sum;

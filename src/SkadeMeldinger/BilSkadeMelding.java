@@ -25,8 +25,8 @@ public class BilSkadeMelding extends KjoretoySkade implements Serializable{
     // meldingen som vises for skadebehandler når han behandler skadene
     public String melding(){
         String s;
-        s = "Bilskademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"+
-                  "RegNO: "+ ((BilForsikring)forsikring).getRegNr()+ "\n" +super.toString();
+        s = "Bilskademelding \n Innmeldt av\t :" +  getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"+
+                  "RegNO: "+ ((BilForsikring)getForsikring()).getRegNr()+ "\n" +super.toString();
         
         return s;
     }

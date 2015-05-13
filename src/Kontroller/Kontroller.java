@@ -57,7 +57,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     private KundeSide nyside;
     private Registrer regVindu;
     private infoMelding infoSkjerm;
-    private String siste;
     
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
@@ -232,13 +231,12 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     //Filskriving
     public void lesFil() {
-
         try (ObjectInputStream innfil = new ObjectInputStream(
                 new FileInputStream("src/Fil/forsikring.data"))) {
             brukerRegister = (BrukerRegister) innfil.readObject();
             skademeldingregister = (SkadeMeldingRegister) innfil.readObject();
             forsikringsregister = (ForsikringsRegister) innfil.readObject();
-            Forsikringer.setStaticPolisnr(innfil.readInt());
+            Forsikringer.setStaticPolisenr(innfil.readInt());
             SkadeMelding.setStaticSkadeNr(innfil.readInt());
             Kunde.setStaticKundeNr(innfil.readInt());
         } catch (ClassNotFoundException cnfe) {
@@ -268,7 +266,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
             utfil.writeObject(brukerRegister);
             utfil.writeObject(skademeldingregister);
             utfil.writeObject(forsikringsregister);
-            utfil.writeInt(Forsikringer.getStaticPolisnr());
+            utfil.writeInt(Forsikringer.getStaticPolisenr());
             utfil.writeInt(SkadeMelding.getStaticSkadeNr());
             utfil.writeInt(Kunde.getStaticKundeNr());
 
@@ -453,14 +451,17 @@ public class Kontroller implements EventHandler<ActionEvent> {
         Bruker sjekkBruker = finnBruker(bruker);
         if (sjekkBruker == null || sjekkBruker instanceof Kunde) {
             return false;
-
         }
         System.out.println("konsulentS");
         return sjekkBruker.sjekkPassord(passord);
     }
-    public void opptaterListeKonsulent(){
+
+    public void opptaterListeKonsulent() {
         nyKunsulentSide.opptatterListeKunde();
     }
 
+    public List<SkadeMelding> gotGodkjentListe(int år) {
+        return skademeldingregister.finnGodkjentListe(år);
+    }
 }// end of class kontroller
 

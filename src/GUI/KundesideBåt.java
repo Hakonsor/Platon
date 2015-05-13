@@ -270,7 +270,7 @@ public class KundesideBåt implements ComboBoxConverter {
 
         RadioButton rbtMotorbåt = new RadioButton("Motorbåt");
         rbtMotorbåt.setToggleGroup(båtType);
-        rbtMotorbåt.setSelected(false);
+        rbtMotorbåt.setSelected(true);
         rbtMotorbåt.setOnAction(e -> {
             type = "Motorbåt";
         });
@@ -292,6 +292,7 @@ public class KundesideBåt implements ComboBoxConverter {
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
         btnSjekkpris.setOnAction(e -> {
+            
             regLabel.setText("Premien er: " + "getPris()");
         });
 
