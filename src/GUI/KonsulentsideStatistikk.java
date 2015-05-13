@@ -2,6 +2,7 @@ package GUI;
 
 import Kontroller.Kakediagram;
 import Kontroller.Kontroller;
+import Kontroller.Statistikk;
 import java.text.DecimalFormat;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -66,27 +67,46 @@ public class KonsulentsideStatistikk {
         tabInnUt.setText("Inntekter & Utgifter");
         tabInnUt.setClosable(false);
         tabInnUt.setOnSelectionChanged(e -> {
-           tabInnUt.setContent(innUt()); 
+            tabInnUt.setContent(innUt()); 
         });
-        
         
         Tab kakeDiagram = new Tab();
         kakeDiagram.setText("Kakediagram");
         kakeDiagram.setClosable(false);
         kakeDiagram.setOnSelectionChanged(e -> {
-        kakeDiagram.setContent(kakeDiagram());
+            kakeDiagram.setContent(kakeDiagram());
         });
         
-        
+        Tab graf = new Tab();
+        graf.setText("Kakediagram");
+        graf.setClosable(false);
+        graf.setOnSelectionChanged(e -> {
+            graf.setContent(graf());
+        });
 
-        tabPane.getTabs().addAll(tabInnUt, kakeDiagram);
+        tabPane.getTabs().addAll(tabInnUt, kakeDiagram, graf);
         borderPane.setTop(tabPane);
 
         borderPane.getStylesheets().add("CSS/konsulentstat.css");
         return borderPane;
     }
+    private Pane graf(){
+        VBox vb = new VBox();
+        vb.setAlignment(Pos.CENTER);
+        vb.setSpacing(40);
+        vb.setPadding(new Insets(100));
+        
+        oppdater();
+        
+        Statistikk graf = new Statistikk();
+        graf.måndeData(kontroll.gotGodkjentListe(aar));
+        
+         vb.getChildren().add(graf.getGraf());
+         return vb;
+    
+    }
 
-    public Pane kakeDiagram() {
+    private Pane kakeDiagram() {
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(40);
@@ -132,7 +152,7 @@ public class KonsulentsideStatistikk {
         return vb;
     }
 
-    public Pane innUt() {
+    private Pane innUt() {
         VBox vb = new VBox();
         vb.setAlignment(Pos.CENTER);
         vb.setSpacing(40);
@@ -333,6 +353,7 @@ public class KonsulentsideStatistikk {
 
         return vb;
     }
+    
     private void velgÅr(){
     String år = cb.getSelectionModel().getSelectedItem();
             switch (år) {
@@ -351,6 +372,7 @@ public class KonsulentsideStatistikk {
             }
         oppdater();
     }
+    
     private void oppdaterTabell(){
                 String form = "0.00";
             DecimalFormat tall = new DecimalFormat(form);
@@ -374,7 +396,7 @@ public class KonsulentsideStatistikk {
             lbDifferanseVerdi.setText(tall.format(inntekt - utgift) + " Kr");
     
     }
-
+    
     private void oppdater() {
             reiseInn = kontroll.finnInntekterReiseFors(aar);
             boligInn = kontroll.finnInntekterBoligForsikring(aar);

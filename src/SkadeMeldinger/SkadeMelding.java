@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 /**
  *
  * @author Therese, Håkon
@@ -20,7 +19,7 @@ import java.util.Date;
 public abstract class SkadeMelding implements Serializable {
 
     public static int getStaticSkadeNr() {
-       return nesteSkadeNr;
+        return nesteSkadeNr;
     }
 
     public static void setStaticSkadeNr(int nyttSkadeNr) {
@@ -32,82 +31,90 @@ public abstract class SkadeMelding implements Serializable {
     private Object skadeBilde;
     private int skadeSum;
     private Forsikringer forsikring;
-   // private String forsikringstype;
+    // private String forsikringstype;
     private static int nesteSkadeNr = 100000;
     private int skadeNr;
     private double utbetaling;
     private boolean godkjent;
-    
-    
-   private SkadeMelding(){
-       skadeNr = (++nesteSkadeNr);
-   } 
-    
+
+    private SkadeMelding() {
+        skadeNr = (++nesteSkadeNr);
+    }
+
     // mottar skadebeløpet, mens utbetalingen settes av konsulenten
-    public SkadeMelding(String skadeBeskrivelse , int skadeSum, Calendar skadeDato){
-        this(); 
+    public SkadeMelding(String skadeBeskrivelse, int skadeSum, Calendar skadeDato) {
+        this();
         this.skadeBeskrivelse = skadeBeskrivelse;
         this.skadeSum = skadeSum;
         datoInnmeldt = Calendar.getInstance();
-        this.skadeDato = skadeDato; 
+        this.skadeDato = skadeDato;
     }
-    
-    
-    public void setUtbetaling(double utbetaling){
+
+    public void setUtbetaling(double utbetaling) {
         this.utbetaling = utbetaling;
     }
 
-    public double getUtbetaling(){
+    public double getUtbetaling() {
         return this.utbetaling;
     }
+
     // viser at skademeldingen er godkjent.
-    public void okUtbetal(){
+
+    public void okUtbetal() {
         godkjent = true;
     }
-    public void avvis(){
+
+    public boolean godkjent() {
+        return godkjent;
+    }
+
+    public void avvis() {
         utbetaling = 0;
     }
-   
-     public String getSkadeBeskrivelse(){ 
+
+    public String getSkadeBeskrivelse() {
         return skadeBeskrivelse;
     }
-    
-    public Calendar getdatoInnmeldt(){
+
+    public Calendar getdatoInnmeldt() {
         return datoInnmeldt;
     }
-    
-    public void setDatoSkade(Calendar skadeDato){
+
+    public void setDatoSkade(Calendar skadeDato) {
         this.skadeDato = skadeDato;
     }
-    public int getSkadeNr(){
+
+    public int getSkadeNr() {
         return skadeNr;
     }
-    public Forsikringer getForsikring(){
+
+    public Forsikringer getForsikring() {
         return forsikring;
     }
-    public void setForsikring(Forsikringer forsikring){
+
+    public void setForsikring(Forsikringer forsikring) {
         this.forsikring = forsikring;
     }
-    
-    public Object getSkadeBilde(){
+
+    public Object getSkadeBilde() {
         return skadeBilde;
     }
-    public void setSkadeBilde(Object skadeBilde){
+
+    public void setSkadeBilde(Object skadeBilde) {
         this.skadeBilde = skadeBilde;
     }
-   
-    public int getskadeNr(){
+
+    public int getskadeNr() {
         return skadeNr;
     }
-    
-    
-    public String toString(){
-       Date dt = skadeDato.getTime();
-       DateFormat df = new SimpleDateFormat("dd.MM.yyyy"); 
-       String dato = df.format(dt);
-       String s = "Skadedato: " 
-                + dato + "\tSkadeNr: " + skadeNr  +"\nSkadebeløp: "
-                + skadeSum + "\t\t Utbetaling: " + utbetaling + "\nSkadebeskrivelse: \n" 
+
+    public String toString() {
+        Date dt = skadeDato.getTime();
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        String dato = df.format(dt);
+        String s = "Skadedato: "
+                + dato + "\tSkadeNr: " + skadeNr + "\nSkadebeløp: "
+                + skadeSum + "\t\t Utbetaling: " + utbetaling + "\nSkadebeskrivelse: \n"
                 + skadeBeskrivelse;
         return s;
     }

@@ -9,6 +9,7 @@ import Person.Bruker;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -100,6 +101,13 @@ public class SkadeMeldingRegister implements Serializable {
         register.add(skade);
         boolean remove = behandling.remove(skade);
 
+    }
+    public List<SkadeMelding> finnGodkjentListe(int år){
+        List<SkadeMelding> list = new LinkedList<>();
+        register.stream().filter((s) -> (s.godkjent() && s.getdatoInnmeldt().get(Calendar.YEAR) == år)).forEach((s) -> {
+            list.add(s);
+        });
+        return list;
     }
 
     // Metode som henter en liste over alle skademeldinger knyttet en bestemt bruker(kunde)

@@ -56,7 +56,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     private KonsulentSide nyKunsulentSide;
     private KundeSide nyside;
     private Registrer regVindu;
-    
+
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
     }
@@ -375,24 +375,28 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public double finnInntekterReiseFors(int aar) {
         return forsikringsregister.finnInntekterReiseFors(aar);
     }
-    
+
     // finner Inntekter boligforsikring
     public double finnInntekterBoligForsikring(int aar) {
         return forsikringsregister.finnInntekterReiseFors(aar);
     }
 //  finner inntekter fritidsbolig
+
     public double finnInntekterFritidsBolig(int aar) {
         return forsikringsregister.finnInntekterFritidsBolig(aar);
     }
 // finner inntekter båt
+
     public double finnInntekterBåt(int aar) {
         return forsikringsregister.finnInntekterBåt(aar);
     }
 // finner inntekter bil
+
     public double finnInntekterBil(int aar) {
         return forsikringsregister.finnInntekterBil(aar);
     }
 // finner den totale inntekten for alle forsikringer
+
     public double finnInntekterAlleForsikringer(int aar) {
         return forsikringsregister.finnInntekterAlleFors(aar);
     }
@@ -441,14 +445,17 @@ public class Kontroller implements EventHandler<ActionEvent> {
         Bruker sjekkBruker = finnBruker(bruker);
         if (sjekkBruker == null || sjekkBruker instanceof Kunde) {
             return false;
-
         }
         System.out.println("konsulentS");
         return sjekkBruker.sjekkPassord(passord);
     }
-    public void opptaterListeKonsulent(){
+
+    public void opptaterListeKonsulent() {
         nyKunsulentSide.opptatterListeKunde();
     }
 
+    public List<SkadeMelding> gotGodkjentListe(int år) {
+        return skademeldingregister.finnGodkjentListe(år);
+    }
 }// end of class kontroller
 
