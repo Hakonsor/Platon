@@ -150,7 +150,16 @@
     -fx-border-color: black;
 }
 
+#btnRegBoligforsikring {
+    -fx-background-color: rgb(129, 177, 102);
+    -fx-background-radius: 0;
+    -fx-font: 14px "Myriad";
+}
 
+#btnRegBoligforsikring:hover, #btnRegBoligforsikring:focused{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
 
 
 #error {

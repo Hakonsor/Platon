@@ -56,6 +56,8 @@ public class Kontroller implements EventHandler<ActionEvent> {
     private KonsulentSide nyKunsulentSide;
     private KundeSide nyside;
     private Registrer regVindu;
+    private infoMelding infoSkjerm;
+    private String siste;
     
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
@@ -73,6 +75,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public void regKonsulent() {
         regKonsulent = new RegKonsulent(new Stage(), this);
+    }
+
+    public void infoSkjerm() {
+        infoSkjerm = new infoMelding(new Stage(), this);
     }
 
     public void sok() {
@@ -168,6 +174,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
         }
 
     }
+
 
     //SkadeMeldingBehandling skadeKonsulent-------------------------------------------
     // henter den første skademeldingen i behandlingskøen

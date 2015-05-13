@@ -4,14 +4,13 @@ import Kontroller.Kontroller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import static javafx.geometry.Pos.*;
+
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -22,14 +21,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import javax.xml.soap.Node;
 
 /**
  * Created by Magnus on 18.04.15.
@@ -45,26 +38,34 @@ public class Login {
     private Button btnKonsulentLogginn;
     private Button btnKundeLogginn;
     private Button btnNyKonsulent;
-
-    TextField tfKundeBrukernavn;
-    PasswordField pfKundePassord;
-    TextField tfKonsulentBrukernavn;
-    PasswordField pfKonsulentPassord;
+    private VBox vBoxKunde;
+    private VBox vBoxKonsulent;
+    private GridPane gridKtext;
+    private GridPane gridKunde;
+    private GridPane gridKonstext;
+    private GridPane gridKonsulent;
+    private TextField tfKundeBrukernavn;
+    private PasswordField pfKundePassord;
+    private TextField tfKonsulentBrukernavn;
+    private PasswordField pfKonsulentPassord;
+    private Label infoKunde;
+    private Label infoKonsulent;
 
     public Login(Stage primaryStage, Kontroller k) throws Exception {
 
         this.primaryStage = primaryStage;
-
         kontroll = k;
         TabPane tabs = new TabPane();
 
         Tab tabKunde = new Tab();
         tabKunde.setText("Kunde");
+        tabKunde.setId("kunde");
         tabKunde.setClosable(false);
         tabKunde.setContent(kundeFane());
 
         Tab tabKonsulent = new Tab();
         tabKonsulent.setText("Konsulent");
+        tabKonsulent.setId("konsulent");
         tabKonsulent.setClosable(false);
         tabKonsulent.setContent(konsulentFane());
         tabs.getTabs().addAll(tabKunde, tabKonsulent);
@@ -83,61 +84,29 @@ public class Login {
 
     private Pane kundeFane() {
 
-        final Rectangle rect1 = new Rectangle(10, 10, 100, 100);
-        rect1.setArcHeight(50);
-        rect1.setArcWidth(50);
-        rect1.setFill(Color.BLUE);
-        rect1.setWidth(200);
+        vBoxKunde = new VBox();
+        vBoxKunde.setAlignment(Pos.CENTER);
+        vBoxKunde.setSpacing(20);
+        vBoxKunde.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
 
-        FadeTransition ft = new FadeTransition(Duration.millis(300), rect1);
-        ft.setFromValue(1.0);
-        ft.setToValue(0.1);
-        ft.setCycleCount(Timeline.INDEFINITE);
-        ft.setAutoReverse(true);
-        ft.play();
+        gridKtext = new GridPane();
+        gridKtext.setAlignment(Pos.CENTER);
 
-        GridPane grid = new GridPane();
-        grid.setAlignment(TOP_CENTER);
-        //grid.setGridLinesVisible(true);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(100));
+        infoKunde = new Label();
+        infoKunde.setText("Logg inn for å fortsette...");
+        infoKunde.setId("logginn_info");
 
-        ImageView loginImg = new ImageView(new Image(LoginBilde));
-        loginImg.setId("loginImg");
-        loginImg.setPreserveRatio(true);
-        loginImg.setFitWidth(128);
-        GridPane.setHalignment(loginImg, HPos.CENTER);
+        gridKtext.add(infoKunde, 0, 0);
 
-        Label velkommen = new Label();
-        velkommen.setText("Kunde Logginn");
-        velkommen.setId("kunde_velkommen_tekst");
-        GridPane.setHalignment(velkommen, HPos.CENTER);
-
-        Label info = new Label();
-        info.setText("Logg inn for å fortsette");
-        info.setId("logginn_info");
-        GridPane.setHalignment(info, HPos.CENTER);
-
-        ParallelTransition pt;
+        gridKunde = new GridPane();
+        gridKunde.setAlignment(Pos.CENTER);
+        gridKunde.setHgap(20);
+        gridKunde.setVgap(10);
 
         tfKundeBrukernavn = new TextField();
         tfKundeBrukernavn.setPromptText("kundenr");
         tfKundeBrukernavn.setId("tfkundenr");
         tfKundeBrukernavn.setMaxWidth(200);
-        GridPane.setHalignment(tfKundeBrukernavn, HPos.CENTER);
-
-        FadeTransition ftBrukernavn = new FadeTransition(Duration.millis(1500), tfKundeBrukernavn);
-        ftBrukernavn.setFromValue(0.3F);
-        ftBrukernavn.setToValue(1.0F);
-        ftBrukernavn.setCycleCount(1);
-        ftBrukernavn.play();
-
-        TranslateTransition ttb = new TranslateTransition(Duration.millis(1500), tfKundeBrukernavn);
-        ttb.setFromX(350);
-        ttb.setToX(0);
-        ttb.setCycleCount(1);
-        ttb.play();
 
         TranslateTransition ttbShake = new TranslateTransition(Duration.millis(100), tfKundeBrukernavn);
         ttbShake.setFromX(0);
@@ -152,19 +121,6 @@ public class Login {
         pfKundePassord.setPromptText("passord");
         pfKundePassord.setId("pfKundePassord");
         pfKundePassord.setMaxWidth(200);
-        GridPane.setHalignment(pfKundePassord, HPos.CENTER);
-
-        FadeTransition ftPassord = new FadeTransition(Duration.millis(1500), pfKundePassord);
-        ftPassord.setFromValue(0.3F);
-        ftPassord.setToValue(1.0F);
-        ftPassord.setCycleCount(1);
-        ttb.play();
-
-        TranslateTransition ttp = new TranslateTransition(Duration.millis(1500), pfKundePassord);
-        ttp.setFromX(-350);
-        ttp.setToX(0);
-        ttp.setCycleCount(1);
-        ttp.play();
 
         TranslateTransition ttpShake = new TranslateTransition(Duration.millis(100), pfKundePassord);
         ttpShake.setFromX(0);
@@ -179,12 +135,10 @@ public class Login {
         logginnInfo.setText("");
         logginnInfo.setVisible(false);
         logginnInfo.setId("logginnInfo");
-        GridPane.setHalignment(logginnInfo, HPos.CENTER);
 
         btnNyKunde = new Button("Ny Kunde");
         btnNyKunde.setId("btNyKunde");
         btnNyKunde.setMaxWidth(200);
-        GridPane.setHalignment(btnNyKunde, HPos.CENTER);
         try {
             btnNyKunde.setOnAction(e -> kontroll.regVindu());
         } catch (Exception ex) {
@@ -194,8 +148,6 @@ public class Login {
         btnKundeLogginn = new Button("Logg inn");
         btnKundeLogginn.setId("btnlogginn");
         btnKundeLogginn.setMaxWidth(200);
-        GridPane.setHalignment(btnKundeLogginn, HPos.CENTER);
-
         try {
             btnKundeLogginn.setOnAction(e -> {
                 if (kontroll.sjekkPassordKunde(tfKundeBrukernavn.getText(), pfKundePassord.getText())) {
@@ -206,7 +158,7 @@ public class Login {
                 } else if (!logginnInfo.isVisible()) {
                     ttpShake.play();
                     ttbShake.play();
-                    logginnInfo.setText("Feil passord/brukernavn");
+                    logginnInfo.setText("Feil kundenr/passord");
                     logginnInfo.setVisible(true);
                     tfKundeBrukernavn.setId("error1");
                     pfKundePassord.setId("error2");
@@ -216,53 +168,68 @@ public class Login {
             Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        grid.add(loginImg, 0, 0);
-        grid.add(velkommen, 0, 1);
-        grid.add(info, 0, 2);
-        grid.add(tfKundeBrukernavn, 0, 5);
-        grid.add(pfKundePassord, 0, 6);
-        grid.add(logginnInfo, 0, 7);
-        grid.add(btnKundeLogginn, 0, 8);
-        grid.add(btnNyKunde, 0, 9);
+        vBoxKunde.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    if (kontroll.sjekkPassordKunde(tfKundeBrukernavn.getText(), pfKundePassord.getText())) {
+                        primaryStage.close();
+                        kontroll.kundeSide(primaryStage);
+                        kontroll.setInnloggetBruker(tfKundeBrukernavn.getText());
 
-        return grid;
+                    } else if (!logginnInfo.isVisible()) {
+                        ttpShake.play();
+                        ttbShake.play();
+                        logginnInfo.setText("Feil kundenr/passord");
+                        logginnInfo.setVisible(true);
+                        tfKundeBrukernavn.setId("error1");
+                        pfKundePassord.setId("error2");
+                    }
+                }
+            }
+        });
+
+
+        gridKunde.add(tfKundeBrukernavn, 0, 0, 2, 1);
+        gridKunde.add(pfKundePassord, 0, 1, 2, 1);
+        gridKunde.add(btnKundeLogginn, 0, 2);
+        gridKunde.add(btnNyKunde, 1, 2);
+        gridKunde.add(logginnInfo, 0, 3, 2, 1);
+
+        vBoxKunde.getChildren().addAll(gridKtext, gridKunde);
+        return vBoxKunde;
     }
 
     private Pane konsulentFane() {
-        GridPane grid = new GridPane();
-        grid.setAlignment(TOP_CENTER);
-        //grid.setGridLinesVisible(true);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(100));
 
-        ImageView loginImg = new ImageView(new Image(LoginBilde));
-        loginImg.setId("loginImg");
-        loginImg.setPreserveRatio(true);
-        loginImg.setFitWidth(128);
-        GridPane.setHalignment(loginImg, HPos.CENTER);
+        vBoxKonsulent = new VBox();
+        vBoxKonsulent.setAlignment(Pos.CENTER);
+        vBoxKonsulent.setSpacing(20);
+        vBoxKonsulent.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
 
-        Label velkommen = new Label();
-        velkommen.setText("Konsulent Logginn");
-        velkommen.setId("konsulent_velkommen_tekst");
-        GridPane.setHalignment(velkommen, HPos.CENTER);
+        gridKonstext = new GridPane();
+        gridKonstext.setAlignment(Pos.CENTER);
 
-        Label info = new Label();
-        info.setText("Logg inn for å fortsette");
-        info.setId("logginn_info");
-        GridPane.setHalignment(info, HPos.CENTER);
+        infoKonsulent = new Label();
+        infoKonsulent.setText("Logg inn for å fortsette...");
+        infoKonsulent.setId("logginn_info");
+
+        gridKonstext.add(infoKonsulent, 0, 0);
+
+        gridKonsulent = new GridPane();
+        gridKonsulent.setAlignment(Pos.CENTER);
+        gridKonsulent.setHgap(20);
+        gridKonsulent.setVgap(10);
 
         tfKonsulentBrukernavn = new TextField();
         tfKonsulentBrukernavn.setPromptText("brukernavn");
         tfKonsulentBrukernavn.setId("tfbrukernavn");
-        tfKonsulentBrukernavn.setMaxWidth(200);
-        GridPane.setHalignment(tfKonsulentBrukernavn, HPos.CENTER);
+        tfKonsulentBrukernavn.setMaxWidth(250);
 
         pfKonsulentPassord = new PasswordField();
         pfKonsulentPassord.setPromptText("passord");
         pfKonsulentPassord.setId("pfbrukernavn");
-        pfKonsulentPassord.setMaxWidth(200);
-        GridPane.setHalignment(pfKonsulentPassord, HPos.CENTER);
+        pfKonsulentPassord.setMaxWidth(250);
 
         //Animasjon
         TranslateTransition ttpShake = new TranslateTransition(Duration.millis(100), pfKonsulentPassord);
@@ -287,12 +254,10 @@ public class Login {
         logginnInfo.setText("");
         logginnInfo.setVisible(false);
         logginnInfo.setId("logginnInfo");
-        GridPane.setHalignment(logginnInfo, HPos.CENTER);
 
         btnKonsulentLogginn = new Button("Logg inn");
         btnKonsulentLogginn.setId("btnlogginn");
         btnKonsulentLogginn.setMaxWidth(200);
-        GridPane.setHalignment(btnKonsulentLogginn, HPos.CENTER);
         btnKonsulentLogginn.setOnAction(e -> {
             if (kontroll.sjekkPassordKonsulent(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
                 primaryStage.close();
@@ -301,7 +266,7 @@ public class Login {
             } else if (!logginnInfo.isVisible()) {
                 ttpShake.play();
                 ttbShake.play();
-                logginnInfo.setText("Feil passord/brukernavn");
+                logginnInfo.setText("Feil brukernavn/passord");
                 logginnInfo.setVisible(true);
                 tfKonsulentBrukernavn.setId("error1");
                 pfKonsulentPassord.setId("error2");
@@ -311,23 +276,40 @@ public class Login {
         btnNyKonsulent = new Button("Ny Konsulent");
         btnNyKonsulent.setId("btNyKonsulent");
         btnNyKonsulent.setMaxWidth(200);
-        GridPane.setHalignment(btnNyKonsulent, HPos.CENTER);
         try {
             btnNyKonsulent.setOnAction(e -> kontroll.regKonsulent());
         } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        grid.add(loginImg, 0, 0);
-        grid.add(velkommen, 0, 1);
-        grid.add(info, 0, 2);
-        grid.add(tfKonsulentBrukernavn, 0, 5);
-        grid.add(pfKonsulentPassord, 0, 6);
-        grid.add(logginnInfo, 0, 7);
-        grid.add(btnKonsulentLogginn, 0, 8);
-        grid.add(btnNyKonsulent, 0, 9);
+        vBoxKonsulent.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    if (kontroll.sjekkPassordKonsulent(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
+                        primaryStage.close();
+                        kontroll.konsulentSide(primaryStage);
+                        kontroll.setInnloggetBruker(tfKonsulentBrukernavn.getText());
+                    } else if (!logginnInfo.isVisible()) {
+                        ttpShake.play();
+                        ttbShake.play();
+                        logginnInfo.setText("Feil brukernavn/passord");
+                        logginnInfo.setVisible(true);
+                        tfKonsulentBrukernavn.setId("error1");
+                        pfKonsulentPassord.setId("error2");
+                    }
+                }
+            }
+        });
 
-        return grid;
+        gridKonsulent.add(tfKonsulentBrukernavn, 0, 0, 2, 1);
+        gridKonsulent.add(pfKonsulentPassord, 0, 1, 2, 1);
+        gridKonsulent.add(btnKonsulentLogginn, 0, 2);
+        gridKonsulent.add(btnNyKonsulent, 1, 2);
+        gridKonsulent.add(logginnInfo, 0, 3, 2, 1);
+
+        vBoxKonsulent.getChildren().addAll(gridKonstext, gridKonsulent);
+        return vBoxKonsulent;
     }
 
     public Button getKnappKonsulentLogginn() {

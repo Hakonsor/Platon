@@ -46,6 +46,7 @@ public class Kunde extends Bruker implements Serializable {
         System.out.println(kundeNr);
     }
 
+
     public boolean getAktiv() {
         return aktiv;
     }

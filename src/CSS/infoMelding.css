@@ -1,0 +1,27 @@
+.root {
+    -fx-background-image: url("Bilder/nykunde.png");
+}
+
+#info {
+    -fx-text-fill: black;
+    -fx-font-size: 26px;
+    -fx-font-family: Avenir Light;
+}
+
+#reg{
+   -fx-text-fill: black;
+   -fx-font-size: 20px;
+   -fx-font-family: Avenir Light;
+}
+
+#lukk {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-radius: 0;
+    -fx-border-color: white;
+    -fx-font: 14px "Myriad";
+}
+
+#lukk:hover, #lukk:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}

@@ -1,15 +1,12 @@
 package GUI;
 
-import Forsikring.BatForsikring;
-import Forsikring.BilForsikring;
-import Forsikring.Forsikringer;
-import Forsikring.ReiseForsikring;
+import Forsikring.*;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
-
+import Kontroller.Postregister;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
+import Kontroller.Kontroller;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
@@ -43,6 +40,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     private Kontroller kontroll;
     private String type;
     private boolean utLeie;
+    private boolean utLeieF;
     private HBox hb;
     private HBox hBox;
     private VBox vBox;
@@ -86,6 +84,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     private TextField tfRegnrB;
     private TextField tfVerdiB;
     private TextField tfVerdi;
+    private Label postSted;
+    private Label postStedF;
     private TextArea taLes;
     private ComboBox<String> cbKjørelengde;
     private ComboBox<String> cbBonus;
@@ -96,7 +96,6 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     private ComboBox<String> cbMatriale;
     private ComboBox<String> cbStandard;
     private ComboBox<String> cbBoligtype;
-    private Button btnSjekkprisF;
     private CheckBox cbleieF;
     private Label regLabelF;
     private Label regLabelBo;
@@ -108,6 +107,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     private Button btnRegBåtforsikring;
     private Button btnRegBilforsikring;
     private Button btnSjekkprisBil;
+    private Button btnSjekkprisBo;
+    private Button btnSjekkprisF;
     private Button btnRegBoligforsikringF;
     private Button btnSlett;
     private Button btnBeregn;
@@ -157,7 +158,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         FadeTransition ftKunde = new FadeTransition(Duration.millis(1000), lbKundenavn);
         ftKunde.setFromValue(0.0F);
         ftKunde.setToValue(1.0F);
-        ftKunde.setCycleCount(7);
+        ftKunde.setCycleCount(5);
 
         btnSøk = new Button();
         btnSøk.setText("Finn kunde");
@@ -438,13 +439,6 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         btnSjekkprisBil.setText("Sjekk Pris");
         btnSjekkprisBil.setId("btnSjekkpris");
         btnSjekkprisBil.setMinWidth(200);
-
-
-        btnRegBilforsikring = new Button();
-        btnRegBilforsikring.setText("Bestill");
-        btnRegBilforsikring.setId("btnRegBilforsikring");
-        btnRegBilforsikring.setMinWidth(200);
-
         btnSjekkprisBil.setOnAction(e -> {
             if (tfRegnr.getId().equals("valid")
                     && tfÅrsmodell.getId().equals("valid")
@@ -482,6 +476,10 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             }
         });
 
+        btnRegBilforsikring = new Button();
+        btnRegBilforsikring.setText("Bestill");
+        btnRegBilforsikring.setId("btnRegBilforsikring");
+        btnRegBilforsikring.setMinWidth(200);
         btnRegBilforsikring.setOnAction(e -> {
             if (tfRegnr.getId().equals("valid")
                     && tfÅrsmodell.getId().equals("valid")
@@ -512,6 +510,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
                 kontroll.setBilForsikring(bil, null);
                 lbregBil.setText("Bilforsikring Registrert!");
+                tfRegnr.clear(); tfÅrsmodell.clear(); tfMerke.clear(); tfModell.clear(); tfKmstand.clear(); cbBonus.setValue("Velg Bonus:"); cbEgenandel.setValue("Velg Egenandel"); cbKjørelengde.setValue("Velg Kjørelengde:");
 
             } else {
                 lbregBil.setText("Sjekk feil i feltene ovenfor");
@@ -602,6 +601,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 f.setPremieOgForsSum(type);
                 kontroll.setReiseForsikring(f);
 
+                rbtnEuropa.setSelected(false); rbtnNorden.setSelected(false); rbtnVerden.setSelected(false);
                 lbPrint.setText("Reiseforsikring " + type + " bestilt!");
             } else {
                 lbPrint.setText("Du må velge en forsikringstype");
@@ -827,7 +827,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 } catch (NumberFormatException nfe) {
                     System.out.println("Feil tallformat");
                 }
-
+                tfRegnrB.clear(); tfÅrsmodellB.clear(); tfBåtmodell.clear(); tfAntfot.clear(); tfMotormerke.clear(); tfYtelse.clear(); tfVerdiB.clear();
+                rbtMotorbåt.setSelected(false); rbtSeilbåt.setSelected(false);
                 regLabelB.setText("Båtforsikring Registrert!");
 
             } else {
@@ -859,33 +860,143 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridBolig.setHgap(10);
         gridBolig.setAlignment(Pos.CENTER);
 
-        tfPostnr = new TextField();
-        tfPostnr.setPromptText("Postnummer");
-        tfPostnr.setMinWidth(200);
-
         tfAdresse = new TextField();
         tfAdresse.setPromptText("Adresse");
-        tfAdresse.setMinWidth(200);
+        tfAdresse.setId("promtfix");
+        tfAdresse.setMaxWidth(200);
+        tfAdresse.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z0-9 _]+";
+                String adresse = tfAdresse.getText();
+
+                if (adresse.matches(regex)) {
+                    tfAdresse.setId("valid");
+                } else {
+                    tfAdresse.setId("error");
+                }
+                if (adresse.length() == 0) {
+                    tfAdresse.setId("promtfix");
+                }
+            }
+        });
 
         tfByggeår = new TextField();
         tfByggeår.setPromptText("Byggeår");
-        tfByggeår.setMinWidth(200);
+        tfByggeår.setId("promtfix");
+        tfByggeår.setMaxWidth(95);
+        tfByggeår.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String byggår = tfByggeår.getText();
+
+                if (!byggår.matches(regex) || byggår.length() > 4 || byggår.length() < 4) {
+                    tfByggeår.setId("error");
+                } else {
+                    tfByggeår.setId("valid");
+                }
+                if (byggår.length() == 0) {
+                    tfByggeår.setId("promtfix");
+                }
+            }
+        });
 
         tfKvadrat = new TextField();
-        tfKvadrat.setPromptText("Kvadratmeter");
-        tfKvadrat.setMinWidth(200);
+        tfKvadrat.setPromptText("KVM");
+        tfKvadrat.setId("promtfix");
+        tfKvadrat.setMaxWidth(95);
+        tfKvadrat.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String KVM = tfKvadrat.getText();
+
+                if (!KVM.matches(regex) || KVM.length() > 6) {
+                    tfKvadrat.setId("error");
+                } else {
+                    tfKvadrat.setId("valid");
+                }
+                if (KVM.length() == 0) {
+                    tfKvadrat.setId("promtfix");
+                }
+            }
+        });
 
         tfByggSum = new TextField();
         tfByggSum.setPromptText("Bolig verdi");
-        tfByggSum.setMinWidth(200);
+        tfByggSum.setId("promtfix");
+        tfByggSum.setMaxWidth(95);
+        tfByggSum.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String byggsum = tfByggSum.getText();
+
+                if (!byggsum.matches(regex) || byggsum.length() > 12) {
+                    tfByggSum.setId("error");
+                } else {
+                    tfByggSum.setId("valid");
+                }
+                if (byggsum.length() == 0) {
+                    tfByggSum.setId("promtfix");
+                }
+            }
+        });
 
         tfInnboSum = new TextField();
         tfInnboSum.setPromptText("Innbo verdi");
-        tfInnboSum.setMinWidth(200);
+        tfInnboSum.setId("promtfix");
+        tfInnboSum.setMaxWidth(95);
+        tfInnboSum.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String innbosum = tfInnboSum.getText();
+
+                if (!innbosum.matches(regex) || innbosum.length() > 12) {
+                    tfInnboSum.setId("error");
+                } else {
+                    tfInnboSum.setId("valid");
+                }
+                if (innbosum.length() == 0) {
+                    tfInnboSum.setId("promtfix");
+                }
+            }
+        });
+
+        tfPostnr = new TextField();
+        tfPostnr.setPromptText("PostNr");
+        tfPostnr.setId("promtfix");
+        tfPostnr.setAlignment(Pos.CENTER_LEFT);
+        tfPostnr.setMaxWidth(70);
+        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String postnr = tfPostnr.getText();
+
+                if (!postnr.matches(regex) || postnr.length() > 4 || postnr.length() < 4) {
+                    tfPostnr.setId("error");
+                } else {
+                    tfPostnr.setId("valid");
+                }
+                if (postnr.length() == 0) {
+                    tfPostnr.setId("promtfix");
+                }
+            }
+        });
+
+        postSted = new Label();
+        postSted.setText("");
+        postSted.setId("promtfix");
+        postSted.setAlignment(Pos.CENTER_LEFT);
+        postSted.setMaxWidth(100);
 
         cbBoligtype = new ComboBox<>();
         cbBoligtype.setEditable(false);
-        cbBoligtype.setMinWidth(200);
+        cbBoligtype.setId("combobox");
+        cbBoligtype.setMaxWidth(200);
         cbBoligtype.getItems().addAll(
                 "Enebolig",
                 "Tomannsbolig",
@@ -896,7 +1007,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
         cbStandard = new ComboBox<>();
         cbStandard.setEditable(false);
-        cbStandard.setMinWidth(200);
+        cbStandard.setId("combobox");
+        cbStandard.setMaxWidth(200);
         cbStandard.getItems().addAll(
                 "Dårlig",
                 "Gjennomsnittlig",
@@ -907,7 +1019,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
         cbMatriale = new ComboBox<>();
         cbMatriale.setEditable(false);
-        cbMatriale.setMinWidth(200);
+        cbMatriale.setId("combobox");
+        cbMatriale.setMaxWidth(200);
         cbMatriale.getItems().addAll(
                 "Mur",
                 "Tre",
@@ -917,51 +1030,146 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbMatriale.setValue("Byggematriale:");
 
-        cbleie = new CheckBox(" UtleieBolig? ");
+        cbleie = new CheckBox( "Er dette utleiebolig ? ");
         cbleie.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            utLeie = cbleie.isSelected() == true;
+            if (cbleie.isSelected()) {
+                utLeie = true;
+
+            } else {
+                utLeie = false;
+                System.out.println("Nei");
+            }
         });
 
-        //Registrer knapp & Label
         regLabelBo = new Label();
         regLabelBo.setText("");
         regLabelBo.setId("regLabel");
         regLabelBo.setAlignment(Pos.CENTER);
 
-        btnSjekkpris = new Button();
-        btnSjekkpris.setText("Beregn pris");
-        btnSjekkpris.setId("btnSjekkpris");
-        btnSjekkpris.setMinWidth(200);
-        btnSjekkpris.setOnAction(e -> {
-            regLabelBo.setText("Prisen er: " + "getPris()");
+        btnSjekkprisBo = new Button();
+        btnSjekkprisBo.setText("Sjekk Pris");
+        btnSjekkprisBo.setId("btnSjekkpris");
+        btnSjekkprisBo.setMaxWidth(200);
+        btnSjekkprisBo.setOnAction(e -> {
+            if (tfAdresse.getId().equals("valid")
+                    && tfPostnr.getId().equals("valid")
+                    && tfByggeår.getId().equals("valid")
+                    && tfKvadrat.getId().equals("valid")
+                    && tfByggSum.getId().equals("valid")
+                    && tfInnboSum.getId().equals("valid")
+                    && !cbBoligtype.getValue().equals("Velg Boligtype:")
+                    && !cbStandard.getValue().equals("Standard:")
+                    && !cbMatriale.getValue().equals("Byggematriale:")
+                    ) {
+
+                String postNr = tfPostnr.getText();
+                String adresse = tfAdresse.getText();
+                String standard = cbStandard.getValue();
+                String materiale = cbMatriale.getValue();
+                String boligType = cbBoligtype.getValue();
+                int byggeÅr = 0;
+                double kvadrat = 0;
+                double byggSum = 0;
+                double innboSum = 0;
+                try {
+                    kvadrat = Double.parseDouble(tfKvadrat.getText());
+                    byggSum = Double.parseDouble(tfByggSum.getText());
+                    innboSum = Double.parseDouble(tfInnboSum.getText());
+                    byggeÅr = Integer.parseInt(tfByggeår.getText());
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat.");
+                }
+                BoligForsikring f = new BoligForsikring(utLeie, kvadrat, adresse, boligType, byggeÅr,
+                        materiale, standard, byggSum, innboSum);
+                String form = "0.00";
+                DecimalFormat tall = new DecimalFormat(form);
+                regLabelBo.setText("Årlig premie: " + tall.format(f.getPremie()) + " kr");
+            } else {
+                regLabelBo.setText("Sjekk feil i feltene ovenfor");
+            }
+
         });
 
         btnRegBoligforsikring = new Button();
-        btnRegBoligforsikring.setText("Registrer Boligforsikring");
+        btnRegBoligforsikring.setText("Bestill");
         btnRegBoligforsikring.setId("btnRegBoligforsikring");
-        btnRegBoligforsikring.setMinWidth(200);
-        btnRegBoligforsikring.setOnAction(eB -> {
-            regBorligForsikring();
+        btnRegBoligforsikring.setMaxWidth(200);
+        btnRegBoligforsikring.setOnAction(e -> {
+            if (tfAdresse.getId().equals("valid")
+                    && tfPostnr.getId().equals("valid")
+                    && tfByggeår.getId().equals("valid")
+                    && tfKvadrat.getId().equals("valid")
+                    && tfByggSum.getId().equals("valid")
+                    && tfInnboSum.getId().equals("valid")
+                    && !cbBoligtype.getValue().equals("Velg Boligtype:")
+                    && !cbStandard.getValue().equals("Standard:")
+                    && !cbMatriale.getValue().equals("Byggematriale:")
+                    ) {
+
+                String postNr = tfPostnr.getText();
+                String adresse = tfAdresse.getText();
+                String byggeÅr = tfByggeår.getText();
+                String standard = cbStandard.getValue();
+                String materiale = cbMatriale.getValue();
+                String boligType = cbBoligtype.getValue();
+                double kvadrat = 0;
+                double byggSum = 0;
+                double innboSum = 0;
+                int byggeår = 0;
+
+                try {
+                    kvadrat = Double.parseDouble(tfKvadrat.getText());
+                    byggSum = Double.parseDouble(tfByggSum.getText());
+                    innboSum = Double.parseDouble(tfInnboSum.getText());
+                    byggeår = Integer.parseInt(tfKvadrat.getText());
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat.");
+                }
+
+                tfAdresse.clear(); tfPostnr.clear(); tfByggeår.clear(); tfKvadrat.clear(); tfByggSum.clear(); tfInnboSum.clear(); cbBoligtype.setValue("Velg Boligtype:"); cbStandard.setValue("Standard:"); cbMatriale.setValue("Byggematriale:"); cbleie.setSelected(false);
+                kontroll.setBoligForsikring(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
+                regLabelBo.setText("Boligforsikring registrert!");
+            } else {
+                regLabelBo.setText("Sjekk feil i feltene ovenfor");
+            }
         });
 
-        gridBolig.add(tfPostnr, 0, 0);
-        gridBolig.add(tfAdresse, 0, 1);
+        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Postregister register = new Postregister();
+                String poststed = register.getPoststed(tfPostnr.getText());
+                if (poststed == null) {
+                    poststed = "Finnes ikke!";
+                }
+                if (tfPostnr.getText().equals("")) {
+                    postSted.setText("");
+                    postSted.setText("PostSted");
+                } else
+                    postSted.setText(poststed);
+            }
+        });
+
+        gridBolig.add(tfAdresse, 0, 0, 2, 1);
+        gridBolig.add(tfPostnr, 0, 1, 2, 1);
+        gridBolig.add(postSted, 1, 1);
         gridBolig.add(tfByggeår, 0, 2);
-        gridBolig.add(tfKvadrat, 0, 3);
-        gridBolig.add(tfByggSum, 0, 4);
-        gridBolig.add(tfInnboSum, 0, 5);
-        gridBolig.add(cbBoligtype, 0, 6);
-        gridBolig.add(cbStandard, 0, 7);
-        gridBolig.add(cbMatriale, 0, 8);
-        gridBolig.add(cbleie, 0, 9);
-        gridBolig.add(btnSjekkpris, 0, 10);
-        gridBolig.add(btnRegBoligforsikring, 0, 11);
-        gridBolig.add(regLabelBo, 0, 12);
+        gridBolig.add(tfKvadrat, 1, 2);
+        gridBolig.add(tfByggSum, 0, 3);
+        gridBolig.add(tfInnboSum, 1, 3);
+        gridBolig.add(cbBoligtype, 0, 4, 2, 1);
+        gridBolig.add(cbStandard, 0, 5, 2, 1);
+        gridBolig.add(cbMatriale, 0, 6, 2, 1);
+        gridBolig.add(cbleie, 0, 7, 2, 1);
+        gridBolig.add(btnSjekkprisBo, 0, 8, 2, 1);
+        gridBolig.add(btnRegBoligforsikring, 0, 9, 2, 1);
+        gridBolig.add(regLabelBo, 0, 10, 2, 1);
 
         gridBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridBolig.setVgap(10);
         gridBolig.setHgap(10);
-        gridBolig.setAlignment(Pos.CENTER);
+        gridBolig.setAlignment(Pos.TOP_CENTER);
 
 
         //FritidsBolig--------------------------------------------------------------------->
@@ -970,33 +1178,143 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridFriBolig.setHgap(10);
         gridFriBolig.setAlignment(Pos.CENTER);
 
-        tfPostnrF = new TextField();
-        tfPostnrF.setPromptText("Postnummer");
-        tfPostnrF.setMinWidth(200);
-
         tfAdresseF = new TextField();
         tfAdresseF.setPromptText("Adresse");
-        tfAdresseF.setMinWidth(200);
+        tfAdresseF.setId("promtfix");
+        tfAdresseF.setMaxWidth(200);
+        tfAdresseF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z0-9 _]+";
+                String adresse = tfAdresseF.getText();
+
+                if (adresse.matches(regex)) {
+                    tfAdresseF.setId("valid");
+                } else {
+                    tfAdresseF.setId("error");
+                }
+                if (adresse.length() == 0) {
+                    tfAdresseF.setId("promtfix");
+                }
+            }
+        });
 
         tfByggeårF = new TextField();
         tfByggeårF.setPromptText("Byggeår");
-        tfByggeårF.setMinWidth(200);
+        tfByggeårF.setId("promtfix");
+        tfByggeårF.setMaxWidth(95);
+        tfByggeårF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String byggår = tfByggeårF.getText();
+
+                if (!byggår.matches(regex) || byggår.length() > 4 || byggår.length() < 4) {
+                    tfByggeårF.setId("error");
+                } else {
+                    tfByggeårF.setId("valid");
+                }
+                if (byggår.length() == 0) {
+                    tfByggeårF.setId("promtfix");
+                }
+            }
+        });
 
         tfKvadratF = new TextField();
-        tfKvadratF.setPromptText("Kvadratmeter");
-        tfKvadratF.setMinWidth(200);
+        tfKvadratF.setPromptText("KVM");
+        tfKvadratF.setId("promtfix");
+        tfKvadratF.setMaxWidth(95);
+        tfKvadratF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String KVM = tfKvadratF.getText();
+
+                if (!KVM.matches(regex) || KVM.length() > 6) {
+                    tfKvadratF.setId("error");
+                } else {
+                    tfKvadratF.setId("valid");
+                }
+                if (KVM.length() == 0) {
+                    tfKvadratF.setId("promtfix");
+                }
+            }
+        });
 
         tfByggSumF = new TextField();
         tfByggSumF.setPromptText("Bolig verdi");
-        tfByggSumF.setMinWidth(200);
+        tfByggSumF.setId("promtfix");
+        tfByggSumF.setMaxWidth(95);
+        tfByggSumF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String byggsum = tfByggSumF.getText();
+
+                if (!byggsum.matches(regex) || byggsum.length() > 12) {
+                    tfByggSumF.setId("error");
+                } else {
+                    tfByggSumF.setId("valid");
+                }
+                if (byggsum.length() == 0) {
+                    tfByggSumF.setId("promtfix");
+                }
+            }
+        });
 
         tfInnboSumF = new TextField();
         tfInnboSumF.setPromptText("Innbo verdi");
-        tfInnboSumF.setMinWidth(200);
+        tfInnboSumF.setId("promtfix");
+        tfInnboSumF.setMaxWidth(95);
+        tfInnboSumF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String innbosum = tfInnboSumF.getText();
+
+                if (!innbosum.matches(regex) || innbosum.length() > 12) {
+                    tfInnboSumF.setId("error");
+                } else {
+                    tfInnboSumF.setId("valid");
+                }
+                if (innbosum.length() == 0) {
+                    tfInnboSumF.setId("promtfix");
+                }
+            }
+        });
+
+        tfPostnrF = new TextField();
+        tfPostnrF.setPromptText("PostNr");
+        tfPostnrF.setId("promtfix");
+        tfPostnrF.setAlignment(Pos.CENTER_LEFT);
+        tfPostnrF.setMaxWidth(70);
+        tfPostnrF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[0-9]+";
+                String postnr = tfPostnrF.getText();
+
+                if (!postnr.matches(regex) || postnr.length() > 4 || postnr.length() < 4) {
+                    tfPostnrF.setId("error");
+                } else {
+                    tfPostnrF.setId("valid");
+                }
+                if (postnr.length() == 0) {
+                    tfPostnrF.setId("promtfix");
+                }
+            }
+        });
+
+        postStedF = new Label();
+        postStedF.setText("");
+        postStedF.setId("promtfix");
+        postStedF.setAlignment(Pos.CENTER_LEFT);
+        postStedF.setMaxWidth(100);
 
         cbBoligtypeF = new ComboBox<>();
         cbBoligtypeF.setEditable(false);
-        cbBoligtypeF.setMinWidth(200);
+        cbBoligtypeF.setId("combobox");
+        cbBoligtypeF.setMaxWidth(200);
         cbBoligtypeF.getItems().addAll(
                 "Enebolig",
                 "Tomannsbolig",
@@ -1007,7 +1325,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
         cbStandardF = new ComboBox<>();
         cbStandardF.setEditable(false);
-        cbStandardF.setMinWidth(200);
+        cbStandardF.setId("combobox");
+        cbStandardF.setMaxWidth(200);
         cbStandardF.getItems().addAll(
                 "Dårlig",
                 "Gjennomsnittlig",
@@ -1018,7 +1337,8 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
         cbMatrialeF = new ComboBox<>();
         cbMatrialeF.setEditable(false);
-        cbMatrialeF.setMinWidth(200);
+        cbMatrialeF.setId("combobox");
+        cbMatrialeF.setMaxWidth(200);
         cbMatrialeF.getItems().addAll(
                 "Mur",
                 "Tre",
@@ -1028,51 +1348,145 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         );
         cbMatrialeF.setValue("Byggematriale:");
 
-        cbleieF = new CheckBox("Merk om du har utleiemulighet");
+        cbleieF = new CheckBox( "Er dette utleiebolig ? ");
         cbleieF.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            utLeie = cbleie.isSelected() == true;
+            if (cbleieF.isSelected()) {
+                utLeieF = true;
+
+            } else {
+                utLeieF = false;
+                System.out.println("Nei");
+            }
         });
 
-        //Registrer knapp & Label
         regLabelF = new Label();
         regLabelF.setText("");
         regLabelF.setId("regLabel");
         regLabelF.setAlignment(Pos.CENTER);
 
         btnSjekkprisF = new Button();
-        btnSjekkprisF.setText("Beregn pris");
+        btnSjekkprisF.setText("Sjekk Pris");
         btnSjekkprisF.setId("btnSjekkpris");
-        btnSjekkprisF.setMinWidth(200);
-        btnSjekkprisF.setOnAction(eF -> {
-            regLabelF.setText("Prisen er: " + "getPris()");
+        btnSjekkprisF.setMaxWidth(200);
+        btnSjekkprisF.setOnAction(e -> {
+            if (tfAdresseF.getId().equals("valid")
+                    && tfPostnrF.getId().equals("valid")
+                    && tfByggeårF.getId().equals("valid")
+                    && tfKvadratF.getId().equals("valid")
+                    && tfByggSumF.getId().equals("valid")
+                    && tfInnboSumF.getId().equals("valid")
+                    && !cbBoligtypeF.getValue().equals("Velg Boligtype:")
+                    && !cbStandardF.getValue().equals("Standard:")
+                    && !cbMatrialeF.getValue().equals("Byggematriale:")
+                    ) {
+
+                String postNr = tfPostnrF.getText();
+                String adresse = tfAdresseF.getText();
+                String standard = cbStandardF.getValue();
+                String materiale = cbMatrialeF.getValue();
+                String boligType = cbBoligtypeF.getValue();
+                int byggeÅr = 0;
+                double kvadrat = 0;
+                double byggSum = 0;
+                double innboSum = 0;
+                try {
+                    kvadrat = Double.parseDouble(tfKvadratF.getText());
+                    byggSum = Double.parseDouble(tfByggSumF.getText());
+                    innboSum = Double.parseDouble(tfInnboSumF.getText());
+                    byggeÅr = Integer.parseInt(tfByggeårF.getText());
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat.");
+                }
+                BoligForsikring f = new BoligForsikring(utLeieF, kvadrat, adresse, boligType, byggeÅr,
+                        materiale, standard, byggSum, innboSum);
+                String form = "0.00";
+                DecimalFormat tall = new DecimalFormat(form);
+                regLabelF.setText("Årlig premie: " + tall.format(f.getPremie()) + " kr");
+            } else {
+                regLabelF.setText("Sjekk feil i feltene ovenfor");
+            }
         });
 
         btnRegBoligforsikringF = new Button();
-        btnRegBoligforsikringF.setText("Registrer Boligforsikring");
+        btnRegBoligforsikringF.setText("Bestill");
         btnRegBoligforsikringF.setId("btnRegBoligforsikring");
-        btnRegBoligforsikringF.setMinWidth(200);
-        btnRegBoligforsikringF.setOnAction(eBF -> {
-            regFriBorligForsikring();
+        btnRegBoligforsikringF.setMaxWidth(200);
+        btnRegBoligforsikringF.setOnAction(e -> {
+            if (tfAdresseF.getId().equals("valid")
+                    && tfPostnrF.getId().equals("valid")
+                    && tfByggeårF.getId().equals("valid")
+                    && tfKvadratF.getId().equals("valid")
+                    && tfByggSumF.getId().equals("valid")
+                    && tfInnboSumF.getId().equals("valid")
+                    && !cbBoligtypeF.getValue().equals("Velg Boligtype:")
+                    && !cbStandardF.getValue().equals("Standard:")
+                    && !cbMatrialeF.getValue().equals("Byggematriale:")
+                    ) {
+
+                String postNr = tfPostnrF.getText();
+                String adresse = tfAdresseF.getText();
+                String byggeÅr = tfByggeårF.getText();
+                String standard = cbStandardF.getValue();
+                String materiale = cbMatrialeF.getValue();
+                String boligType = cbBoligtypeF.getValue();
+                double kvadrat = 0;
+                double byggSum = 0;
+                double innboSum = 0;
+                int byggeår = 0;
+
+                try {
+                    kvadrat = Double.parseDouble(tfKvadratF.getText());
+                    byggSum = Double.parseDouble(tfByggSumF.getText());
+                    innboSum = Double.parseDouble(tfInnboSumF.getText());
+                    byggeår = Integer.parseInt(tfKvadratF.getText());
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat.");
+                }
+                tfAdresseF.clear(); tfPostnrF.clear(); tfByggeårF.clear(); tfKvadratF.clear(); tfByggSumF.clear(); tfInnboSumF.clear(); cbBoligtypeF.setValue("Velg Boligtype:"); cbStandardF.setValue("Standard:"); cbMatrialeF.setValue("Byggematriale:"); cbleieF.setSelected(false);
+                kontroll.setFritidsForsikring(utLeieF, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
+                regLabelF.setText("Fritidsboligforsikring registrert!");
+            } else {
+                regLabelF.setText("Sjekk feil i feltene ovenfor");
+            }
+
         });
 
-        gridFriBolig.add(tfPostnrF, 0, 0);
-        gridFriBolig.add(tfAdresseF, 0, 1);
+        tfPostnrF.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Postregister register = new Postregister();
+                String poststed = register.getPoststed(tfPostnrF.getText());
+                if (poststed == null) {
+                    poststed = "Finnes ikke!";
+                }
+                if (tfPostnrF.getText().equals("")) {
+                    postStedF.setText("");
+                    postStedF.setText("PostSted");
+                } else
+                    postStedF.setText(poststed);
+            }
+        });
+
+        gridFriBolig.add(tfAdresseF, 0, 0, 2, 1);
+        gridFriBolig.add(tfPostnrF, 0, 1, 2, 1);
+        gridFriBolig.add(postStedF, 1, 1);
         gridFriBolig.add(tfByggeårF, 0, 2);
-        gridFriBolig.add(tfKvadratF, 0, 3);
-        gridFriBolig.add(tfByggSumF, 0, 4);
-        gridFriBolig.add(tfInnboSumF, 0, 5);
-        gridFriBolig.add(cbBoligtypeF, 0, 6);
-        gridFriBolig.add(cbStandardF, 0, 7);
-        gridFriBolig.add(cbMatrialeF, 0, 8);
-        gridFriBolig.add(cbleieF, 0, 9);
-        gridFriBolig.add(btnSjekkprisF, 0, 10);
-        gridFriBolig.add(btnRegBoligforsikringF, 0, 11);
-        gridFriBolig.add(regLabelF, 0, 12);
+        gridFriBolig.add(tfKvadratF, 1, 2);
+        gridFriBolig.add(tfByggSumF, 0, 3);
+        gridFriBolig.add(tfInnboSumF, 1, 3);
+        gridFriBolig.add(cbBoligtypeF, 0, 4, 2, 1);
+        gridFriBolig.add(cbStandardF, 0, 5, 2, 1);
+        gridFriBolig.add(cbMatrialeF, 0, 6, 2, 1);
+        gridFriBolig.add(cbleieF, 0, 7, 2, 1);
+        gridFriBolig.add(btnSjekkprisF, 0, 8, 2, 1);
+        gridFriBolig.add(btnRegBoligforsikringF, 0, 9, 2, 1);
+        gridFriBolig.add(regLabelF, 0, 10, 2, 1);
 
         gridFriBolig.setPadding(new Insets(0, 0, 0, 0)); //top/right/bottom/left
         gridFriBolig.setVgap(10);
         gridFriBolig.setHgap(10);
-        gridFriBolig.setAlignment(Pos.CENTER);
+        gridFriBolig.setAlignment(Pos.TOP_CENTER);
 
 
         //Alle--------------------------------------------------------------------->
@@ -1136,7 +1550,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
 
         vb = new VBox();
-        vb.setAlignment(Pos.CENTER);
+        vb.setAlignment(Pos.TOP_CENTER);
         vb.setSpacing(20);
 
         //LEFT(grid) + RIGHT(grid) = CENTER(vBox)
@@ -1192,7 +1606,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             gridBolig.setVisible(false);
         }
 
-        if (forsikringComboBox.getValue().equals("Fri.Boligforsikring")) {
+        if (forsikringComboBox.getValue().equals("Fritidsbolig")) {
             gridFriBolig.setVisible(true);
         } else {
             gridFriBolig.setVisible(false);

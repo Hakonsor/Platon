@@ -3,6 +3,8 @@ package GUI;
 import Kontroller.Kontroller;
 import Person.Bruker;
 import Person.Konsulent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -25,6 +27,7 @@ public class RegKonsulent {
     private final String LoginBilde = "Bilder/add_user.png";
     private final Button btnRegKonsulent;
     private final Label nyKonsulent;
+    private final Label info;
     private final TextField fornavn;
     private final TextField etternavn;
     private final TextField brukernavn;
@@ -64,7 +67,7 @@ public class RegKonsulent {
 
         nyKonsulent = new Label();
         nyKonsulent.setText("Ny Konsulent");
-        nyKonsulent.setId("nykonsulent");
+        nyKonsulent.setId("nykunde");
         GridPane.setHalignment(nyKonsulent, HPos.CENTER);
 
         fornavn = new TextField();
@@ -72,18 +75,66 @@ public class RegKonsulent {
         fornavn.setId("fornavn");
         fornavn.setMaxWidth(200);
         GridPane.setHalignment(fornavn, HPos.CENTER);
+        fornavn.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
+                String Fornavn = fornavn.getText();
+
+                if (Fornavn.matches(regex)) {
+                    fornavn.setId("valid");
+                } else {
+                    fornavn.setId("error");
+                }
+                if (Fornavn.length() == 0) {
+                    fornavn.setId("promtfix");
+                }
+            }
+        });
 
         etternavn = new TextField();
         etternavn.setPromptText("Etternavn");
         etternavn.setId("etternavn");
         etternavn.setMaxWidth(200);
         GridPane.setHalignment(etternavn, HPos.CENTER);
+        etternavn.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
+                String Etternavn = etternavn.getText();
+
+                if (Etternavn.matches(regex)) {
+                    etternavn.setId("valid");
+                } else {
+                    etternavn.setId("error");
+                }
+                if (Etternavn.length() == 0) {
+                    etternavn.setId("promtfix");
+                }
+            }
+        });
 
         brukernavn = new TextField();
         brukernavn.setPromptText("Velg Brukernavn");
         brukernavn.setId("brukernavn");
         brukernavn.setMaxWidth(200);
         GridPane.setHalignment(brukernavn, HPos.CENTER);
+        brukernavn.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
+                String Brukernavn = brukernavn.getText();
+
+                if (Brukernavn.matches(regex)) {
+                    brukernavn.setId("valid");
+                } else {
+                    brukernavn.setId("error");
+                }
+                if (Brukernavn.length() == 0) {
+                    brukernavn.setId("promtfix");
+                }
+            }
+        });
 
         velgpassord = new PasswordField();
         velgpassord.setPromptText("Velg Passord");
@@ -96,13 +147,51 @@ public class RegKonsulent {
         gjentapassord.setId("gjentapassord");
         gjentapassord.setMaxWidth(200);
         GridPane.setHalignment(gjentapassord, HPos.CENTER);
+        gjentapassord.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String Velgpassord = velgpassord.getText();
+                String Gjentapassord = gjentapassord.getText();
+                if (!velgpassord.getText().equals(gjentapassord.getText())) {
+                    // velgpassord.setId();
+                    gjentapassord.setId("error");
+                }
+                if (velgpassord.getText().equals(gjentapassord.getText())) {
+                    velgpassord.setId("valid");
+                    gjentapassord.setId("valid");
+                }
+                if (Velgpassord.length() == 0) {
+                    velgpassord.setId("promtfix");
+                }
+                if (Gjentapassord.length() == 0) {
+                    gjentapassord.setId("promtfix");
+                    velgpassord.setId("promtfix");
+                }
+            }
+        });
 
-        btnRegKonsulent = new Button("Registrer Kunde");
+        info = new Label();
+        info.setText("");
+        info.setId("info");
+        info.setVisible(false);
+        GridPane.setHalignment(info, HPos.CENTER);
+
+        btnRegKonsulent = new Button("Registrer Konsulent");
         btnRegKonsulent.setId("btNyKunde");
         btnRegKonsulent.setMaxWidth(200);
         btnRegKonsulent.setOnAction(e -> {
-            kontroll.registrerBruker(this.getKonsulent());
-            vindu.close();
+            if (fornavn.getId().equals("valid")
+                    && etternavn.getId().equals("valid")
+                    && brukernavn.getId().equals("valid")
+                    && velgpassord.getId().equals("valid")
+                    && gjentapassord.getId().equals("valid")
+                    ) {
+                kontroll.registrerBruker(this.getKonsulent());
+                vindu.close();
+            } else {
+                info.setText("Sjekk feil i feltene ovenfor");
+                info.setVisible(true);
+            }
         });
 
 
@@ -116,12 +205,13 @@ public class RegKonsulent {
         grid.add(velgpassord, 0, 5);
         grid.add(gjentapassord, 0, 6);
         grid.add(btnRegKonsulent, 0, 8);
+        grid.add(info, 0, 9);
 
 
-        Scene scene = new Scene(grid, 300, 650);
+        Scene scene = new Scene(grid, 300, 500);
         vindu.setTitle("Registrer");
         vindu.setScene(scene);
-        scene.getStylesheets().add("CSS/registrer.css");
+        scene.getStylesheets().add("CSS/nykunde.css");
         vindu.show();
     }
 

@@ -1,0 +1,55 @@
+.root {
+    -fx-background-image: url("Bilder/sok.png");
+}
+
+#promtfix, #promtfix:focused {
+    -fx-prompt-text-fill:darkgray;
+    -fx-background-radius: 0;
+    -fx-background-radius: 0;
+    -fx-font: 14px "Myriad";
+}
+
+#list {
+    -fx-font: 14px "Myriad";
+}
+
+#info {
+    -fx-font: 14px "Myriad";
+    -fx-text-fill:white;
+}
+
+#btnlukk {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-radius: 0;
+    -fx-border-color: white;
+    -fx-font: 14px "Myriad";
+}
+
+#btnlukk:hover, #btnlukk:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#btnsok {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-radius: 0;
+    -fx-border-color: white;
+    -fx-font: 14px "Myriad";
+}
+
+#btnsok:hover, #btnsok:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
+
+#btnvelg {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-radius: 0;
+    -fx-border-color: white;
+    -fx-font: 14px "Myriad";
+}
+
+#btnvelg:hover, #btnvelg:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+}
