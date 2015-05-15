@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class BatForsikring extends Forsikringer implements Serializable {
 
     private int lendgeFot, motorStyrke;
-    private String regNo, motorMerke, type;
+    private String regNo, motorMerke, type, modell, årsmodell;
     private double forsikringSum;
     private final double SKADETILLEGG = 500;
     private final double  MOTORTILLEGG = 300;
@@ -31,6 +31,9 @@ public class BatForsikring extends Forsikringer implements Serializable {
         this.type = type;
         this.motorStyrke = motorstyrke;
         this.motorMerke = motormerke;
+        this.modell = modell;
+        this.årsmodell = arsModell;
+        this.regNo = regNr;
     }
 
     public String getRegNr() {
@@ -49,10 +52,7 @@ public class BatForsikring extends Forsikringer implements Serializable {
         return motorMerke;
     }
 
-    public String toString() {
-        return "s";
-    }
-
+    
     // metoden setter egenandel utifra om båten har motor eller ikke.
     public void beregnOgSetEgenAndel() {
         if (type.equals("Motorbåt")) {
@@ -80,6 +80,14 @@ public class BatForsikring extends Forsikringer implements Serializable {
         double premieTilGodkjenning = gmlPremie + SKADETILLEGG;
         premieTilGodkjenning(premieTilGodkjenning);
         
+    }
+    public String toString(){
+    String s;
+        s ="BilForsikring:" + 
+             "\nForsikringen gjelder for reg.nr: " + getRegNr() + "Merke: " + type +
+             "\nModell: " + modell + "Årsmodell: " + årsmodell + "Motormerke: " +motorMerke +
+             "\n" + super.toString();  
+        return s;
     }
     
     
