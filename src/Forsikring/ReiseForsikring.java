@@ -17,6 +17,9 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
 
     private String type;
     private double forsikringSum;
+    private final int VERDEN = 1700;
+    private final int EUROPA = 1400;
+    private final int NORDEN = 900;
     public ReiseForsikring() {
         super(0, 0);
 
@@ -35,13 +38,13 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
     // setter premie og forsikringsum
     public void setPremieOgForsSum(String type) {
         if (type.equals("Verden")) {
-            setPremie(1700);
+            setPremie(VERDEN);
             forsikringSum = 10000000; 
         } else if (type.equalsIgnoreCase("Europa")) {
-            setPremie(1400);
+            setPremie(EUROPA);
             forsikringSum = 1000000; 
-        } else if (type.equalsIgnoreCase("Europa")) {
-            setPremie(900);
+        } else if (type.equalsIgnoreCase("Norden")) {
+            setPremie(NORDEN);
             forsikringSum = 1000000;
         }
     }
