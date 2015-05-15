@@ -136,11 +136,14 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     // skriver ut informasjon om bilen og bilforsikringen
     public String toString() {
         String s;
-        s = "BilForsikring:" + "\nForsikringen gjelder for reg.nr: " + getRegNr() 
-                + "\nPoliseNr: " + getPoliseNr()
-                + "Gjelder fra: " + getStartDato() + "\ttil: " + getSluttDato()
-                + "\nMerke: " + getModell() + "\tÅrsmodell: " + getArsModell()
-                +"\n";
+        s ="BilForsikring:" + 
+             "\nForsikringen gjelder for reg.nr: " + getRegNr() + "Merke: " + getType() +
+             "\nModell: " + getModell() + "Årsmodell: " + getArsModell() +
+             "\nkilometerstand:" + kmStand +
+             "\n" + super.toString() + 
+             "\nBonus: " + getBonus() +  
+             "\nValgt kjørelengde: " + kjorelengde 
+             ;
         return s;
     }// end of toString()
 
