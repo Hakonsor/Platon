@@ -53,25 +53,7 @@ public abstract class Kjoretoy extends Forsikringer implements Serializable{
     }
     
     public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(super.toString());
-        sb.append("\nKjøretøysforsikring: ");
-        sb.append("\nBonus : ");
-        sb.append(bonus);
-        sb.append(" %");
-        sb.append("\n");
-        sb.append("Registreringsnummer: ");
-        sb.append(regNr);
-        sb.append("\n");
-        sb.append("Merke: ");
-        sb.append(type);
-        sb.append("\n");
-        sb.append("Modell: ");
-        sb.append(modell);
-        sb.append("\n");
-        sb.append("Årsmodell: ");
-        sb.append(arsModell);
-        sb.append("\n");
-        return sb.toString();
-    }// end of method toString()   
+        
+      return super.toString();
+    }   
 }// end of class Kjoretoy
