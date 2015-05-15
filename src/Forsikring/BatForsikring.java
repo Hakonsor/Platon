@@ -55,7 +55,7 @@ public class BatForsikring extends Forsikringer implements Serializable {
     
     // metoden setter egenandel utifra om båten har motor eller ikke.
     public void beregnOgSetEgenAndel() {
-        if (type.equals("Motorbåt")) {
+        if (type.equalsIgnoreCase("Motorbåt")) {
             setEgenandel(3000);
         } else {
             setEgenandel(2000);
