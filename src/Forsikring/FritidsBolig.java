@@ -6,6 +6,7 @@
 package Forsikring;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 
 
@@ -26,5 +27,25 @@ public class FritidsBolig extends Bygg implements Serializable{
                   materiale, standard, byggSum, innboSum);
      
     }
+    public String toString(){
+    String s;
+        String utleie;
+        String form = "0.00";
+        DecimalFormat tall = new DecimalFormat(form);
+        if (getUtleie()) {
+            utleie = "fritidsbolig med utleie. ";
+        } else {
+            utleie = "fritidsbolig uten utleie. ";
+        }
+        s = "Forsikringen gjelder for: " + utleie
+                + "\nAdresse: " + getAdresse()
+                + "\nBoligtype: " + getBoligType() + "\t " + "Byggeår: " + getByggeÅr()
+                + "\nMateriale: " + getMateriale() + "\t " + "Standard: " + getStandard()
+                + "\nStørrelse: " + getKvadrat()
+                + "\nBygget er forsikret for: " + tall.format(getByggSum()) + " kr"
+                + "\nInnboet er forsikret for: " + tall.format(getInnboSum()) + " kr"
+                + "\n" + super.toString();
+        return s;
+    }
     
-}
+}// end of class fritidsboligforsikring

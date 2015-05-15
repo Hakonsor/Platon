@@ -28,7 +28,7 @@ public class BoligForsikring extends Bygg implements Serializable {
         String form = "0.00";
         DecimalFormat tall = new DecimalFormat(form);
         if (getUtleie()) {
-            utleie = "utleiebolig";
+            utleie = "bolig for utleie";
         } else {
             utleie = "bolig";
         }
