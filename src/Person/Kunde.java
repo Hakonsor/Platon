@@ -71,6 +71,9 @@ public class Kunde extends Bruker implements Serializable {
     }
 
     public String toString() {
+        String s = " Fornavn: "+getFornavn()+" Etternavn: "+getEtternavn()+"\n";
+        s += " Adresse: "+getGateAdr()+" Gatenummer: "+getGateNr();
+        
         return Integer.toString(kundeNr);
     }
 

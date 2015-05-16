@@ -16,6 +16,7 @@ import javafx.stage.Stage;
  */
 public class infoMelding {
 
+    private Kontroller kontroll;
     private BorderPane borderPane;
     private VBox vBox;
     private Button lukk;
@@ -27,7 +28,8 @@ public class infoMelding {
 
     public infoMelding(Stage vindu, Kontroller kontroll) {
         this.vindu = vindu;
-
+        
+        this.kontroll = kontroll;
         vBox = new VBox();
         vBox.setAlignment(Pos.TOP_CENTER);
         vBox.setSpacing(20);
@@ -56,13 +58,22 @@ public class infoMelding {
         });
 
         vBox.getChildren().addAll(info, reg, print,lukk);
+        
+        print.setText(kontroll.getsisteKunde());
 
+        
 
         scene = new Scene(vBox, 450, 525);
         vindu.setTitle("Dine opplysninger");
         vindu.setScene(scene);
         scene.getStylesheets().add("CSS/infoMelding.css");
         vindu.show();
+    }
+    
+    public void setText(){
+        
+        
+        
     }
 
 

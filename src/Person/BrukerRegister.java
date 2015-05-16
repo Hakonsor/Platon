@@ -31,9 +31,9 @@ public class BrukerRegister implements Serializable {
         for (Map.Entry<String, Bruker> e : register.entrySet()) {
             if (e.getValue() instanceof Kunde) {
                 kunde = (Kunde) e.getValue();
-                if (kunde.getFornavn().equals(fornavn)) {
+                if (kunde.getFornavn().equals(fornavn)||kunde.getFornavn().equalsIgnoreCase(fornavn)) {
                     liste.add(kunde);
-                } else if (kunde.getEtternavn().equals(etternavn)) {
+                } else if (kunde.getEtternavn().equals(etternavn) || (kunde.getEtternavn().equalsIgnoreCase(etternavn) )) {
                     liste.add(kunde);
                 }
             }
@@ -64,6 +64,12 @@ public class BrukerRegister implements Serializable {
 
     public Bruker getKonsulent(String nøkkel) {
         return (Konsulent) register.get(nøkkel);
+    }
+
+    public String getSisteBruker() {
+        Kunde k = (Kunde)register.get(Integer.toString(Kunde.getStaticKundeNr()));
+        
+        return k.toString();
     }
 
 }

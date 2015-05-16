@@ -1,7 +1,9 @@
 package GUI;
 
+import Person.Personsammenlikner;
 import Kontroller.Kontroller;
 import Person.Kunde;
+import java.util.Collections;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -149,9 +151,13 @@ public class Sok {
     private void søkeResultater() {
         data.clear();
         List<Kunde> list = kontroll.søkeResultater(fornavn.getText(), etternavn.getText(), kundeNr.getText());
+        Collections.sort(list, new Personsammenlikner());
+        Collections.reverse(list); 
         list.stream().forEach((i) -> {
             data.add(i.getFornavn() + " " + i.getEtternavn() + ", KundeNr: " + i.getNøkkel());
+            
         });
+        
     }
 
     private void velgKunde() {
