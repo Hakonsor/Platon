@@ -5,6 +5,7 @@ import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import java.util.ArrayList;
 
+import Person.Bruker;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
@@ -67,18 +68,19 @@ public class KundesideInfo implements ComboBoxConverter {
 
         lbnavn = new Label();
         lbnavn.setId("navn");
-        lbnavn.setText("Navn Navnesen");
+        lbnavn.setText(getKundeNavn());
         lbnavn.setAlignment(Pos.CENTER_LEFT);
 
         lbkundenr = new Label();
         lbkundenr.setId("kundenr");
 
-        lbkundenr.setText("kundenr: " + "1");
+        lbkundenr.setText("kundenr: " + getKundenr());
         lbkundenr.setAlignment(Pos.CENTER);
 
         lbepost = new Label();
         lbepost.setId("epost");
-        lbepost.setText("fornavn.etternavn@mail.com");
+        //lbepost.setText("fornavn.etternavn@mail.com");
+        lbepost.setText(getEpost());
         lbepost.setAlignment(Pos.CENTER);
 
         grid.add(lbhei, 0, 0);
@@ -208,5 +210,20 @@ public class KundesideInfo implements ComboBoxConverter {
         }
         kontroller.slettForsikring(Integer.parseInt(polisNr));
         settListe();
+    }
+
+    private String getKundeNavn(){
+        Bruker b = kontroller.getInnloggetBruker();
+        return b.getFornavn() + " " + b.getEtternavn();
+    }
+
+    private String getEpost(){
+        Bruker b = kontroller.getInnloggetBruker();
+        return b.getEpost();
+    }
+
+    private String getKundenr(){
+        Bruker b = kontroller.getInnloggetBruker();
+        return b.getNøkkel();
     }
 }

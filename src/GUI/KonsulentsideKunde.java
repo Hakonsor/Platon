@@ -1,6 +1,7 @@
 package GUI;
 
 import Forsikring.*;
+import Person.Bruker;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
 import Kontroller.Postregister;
@@ -148,7 +149,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         vBox.setPadding(new Insets(130, 10, 20, 0)); //top/right/bottom/left
 
         lbKonsulent = new Label();
-        lbKonsulent.setText("Hei " + "Navn Navnesen");
+        lbKonsulent.setText(getKonsulentNavn());
         lbKonsulent.setId("konsulent");
 
         lbKundenavn = new Label();
@@ -523,6 +524,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
                 kontroll.setBilForsikring(bil, null);
                 lbregBil.setText("Bilforsikring Registrert!");
+                settListe();
                 tfRegnr.clear(); tfÅrsmodell.clear(); tfMerke.clear(); tfModell.clear(); tfKmstand.clear(); cbBonus.setValue("Velg Bonus:"); cbEgenandel.setValue("Velg Egenandel"); cbKjørelengde.setValue("Velg Kjørelengde:");
 
             } else {
@@ -614,8 +616,10 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 f.setPremieOgForsSum(type);
                 kontroll.setReiseForsikring(f);
 
+
                 rbtnEuropa.setSelected(false); rbtnNorden.setSelected(false); rbtnVerden.setSelected(false);
                 lbPrint.setText("Reiseforsikring " + type + " bestilt!");
+                settListe();
             } else {
                 lbPrint.setText("Du må velge en forsikringstype");
             }
@@ -842,6 +846,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 }
                 tfRegnrB.clear(); tfÅrsmodellB.clear(); tfBåtmodell.clear(); tfAntfot.clear(); tfMotormerke.clear(); tfYtelse.clear(); tfVerdiB.clear();
                 rbtMotorbåt.setSelected(false); rbtSeilbåt.setSelected(false);
+                settListe();
                 regLabelB.setText("Båtforsikring Registrert!");
 
             } else {
@@ -1141,6 +1146,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
                 tfAdresse.clear(); tfPostnr.clear(); tfByggeår.clear(); tfKvadrat.clear(); tfByggSum.clear(); tfInnboSum.clear(); cbBoligtype.setValue("Velg Boligtype:"); cbStandard.setValue("Standard:"); cbMatriale.setValue("Byggematriale:"); cbleie.setSelected(false);
                 kontroll.setBoligForsikring(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
+                settListe();
                 regLabelBo.setText("Boligforsikring registrert!");
             } else {
                 regLabelBo.setText("Sjekk feil i feltene ovenfor");
@@ -1457,6 +1463,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 }
                 tfAdresseF.clear(); tfPostnrF.clear(); tfByggeårF.clear(); tfKvadratF.clear(); tfByggSumF.clear(); tfInnboSumF.clear(); cbBoligtypeF.setValue("Velg Boligtype:"); cbStandardF.setValue("Standard:"); cbMatrialeF.setValue("Byggematriale:"); cbleieF.setSelected(false);
                 kontroll.setFritidsForsikring(utLeieF, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
+                settListe();
                 regLabelF.setText("Fritidsboligforsikring registrert!");
             } else {
                 regLabelF.setText("Sjekk feil i feltene ovenfor");
@@ -1509,7 +1516,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridAlle.setAlignment(Pos.TOP_CENTER);
 
         taLes = new TextArea();
-        taLes.setPrefSize(250, 350);
+        taLes.setPrefSize(350, 350);
         taLes.setId("taLes");
         taLes.setEditable(false);
 
@@ -1767,6 +1774,11 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         }
         kontroll.slettForsikring(Integer.parseInt(polisNr));
         settListe();
+    }
+
+    private String getKonsulentNavn(){
+        Bruker b = kontroll.getInnloggetKonsulent();
+        return "Hei " + b.getFornavn() + " " + b.getEtternavn();
     }
 
 }//End of class

@@ -33,14 +33,15 @@ public class Kunde extends Bruker implements Serializable {
 
     private int kundeNr;
     private static int nesteKundeNr;
-    private String passord, telefon;
+    private String passord, telefon, epost;
     private ForsikringsRegister register;
     private boolean aktiv;
 
-    public Kunde(String fornavn, String etternavn, String adr, String postNr, String telefon, String personNr, String passord) {
-        super(fornavn, etternavn, personNr, adr, postNr, passord, telefon);
+    public Kunde(String fornavn, String etternavn, String personNr, String telefon, String epost, String adr, String postNr, String passord) {
+        super(fornavn, etternavn, personNr, telefon, epost, adr, postNr, passord);
         this.passord = passord;
         this.telefon = telefon;
+        this.epost = epost;
         this.aktiv = true;
         kundeNr = ++nesteKundeNr;
         System.out.println(kundeNr);

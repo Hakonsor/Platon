@@ -203,12 +203,16 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     //Bruker
     public void setInnloggetBruker(String nøkkel) {
+
         Bruker bruker = brukerRegister.getBruker(nøkkel);
         if (bruker instanceof Kunde) {
+            System.out.println("mø");
             innLoggetBruker = brukerRegister.getKunde(nøkkel);
         } else if (bruker instanceof Konsulent) {
+            System.out.println("hei");
             innloggetKonsulent = brukerRegister.getKonsulent(nøkkel);
         }
+        System.out.println(nøkkel);
 
     }
 
