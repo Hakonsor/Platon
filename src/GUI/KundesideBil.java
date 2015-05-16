@@ -619,7 +619,7 @@ public class KundesideBil implements ComboBoxConverter {
                 ) {
             Person person;
             if (rbtJa.selectedProperty().getValue()) {
-                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
+                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), null, tfTelefon.getText());
             } else {
                 person = null;
             }
@@ -663,7 +663,7 @@ public class KundesideBil implements ComboBoxConverter {
                 ) {
             Person person;
             if (rbtJa.selectedProperty().getValue()) {
-                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), tfTelefon.getText());
+                person = new Person(tfFornavn.getText(), tfEtternavn.getText(), tfPersonnr.getText(), tfAdresse.getText(), tfPostnr.getText(), null, tfTelefon.getText());
             } else {
                 person = null;
             }

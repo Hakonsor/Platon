@@ -50,6 +50,13 @@ public class Login {
     private PasswordField pfKonsulentPassord;
     private Label infoKunde;
     private Label infoKonsulent;
+    private Label logginnInfo;
+    private Label logginnInfoKunde;
+    private TranslateTransition ttpShake;
+    private TranslateTransition ttkShake;
+
+    private TranslateTransition ttpkShake;
+    private TranslateTransition ttbShake;
 
     public Login(Stage primaryStage, Kontroller k) throws Exception {
 
@@ -108,21 +115,21 @@ public class Login {
         tfKundeBrukernavn.setId("tfkundenr");
         tfKundeBrukernavn.setMaxWidth(200);
 
-        TranslateTransition ttbShake = new TranslateTransition(Duration.millis(100), tfKundeBrukernavn);
-        ttbShake.setFromX(0);
-        ttbShake.setToX(30);
-        ttbShake.setFromX(30);
-        ttbShake.setToX(-30);
-        ttbShake.setFromX(-30);
-        ttbShake.setToX(0);
-        ttbShake.setCycleCount(3);
+        ttkShake = new TranslateTransition(Duration.millis(100), tfKundeBrukernavn);
+        ttkShake.setFromX(0);
+        ttkShake.setToX(30);
+        ttkShake.setFromX(30);
+        ttkShake.setToX(-30);
+        ttkShake.setFromX(-30);
+        ttkShake.setToX(0);
+        ttkShake.setCycleCount(3);
 
         pfKundePassord = new PasswordField();
         pfKundePassord.setPromptText("passord");
         pfKundePassord.setId("pfKundePassord");
         pfKundePassord.setMaxWidth(200);
 
-        TranslateTransition ttpShake = new TranslateTransition(Duration.millis(100), pfKundePassord);
+        ttpShake = new TranslateTransition(Duration.millis(100), pfKundePassord);
         ttpShake.setFromX(0);
         ttpShake.setToX(30);
         ttpShake.setFromX(30);
@@ -131,10 +138,10 @@ public class Login {
         ttpShake.setToX(0);
         ttpShake.setCycleCount(3);
 
-        Label logginnInfo = new Label();
-        logginnInfo.setText("");
-        logginnInfo.setVisible(false);
-        logginnInfo.setId("logginnInfo");
+        logginnInfoKunde = new Label();
+        logginnInfoKunde.setText("");
+        logginnInfoKunde.setVisible(false);
+        logginnInfoKunde.setId("logginnInfo");
 
         btnNyKunde = new Button("Ny Kunde");
         btnNyKunde.setId("btNyKunde");
@@ -150,19 +157,7 @@ public class Login {
         btnKundeLogginn.setMaxWidth(200);
         try {
             btnKundeLogginn.setOnAction(e -> {
-                if (kontroll.sjekkPassordKunde(tfKundeBrukernavn.getText(), pfKundePassord.getText())) {
-                    primaryStage.close();
-                    kontroll.kundeSide(primaryStage);
-                    kontroll.setInnloggetBruker(tfKundeBrukernavn.getText());
-
-                } else if (!logginnInfo.isVisible()) {
-                    ttpShake.play();
-                    ttbShake.play();
-                    logginnInfo.setText("Feil kundenr/passord");
-                    logginnInfo.setVisible(true);
-                    tfKundeBrukernavn.setId("error1");
-                    pfKundePassord.setId("error2");
-                }
+                loginKunde();
             });
         } catch (Exception ex) {
             Logger.getLogger(KundeSide.class.getName()).log(Level.SEVERE, null, ex);
@@ -172,19 +167,7 @@ public class Login {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
-                    if (kontroll.sjekkPassordKunde(tfKundeBrukernavn.getText(), pfKundePassord.getText())) {
-                        primaryStage.close();
-                        kontroll.kundeSide(primaryStage);
-                        kontroll.setInnloggetBruker(tfKundeBrukernavn.getText());
-
-                    } else if (!logginnInfo.isVisible()) {
-                        ttpShake.play();
-                        ttbShake.play();
-                        logginnInfo.setText("Feil kundenr/passord");
-                        logginnInfo.setVisible(true);
-                        tfKundeBrukernavn.setId("error1");
-                        pfKundePassord.setId("error2");
-                    }
+                    loginKunde();
                 }
             }
         });
@@ -194,7 +177,7 @@ public class Login {
         gridKunde.add(pfKundePassord, 0, 1, 2, 1);
         gridKunde.add(btnKundeLogginn, 0, 2);
         gridKunde.add(btnNyKunde, 1, 2);
-        gridKunde.add(logginnInfo, 0, 3, 2, 1);
+        gridKunde.add(logginnInfoKunde, 0, 3, 2, 1);
 
         vBoxKunde.getChildren().addAll(gridKtext, gridKunde);
         return vBoxKunde;
@@ -232,16 +215,16 @@ public class Login {
         pfKonsulentPassord.setMaxWidth(250);
 
         //Animasjon
-        TranslateTransition ttpShake = new TranslateTransition(Duration.millis(100), pfKonsulentPassord);
-        ttpShake.setFromX(0);
-        ttpShake.setToX(30);
-        ttpShake.setFromX(30);
-        ttpShake.setToX(-30);
-        ttpShake.setFromX(-30);
-        ttpShake.setToX(0);
-        ttpShake.setCycleCount(3);
+        ttpkShake = new TranslateTransition(Duration.millis(100), pfKonsulentPassord);
+        ttpkShake.setFromX(0);
+        ttpkShake.setToX(30);
+        ttpkShake.setFromX(30);
+        ttpkShake.setToX(-30);
+        ttpkShake.setFromX(-30);
+        ttpkShake.setToX(0);
+        ttpkShake.setCycleCount(3);
 
-        TranslateTransition ttbShake = new TranslateTransition(Duration.millis(100), tfKonsulentBrukernavn);
+        ttbShake = new TranslateTransition(Duration.millis(100), tfKonsulentBrukernavn);
         ttbShake.setFromX(0);
         ttbShake.setToX(30);
         ttbShake.setFromX(30);
@@ -250,7 +233,7 @@ public class Login {
         ttbShake.setToX(0);
         ttbShake.setCycleCount(3);
 
-        Label logginnInfo = new Label();
+        logginnInfo = new Label();
         logginnInfo.setText("");
         logginnInfo.setVisible(false);
         logginnInfo.setId("logginnInfo");
@@ -259,18 +242,7 @@ public class Login {
         btnKonsulentLogginn.setId("btnlogginn");
         btnKonsulentLogginn.setMaxWidth(200);
         btnKonsulentLogginn.setOnAction(e -> {
-            if (kontroll.sjekkPassordKonsulent(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
-                primaryStage.close();
-                kontroll.konsulentSide(primaryStage);
-                kontroll.setInnloggetBruker(tfKonsulentBrukernavn.getText());
-            } else if (!logginnInfo.isVisible()) {
-                ttpShake.play();
-                ttbShake.play();
-                logginnInfo.setText("Feil brukernavn/passord");
-                logginnInfo.setVisible(true);
-                tfKonsulentBrukernavn.setId("error1");
-                pfKonsulentPassord.setId("error2");
-            }
+            loginKonsulent();
         });
 
         btnNyKonsulent = new Button("Ny Konsulent");
@@ -286,18 +258,7 @@ public class Login {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
-                    if (kontroll.sjekkPassordKonsulent(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
-                        primaryStage.close();
-                        kontroll.konsulentSide(primaryStage);
-                        kontroll.setInnloggetBruker(tfKonsulentBrukernavn.getText());
-                    } else if (!logginnInfo.isVisible()) {
-                        ttpShake.play();
-                        ttbShake.play();
-                        logginnInfo.setText("Feil brukernavn/passord");
-                        logginnInfo.setVisible(true);
-                        tfKonsulentBrukernavn.setId("error1");
-                        pfKonsulentPassord.setId("error2");
-                    }
+                    loginKonsulent();
                 }
             }
         });
@@ -338,6 +299,38 @@ public class Login {
 
     public String getKunsulentPassord() {
         return pfKonsulentPassord.getText();
+    }
+
+    public void loginKonsulent(){
+        if (kontroll.sjekkPassordKonsulent(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
+            kontroll.setInnloggetBruker(tfKonsulentBrukernavn.getText());
+            System.out.println(kontroll.getInnloggetKonsulent().getFornavn());
+            primaryStage.close();
+            kontroll.konsulentSide(primaryStage);
+        } else {
+            ttpkShake.play();
+            ttbShake.play();
+            logginnInfo.setText("Feil brukernavn/passord");
+            logginnInfo.setVisible(true);
+            tfKonsulentBrukernavn.setId("error1");
+            pfKonsulentPassord.setId("error2");
+        }
+    }
+
+    public void loginKunde() {
+        if (kontroll.sjekkPassordKunde(tfKundeBrukernavn.getText(), pfKundePassord.getText())) {
+            kontroll.setInnloggetBruker(tfKundeBrukernavn.getText());
+            primaryStage.close();
+            kontroll.kundeSide(primaryStage);
+
+        } else {
+            ttpShake.play();
+            ttkShake.play();
+            logginnInfoKunde.setText("Feil kundenr/passord");
+            logginnInfoKunde.setVisible(true);
+            tfKundeBrukernavn.setId("error1");
+            pfKundePassord.setId("error2");
+        }
     }
 
 }//End of class

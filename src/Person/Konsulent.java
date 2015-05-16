@@ -17,7 +17,6 @@ public class Konsulent extends Bruker implements Serializable {
     public Konsulent(String brukernavn, String passord, String fornavn, String etternavn ){
         super(passord, fornavn, etternavn);
         this.brukernavn = brukernavn;
-        System.out.println(brukernavn);
     }
     
     @Override
