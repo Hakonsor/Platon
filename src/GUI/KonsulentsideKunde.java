@@ -178,7 +178,19 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         btnSlett.setId("slett");
         btnSlett.setMaxWidth(150);
         btnSlett.setOnAction(e -> {
-            slettForsikring();
+            if (!lbKundenavn.getText().equals("Valgt kunde: " + "\"Ingen kunde er valgt\"") && !forsikringComboBox.getValue().equals("Velg Forsikring:")) {
+                gridAdvarsel.setVisible(false);
+                slettForsikring();
+            }
+            else if (forsikringComboBox.getValue().equals("Velg Forsikring:") && !lbKundenavn.getText().equals("Valgt kunde: " + "\"Ingen kunde er valgt\"")) {
+                gridAdvarsel.setVisible(true);
+                lbAdvarsel.setText("Du må først velge en forsikring du ønsker å slette");
+            }
+
+            else if (lbKundenavn.getText().equals("Valgt kunde: " + "\"Ingen kunde er valgt\"")) {
+                gridAdvarsel.setVisible(true);
+                lbAdvarsel.setText("Du må velge en kunde fra \"Finn kunde\" først!");
+            }
         });
 
         FadeTransition ftSlett = new FadeTransition(Duration.millis(200), btnSlett);
@@ -225,6 +237,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 ruteVipper();
             } else {
                 gridAdvarsel.setVisible(true);
+                forsikringComboBox.setValue("Velg Forsikring:");
             }
         });
 
@@ -1511,7 +1524,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         gridAdvarsel.setVisible(false);
 
         lbAdvarsel = new Label();
-        lbAdvarsel.setText("Du må velge en kunde først!");
+        lbAdvarsel.setText("Du må velge en kunde fra \"Finn kunde\" først!");
         lbAdvarsel.setId("advarsel");
 
         gridAdvarsel.add(lbAdvarsel, 0, 0);
