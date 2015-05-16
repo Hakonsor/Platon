@@ -463,5 +463,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public List<SkadeMelding> gotGodkjentListe(int år) {
         return skademeldingregister.finnGodkjentListe(år);
     }
+
+    public String getsisteKunde() {
+        return brukerRegister.getSisteBruker();
+    }
+    
 }// end of class kontroller
 

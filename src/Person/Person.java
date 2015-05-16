@@ -47,6 +47,11 @@ public class Person implements Serializable{
     public String getPostNr(){
        return gateAdr;
     }
+    public boolean equals(Person p)
+   {
+     return ( p.getEtternavn().equals( etternavn ) &&
+         p.getFornavn().equals( fornavn ) );
+   }
     
     public String toString(){
         StringBuilder sb = new StringBuilder();
