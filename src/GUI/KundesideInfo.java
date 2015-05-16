@@ -99,6 +99,7 @@ public class KundesideInfo implements ComboBoxConverter {
         forsikringComboBox.setValue("Velg Forsikring:");
         forsikringComboBox.setOnAction(e -> {
             settListe();
+            oppdaterArea();
         });
 
         FadeTransition ftcombo = new FadeTransition(Duration.millis(150), forsikringComboBox);
@@ -210,6 +211,7 @@ public class KundesideInfo implements ComboBoxConverter {
         }
         kontroller.slettForsikring(Integer.parseInt(polisNr));
         settListe();
+        oppdaterArea();
     }
 
     private String getKundeNavn(){
@@ -225,5 +227,10 @@ public class KundesideInfo implements ComboBoxConverter {
     private String getKundenr(){
         Bruker b = kontroller.getInnloggetBruker();
         return b.getNøkkel();
+    }
+
+    public void oppdaterArea() {
+        textArea.setText("");
+
     }
 }

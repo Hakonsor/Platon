@@ -465,6 +465,7 @@ public class KundesideBil implements ComboBoxConverter {
         rbtNei.setSelected(true);
         rbtNei.setOnAction(e -> {
             gridPerson.setVisible(false);
+            tfFornavn.clear(); tfEtternavn.clear(); tfPersonnr.clear(); tfTelefon.clear(); tfAdresse.clear(); tfPostnr.clear();
         });
 
         TranslateTransition ttNei = new TranslateTransition(Duration.millis(100), rbtNei);
@@ -642,6 +643,8 @@ public class KundesideBil implements ComboBoxConverter {
             }
             BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
             kontroller.setBilForsikring(bil, person);
+            tfRegnr.clear(); tfÅrsmodell.clear(); tfMerke.clear(); tfModell.clear(); tfKmstand.clear(); cbBonus.setValue("Velg Bonus:"); cbEgenandel.setValue("Velg Egenandel:"); cbKjørelengde.setValue("Velg Kjørelengde:");
+            tfFornavn.clear(); tfEtternavn.clear(); tfPersonnr.clear(); tfTelefon.clear(); tfAdresse.clear(); tfPostnr.clear();
             regLabel.setText("Bilforsikring Registrert!");
 
         } else {
@@ -686,6 +689,7 @@ public class KundesideBil implements ComboBoxConverter {
             }
             BilForsikring bil = new BilForsikring(bonus, egenandel, kjøreLengde, regNo, bilMerke, bilModell, årsModell, kmStand);
             kontroller.setBilForsikring(bil, person);
+            tfRegnr.clear(); tfÅrsmodell.clear(); tfMerke.clear(); tfModell.clear(); tfKmstand.clear(); cbBonus.setValue("Velg Bonus:"); cbEgenandel.setValue("Velg Egenandel:"); cbKjørelengde.setValue("Velg Kjørelengde:");
             regLabel.setText("Bilforsikring Registrert!");
 
         } else {

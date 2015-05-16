@@ -136,7 +136,7 @@ public class KundesideSkade {
         ftskrive.setToValue(1.0F);
         ftskrive.setCycleCount(1);
         
-        listView.setPrefSize(200, 300);
+        listView.setPrefSize(250, 300);
         listView.setId("felt");
         listView.setEditable(false);
 
@@ -229,21 +229,11 @@ public class KundesideSkade {
 
         dpDato = new DatePicker();
         dpDato.setId("promtfix");
-        dpDato.setMaxWidth(120);
+        dpDato.setMaxWidth(150);
         dpDato.setPromptText("dd.mm.åååå");
         dpDato.setEditable(false);
         dpDato.setOnAction((ActionEvent e) -> {
             sjekkDate();
-        });
-        dpDato.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                if (dpDato.getValue() != null) {
-                    dpDato.setId("valid");
-                } else {
-                    dpDato.setId("promtfix");
-                }
-            }
         });
 
         FadeTransition ftdato = new FadeTransition(Duration.millis(100), dpDato);
@@ -369,11 +359,24 @@ public class KundesideSkade {
             if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
                 polisNr = polisNr.substring(0, 6);
             }else{
+                lbInfo.setVisible(true);
                 lbInfo.setText("Vennligst velg en forsikring");
                 return;
             }
+            if(skriveOmråde.getText() == null || skriveOmråde.getText().isEmpty()){
+                lbInfo.setVisible(true);
+                lbInfo.setText("Vennligst beskriv skaden");
+                return;
+            }
+            if (tfBeløp.getText() == null || tfBeløp.getText().isEmpty()){
+                lbInfo.setVisible(true);
+                lbInfo.setText("Mangler skadebeløp!");
+                return;
+            }
             if(dato == null || dato.after(Calendar.getInstance())){
+                lbInfo.setVisible(true);
                 lbInfo.setText("Vennligst sett en gyldig dato");
+                dpDato.setId("error");
                 return;
             }
 
@@ -439,9 +442,11 @@ public class KundesideSkade {
                 lbInfo.setText("Ugyldig skadebeløp");
                 return;
             }
-            skriveOmråde.clear();  
             tfBeløp.clear();
+            dpDato.getEditor().clear();
+            dpDato.setId("promtfix");
             dato.clear();
+            data.clear();
             lbInfo.setText("Skademelding er sendt inn");
     
     
