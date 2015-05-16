@@ -33,18 +33,15 @@ public class Kunde extends Bruker implements Serializable {
 
     private int kundeNr;
     private static int nesteKundeNr;
-    private String passord, telefon, epost;
+    private String epost;
     private ForsikringsRegister register;
     private boolean aktiv;
 
     public Kunde(String fornavn, String etternavn, String personNr, String telefon, String epost, String adr, String postNr, String passord) {
         super(fornavn, etternavn, personNr, telefon, epost, adr, postNr, passord);
-        this.passord = passord;
-        this.telefon = telefon;
         this.epost = epost;
         this.aktiv = true;
         kundeNr = ++nesteKundeNr;
-        System.out.println(kundeNr);
     }
 
 
@@ -66,15 +63,16 @@ public class Kunde extends Bruker implements Serializable {
     
     @Override
     public boolean sjekkPassord(String passord) {
-        System.out.println(this.passord +""+passord);
-        return (this.passord.equals(passord) && aktiv);
+        return (super.sjekkPassord(passord) && aktiv);
     }
 
     public String toString() {
-        String s = " Fornavn: "+getFornavn()+" Etternavn: "+getEtternavn()+"\n";
-        s += " Adresse: "+getGateAdr()+" Gatenummer: "+getGateNr();
-        
-        return Integer.toString(kundeNr);
+        String s = " Fornavn: "+getFornavn()+"\t Etternavn: "+getEtternavn()+"\n";
+        s += " Adresse: "+getGateAdr()+"\t Gatenummer: "+getGateNr()+"\n";
+        s += " PersonNr: "+ getPersonNr() +"\t PostNr: "+getPostNr()+"\n";
+        s += " TellefonNr: "+ getTlf();
+        s += "\t KundeNr:"+ Integer.toString(kundeNr);
+        return s;
     }
 
 }// end of class Kunde

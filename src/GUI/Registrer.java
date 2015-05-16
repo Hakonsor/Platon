@@ -48,7 +48,7 @@ public class Registrer {
     }
     public Kunde getKunde(){
         if(velgpassord.getText().equals(gjentapassord.getText())){
-            return new Kunde(fornavn.getText(), etternavn.getText(), adresse.getText(), postnr.getText(), epost.getText(), telefon.getText(), personnr.getText(), velgpassord.getText() );
+            return new Kunde(fornavn.getText(), etternavn.getText(), personnr.getText(), telefon.getText(), epost.getText(),  adresse.getText(), postnr.getText(), velgpassord.getText() );
         } else {
             velgpassord.setId("error");
             gjentapassord.setId("error");

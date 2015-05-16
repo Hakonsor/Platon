@@ -60,7 +60,8 @@ public class infoMelding {
         vBox.getChildren().addAll(info, reg, print,lukk);
         
         print.setText(kontroll.getsisteKunde());
-
+        //setText();
+        
         
 
         scene = new Scene(vBox, 450, 525);
@@ -70,8 +71,10 @@ public class infoMelding {
         vindu.show();
     }
     
-    public void setText(){
-        
+    public String setText(){
+       String textfelt = "";
+       textfelt += kontroll.getsisteKunde();
+       return textfelt;
         
         
     }

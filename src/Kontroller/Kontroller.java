@@ -57,7 +57,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     private KundeSide nyside;
     private Registrer regVindu;
     private infoMelding infoSkjerm;
-    
+
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
     }
@@ -174,7 +174,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     }
 
-
     //SkadeMeldingBehandling skadeKonsulent-------------------------------------------
     // henter den første skademeldingen i behandlingskøen
     public SkadeMelding getFørste() {
@@ -206,13 +205,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
         Bruker bruker = brukerRegister.getBruker(nøkkel);
         if (bruker instanceof Kunde) {
-            System.out.println("mø");
             innLoggetBruker = brukerRegister.getKunde(nøkkel);
         } else if (bruker instanceof Konsulent) {
-            System.out.println("hei");
             innloggetKonsulent = brukerRegister.getKonsulent(nøkkel);
         }
-        System.out.println(nøkkel);
 
     }
 
@@ -471,6 +467,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public String getsisteKunde() {
         return brukerRegister.getSisteBruker();
     }
-    
+
 }// end of class kontroller
 
