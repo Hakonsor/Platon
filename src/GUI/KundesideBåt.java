@@ -3,17 +3,15 @@ package GUI;
 import Forsikring.BatForsikring;
 import Kontroller.ComboBoxConverter;
 import Kontroller.Kontroller;
-import Person.Person;
+import java.text.DecimalFormat;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -24,14 +22,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.io.SequenceInputStream;
-
 /**
  * Created by Magnus on 21.04.15.
  */
 public class KundesideBåt implements ComboBoxConverter {
 
-    private String type;
+    private String batType;
 
     public Pane båtFane(Kontroller kontroll) {
 
@@ -151,7 +147,7 @@ public class KundesideBåt implements ComboBoxConverter {
         ttBåtmodell.setToX(0);
         ttBåtmodell.setCycleCount(1);
 
-        TextField tfAntfot= new TextField();
+        TextField tfAntfot = new TextField();
         tfAntfot.setPromptText("Antall fot");
         tfAntfot.setMinWidth(200);
         tfAntfot.setId("promtfix");
@@ -260,7 +256,7 @@ public class KundesideBåt implements ComboBoxConverter {
         rbtSeilbåt.setToggleGroup(båtType);
         rbtSeilbåt.setSelected(false);
         rbtSeilbåt.setOnAction(e -> {
-            type = "Seilbåt";
+            batType = "Seilbåt";
         });
 
         TranslateTransition ttSeilbåt = new TranslateTransition(Duration.millis(100), rbtSeilbåt);
@@ -272,14 +268,13 @@ public class KundesideBåt implements ComboBoxConverter {
         rbtMotorbåt.setToggleGroup(båtType);
         rbtMotorbåt.setSelected(true);
         rbtMotorbåt.setOnAction(e -> {
-            type = "Motorbåt";
+            batType = "Motorbåt";
         });
 
         TranslateTransition ttMotor = new TranslateTransition(Duration.millis(100), rbtMotorbåt);
         ttMotor.setFromX(500);
         ttMotor.setToX(0);
         ttMotor.setCycleCount(1);
-
 
         //Registrer knapp & Label
         Label regLabel = new Label();
@@ -292,8 +287,33 @@ public class KundesideBåt implements ComboBoxConverter {
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
         btnSjekkpris.setOnAction(e -> {
-            
-            regLabel.setText("Premien er: " + "getPris()");
+            if (tfRegnr.getId().equals("valid")
+                    && tfÅrsmodell.getId().equals("valid")
+                    && tfBåtmodell.getId().equals("valid")
+                    && tfAntfot.getId().equals("valid")
+                    && tfMotormerke.getId().equals("valid")
+                    && tfYtelse.getId().equals("valid")
+                    && tfVerdi.getId().equals("valid")) {
+                double verdi;
+                int lengdeFot;
+                String regNo = tfRegnr.getText();
+                try {
+                    verdi = Double.parseDouble(tfVerdi.getText());
+                    lengdeFot = Integer.parseInt(tfYtelse.getText());
+                    BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, batType, "modell", "årsModell", 10, "motormerke");
+                    båt.beregnOgSetEgenAndel();
+                    båt.beregnOgSetPremie();
+                    String form = "0.00";
+                    DecimalFormat tall = new DecimalFormat(form);
+                    regLabel.setText("Årlig premie: " + tall.format(båt.getPremie()) + " kr");
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Feil tallformat");
+                }
+
+            } else {
+                regLabel.setText("Fargeblind bro?!");
+            }
+
         });
 
         FadeTransition ftPris = new FadeTransition(Duration.millis(100), btnSjekkpris);
@@ -315,19 +335,20 @@ public class KundesideBåt implements ComboBoxConverter {
                     && tfMotormerke.getId().equals("valid")
                     && tfYtelse.getId().equals("valid")
                     && tfVerdi.getId().equals("valid")) {
-                double verdi = 0;
-                int lengdeFot = 0;
+                double verdi;
+                int lengdeFot;
                 String regNo = tfRegnr.getText();
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     lengdeFot = Integer.parseInt(tfYtelse.getText());
-                    BatForsikring båt = new BatForsikring( verdi, lengdeFot, regNo , type, "modell", "årsModell", 10 , "motormerke");
+                    BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, batType, "modell", "årsModell", 10, "motormerke");
+                    båt.beregnOgSetEgenAndel();
+                    båt.beregnOgSetPremie();
                     kontroll.setBåtForsikring(båt);
                 } catch (NumberFormatException nfe) {
                     System.out.println("Feil tallformat");
                 }
 
-                
                 regLabel.setText("Bilforsikring Registrert!");
 
             } else {
@@ -342,9 +363,7 @@ public class KundesideBåt implements ComboBoxConverter {
 
         SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfot, ttMotormerke, ttYtelse, ttVerdi, ttSeilbåt, ttMotor, ftPris, ftBestill);
         st.play();
-        
 
-       
         grid.add(tfRegnr, 0, 1);
         grid.add(tfÅrsmodell, 0, 2);
         grid.add(tfBåtmodell, 0, 3);
@@ -354,7 +373,7 @@ public class KundesideBåt implements ComboBoxConverter {
         grid.add(tfVerdi, 0, 7);
         grid.add(rbtSeilbåt, 0, 8);
         grid.add(rbtMotorbåt, 0, 9);
-        grid.add(btnSjekkpris, 0,10 );
+        grid.add(btnSjekkpris, 0, 10);
         grid.add(btnRegBåtforsikring, 0, 11);
         grid.add(regLabel, 0, 12);
 

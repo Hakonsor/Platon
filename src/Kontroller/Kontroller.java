@@ -338,14 +338,14 @@ public class Kontroller implements EventHandler<ActionEvent> {
             while (iterator.hasNext()) {
                 BoligForsikring b = (BoligForsikring) iterator.next();
                 if (b.getAktiv()) {
-                    liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
+                    liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.getAdresse());
                 }
             }
         } else if (a.get(0) instanceof FritidsBolig) {
             while (iterator.hasNext()) {
                 FritidsBolig b = (FritidsBolig) iterator.next();
                 if (b.getAktiv()) {
-                    liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.adresse());
+                    liste.add(Integer.toString(b.getPoliseNr()) + " Adresse: " + b.getAdresse());
                 }
             }
         } else if (a.get(0) instanceof ReiseForsikring) {

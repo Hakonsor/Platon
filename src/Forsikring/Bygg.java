@@ -68,32 +68,36 @@ abstract class Bygg extends Forsikringer implements Serializable {
         return kvadrat;
     }
 
-    public String adresse() {
+    public String getAdresse() {
         return adresse;
     }
 
-    public String boligType() {
+    public String getBoligType() {
         return boligType;
     }
 
-    public int byggear() {
+    public int getByggeÅr() {
         return byggeår;
     }
 
-    public double byggSum() {
+    public double getByggSum() {
         return byggSum;
     }
 
-    public double inboSum() {
+    public double getInnboSum() {
         return innboSum;
     }
 
-    public String materiale() {
+    public String getMateriale() {
         return materiale;
     }
 
-    public String standard() {
+    public String getStandard() {
         return standard;
+    }
+    
+    public boolean getUtleie(){
+        return utleie;
     }
 
     // beregner egenandelen avhengig av skadetype, og om boligen er fg godkjent.
