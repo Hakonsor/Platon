@@ -147,6 +147,7 @@ public class KundesideReise {
                 f.setPremieOgForsSum(type);
                 kontroller.setReiseForsikring(f);
 
+                rbtnEuropa.setSelected(false); rbtnNorden.setSelected(false); rbtnVerden.setSelected(false);
                 lbPrint.setText("Reiseforsikring "+ type + " bestilt!");
             }
             else {

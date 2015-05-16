@@ -27,7 +27,7 @@ import javafx.util.Duration;
  */
 public class KundesideBåt implements ComboBoxConverter {
 
-    private String batType;
+    private String båtType;
 
     public Pane båtFane(Kontroller kontroll) {
 
@@ -251,12 +251,12 @@ public class KundesideBåt implements ComboBoxConverter {
         ttVerdi.setToX(0);
         ttVerdi.setCycleCount(1);
 
-        ToggleGroup båtType = new ToggleGroup();
+        ToggleGroup batType = new ToggleGroup();
         RadioButton rbtSeilbåt = new RadioButton("Seilbåt");
-        rbtSeilbåt.setToggleGroup(båtType);
+        rbtSeilbåt.setToggleGroup(batType);
         rbtSeilbåt.setSelected(false);
         rbtSeilbåt.setOnAction(e -> {
-            batType = "Seilbåt";
+            båtType = "Seilbåt";
         });
 
         TranslateTransition ttSeilbåt = new TranslateTransition(Duration.millis(100), rbtSeilbåt);
@@ -265,10 +265,10 @@ public class KundesideBåt implements ComboBoxConverter {
         ttSeilbåt.setCycleCount(1);
 
         RadioButton rbtMotorbåt = new RadioButton("Motorbåt");
-        rbtMotorbåt.setToggleGroup(båtType);
-        rbtMotorbåt.setSelected(true);
+        rbtMotorbåt.setToggleGroup(batType);
+        rbtMotorbåt.setSelected(false);
         rbtMotorbåt.setOnAction(e -> {
-            batType = "Motorbåt";
+            båtType = "Motorbåt";
         });
 
         TranslateTransition ttMotor = new TranslateTransition(Duration.millis(100), rbtMotorbåt);
@@ -293,14 +293,16 @@ public class KundesideBåt implements ComboBoxConverter {
                     && tfAntfot.getId().equals("valid")
                     && tfMotormerke.getId().equals("valid")
                     && tfYtelse.getId().equals("valid")
-                    && tfVerdi.getId().equals("valid")) {
+                    && tfVerdi.getId().equals("valid")
+                    && batType.getSelectedToggle() != null
+                    ){
                 double verdi;
                 int lengdeFot;
                 String regNo = tfRegnr.getText();
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     lengdeFot = Integer.parseInt(tfYtelse.getText());
-                    BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, batType, "modell", "årsModell", 10, "motormerke");
+                    BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, båtType, "modell", "årsModell", 10, "motormerke");
                     båt.beregnOgSetEgenAndel();
                     båt.beregnOgSetPremie();
                     String form = "0.00";
@@ -311,7 +313,7 @@ public class KundesideBåt implements ComboBoxConverter {
                 }
 
             } else {
-                regLabel.setText("Fargeblind bro?!");
+                regLabel.setText("Feil i feltene ovenfor");
             }
 
         });
@@ -334,14 +336,16 @@ public class KundesideBåt implements ComboBoxConverter {
                     && tfAntfot.getId().equals("valid")
                     && tfMotormerke.getId().equals("valid")
                     && tfYtelse.getId().equals("valid")
-                    && tfVerdi.getId().equals("valid")) {
+                    && tfVerdi.getId().equals("valid")
+                    && batType.getSelectedToggle() != null
+                    ){
                 double verdi;
                 int lengdeFot;
                 String regNo = tfRegnr.getText();
                 try {
                     verdi = Double.parseDouble(tfVerdi.getText());
                     lengdeFot = Integer.parseInt(tfYtelse.getText());
-                    BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, batType, "modell", "årsModell", 10, "motormerke");
+                    BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, båtType, "modell", "årsModell", 10, "motormerke");
                     båt.beregnOgSetEgenAndel();
                     båt.beregnOgSetPremie();
                     kontroll.setBåtForsikring(båt);
@@ -349,10 +353,11 @@ public class KundesideBåt implements ComboBoxConverter {
                     System.out.println("Feil tallformat");
                 }
 
+                tfRegnr.clear(); tfÅrsmodell.clear(); tfBåtmodell.clear(); tfAntfot.clear(); tfMotormerke.clear(); tfYtelse.clear(); tfVerdi.clear(); rbtMotorbåt.setSelected(false); rbtSeilbåt.setSelected(false);
                 regLabel.setText("Bilforsikring Registrert!");
 
             } else {
-                regLabel.setText("Fargeblind bro?!");
+                regLabel.setText("Feil i feltene ovenfor");
             }
         });
 

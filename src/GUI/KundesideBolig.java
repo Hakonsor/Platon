@@ -425,6 +425,7 @@ public class KundesideBolig {
                 }
 
                 kontroller.setBoligForsikring(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, innboSum);
+                tfAdresse.clear(); tfPostnr.clear(); tfByggeår.clear(); tfKvadrat.clear(); tfByggSum.clear(); tfInnboSum.clear(); cbleie.setSelected(false); postSted.setText(""); cbBoligtype.setValue("Velg Boligtype:"); cbStandard.setValue("Standard:"); cbMatriale.setValue("Byggematriale:");
                 regLabel.setText("Boligforsikring registrert!");
             }
             else {
