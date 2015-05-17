@@ -44,6 +44,10 @@ public class Personsammenlikner implements Comparator<Person>, Serializable
      if (d != 0)
        return d;
      else
+         
+     System.out.println(n1+" "+n2);
+     System.out.println(f1+" "+f2);
        return kollator.compare(f1, f2);
+       
    }
  }

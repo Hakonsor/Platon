@@ -44,7 +44,6 @@ public class Kunde extends Bruker implements Serializable {
         kundeNr = ++nesteKundeNr;
     }
 
-
     public boolean getAktiv() {
         return aktiv;
     }
@@ -68,9 +67,8 @@ public class Kunde extends Bruker implements Serializable {
 
     public String toString() {
         String s = " Fornavn: "+getFornavn()+"\t Etternavn: "+getEtternavn()+"\n";
-        s += " Adresse: "+getGateAdr()+"\t Gatenummer: "+getGateNr()+"\n";
-        s += " PersonNr: "+ getPersonNr() +"\t PostNr: "+getPostNr()+"\n";
-        s += " TellefonNr: "+ getTlf();
+        s += " Adresse: "+getGateAdr()+"\t PersonNr: "+getPersonNr()+"\n" ;
+        s += "\t PostNr: "+getPostNr()+"\t TellefonNr: "+ getTlf()+"\n";
         s += "\t KundeNr:"+ Integer.toString(kundeNr);
         return s;
     }

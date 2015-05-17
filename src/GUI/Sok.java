@@ -152,9 +152,8 @@ public class Sok {
         data.clear();
         List<Kunde> list = kontroll.søkeResultater(fornavn.getText(), etternavn.getText(), kundeNr.getText());
         Collections.sort(list, new Personsammenlikner());
-        Collections.reverse(list); 
         list.stream().forEach((i) -> {
-            data.add(i.getFornavn() + " " + i.getEtternavn() + ", KundeNr: " + i.getNøkkel());
+            data.add(i.getEtternavn() +" "+ i.getFornavn() +", KundeNr: " + i.getNøkkel());
             
         });
         
