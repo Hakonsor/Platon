@@ -47,6 +47,9 @@ public abstract class Forsikringer implements Serializable{
        startDato = Calendar.getInstance();
        utløpsDato = new GregorianCalendar(startDato.get(Calendar.YEAR)+ 1, startDato.get(Calendar.MONTH), startDato.get(Calendar.MONTH));
     }
+    public void setGenerertDato(GregorianCalendar gc){
+    startDato = gc;
+    }
     public static int getStaticPolisenr(){
         return nestePoliseNr;
     }

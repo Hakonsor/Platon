@@ -45,6 +45,7 @@ public class ForsikringsRegister implements Serializable {
         double sum = 0;
         sum = register.stream().filter((f) -> (f instanceof BoligForsikring && f.getStartDato().get(Calendar.YEAR ) == år))
                 .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        System.out.println("borlig forsikring sum: "+sum);
         return sum;
         
     }
@@ -54,6 +55,7 @@ public class ForsikringsRegister implements Serializable {
        double sum = 0;
         sum = register.stream().filter((f) -> (f instanceof FritidsBolig)&& f.getStartDato().get(Calendar.YEAR ) == år)
                 .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        System.out.println("fritidsborlig forsikring sum: "+sum);
         return sum; 
         
     }
@@ -64,6 +66,7 @@ public class ForsikringsRegister implements Serializable {
        double sum = 0;
         sum = register.stream().filter((f) -> (f instanceof BilForsikring)&& f.getStartDato().get(Calendar.YEAR ) == år)
                 .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        System.out.println("bil forsikring sum: "+sum);
         return sum; 
         
     }
@@ -74,6 +77,7 @@ public class ForsikringsRegister implements Serializable {
        double sum = 0;
         sum = register.stream().filter((f) -> (f instanceof BatForsikring)&& f.getStartDato().get(Calendar.YEAR ) == år)
                 .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        System.out.println("båt forsikring sum: "+sum);
         return sum; 
         
     }
@@ -83,6 +87,7 @@ public class ForsikringsRegister implements Serializable {
        double sum = 0;
         sum = register.stream().filter((f) -> (f instanceof ReiseForsikring)&& f.getStartDato().get(Calendar.YEAR ) == år)
                 .map((f) -> f.getPremie()).reduce(sum, (accumulator,item) -> accumulator + item);
+        System.out.println("reise forsikring sum: "+sum);
         return sum; 
     }
     

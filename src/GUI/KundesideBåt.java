@@ -26,26 +26,59 @@ import javafx.util.Duration;
  * Created by Magnus on 21.04.15.
  */
 public class KundesideBåt implements ComboBoxConverter {
-
+    private Kontroller kontroll;
     private String båtType;
+    private BorderPane borderPane;
+    private HBox vb;
+    private GridPane grid;
+    private GridPane gridleft;
+    private GridPane gridright;
+    private GridPane gridcenter;
+    private Label lbBåt;
+    private TextField tfRegnr;
+    private TranslateTransition ttRegnr;
+    private TextField tfÅrsmodell;
+    private TranslateTransition ttÅrsmodell;
+    private TextField tfBåtmodell;
+    private TranslateTransition ttBåtmodell;
+    private TranslateTransition ttAntfot;
+    private TranslateTransition ttYtelse;
+    private TranslateTransition ttVerdi;
+    private ToggleGroup batType;
+    private TranslateTransition ttSeilbåt;
+    private RadioButton rbtMotorbåt;
+    private TranslateTransition ttMotor;
+    private Label regLabel;
+    private Button btnSjekkpris;
+    private FadeTransition ftPris;
+    private Button btnRegBåtforsikring;
+    private FadeTransition ftBestill;
+    private SequentialTransition st;
+    private TextField tfAntfot;
+    private TextField tfMotormerke;
+    private TextField tfVerdi;
+    private TranslateTransition ttMotormerke;
+    private TextField tfYtelse;
+    private RadioButton rbtSeilbåt;
+   
 
     public Pane båtFane(Kontroller kontroll) {
-
+        this.kontroll = kontroll;
         //Group root = new Group();
-        BorderPane borderPane = new BorderPane();
+        borderPane = new BorderPane();
         borderPane.setId("borderpane");
-        HBox vb = new HBox();
+        vb = new HBox();
         vb.setPadding(new Insets(25, 25, 0, 25));
         vb.setSpacing(100);
         vb.setAlignment(Pos.CENTER);
 
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(200, 260, 10, 10));//top/right/bottom/left
 
-        GridPane gridleft = new GridPane();
+        gridleft = new GridPane();
         gridleft.setAlignment(Pos.TOP_CENTER);
         gridleft.setHgap(10);
         gridleft.setVgap(10);
@@ -53,7 +86,7 @@ public class KundesideBåt implements ComboBoxConverter {
         gridleft.setPrefHeight(50);
         gridleft.setPrefWidth(400);
 
-        GridPane gridright = new GridPane();
+        gridright = new GridPane();
         gridright.setAlignment(Pos.TOP_CENTER);
         gridright.setHgap(10);
         gridright.setVgap(10);
@@ -61,7 +94,7 @@ public class KundesideBåt implements ComboBoxConverter {
         gridright.setPrefHeight(50);
         gridright.setPrefWidth(400);
 
-        GridPane gridcenter = new GridPane();
+        gridcenter = new GridPane();
         gridcenter.setAlignment(Pos.CENTER);
         gridcenter.setHgap(10);
         gridcenter.setVgap(10);
@@ -70,12 +103,12 @@ public class KundesideBåt implements ComboBoxConverter {
         gridcenter.setPrefWidth(200);
 
         //Båt
-        Label lbBåt = new Label();
+        lbBåt = new Label();
         lbBåt.setText("Båt innformasjon");
         lbBåt.setAlignment(Pos.CENTER);
         lbBåt.setId("promtfix");
 
-        TextField tfRegnr = new TextField();
+        tfRegnr = new TextField();
         tfRegnr.setPromptText("Reg.Nr eks (ABC123)");
         tfRegnr.setMinWidth(200);
         tfRegnr.setId("promtfix");
@@ -96,12 +129,12 @@ public class KundesideBåt implements ComboBoxConverter {
             }
         });
 
-        TranslateTransition ttRegnr = new TranslateTransition(Duration.millis(100), tfRegnr);
+        ttRegnr = new TranslateTransition(Duration.millis(100), tfRegnr);
         ttRegnr.setFromX(500);
         ttRegnr.setToX(0);
         ttRegnr.setCycleCount(1);
 
-        TextField tfÅrsmodell = new TextField();
+        tfÅrsmodell = new TextField();
         tfÅrsmodell.setPromptText("Årsmodell 4-tall");
         tfÅrsmodell.setMinWidth(200);
         tfÅrsmodell.setId("promtfix");
@@ -122,12 +155,12 @@ public class KundesideBåt implements ComboBoxConverter {
             }
         });
 
-        TranslateTransition ttÅrsmodell = new TranslateTransition(Duration.millis(100), tfÅrsmodell);
+        ttÅrsmodell = new TranslateTransition(Duration.millis(100), tfÅrsmodell);
         ttÅrsmodell.setFromX(500);
         ttÅrsmodell.setToX(0);
         ttÅrsmodell.setCycleCount(1);
 
-        TextField tfBåtmodell = new TextField();
+        tfBåtmodell = new TextField();
         tfBåtmodell.setPromptText("Båtmodell eks (Ibiza 22)");
         tfBåtmodell.setMinWidth(200);
         tfBåtmodell.setId("promtfix");
@@ -142,12 +175,12 @@ public class KundesideBåt implements ComboBoxConverter {
             }
         });
 
-        TranslateTransition ttBåtmodell = new TranslateTransition(Duration.millis(100), tfBåtmodell);
+        ttBåtmodell = new TranslateTransition(Duration.millis(100), tfBåtmodell);
         ttBåtmodell.setFromX(500);
         ttBåtmodell.setToX(0);
         ttBåtmodell.setCycleCount(1);
 
-        TextField tfAntfot = new TextField();
+        tfAntfot = new TextField();
         tfAntfot.setPromptText("Antall fot");
         tfAntfot.setMinWidth(200);
         tfAntfot.setId("promtfix");
@@ -168,12 +201,12 @@ public class KundesideBåt implements ComboBoxConverter {
             }
         });
 
-        TranslateTransition ttAntfot = new TranslateTransition(Duration.millis(100), tfAntfot);
+        ttAntfot = new TranslateTransition(Duration.millis(100), tfAntfot);
         ttAntfot.setFromX(500);
         ttAntfot.setToX(0);
         ttAntfot.setCycleCount(1);
 
-        TextField tfMotormerke = new TextField();
+        tfMotormerke = new TextField();
         tfMotormerke.setPromptText("Motormerke");
         tfMotormerke.setMinWidth(200);
         tfMotormerke.setId("promtfix");
@@ -194,12 +227,12 @@ public class KundesideBåt implements ComboBoxConverter {
             }
         });
 
-        TranslateTransition ttMotormerke = new TranslateTransition(Duration.millis(100), tfMotormerke);
+        ttMotormerke = new TranslateTransition(Duration.millis(100), tfMotormerke);
         ttMotormerke.setFromX(500);
         ttMotormerke.setToX(0);
         ttMotormerke.setCycleCount(1);
 
-        TextField tfYtelse = new TextField();
+        tfYtelse = new TextField();
         tfYtelse.setPromptText("Ytelse (hk)");
         tfYtelse.setMinWidth(200);
         tfYtelse.setId("promtfix");
@@ -220,12 +253,12 @@ public class KundesideBåt implements ComboBoxConverter {
             }
         });
 
-        TranslateTransition ttYtelse = new TranslateTransition(Duration.millis(100), tfYtelse);
+        ttYtelse = new TranslateTransition(Duration.millis(100), tfYtelse);
         ttYtelse.setFromX(500);
         ttYtelse.setToX(0);
         ttYtelse.setCycleCount(1);
 
-        TextField tfVerdi = new TextField();
+        tfVerdi = new TextField();
         tfVerdi.setPromptText("Verdi på båten");
         tfVerdi.setMinWidth(200);
         tfVerdi.setId("promtfix");
@@ -246,47 +279,88 @@ public class KundesideBåt implements ComboBoxConverter {
             }
         });
 
-        TranslateTransition ttVerdi = new TranslateTransition(Duration.millis(100), tfVerdi);
+        ttVerdi = new TranslateTransition(Duration.millis(100), tfVerdi);
         ttVerdi.setFromX(500);
         ttVerdi.setToX(0);
         ttVerdi.setCycleCount(1);
 
-        ToggleGroup batType = new ToggleGroup();
-        RadioButton rbtSeilbåt = new RadioButton("Seilbåt");
+        batType = new ToggleGroup();
+        rbtSeilbåt = new RadioButton("Seilbåt");
         rbtSeilbåt.setToggleGroup(batType);
         rbtSeilbåt.setSelected(false);
         rbtSeilbåt.setOnAction(e -> {
             båtType = "Seilbåt";
         });
 
-        TranslateTransition ttSeilbåt = new TranslateTransition(Duration.millis(100), rbtSeilbåt);
+        ttSeilbåt = new TranslateTransition(Duration.millis(100), rbtSeilbåt);
         ttSeilbåt.setFromX(500);
         ttSeilbåt.setToX(0);
         ttSeilbåt.setCycleCount(1);
 
-        RadioButton rbtMotorbåt = new RadioButton("Motorbåt");
+        rbtMotorbåt = new RadioButton("Motorbåt");
         rbtMotorbåt.setToggleGroup(batType);
         rbtMotorbåt.setSelected(false);
         rbtMotorbåt.setOnAction(e -> {
             båtType = "Motorbåt";
         });
 
-        TranslateTransition ttMotor = new TranslateTransition(Duration.millis(100), rbtMotorbåt);
+        ttMotor = new TranslateTransition(Duration.millis(100), rbtMotorbåt);
         ttMotor.setFromX(500);
         ttMotor.setToX(0);
         ttMotor.setCycleCount(1);
 
         //Registrer knapp & Label
-        Label regLabel = new Label();
+        regLabel = new Label();
         regLabel.setText("");
         regLabel.setId("regLabel");
         regLabel.setAlignment(Pos.CENTER);
 
-        Button btnSjekkpris = new Button();
+        btnSjekkpris = new Button();
         btnSjekkpris.setText("Sjekk Pris");
         btnSjekkpris.setId("btnSjekkpris");
         btnSjekkpris.setMinWidth(200);
-        btnSjekkpris.setOnAction(e -> {
+        btnSjekkpris.setOnAction(e -> { sjekkPris();
+        });
+
+        ftPris = new FadeTransition(Duration.millis(100), btnSjekkpris);
+        ftPris.setFromValue(0.0F);
+        ftPris.setToValue(1.0F);
+        ftPris.setCycleCount(1);
+
+        btnRegBåtforsikring = new Button();
+        btnRegBåtforsikring.setText("Bestill");
+        btnRegBåtforsikring.setId("btnRegBatforsikring");
+        btnRegBåtforsikring.setMinWidth(200);
+        btnRegBåtforsikring.setOnAction(e -> { regBåy();
+        });
+
+        ftBestill = new FadeTransition(Duration.millis(100), btnRegBåtforsikring);
+        ftBestill.setFromValue(0.0F);
+        ftBestill.setToValue(1.0F);
+        ftBestill.setCycleCount(1);
+
+        st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfot, ttMotormerke, ttYtelse, ttVerdi, ttSeilbåt, ttMotor, ftPris, ftBestill);
+        st.play();
+
+        grid.add(tfRegnr, 0, 1);
+        grid.add(tfÅrsmodell, 0, 2);
+        grid.add(tfBåtmodell, 0, 3);
+        grid.add(tfAntfot, 0, 4);
+        grid.add(tfMotormerke, 0, 5);
+        grid.add(tfYtelse, 0, 6);
+        grid.add(tfVerdi, 0, 7);
+        grid.add(rbtSeilbåt, 0, 8);
+        grid.add(rbtMotorbåt, 0, 9);
+        grid.add(btnSjekkpris, 0, 10);
+        grid.add(btnRegBåtforsikring, 0, 11);
+        grid.add(regLabel, 0, 12);
+
+        borderPane.setRight(grid); // CENTER
+        borderPane.getStylesheets().add("CSS/kundebat.css");
+        return borderPane;
+    }
+    private void sjekkPris(){
+    
             if (tfRegnr.getId().equals("valid")
                     && tfÅrsmodell.getId().equals("valid")
                     && tfBåtmodell.getId().equals("valid")
@@ -294,8 +368,7 @@ public class KundesideBåt implements ComboBoxConverter {
                     && tfMotormerke.getId().equals("valid")
                     && tfYtelse.getId().equals("valid")
                     && tfVerdi.getId().equals("valid")
-                    && batType.getSelectedToggle() != null
-                    ){
+                    && batType.getSelectedToggle() != null) {
                 double verdi;
                 int lengdeFot;
                 String regNo = tfRegnr.getText();
@@ -315,19 +388,11 @@ public class KundesideBåt implements ComboBoxConverter {
             } else {
                 regLabel.setText("Feil i feltene ovenfor");
             }
-
-        });
-
-        FadeTransition ftPris = new FadeTransition(Duration.millis(100), btnSjekkpris);
-        ftPris.setFromValue(0.0F);
-        ftPris.setToValue(1.0F);
-        ftPris.setCycleCount(1);
-
-        Button btnRegBåtforsikring = new Button();
-        btnRegBåtforsikring.setText("Bestill");
-        btnRegBåtforsikring.setId("btnRegBatforsikring");
-        btnRegBåtforsikring.setMinWidth(200);
-        btnRegBåtforsikring.setOnAction(e -> {
+    
+    
+    }
+    private void regBåy() {
+        
             regLabel.setText("Båtforsikring Registrert!");
 
             if (tfRegnr.getId().equals("valid")
@@ -337,8 +402,7 @@ public class KundesideBåt implements ComboBoxConverter {
                     && tfMotormerke.getId().equals("valid")
                     && tfYtelse.getId().equals("valid")
                     && tfVerdi.getId().equals("valid")
-                    && batType.getSelectedToggle() != null
-                    ){
+                    && batType.getSelectedToggle() != null) {
                 double verdi;
                 int lengdeFot;
                 String regNo = tfRegnr.getText();
@@ -353,37 +417,19 @@ public class KundesideBåt implements ComboBoxConverter {
                     System.out.println("Feil tallformat");
                 }
 
-                tfRegnr.clear(); tfÅrsmodell.clear(); tfBåtmodell.clear(); tfAntfot.clear(); tfMotormerke.clear(); tfYtelse.clear(); tfVerdi.clear(); rbtMotorbåt.setSelected(false); rbtSeilbåt.setSelected(false);
+                tfRegnr.clear();
+                tfÅrsmodell.clear();
+                tfBåtmodell.clear();
+                tfAntfot.clear();
+                tfMotormerke.clear();
+                tfYtelse.clear();
+                tfVerdi.clear();
+                rbtMotorbåt.setSelected(false);
+                rbtSeilbåt.setSelected(false);
                 regLabel.setText("Bilforsikring Registrert!");
 
             } else {
                 regLabel.setText("Feil i feltene ovenfor");
             }
-        });
-
-        FadeTransition ftBestill = new FadeTransition(Duration.millis(100), btnRegBåtforsikring);
-        ftBestill.setFromValue(0.0F);
-        ftBestill.setToValue(1.0F);
-        ftBestill.setCycleCount(1);
-
-        SequentialTransition st = new SequentialTransition(ttRegnr, ttÅrsmodell, ttBåtmodell, ttAntfot, ttMotormerke, ttYtelse, ttVerdi, ttSeilbåt, ttMotor, ftPris, ftBestill);
-        st.play();
-
-        grid.add(tfRegnr, 0, 1);
-        grid.add(tfÅrsmodell, 0, 2);
-        grid.add(tfBåtmodell, 0, 3);
-        grid.add(tfAntfot, 0, 4);
-        grid.add(tfMotormerke, 0, 5);
-        grid.add(tfYtelse, 0, 6);
-        grid.add(tfVerdi, 0, 7);
-        grid.add(rbtSeilbåt, 0, 8);
-        grid.add(rbtMotorbåt, 0, 9);
-        grid.add(btnSjekkpris, 0, 10);
-        grid.add(btnRegBåtforsikring, 0, 11);
-        grid.add(regLabel, 0, 12);
-
-        borderPane.setRight(grid); // CENTER
-        borderPane.getStylesheets().add("CSS/kundebat.css");
-        return borderPane;
     }
 }

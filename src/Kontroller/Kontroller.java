@@ -384,7 +384,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     // finner Inntekter boligforsikring
     public double finnInntekterBoligForsikring(int aar) {
-        return forsikringsregister.finnInntekterReiseFors(aar);
+        return forsikringsregister.finnInntekterBoligForsikring(aar);
     }
 //  finner inntekter fritidsbolig
 

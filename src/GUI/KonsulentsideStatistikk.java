@@ -398,6 +398,8 @@ public class KonsulentsideStatistikk {
     }
     
     private void oppdater() {
+        System.out.println("oppdater");
+        
             reiseInn = kontroll.finnInntekterReiseFors(aar);
             boligInn = kontroll.finnInntekterBoligForsikring(aar);
             fritidInn = kontroll.finnInntekterFritidsBolig(aar);
@@ -411,6 +413,12 @@ public class KonsulentsideStatistikk {
             båtUt = kontroll.finnUtgiftBåt(aar);
             bilUt = kontroll.finnUtgiftBil(aar);
             utgift = kontroll.finnUtgiftTotal(aar);
+            System.out.println(reiseInn);
+            System.out.println(boligInn);
+            System.out.println(fritidInn);
+            System.out.println(båtInn);
+            System.out.println(bilInn);
+            System.out.println(inntekt);
     }
 
 }//End of class
