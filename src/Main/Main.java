@@ -12,6 +12,7 @@ import Kontroller.Kontroller;
 import Person.Kunde;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
+import java.util.List;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
@@ -28,7 +29,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Kontroller c = new Kontroller(primaryStage);
         c.lesFil();
-        //genererKunder(c);
+       // genererKunder(c);
         primaryStage.setOnCloseRequest(e -> c.skrivTilFil());
         c.loginVindu(primaryStage);
         
@@ -114,8 +115,19 @@ public class Main extends Application {
                 persondnr = Integer.toString(personnr);
                 persondnr += Integer.toString(perssnr);
                 telefon = 1 + randomGenerator.nextInt(99999999);
+                String forrnavn = fornavn[randomGenerator.nextInt(fornavn.length)];
+                String etternavne = etternavn[randomGenerator.nextInt(etternavn.length)];
+              
+                List<Kunde> liste = c.søkeResultater(forrnavn, etternavne , "0");
+            for (Kunde ku : liste) {
+                while((ku.getFornavn().equals(forrnavn)) && (ku.getEtternavn().equals(etternavne))){
+                forrnavn = fornavn[randomGenerator.nextInt(fornavn.length)];
+                etternavne = etternavn[randomGenerator.nextInt(etternavn.length)];
+                    System.out.println("løkke");
+                }
                 
-                Kunde k = new Kunde(fornavn[randomGenerator.nextInt(fornavn.length)], etternavn[randomGenerator.nextInt(etternavn.length)], persondnr, Integer.toString(telefon),
+            }
+                Kunde k = new Kunde(forrnavn, etternavne, persondnr, Integer.toString(telefon),
                         epost, adresse, postadresse, "pas");
                 
 
@@ -165,6 +177,6 @@ public class Main extends Application {
         gc.set(gc.DAY_OF_YEAR, dayOfYear);
         return gc;
      }
-    */
-
+   
+*/
 }//End of class

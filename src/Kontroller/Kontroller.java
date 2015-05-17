@@ -132,7 +132,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            System.out.println("innlogget bruker");
             forsikringsregister.settInn(kunde, new BoligForsikring(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
         } catch (ClassCastException cce) {
 
@@ -146,7 +145,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
             String materiale, String standard, double byggSum, double inboSum) {
         try {
             Kunde kunde = (Kunde) innLoggetBruker;
-            System.out.println("innlogget bruker");
             forsikringsregister.settInn(kunde, new FritidsBolig(utLeie, kvadrat, adresse, boligType, byggeår, materiale, standard, byggSum, inboSum));
         } catch (ClassCastException cce) {
             System.out.println("Feil med bruker");
@@ -452,7 +450,6 @@ public class Kontroller implements EventHandler<ActionEvent> {
         if (sjekkBruker == null || sjekkBruker instanceof Kunde) {
             return false;
         }
-        System.out.println("konsulentS");
         return sjekkBruker.sjekkPassord(passord);
     }
 

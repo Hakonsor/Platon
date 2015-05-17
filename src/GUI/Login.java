@@ -304,7 +304,6 @@ public class Login {
     public void loginKonsulent(){
         if (kontroll.sjekkPassordKonsulent(tfKonsulentBrukernavn.getText(), pfKonsulentPassord.getText())) {
             kontroll.setInnloggetBruker(tfKonsulentBrukernavn.getText());
-            System.out.println(kontroll.getInnloggetKonsulent().getFornavn());
             primaryStage.close();
             kontroll.konsulentSide(primaryStage);
         } else {

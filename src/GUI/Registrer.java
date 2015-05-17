@@ -1,10 +1,11 @@
 package GUI;
 
-
 import Kontroller.Kontroller;
 import Person.Bruker;
 import Kontroller.Postregister;
 import Person.Kunde;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
@@ -17,15 +18,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-
 /**
  * Created by Magnus on 20.04.15.
  */
-
 public class Registrer {
-    
+
     private final String LoginBilde = "Bilder/add_user.png";
-    
+    private Kontroller kontroll;
+
     private final Button btnRegKunde;
     private final Label nyKunde;
     private final Label info;
@@ -41,26 +41,10 @@ public class Registrer {
     private final PasswordField gjentapassord;
     private static Stage vindu;
     public Scene scene;
-  
-    
-    public Button getBtnRegKunde(){
-    return btnRegKunde;
-    }
-    public Kunde getKunde(){
-        if(velgpassord.getText().equals(gjentapassord.getText())){
-            return new Kunde(fornavn.getText(), etternavn.getText(), personnr.getText(), telefon.getText(), epost.getText(),  adresse.getText(), postnr.getText(), velgpassord.getText() );
-        } else {
-            velgpassord.setId("error");
-            gjentapassord.setId("error");
-            System.out.println("Todo popommelding i register getbruker");
-        //pop opp melding hvis ordene ikke er like
-        }
-        return null;
-    
-    }
-    public Registrer(Stage vindu, Kontroller kontroll)  {
-        this.vindu = vindu;
 
+    public Registrer(Stage vindu, Kontroller kontroll) {
+        this.vindu = vindu;
+        this.kontroll = kontroll;
 
         GridPane grid = new GridPane();
         grid.setAlignment(TOP_CENTER);
@@ -85,20 +69,17 @@ public class Registrer {
         fornavn.setId("promtfix");
         fornavn.setMaxWidth(200);
         GridPane.setHalignment(fornavn, HPos.CENTER);
-        fornavn.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
-                String Fornavn = fornavn.getText();
+        fornavn.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
+            String Fornavn = fornavn.getText();
 
-                if (Fornavn.matches(regex)) {
-                    fornavn.setId("valid");
-                } else {
-                    fornavn.setId("error");
-                }
-                if (Fornavn.length() == 0) {
-                    fornavn.setId("promtfix");
-                }
+            if (Fornavn.matches(regex)) {
+                fornavn.setId("valid");
+            } else {
+                fornavn.setId("error");
+            }
+            if (Fornavn.length() == 0) {
+                fornavn.setId("promtfix");
             }
         });
 
@@ -107,20 +88,17 @@ public class Registrer {
         etternavn.setId("promtfix");
         etternavn.setMaxWidth(200);
         GridPane.setHalignment(etternavn, HPos.CENTER);
-        etternavn.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
-                String Etternavn = etternavn.getText();
+        etternavn.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[äÄöÖüÜëËÆØÅæøåA-Za-z]+";
+            String Etternavn = etternavn.getText();
 
-                if (Etternavn.matches(regex)) {
-                    etternavn.setId("valid");
-                } else {
-                    etternavn.setId("error");
-                }
-                if (Etternavn.length() == 0) {
-                    etternavn.setId("promtfix");
-                }
+            if (Etternavn.matches(regex)) {
+                etternavn.setId("valid");
+            } else {
+                etternavn.setId("error");
+            }
+            if (Etternavn.length() == 0) {
+                etternavn.setId("promtfix");
             }
         });
 
@@ -129,20 +107,17 @@ public class Registrer {
         personnr.setId("promtfix");
         personnr.setMaxWidth(200);
         GridPane.setHalignment(personnr, HPos.CENTER);
-        personnr.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String Personnr = personnr.getText();
+        personnr.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String Personnr = personnr.getText();
 
-                if (!Personnr.matches(regex) || Personnr.length() > 11 || Personnr.length() < 11) {
-                    personnr.setId("error");
-                } else {
-                    personnr.setId("valid");
-                }
-                if (Personnr.length() == 0) {
-                    personnr.setId("promtfix");
-                }
+            if (!Personnr.matches(regex) || Personnr.length() > 11 || Personnr.length() < 11) {
+                personnr.setId("error");
+            } else {
+                personnr.setId("valid");
+            }
+            if (Personnr.length() == 0) {
+                personnr.setId("promtfix");
             }
         });
 
@@ -151,20 +126,17 @@ public class Registrer {
         telefon.setId("promtfix");
         telefon.setMaxWidth(200);
         GridPane.setHalignment(telefon, HPos.CENTER);
-        telefon.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String Telefon = telefon.getText();
+        telefon.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String Telefon = telefon.getText();
 
-                if (!Telefon.matches(regex) || Telefon.length() > 8 || Telefon.length() < 8) {
-                    telefon.setId("error");
-                } else {
-                    telefon.setId("valid");
-                }
-                if (Telefon.length() == 0) {
-                    telefon.setId("promtfix");
-                }
+            if (!Telefon.matches(regex) || Telefon.length() > 8 || Telefon.length() < 8) {
+                telefon.setId("error");
+            } else {
+                telefon.setId("valid");
+            }
+            if (Telefon.length() == 0) {
+                telefon.setId("promtfix");
             }
         });
 
@@ -173,20 +145,17 @@ public class Registrer {
         epost.setId("promtfix");
         epost.setMaxWidth(200);
         GridPane.setHalignment(epost, HPos.CENTER);
-        epost.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "^[A-Za-z0-9.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
-                String Epost = epost.getText();
+        epost.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "^[A-Za-z0-9.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+            String Epost = epost.getText();
 
-                if (Epost.matches(regex)) {
-                    epost.setId("valid");
-                } else {
-                    epost.setId("error");
-                }
-                if (Epost.length() == 0) {
-                    epost.setId("promtfix");
-                }
+            if (Epost.matches(regex)) {
+                epost.setId("valid");
+            } else {
+                epost.setId("error");
+            }
+            if (Epost.length() == 0) {
+                epost.setId("promtfix");
             }
         });
 
@@ -292,25 +261,7 @@ public class Registrer {
         btnRegKunde.setId("btNyKunde");
         btnRegKunde.setMaxWidth(200);
         btnRegKunde.setOnAction(e -> {
-            if (fornavn.getId().equals("valid")
-                    && etternavn.getId().equals("valid")
-                    && personnr.getId().equals("valid")
-                    && telefon.getId().equals("valid")
-                    && epost.getId().equals("valid")
-                    && adresse.getId().equals("valid")
-                    && postnr.getId().equals("valid")
-                    && velgpassord.getId().equals("valid")
-                    && gjentapassord.getId().equals("valid")
-                    ) {
-                kontroll.registrerBruker(this.getKunde());
-                vindu.close();
-                kontroll.infoSkjerm();
-            } else {
-                info.setText("Sjekk feil i feltene ovenfor");
-                info.setVisible(true);
-            }
-
-
+            regKunde();
         });
 
         GridPane.setHalignment(btnRegKunde, HPos.CENTER);
@@ -330,7 +281,6 @@ public class Registrer {
         grid.add(btnRegKunde, 0, 14);
         grid.add(info, 0, 15);
 
-
         scene = new Scene(grid, 300, 650);
         vindu.setTitle("Registrer");
         vindu.setScene(scene);
@@ -338,45 +288,85 @@ public class Registrer {
         vindu.show();
     }
 
+    public Button getBtnRegKunde() {
+        return btnRegKunde;
+    }
 
-/*
-    public String getnyKunde(){
+    public Kunde getKunde() {
+        if (velgpassord.getText().equals(gjentapassord.getText())) {
+            return new Kunde(fornavn.getText(), etternavn.getText(), personnr.getText(), telefon.getText(), epost.getText(), adresse.getText(), postnr.getText(), velgpassord.getText());
+        } else {
+            velgpassord.setId("error");
+            gjentapassord.setId("error");
+            //pop opp melding hvis ordene ikke er like
+        }
+        return null;
+    }
+
+    public void regKunde() {
+        if (fornavn.getId().equals("valid")
+                && etternavn.getId().equals("valid")
+                && personnr.getId().equals("valid")
+                && telefon.getId().equals("valid")
+                && epost.getId().equals("valid")
+                && adresse.getId().equals("valid")
+                && postnr.getId().equals("valid")
+                && velgpassord.getId().equals("valid")
+                && gjentapassord.getId().equals("valid")) {
+            List<Kunde> list = kontroll.søkeResultater(fornavn.getText(),etternavn.getText() , "0");
+            for (Kunde k : list) {
+                if (k.getFornavn().equals(fornavn.getText()) && (k.getEtternavn().equals(etternavn.getText()))) {
+                    info.setText("Denne brukeren eksisterer allerede");
+                    info.setVisible(true);
+                    return;
+                }
+            }
+            kontroll.registrerBruker(this.getKunde());
+            vindu.close();
+            kontroll.infoSkjerm();
+        } else {
+            info.setText("Sjekk feil i feltene ovenfor");
+            info.setVisible(true);
+        }
+    }
+
+
+    /*
+     public String getnyKunde(){
         
-    return nyKunde;
-    } 
+     return nyKunde;
+     } 
     
-    public String getFornavn(){
-    return fornavn;
-    } 
+     public String getFornavn(){
+     return fornavn;
+     } 
     
-    public String getEtternavn(){
-    return null;
-    } 
+     public String getEtternavn(){
+     return null;
+     } 
     
-    public String getPersonnr(){
-    return null;
-    } 
+     public String getPersonnr(){
+     return null;
+     } 
     
-    public String getTelefon(){
-    return null;
-    } 
+     public String getTelefon(){
+     return null;
+     } 
     
-    public String getEpost(){
-    return null;
-    } 
+     public String getEpost(){
+     return null;
+     } 
     
-    public String getAdresse(){
-    return null;
-    } 
+     public String getAdresse(){
+     return null;
+     } 
     
-    public String getVelgpassord(){
-    return null;
-    } 
+     public String getVelgpassord(){
+     return null;
+     } 
     
-    public String getGjentapassord(){
-    return null;
-    } 
-      */
-
-
+     public String getGjentapassord(){
+     return null;
+     } 
+     */
 }//End of class

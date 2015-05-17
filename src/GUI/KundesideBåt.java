@@ -112,20 +112,17 @@ public class KundesideBåt implements ComboBoxConverter {
         tfRegnr.setPromptText("Reg.Nr eks (ABC123)");
         tfRegnr.setMinWidth(200);
         tfRegnr.setId("promtfix");
-        tfRegnr.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "^[a-zA-Z]{3}\\d{3}$";
-                String regnr = tfRegnr.getText();
-
-                if (!regnr.matches(regex)) {
-                    tfRegnr.setId("error");
-                } else {
-                    tfRegnr.setId("valid");
-                }
-                if (regnr.length() == 0) {
-                    tfRegnr.setId("promtfix");
-                }
+        tfRegnr.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "^[a-zA-Z]{3}\\d{3}$";
+            String regnr = tfRegnr.getText();
+            
+            if (!regnr.matches(regex)) {
+                tfRegnr.setId("error");
+            } else {
+                tfRegnr.setId("valid");
+            }
+            if (regnr.length() == 0) {
+                tfRegnr.setId("promtfix");
             }
         });
 
@@ -138,20 +135,17 @@ public class KundesideBåt implements ComboBoxConverter {
         tfÅrsmodell.setPromptText("Årsmodell 4-tall");
         tfÅrsmodell.setMinWidth(200);
         tfÅrsmodell.setId("promtfix");
-        tfÅrsmodell.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String årsmodell = tfÅrsmodell.getText();
-
-                if (!årsmodell.matches(regex) || årsmodell.length() > 4 || årsmodell.length() < 4) {
-                    tfÅrsmodell.setId("error");
-                } else {
-                    tfÅrsmodell.setId("valid");
-                }
-                if (årsmodell.length() == 0) {
-                    tfÅrsmodell.setId("promtfix");
-                }
+        tfÅrsmodell.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String årsmodell = tfÅrsmodell.getText();
+            
+            if (!årsmodell.matches(regex) || årsmodell.length() > 4 || årsmodell.length() < 4) {
+                tfÅrsmodell.setId("error");
+            } else {
+                tfÅrsmodell.setId("valid");
+            }
+            if (årsmodell.length() == 0) {
+                tfÅrsmodell.setId("promtfix");
             }
         });
 
@@ -164,14 +158,11 @@ public class KundesideBåt implements ComboBoxConverter {
         tfBåtmodell.setPromptText("Båtmodell eks (Ibiza 22)");
         tfBåtmodell.setMinWidth(200);
         tfBåtmodell.setId("promtfix");
-        tfBåtmodell.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (tfBåtmodell.getLength() > 0) {
-                    tfBåtmodell.setId("valid");
-                } else {
-                    tfBåtmodell.setId("promtfix");
-                }
+        tfBåtmodell.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (tfBåtmodell.getLength() > 0) {
+                tfBåtmodell.setId("valid");
+            } else {
+                tfBåtmodell.setId("promtfix");
             }
         });
 
@@ -184,20 +175,17 @@ public class KundesideBåt implements ComboBoxConverter {
         tfAntfot.setPromptText("Antall fot");
         tfAntfot.setMinWidth(200);
         tfAntfot.setId("promtfix");
-        tfAntfot.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String fot = tfAntfot.getText();
-
-                if (!fot.matches(regex) || fot.length() > 4) {
-                    tfAntfot.setId("error");
-                } else {
-                    tfAntfot.setId("valid");
-                }
-                if (fot.length() == 0) {
-                    tfAntfot.setId("promtfix");
-                }
+        tfAntfot.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String fot = tfAntfot.getText();
+            
+            if (!fot.matches(regex) || fot.length() > 4) {
+                tfAntfot.setId("error");
+            } else {
+                tfAntfot.setId("valid");
+            }
+            if (fot.length() == 0) {
+                tfAntfot.setId("promtfix");
             }
         });
 
@@ -210,20 +198,17 @@ public class KundesideBåt implements ComboBoxConverter {
         tfMotormerke.setPromptText("Motormerke");
         tfMotormerke.setMinWidth(200);
         tfMotormerke.setId("promtfix");
-        tfMotormerke.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[ÆØÅæøåA-Za-z]+";
-                String merke = tfMotormerke.getText();
-
-                if (merke.matches(regex)) {
-                    tfMotormerke.setId("valid");
-                } else {
-                    tfMotormerke.setId("error");
-                }
-                if (merke.length() == 0) {
-                    tfMotormerke.setId("promtfix");
-                }
+        tfMotormerke.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[ÆØÅæøåA-Za-z]+";
+            String merke = tfMotormerke.getText();
+            
+            if (merke.matches(regex)) {
+                tfMotormerke.setId("valid");
+            } else {
+                tfMotormerke.setId("error");
+            }
+            if (merke.length() == 0) {
+                tfMotormerke.setId("promtfix");
             }
         });
 
@@ -236,20 +221,17 @@ public class KundesideBåt implements ComboBoxConverter {
         tfYtelse.setPromptText("Ytelse (hk)");
         tfYtelse.setMinWidth(200);
         tfYtelse.setId("promtfix");
-        tfYtelse.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String ytelse = tfYtelse.getText();
-
-                if (!ytelse.matches(regex) || ytelse.length() > 5) {
-                    tfYtelse.setId("error");
-                } else {
-                    tfYtelse.setId("valid");
-                }
-                if (ytelse.length() == 0) {
-                    tfYtelse.setId("promtfix");
-                }
+        tfYtelse.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String ytelse = tfYtelse.getText();
+            
+            if (!ytelse.matches(regex) || ytelse.length() > 5) {
+                tfYtelse.setId("error");
+            } else {
+                tfYtelse.setId("valid");
+            }
+            if (ytelse.length() == 0) {
+                tfYtelse.setId("promtfix");
             }
         });
 
@@ -262,20 +244,17 @@ public class KundesideBåt implements ComboBoxConverter {
         tfVerdi.setPromptText("Verdi på båten");
         tfVerdi.setMinWidth(200);
         tfVerdi.setId("promtfix");
-        tfVerdi.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String verdi = tfVerdi.getText();
-
-                if (!verdi.matches(regex) || verdi.length() > 13) {
-                    tfVerdi.setId("error");
-                } else {
-                    tfVerdi.setId("valid");
-                }
-                if (verdi.length() == 0) {
-                    tfVerdi.setId("promtfix");
-                }
+        tfVerdi.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String verdi = tfVerdi.getText();
+            
+            if (!verdi.matches(regex) || verdi.length() > 13) {
+                tfVerdi.setId("error");
+            } else {
+                tfVerdi.setId("valid");
+            }
+            if (verdi.length() == 0) {
+                tfVerdi.setId("promtfix");
             }
         });
 

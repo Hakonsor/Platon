@@ -136,12 +136,9 @@ public class Sok {
         vindu.setScene(scene);
         scene.getStylesheets().add("CSS/sok.css");
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    søkeResultater();
-                }
+        scene.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                søkeResultater();
             }
         });
 
