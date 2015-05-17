@@ -32,6 +32,7 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -463,6 +464,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
 
     public String getsisteKunde() {
         return brukerRegister.getSisteBruker();
+    }
+
+    public List getInntektList(Calendar c) {
+        return forsikringsregister.finnForsikringer(c);
     }
 
 }// end of class kontroller

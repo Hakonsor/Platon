@@ -29,14 +29,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Kontroller c = new Kontroller(primaryStage);
         c.lesFil();
-       // genererKunder(c);
+       //genererKunder(c);
         primaryStage.setOnCloseRequest(e -> c.skrivTilFil());
         c.loginVindu(primaryStage);
         
     }
     // alt unner her genereing av kunder
 
-    /*
+
 
     public void genererKunder(Kontroller c) {
         
@@ -123,7 +123,7 @@ public class Main extends Application {
                 while((ku.getFornavn().equals(forrnavn)) && (ku.getEtternavn().equals(etternavne))){
                 forrnavn = fornavn[randomGenerator.nextInt(fornavn.length)];
                 etternavne = etternavn[randomGenerator.nextInt(etternavn.length)];
-                    System.out.println("løkke");
+                    
                 }
                 
             }
@@ -169,7 +169,7 @@ public class Main extends Application {
         int year = randBetween(2013, 2015);
         int dayOfYear;
         if(year == 2015){
-        dayOfYear = 160;
+        dayOfYear = randBetween(1, 130);
         }else{
         dayOfYear = randBetween(1, gc.getActualMaximum(gc.DAY_OF_YEAR));
         }
@@ -178,5 +178,5 @@ public class Main extends Application {
         return gc;
      }
    
-*/
+
 }//End of class

@@ -5,6 +5,7 @@
  */
 package Kontroller;
 
+import Forsikring.Forsikringer;
 import SkadeMeldinger.SkadeMelding;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,17 +32,17 @@ public class Statistikk {
     XYChart.Series series = new XYChart.Series();
     final CategoryAxis xAxis = new CategoryAxis();
     final NumberAxis yAxis = new NumberAxis();
-    String datanavn = "";
+    String datanavn = "Forsikringer";
     String månder[] = {"Jan", "Feb", "Mar", "Apr", "May",
         "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     int jan = 0, feb = 0, mar = 0, apr = 0, may = 0, jun = 0, jul = 0, aug = 0, sep = 0, oct = 0, nov = 0, dec = 0;
 
-    public Statistikk() {
+    public Statistikk(String title) {
 
         xAxis.setLabel("Number of Month");
         //creating the chart
-        lineChart  = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Forsikringer Monitoring, 2015");
+        lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.setTitle(title);
         //defining a series
 
         series.setName(datanavn);
@@ -51,48 +52,86 @@ public class Statistikk {
         lineChart.getData().add(series);
 
     }
-    public LineChart getGraf(){
-    return lineChart;
+
+    public LineChart getGraf() {
+        return lineChart;
+    }
+
+    public void soterMånedSkademeldinger(List list) {
+        List<SkadeMelding> liste = list;
+        liste.stream().forEach((s) -> {
+            if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JANUARY) {
+                jan += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.FEBRUARY) {
+                feb += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.MARCH) {
+                mar += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.APRIL) {
+                apr += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.MAY) {
+                may += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JUNE) {
+                jun += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JULY) {
+                jul += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.AUGUST) {
+                aug += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.SEPTEMBER) {
+                sep += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.OCTOBER) {
+                oct += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.NOVEMBER) {
+                nov += s.getUtbetaling();
+            } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.DECEMBER) {
+                dec += s.getUtbetaling();
+            }// ser ut som unødvending mye code, men er jeg for sliten til å være kreativ
+        });
+
+    }
+
+    public void soterMånedForsikringer(List list) {
+        List<Forsikringer> liste = list;
+        liste.stream().forEach((s) -> {
+            if (s.getStartDato().get(Calendar.MONTH) == Calendar.JANUARY) {
+                jan += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.FEBRUARY) {
+                feb += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.MARCH) {
+                mar += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.APRIL) {
+                apr += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.MAY) {
+                may += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.JUNE) {
+                jun += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.JULY) {
+                jul += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.AUGUST) {
+                aug += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.SEPTEMBER) {
+                sep += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.OCTOBER) {
+                oct += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.NOVEMBER) {
+                nov += s.getPremie();
+            } else if (s.getStartDato().get(Calendar.MONTH) == Calendar.DECEMBER) {
+                dec += s.getPremie();
+            }// ser ut som unødvending mye code, men er jeg for sliten til å være kreativ
+        });
+
     }
 
     public void måndeData(List list) {
 
         if (list != null && !list.isEmpty() && list.get(0) instanceof SkadeMelding) {
-            LinkedList<SkadeMelding> liste = (LinkedList) list;
-            
-            liste.stream().forEach((s) -> {
-                if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JANUARY) {
-                    jan += s.getUtbetaling();     
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.FEBRUARY) {
-                    feb += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.MARCH) {
-                    mar += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.APRIL) {
-                    apr += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.MAY) {
-                    may += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JUNE) {
-                    jun += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JULY) {
-                    jul += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.AUGUST) {
-                    aug += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.SEPTEMBER) {
-                    sep += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.OCTOBER) {
-                    oct += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.NOVEMBER) {
-                    nov += s.getUtbetaling();
-                } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.DECEMBER) {
-                    dec += s.getUtbetaling();
-                }// ser ut som unødvending mye code, men er jeg for sliten til å være kreativ
-            });
-            opptatterGraf();
-
+            soterMånedSkademeldinger(list);
+        }else if (list != null && !list.isEmpty() && list.get(0) instanceof Forsikringer) {
+            soterMånedForsikringer(list);
         }
+        //opptatterGraf();
     }
 
-    private void opptatterGraf() {
+    public void opptatterGraf() {
         series.getData().add(new XYChart.Data("Jan", jan));
         series.getData().add(new XYChart.Data("Feb", feb));
         series.getData().add(new XYChart.Data("Mar", mar));
@@ -106,8 +145,8 @@ public class Statistikk {
         series.getData().add(new XYChart.Data("Nov", nov));
         series.getData().add(new XYChart.Data("Dec", dec));
     }
-    private void opptatterMånder(List list){
-    
-    
+
+    private void opptatterMånder(List list) {
+
     }
 }

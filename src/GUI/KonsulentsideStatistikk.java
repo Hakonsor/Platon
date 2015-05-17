@@ -4,6 +4,7 @@ import Kontroller.Kakediagram;
 import Kontroller.Kontroller;
 import Kontroller.Statistikk;
 import java.text.DecimalFormat;
+import java.util.GregorianCalendar;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,6 +25,7 @@ public class KonsulentsideStatistikk {
     private Kontroller kontroll;
     private double reiseInn, boligInn, fritidInn, båtInn, bilInn,
             reiseUt, boligUt, fritidUt, båtUt, bilUt, inntekt, utgift;
+    private GregorianCalendar gc;
     private int aar = 2015;
     private ComboBox<String> cb;
     private Label lbBoligVerdiInn;
@@ -96,10 +98,14 @@ public class KonsulentsideStatistikk {
         vb.setSpacing(40);
         vb.setPadding(new Insets(100));
         
+        gc = new GregorianCalendar();
+        gc.set(gc.YEAR, aar);
         oppdater();
         
-        Statistikk graf = new Statistikk();
+        Statistikk graf = new Statistikk(Integer.toString(aar));
         graf.måndeData(kontroll.gotGodkjentListe(aar));
+        graf.måndeData(kontroll.getInntektList(gc));
+        graf.opptatterGraf();
         
          vb.getChildren().add(graf.getGraf());
          return vb;
