@@ -47,11 +47,8 @@ public class Person implements Serializable{
     public String getGateAdr(){
        return gateAdr;
     }
-    public String getGateNr(){
-       return personNr;
-    }
     public String getPostNr(){
-       return gateAdr;
+       return postNr;
     }
     public boolean equals(Person p)
    {

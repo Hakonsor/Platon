@@ -66,10 +66,14 @@ public class Kunde extends Bruker implements Serializable {
     }
 
     public String toString() {
-        String s = " Fornavn: "+getFornavn()+"\t Etternavn: "+getEtternavn()+"\n";
-        s += " Adresse: "+getGateAdr()+"\t PersonNr: "+getPersonNr()+"\n" ;
-        s += "\t PostNr: "+getPostNr()+"\t TellefonNr: "+ getTlf()+"\n";
-        s += "\t KundeNr:"+ Integer.toString(kundeNr);
+        String s = "Fornavn: " + getFornavn();
+        s += "\nEtternavn: " + getEtternavn();
+        s += "\nAdresse: " + getGateAdr();
+        s += "\nPersonNr: " + getPersonNr();
+        s += "\nPostNr: " + getPostNr();
+        s += "\nTLF: " + getTlf();
+        s += "\n\nKundeNr: " + Integer.toString(kundeNr);
+        s += "\nHusk ditt kundenr, dette brukes ved innloggning!";
         return s;
     }
 
