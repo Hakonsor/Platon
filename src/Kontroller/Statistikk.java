@@ -32,14 +32,14 @@ public class Statistikk {
     XYChart.Series series = new XYChart.Series();
     final CategoryAxis xAxis = new CategoryAxis();
     final NumberAxis yAxis = new NumberAxis();
-    String datanavn = "Forsikringer";
+    String datanavn = "";
     String månder[] = {"Jan", "Feb", "Mar", "Apr", "May",
         "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     int jan = 0, feb = 0, mar = 0, apr = 0, may = 0, jun = 0, jul = 0, aug = 0, sep = 0, oct = 0, nov = 0, dec = 0;
 
-    public Statistikk(String title) {
-
-        xAxis.setLabel("Number of Month");
+    public Statistikk(String title, String data) {
+        datanavn = data;
+        xAxis.setLabel("Måneder");
         //creating the chart
         lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle(title);

@@ -102,7 +102,7 @@ public class KonsulentsideStatistikk {
         gc.set(gc.YEAR, aar);
         oppdater();
         
-        Statistikk graf = new Statistikk(Integer.toString(aar));
+        Statistikk graf = new Statistikk(Integer.toString(aar),"Fortjeneste");
         graf.måndeData(kontroll.gotGodkjentListe(aar));
         graf.måndeData(kontroll.getInntektList(gc));
         graf.opptatterGraf();

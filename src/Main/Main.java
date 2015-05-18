@@ -108,7 +108,7 @@ public class Main extends Application {
         String adresse = "St. Olavs plass";
         String postadresse = "1413";
 
-        for (int j = 0 ; j < 1; j++) {
+        for (int j = 0 ; j < 2; j++) {
 
             for (int i = 0; i < etternavn.length; i++) {
                 personnr = (999 + randomGenerator.nextInt(9999));

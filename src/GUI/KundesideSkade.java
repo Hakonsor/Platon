@@ -304,9 +304,11 @@ public class KundesideSkade {
       // henter datoen og konverterer den til Calendar
     private void sjekkDate(){
                 LocalDate date = dpDato.getValue();
-                Date dat = Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-                dato = Calendar.getInstance();
-                dato.setTime(dat);
+        if (date != null) {
+            Date dat = Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+            dato = Calendar.getInstance();
+            dato.setTime(dat);
+        }
     }
     private void SkrivListe(){
             ArrayList<String> forsikringliste = kontroll.
