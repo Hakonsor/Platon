@@ -159,7 +159,7 @@ public class KonsulentsideSkade {
                     taLes.setText(s.melding());
                 }
                 tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
-tfAntall.setText("" + kontroll.visAntalliKø());
+                tfAntall.setText("" + kontroll.visAntalliKø());
             } else {
                 taLes.setText("Det er ikke registrert noen flere skademeldinger.");
             }
@@ -195,8 +195,10 @@ tfAntall.setText("" + kontroll.visAntalliKø());
         // godkjenner beløpet og setter skademeldingen i registeret, samt oppdaterer premien.
         // godkjenner beløpet og setter skademeldingen i registeret
         btnGodta.setOnAction((ActionEvent e) -> {
-           
+
             if (skade != null) {
+                tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
+                tfAntall.setText("" + kontroll.visAntalliKø());
                 kontroll.ferdigBehandlet(skade);
                 skade.okUtbetal();
                 skade.getForsikring().nyPremieOk();
@@ -206,31 +208,27 @@ tfAntall.setText("" + kontroll.visAntalliKø());
                 }
                 skade = kontroll.visNesteIKø();
                 tfAntall.setText("" + kontroll.visAntalliKø());
-                if(skade!= null){
+                if (skade != null) {
                     skade = kontroll.visNesteIKø();
-                if (skade instanceof BilSkadeMelding) {
-                    BilSkadeMelding s = (BilSkadeMelding) skade;
-                    taLes.setText(s.melding());
-                } else if (skade instanceof BatSkadeMelding) {
-                    BatSkadeMelding s = (BatSkadeMelding) skade;
-                    taLes.setText(s.melding());
-                } else if (skade instanceof BoligSkadeMelding) {
-                    BoligSkadeMelding s = (BoligSkadeMelding) skade;
-                    taLes.setText(s.melding());
-                } else if (skade instanceof FritidsBoligMelding) {
-                    FritidsBoligMelding s = (FritidsBoligMelding) skade;
-                    taLes.setText(s.melding());
-                } else if (skade instanceof ReiseSkadeMelding) {
-                    ReiseSkadeMelding s = (ReiseSkadeMelding) skade;
-                    taLes.setText(s.melding());
+                    if (skade instanceof BilSkadeMelding) {
+                        BilSkadeMelding s = (BilSkadeMelding) skade;
+                        taLes.setText(s.melding());
+                    } else if (skade instanceof BatSkadeMelding) {
+                        BatSkadeMelding s = (BatSkadeMelding) skade;
+                        taLes.setText(s.melding());
+                    } else if (skade instanceof BoligSkadeMelding) {
+                        BoligSkadeMelding s = (BoligSkadeMelding) skade;
+                        taLes.setText(s.melding());
+                    } else if (skade instanceof FritidsBoligMelding) {
+                        FritidsBoligMelding s = (FritidsBoligMelding) skade;
+                        taLes.setText(s.melding());
+                    } else if (skade instanceof ReiseSkadeMelding) {
+                        ReiseSkadeMelding s = (ReiseSkadeMelding) skade;
+                        taLes.setText(s.melding());
+                    }
+
                 }
-                tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
-                 tfAntall.setText("" + kontroll.visAntalliKø());
-                 taLes.setText("Skaden er godkjent.");
-                }
-                
-                
-                
+
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }
@@ -238,15 +236,37 @@ tfAntall.setText("" + kontroll.visAntalliKø());
         });
         //legger skademeldingen i registeret, og sletter beløpet som er lagt tli betaling.
         btnAvvis.setOnAction((ActionEvent e) -> {
-            
+
             if (skade != null) {
                 kontroll.ferdigBehandlet(skade);
                 skade.avvis();
-                taLes.setText("Skaden er avvist.");
+                skade = kontroll.visNesteIKø();
+                tfAntall.setText("" + kontroll.visAntalliKø());
+                if (skade != null) {
+                    skade = kontroll.visNesteIKø();
+                    if (skade instanceof BilSkadeMelding) {
+                        BilSkadeMelding s = (BilSkadeMelding) skade;
+                        taLes.setText(s.melding());
+                    } else if (skade instanceof BatSkadeMelding) {
+                        BatSkadeMelding s = (BatSkadeMelding) skade;
+                        taLes.setText(s.melding());
+                    } else if (skade instanceof BoligSkadeMelding) {
+                        BoligSkadeMelding s = (BoligSkadeMelding) skade;
+                        taLes.setText(s.melding());
+                    } else if (skade instanceof FritidsBoligMelding) {
+                        FritidsBoligMelding s = (FritidsBoligMelding) skade;
+                        taLes.setText(s.melding());
+                    } else if (skade instanceof ReiseSkadeMelding) {
+                        ReiseSkadeMelding s = (ReiseSkadeMelding) skade;
+                        taLes.setText(s.melding());
+                    }
+
+                }
+
+
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }
-            tfAntall.setText(Integer.toString(kontroll.visAntalliKø()));
 
         });
         borderPane.getStylesheets().add("CSS/konsulentskade.css");
