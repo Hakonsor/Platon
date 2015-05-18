@@ -106,8 +106,8 @@ public class KonsulentsideSkade {
         tfAntall.setAlignment(Pos.CENTER);
         tfAntall.setId("tfantall");
         tfAntall.setMaxWidth(50);
-        tfAntall.setText(Integer.toString(skadeMeldingRegister.visAntallIKø()));
         tfAntall.setEditable(false);
+        tfAntall.setText("" + kontroll.visAntalliKø());
 
         Button btnGodta = new Button("Godta");
         btnGodta.setMinWidth(200);
@@ -159,7 +159,7 @@ public class KonsulentsideSkade {
                     taLes.setText(s.melding());
                 }
                 tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
-
+tfAntall.setText("" + kontroll.visAntalliKø());
             } else {
                 taLes.setText("Det er ikke registrert noen flere skademeldinger.");
             }
@@ -186,7 +186,7 @@ public class KonsulentsideSkade {
                     taLes.setText(s.melding());
                 }
                 tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
-
+                tfAntall.setText("" + kontroll.visAntalliKø());
             } else {
                 taLes.setText("Det er ikke registrert noen nye skademeldinger.");
             }
@@ -195,19 +195,17 @@ public class KonsulentsideSkade {
         // godkjenner beløpet og setter skademeldingen i registeret, samt oppdaterer premien.
         // godkjenner beløpet og setter skademeldingen i registeret
         btnGodta.setOnAction((ActionEvent e) -> {
-
+           
             if (skade != null) {
                 kontroll.ferdigBehandlet(skade);
                 skade.okUtbetal();
                 skade.getForsikring().nyPremieOk();
                 if (skade instanceof BilSkadeMelding) {
                     BilForsikring bil = (BilForsikring) skade.getForsikring();
-                    System.out.println("Gammel bonus: " + bil.getBonus());
                     bil.bonusGodkjent();
-                    System.out.println("Ny bonus: " + bil.getBonus());
-
                 }
                 skade = kontroll.visNesteIKø();
+                tfAntall.setText("" + kontroll.visAntalliKø());
                 if(skade!= null){
                     skade = kontroll.visNesteIKø();
                 if (skade instanceof BilSkadeMelding) {
@@ -227,8 +225,10 @@ public class KonsulentsideSkade {
                     taLes.setText(s.melding());
                 }
                 tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
+                 tfAntall.setText("" + kontroll.visAntalliKø());
+                 taLes.setText("Skaden er godkjent.");
                 }
-                tfAntall.setText(Integer.toString(skadeMeldingRegister.visAntallIKø()));
+                
                 
                 
             } else {
@@ -238,6 +238,7 @@ public class KonsulentsideSkade {
         });
         //legger skademeldingen i registeret, og sletter beløpet som er lagt tli betaling.
         btnAvvis.setOnAction((ActionEvent e) -> {
+            
             if (skade != null) {
                 kontroll.ferdigBehandlet(skade);
                 skade.avvis();
@@ -245,7 +246,7 @@ public class KonsulentsideSkade {
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
             }
-            tfAntall.setText(Integer.toString(skadeMeldingRegister.visAntallIKø()));
+            tfAntall.setText(Integer.toString(kontroll.visAntalliKø()));
 
         });
         borderPane.getStylesheets().add("CSS/konsulentskade.css");

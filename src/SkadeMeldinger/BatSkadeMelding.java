@@ -26,7 +26,7 @@ public class BatSkadeMelding extends SkadeMelding implements Serializable{
     // teksten som skal vises i vinduet når skademeldingen er registrert.
     public String melding(){
         String s;
-        s = "Båtskademelding \n Innmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() 
+        s = "Båtskademelding \nInnmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() 
                 +" "+super.getForsikring().getKunde().getEtternavn()+"\n"+
                 
                 super.toString();
