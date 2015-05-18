@@ -95,8 +95,8 @@ abstract class Bygg extends Forsikringer implements Serializable {
     public String getStandard() {
         return standard;
     }
-    
-    public boolean getUtleie(){
+
+    public boolean getUtleie() {
         return utleie;
     }
 
@@ -138,7 +138,6 @@ abstract class Bygg extends Forsikringer implements Serializable {
         } else {
             byggVerdi = verdi;
         }
-        System.out.println("byggverdi" + byggVerdi);
 
         // laveste skadegrense for totalskade her er det tatt hensyn til byggets alder:    
         double minTotal = byggVerdi * TOTALSKADEGRENSE;
@@ -149,8 +148,11 @@ abstract class Bygg extends Forsikringer implements Serializable {
         } else {
             sum = byggVerdi - egenandel;
         }
-        System.out.println("Sum" + sum);
-        return (int) sum;
+        if (sum < 0) {
+            return 0;
+        } else {
+            return (int) sum;
+        }
 
     }// end of method fullUtbetaling  
 
