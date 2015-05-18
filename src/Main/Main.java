@@ -29,7 +29,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Kontroller c = new Kontroller(primaryStage);
         c.lesFil();
-        //genererKunder(c); // GENERERER MASSE BRUKERE, GJØR PROGRAMMET TREIGT Å STARTE!
+        genererKunder(c); // GENERERER MASSE BRUKERE, GJØR PROGRAMMET TREIGT Å STARTE!
         primaryStage.setOnCloseRequest(e -> c.skrivTilFil());
         c.loginVindu(primaryStage);
         
@@ -146,13 +146,13 @@ public class Main extends Application {
                 bil.setGenerertDato(dato());
                 c.setBilForsikring(bil, k);
 
-                c.setBoligForsikring(true, 40, "Pilestredet 39", "Leilighet", year, "Mur", persondnr, 300000, 1000000);
-                BatForsikring båt = new BatForsikring(100000, 25, "ADC123", "Tresenkke", "Feri", "1945", 22, "Alta");
+                c.setBoligForsikring(true, 40, "Pilestredet 39", "Leilighet", year, "Mur", "Gjennomsnittlig", 300000, 1000000);
+                BatForsikring båt = new BatForsikring(100000, 25, "ADC123", "Tresnekke", "Feri", "1945", 22, "Alta");
                 båt.beregnOgSetEgenAndel();
                 båt.beregnOgSetPremie();
                 båt.setGenerertDato(dato());
                 c.setBåtForsikring(båt);
-                c.setFritidsForsikring(true, 22, "Pilestredet 63 C", "Leilighet", year, "Mur", persondnr, 150000, 600000);
+                c.setFritidsForsikring(true, 22, "Ekkornveien 63 C", "Leilighet", year, "Mur", "Gjennomsnittlig", 150000, 600000);
 
             }
         }
