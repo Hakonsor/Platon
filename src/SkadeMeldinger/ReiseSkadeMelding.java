@@ -28,7 +28,7 @@ public class ReiseSkadeMelding extends SkadeMelding{
    public String melding(){
         String s;
         ReiseForsikring f = (ReiseForsikring)getForsikring();
-        s = "Reiseskademelding \nInnmeldt av\t :" + super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn() +"\n"+
+        s = "Reiseskademelding \nInnmeldt av:\t" + super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn() +"\n"+
              "Forsikringstype: " +f.getType()+ "\n" +
               super.toString();
         

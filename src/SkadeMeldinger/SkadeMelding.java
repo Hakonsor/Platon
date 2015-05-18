@@ -8,6 +8,7 @@ package SkadeMeldinger;
 import Forsikring.Forsikringer;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -112,9 +113,12 @@ public abstract class SkadeMelding implements Serializable {
         Date dt = skadeDato.getTime();
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         String dato = df.format(dt);
+        
+        String form = "0.00";
+                DecimalFormat tall = new DecimalFormat(form);
         String s = "Skadedato: "
-                + dato + "\tSkadeNr: " + skadeNr + "\nSkadebeløp: "
-                + skadeSum + "\t\t Utbetaling: " + utbetaling + "\nSkadebeskrivelse: \n"
+                + dato + "\tSkadeNr: " + tall.format(skadeNr) + "\nSkadebeløp: "
+                + skadeSum + " kr\t\t Utbetaling: " + tall.format(utbetaling) + " kr\nSkadebeskrivelse: \n"
                 + skadeBeskrivelse;
         return s;
     }

@@ -25,7 +25,7 @@ public class BoligSkadeMelding extends ByggSkade implements Serializable {
     // denne meldingen vises i vinduet for skadebehandleren
     public String melding(){
         String s;
-        s = "Boligskademelding \nInnmeldt av\t :" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"
+        s = "Boligskademelding \nInnmeldt av:\t" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"
                 + super.toString();
         
         return s;
