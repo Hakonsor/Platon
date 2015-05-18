@@ -197,6 +197,7 @@ public class Registrer {
 
             Postregister register = new Postregister();
             String Poststed = register.getPoststed(postnr.getText());
+
             if (!Postnr.matches(regex) || Postnr.length() > 4 || Postnr.length() < 4) {
                 postnr.setId("error");
             }

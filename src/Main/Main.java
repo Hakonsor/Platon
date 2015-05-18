@@ -29,7 +29,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Kontroller c = new Kontroller(primaryStage);
         c.lesFil();
-       //genererKunder(c);
+       //genererKunder(c); // GENERERER MASSE BRUKERE, GJØR PROGRAMMET TREIGT Å STARTE!
         primaryStage.setOnCloseRequest(e -> c.skrivTilFil());
         c.loginVindu(primaryStage);
         
@@ -103,11 +103,12 @@ public class Main extends Application {
         String persondnr = Integer.toString(personnr);
         persondnr += Integer.toString(perssnr);
         int telefon = 1 + randomGenerator.nextInt(99999999);
-        String epost = "hioa@hioa.no";
+        String epost1 = "";
+        String epost = "@hioa.no";
         String adresse = "St. Olavs plass";
         String postadresse = "1413";
 
-        for (int j = 0 ; j < 3; j++) {
+        for (int j = 0 ; j < 1; j++) {
 
             for (int i = 0; i < etternavn.length; i++) {
                 personnr = (999 + randomGenerator.nextInt(9999));
@@ -117,18 +118,19 @@ public class Main extends Application {
                 telefon = 1 + randomGenerator.nextInt(99999999);
                 String forrnavn = fornavn[randomGenerator.nextInt(fornavn.length)];
                 String etternavne = etternavn[randomGenerator.nextInt(etternavn.length)];
+                epost1 = forrnavn + epost;
               
                 List<Kunde> liste = c.søkeResultater(forrnavn, etternavne , "0");
             for (Kunde ku : liste) {
                 while((ku.getFornavn().equals(forrnavn)) && (ku.getEtternavn().equals(etternavne))){
-                forrnavn = fornavn[randomGenerator.nextInt(fornavn.length)];
-                etternavne = etternavn[randomGenerator.nextInt(etternavn.length)];
-                    
+                    forrnavn = fornavn[randomGenerator.nextInt(fornavn.length)];
+                    etternavne = etternavn[randomGenerator.nextInt(etternavn.length)];
+                    epost1 = forrnavn + epost;
                 }
                 
             }
                 Kunde k = new Kunde(forrnavn, etternavne, persondnr, Integer.toString(telefon),
-                        epost, adresse, postadresse, "pas");
+                        epost1, adresse, postadresse, "pas");
                 
 
                 c.registrerBruker(k);

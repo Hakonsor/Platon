@@ -443,9 +443,9 @@ public class KundesideSkade {
                 return;
             }
             tfBeløp.clear();
+            dato.clear();
             dpDato.getEditor().clear();
             dpDato.setId("promtfix");
-            dato.clear();
             data.clear();
             lbInfo.setText("Skademelding er sendt inn");
     

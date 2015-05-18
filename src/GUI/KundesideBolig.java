@@ -190,22 +190,6 @@ public class KundesideBolig {
         tfPostnr.setId("promtfix");
         tfPostnr.setAlignment(Pos.CENTER_LEFT);
         tfPostnr.setMaxWidth(70);
-        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String postnr = tfPostnr.getText();
-
-                if (!postnr.matches(regex) || postnr.length() > 4 || postnr.length() < 4) {
-                    tfPostnr.setId("error");
-                } else {
-                    tfPostnr.setId("valid");
-                }
-                if (postnr.length() == 0) {
-                    tfPostnr.setId("promtfix");
-                }
-            }
-        });
 
         FadeTransition ftpostnr = new FadeTransition(Duration.millis(100), tfPostnr);
         ftpostnr.setFromValue(0.0F);
@@ -217,6 +201,32 @@ public class KundesideBolig {
         postSted.setId("promtfix");
         postSted.setAlignment(Pos.CENTER_LEFT);
         postSted.setMaxWidth(100);
+        tfPostnr.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String Postnr = tfPostnr.getText();
+
+            Postregister register = new Postregister();
+            String Poststed = register.getPoststed(tfPostnr.getText());
+
+            if (!Postnr.matches(regex) || Postnr.length() > 4 || Postnr.length() < 4) {
+                tfPostnr.setId("error");
+            }
+            if (Poststed != null) {
+                tfPostnr.setId("valid");
+            }
+            if (Postnr.length() == 0) {
+                tfPostnr.setId("promtfix");
+            }
+
+            if (Poststed == null) {
+                postSted.setText("Finnes ikke!");
+            }
+            if (tfPostnr.getText().length() == 0) {
+                postSted.setText("");
+            } else {
+                postSted.setText(Poststed);
+            }
+        });
 
         cbBoligtype = new ComboBox<>();
         cbBoligtype.setEditable(false);

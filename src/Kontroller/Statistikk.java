@@ -61,29 +61,29 @@ public class Statistikk {
         List<SkadeMelding> liste = list;
         liste.stream().forEach((s) -> {
             if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JANUARY) {
-                jan += s.getUtbetaling();
+                jan -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.FEBRUARY) {
-                feb += s.getUtbetaling();
+                feb -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.MARCH) {
-                mar += s.getUtbetaling();
+                mar -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.APRIL) {
-                apr += s.getUtbetaling();
+                apr -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.MAY) {
-                may += s.getUtbetaling();
+                may -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JUNE) {
-                jun += s.getUtbetaling();
+                jun -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.JULY) {
-                jul += s.getUtbetaling();
+                jul -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.AUGUST) {
-                aug += s.getUtbetaling();
+                aug -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.SEPTEMBER) {
-                sep += s.getUtbetaling();
+                sep -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.OCTOBER) {
-                oct += s.getUtbetaling();
+                oct -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.NOVEMBER) {
-                nov += s.getUtbetaling();
+                nov -= s.getUtbetaling();
             } else if (s.getdatoInnmeldt().get(Calendar.MONTH) == Calendar.DECEMBER) {
-                dec += s.getUtbetaling();
+                dec -= s.getUtbetaling();
             }// ser ut som unødvending mye code, men er jeg for sliten til å være kreativ
         });
 

@@ -186,22 +186,6 @@ public class KundesideBil implements ComboBoxConverter {
         tfPostnr.setPromptText("PostNr");
         tfPostnr.setId("promtfix");
         tfPostnr.setMinWidth(200);
-        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String postnr = tfPostnr.getText();
-
-                if (!postnr.matches(regex) || postnr.length() > 4 || postnr.length() < 4) {
-                    tfPostnr.setId("error");
-                } else {
-                    tfPostnr.setId("valid");
-                }
-                if (postnr.length() == 0) {
-                    tfPostnr.setId("promtfix");
-                }
-            }
-        });
 
         tfTelefon = new TextField();
         tfTelefon.setPromptText("Telefon");
@@ -229,18 +213,30 @@ public class KundesideBil implements ComboBoxConverter {
         postSted.setId("promtfix");
         postSted.setEditable(false);
         postSted.setMinWidth(200);
-
         tfPostnr.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String Postnr = tfPostnr.getText();
+
             Postregister register = new Postregister();
-            String poststed = register.getPoststed(tfPostnr.getText());
-            if (poststed == null) {
-                poststed = "Finnes ikke!";
+            String Poststed = register.getPoststed(tfPostnr.getText());
+
+            if (!Postnr.matches(regex) || Postnr.length() > 4 || Postnr.length() < 4) {
+                tfPostnr.setId("error");
             }
-            if (tfPostnr.getText().equals("")) {
+            if (Poststed != null) {
+                tfPostnr.setId("valid");
+            }
+            if (Postnr.length() == 0) {
+                tfPostnr.setId("promtfix");
+            }
+
+            if (Poststed == null) {
+                postSted.setText("Finnes ikke!");
+            }
+            if (tfPostnr.getText().length() == 0) {
                 postSted.setText("");
-                postSted.setPromptText("PostSted");
             } else {
-                postSted.setText(poststed);
+                postSted.setText(Poststed);
             }
         });
 

@@ -814,9 +814,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         btnSjekkprisB.setText("Sjekk Pris");
         btnSjekkprisB.setId("btnSjekkpris");
         btnSjekkprisB.setMinWidth(200);
-        btnSjekkprisB.setOnAction(e -> {
-            regLabelB.setText("Premien er: " + "getPris()");
-        });
+        btnSjekkprisB.setOnAction(e -> { sjekkPris();});
 
 
         btnRegBåtforsikring = new Button();
@@ -988,28 +986,38 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         tfPostnr.setId("promtfix");
         tfPostnr.setAlignment(Pos.CENTER_LEFT);
         tfPostnr.setMaxWidth(70);
-        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String postnr = tfPostnr.getText();
-
-                if (!postnr.matches(regex) || postnr.length() > 4 || postnr.length() < 4) {
-                    tfPostnr.setId("error");
-                } else {
-                    tfPostnr.setId("valid");
-                }
-                if (postnr.length() == 0) {
-                    tfPostnr.setId("promtfix");
-                }
-            }
-        });
 
         postSted = new Label();
         postSted.setText("");
         postSted.setId("promtfix");
         postSted.setAlignment(Pos.CENTER_LEFT);
         postSted.setMaxWidth(100);
+        tfPostnr.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String Postnr = tfPostnr.getText();
+
+            Postregister register = new Postregister();
+            String Poststed = register.getPoststed(tfPostnr.getText());
+
+            if (!Postnr.matches(regex) || Postnr.length() > 4 || Postnr.length() < 4) {
+                tfPostnr.setId("error");
+            }
+            if (Poststed != null) {
+                tfPostnr.setId("valid");
+            }
+            if (Postnr.length() == 0) {
+                tfPostnr.setId("promtfix");
+            }
+
+            if (Poststed == null) {
+                postSted.setText("Finnes ikke!");
+            }
+            if (tfPostnr.getText().length() == 0) {
+                postSted.setText("");
+            } else {
+                postSted.setText(Poststed);
+            }
+        });
 
         cbBoligtype = new ComboBox<>();
         cbBoligtype.setEditable(false);
@@ -1153,23 +1161,6 @@ public class KonsulentsideKunde implements ComboBoxConverter {
             }
         });
 
-        tfPostnr.textProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                Postregister register = new Postregister();
-                String poststed = register.getPoststed(tfPostnr.getText());
-                if (poststed == null) {
-                    poststed = "Finnes ikke!";
-                }
-                if (tfPostnr.getText().equals("")) {
-                    postSted.setText("");
-                    postSted.setText("PostSted");
-                } else
-                    postSted.setText(poststed);
-            }
-        });
-
         gridBolig.add(tfAdresse, 0, 0, 2, 1);
         gridBolig.add(tfPostnr, 0, 1, 2, 1);
         gridBolig.add(postSted, 1, 1);
@@ -1307,28 +1298,38 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         tfPostnrF.setId("promtfix");
         tfPostnrF.setAlignment(Pos.CENTER_LEFT);
         tfPostnrF.setMaxWidth(70);
-        tfPostnrF.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String regex = "[0-9]+";
-                String postnr = tfPostnrF.getText();
-
-                if (!postnr.matches(regex) || postnr.length() > 4 || postnr.length() < 4) {
-                    tfPostnrF.setId("error");
-                } else {
-                    tfPostnrF.setId("valid");
-                }
-                if (postnr.length() == 0) {
-                    tfPostnrF.setId("promtfix");
-                }
-            }
-        });
 
         postStedF = new Label();
         postStedF.setText("");
         postStedF.setId("promtfix");
         postStedF.setAlignment(Pos.CENTER_LEFT);
         postStedF.setMaxWidth(100);
+        tfPostnrF.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            String regex = "[0-9]+";
+            String PostnrF = tfPostnrF.getText();
+
+            Postregister register = new Postregister();
+            String Poststed = register.getPoststed(tfPostnrF.getText());
+
+            if (!PostnrF.matches(regex) || PostnrF.length() > 4 || PostnrF.length() < 4) {
+                tfPostnrF.setId("error");
+            }
+            if (Poststed != null) {
+                tfPostnrF.setId("valid");
+            }
+            if (PostnrF.length() == 0) {
+                tfPostnrF.setId("promtfix");
+            }
+
+            if (Poststed == null) {
+                postStedF.setText("Finnes ikke!");
+            }
+            if (tfPostnrF.getText().length() == 0) {
+                postStedF.setText("");
+            } else {
+                postStedF.setText(Poststed);
+            }
+        });
 
         cbBoligtypeF = new ComboBox<>();
         cbBoligtypeF.setEditable(false);
@@ -1469,23 +1470,6 @@ public class KonsulentsideKunde implements ComboBoxConverter {
                 regLabelF.setText("Sjekk feil i feltene ovenfor");
             }
 
-        });
-
-        tfPostnrF.textProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                Postregister register = new Postregister();
-                String poststed = register.getPoststed(tfPostnrF.getText());
-                if (poststed == null) {
-                    poststed = "Finnes ikke!";
-                }
-                if (tfPostnrF.getText().equals("")) {
-                    postStedF.setText("");
-                    postStedF.setText("PostSted");
-                } else
-                    postStedF.setText(poststed);
-            }
         });
 
         gridFriBolig.add(tfAdresseF, 0, 0, 2, 1);
@@ -1779,6 +1763,37 @@ public class KonsulentsideKunde implements ComboBoxConverter {
     private String getKonsulentNavn(){
         Bruker b = kontroll.getInnloggetKonsulent();
         return "Hei " + b.getFornavn() + " " + b.getEtternavn();
+    }
+
+    private void sjekkPris(){
+
+        if (tfRegnrB.getId().equals("valid")
+                && tfÅrsmodellB.getId().equals("valid")
+                && tfBåtmodell.getId().equals("valid")
+                && tfAntfot.getId().equals("valid")
+                && tfMotormerke.getId().equals("valid")
+                && tfYtelse.getId().equals("valid")
+                && tfVerdiB.getId().equals("valid")
+                && båtType.getSelectedToggle() != null) {
+            double verdi;
+            int lengdeFot;
+            String regNo = tfRegnrB.getText();
+            try {
+                verdi = Double.parseDouble(tfVerdiB.getText());
+                lengdeFot = Integer.parseInt(tfYtelse.getText());
+                BatForsikring båt = new BatForsikring(verdi, lengdeFot, regNo, type, "modell", "årsModell", 10, "motormerke");
+                båt.beregnOgSetEgenAndel();
+                båt.beregnOgSetPremie();
+                String form = "0.00";
+                DecimalFormat tall = new DecimalFormat(form);
+                regLabelB.setText("Årlig premie: " + tall.format(båt.getPremie()) + " kr");
+            } catch (NumberFormatException nfe) {
+                System.out.println("Feil tallformat");
+            }
+
+        } else {
+            regLabelB.setText("Feil i feltene ovenfor");
+        }
     }
 
 }//End of class
