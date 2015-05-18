@@ -29,7 +29,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Kontroller c = new Kontroller(primaryStage);
         c.lesFil();
-       //genererKunder(c); // GENERERER MASSE BRUKERE, GJØR PROGRAMMET TREIGT Å STARTE!
+        //genererKunder(c); // GENERERER MASSE BRUKERE, GJØR PROGRAMMET TREIGT Å STARTE!
         primaryStage.setOnCloseRequest(e -> c.skrivTilFil());
         c.loginVindu(primaryStage);
         

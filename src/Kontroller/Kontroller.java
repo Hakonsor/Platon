@@ -198,6 +198,10 @@ public class Kontroller implements EventHandler<ActionEvent> {
     public void ferdigBehandlet(SkadeMelding skade) {
         skademeldingregister.flyttTilRegister(skade);
     }
+    
+    public int visAntalliKø(){
+        return skademeldingregister.visAntallIKø();
+    }
 
     //Bruker
     public void setInnloggetBruker(String nøkkel) {

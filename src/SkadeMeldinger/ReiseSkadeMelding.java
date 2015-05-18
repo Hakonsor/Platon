@@ -5,6 +5,8 @@
  */
 package SkadeMeldinger;
 
+import Forsikring.Forsikringer;
+import Forsikring.ReiseForsikring;
 import java.util.Calendar;
 
 
@@ -19,15 +21,16 @@ public class ReiseSkadeMelding extends SkadeMelding{
   
    
    public ReiseSkadeMelding(String skadeBeskrivelse , int utbetal, Calendar skadeDato){
-        super(skadeBeskrivelse ,  utbetal, skadeDato);
+        super(skadeBeskrivelse ,utbetal, skadeDato);
  
    }
    
    public String melding(){
         String s;
-        s = "Reiseskademelding \n Innmeldt av\t :"  +"\n"+
-                "Forsikringstype: " + "verden\n" +
-                super.toString();
+        ReiseForsikring f = (ReiseForsikring)getForsikring();
+        s = "Reiseskademelding \nInnmeldt av:\t" + super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn() +"\n"+
+             "Forsikringstype: " +f.getType()+ "\n" +
+              super.toString();
         
         return s;
     }
