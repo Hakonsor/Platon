@@ -24,7 +24,7 @@ public class FritidsBoligMelding extends ByggSkade implements Serializable {
     // melding som vises i vinduet når skadebehandleren behandler skader.
     public String melding(){
         String s;
-        s = "Fritidshus skademelding \nInnmeldt av:\t" +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"
+        s = "Fritidshus skademelding \nInnmeldt av: " +  super.getForsikring().getKunde().getFornavn() +" "+super.getForsikring().getKunde().getEtternavn()+"\n"
                 + super.toString();
         return s;
     }

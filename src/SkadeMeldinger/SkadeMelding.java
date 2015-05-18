@@ -116,9 +116,11 @@ public abstract class SkadeMelding implements Serializable {
         
         String form = "0.00";
                 DecimalFormat tall = new DecimalFormat(form);
-        String s = "Skadedato: "
-                + dato + "\tSkadeNr: " + skadeNr + "\nSkadebeløp: "
-                + tall.format(skadeSum) + " kr\t Utbetaling: " + tall.format(utbetaling) + " kr\nSkadebeskrivelse: \n"
+        String s = "Skadedato: " + dato
+                + "\nSkadeNr: " + skadeNr
+                + "\nSkadebeløp: " + tall.format(skadeSum) + " kr"
+                + "\nUtbetaling: " + tall.format(utbetaling) + " kr"
+                + "\n\nSkadebeskrivelse: \n"
                 + skadeBeskrivelse;
         return s;
     }

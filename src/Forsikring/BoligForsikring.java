@@ -34,8 +34,10 @@ public class BoligForsikring extends Bygg implements Serializable {
         }
         s = "Forsikringen gjelder for: " + utleie
                 + "\nAdresse: " + getAdresse()
-                + "\nBoligtype: " + getBoligType() + "\t " + "Byggeår: " + getByggeÅr()
-                + "\nMateriale: " + getMateriale() + "\t " + "Standard: " + getStandard()
+                + "\nBoligtype: " + getBoligType()
+                + "\nByggeår: " + getByggeÅr()
+                + "\nMateriale: " + getMateriale()
+                + "\nStandard: " + getStandard()
                 + "\nStørrelse: " + getKvadrat()
                 + "\nBygget er forsikret for: " + tall.format(getByggSum()) + " kr"
                 + "\nInnboet er forsikret for: " + tall.format(getInnboSum()) + " kr"

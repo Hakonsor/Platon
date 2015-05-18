@@ -83,10 +83,13 @@ public class BatForsikring extends Forsikringer implements Serializable {
     }
     public String toString(){
     String s;
-        s ="BilForsikring:" + 
-             "\nForsikringen gjelder for reg.nr: " + getRegNr() + "Merke: " + type +
-             "\nModell: " + modell + "Årsmodell: " + årsmodell + "Motormerke: " +motorMerke +
-             "\n" + super.toString();  
+        s = "BilForsikring:";
+        s += "\nForsikringen gjelder for reg.nr: " + getRegNr();
+        s += "\nMerke: " + type;
+        s += "\nModell: " + modell;
+        s += "\nÅrsmodell: " + årsmodell;
+        s += "\nMotormerke: " + motorMerke;
+        s += "\n" + super.toString();
         return s;
     }
     
