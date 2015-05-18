@@ -5,6 +5,14 @@
  */
 package Kontroller;
 
+import Forsikring.Forsikringer;
+import Person.Kunde;
+import SkadeMeldinger.SkadeMelding;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 /**
@@ -4762,6 +4770,19 @@ public class Postregister {
         postregister.put("9990", "BÅTSFJORD");
         postregister.put("9991", "BÅTSFJORD");
 
+    }
+     public void skrivTilFil() {
+        try (ObjectOutputStream utfil = new ObjectOutputStream(
+                new FileOutputStream("src/Fil/forsikring.data"))) {
+            //utfil.writeObject();
+
+        } catch (NotSerializableException nse) {
+            System.out.println("Objektet er ikke serialisert!");
+        } catch (FileNotFoundException ioe) {
+            System.out.println("Finner ikke fil");
+        } catch (IOException ioe) {
+            System.out.println("Problem med utskrift til fil." + ioe.toString());
+        }
     }
 
     public String getPoststed(String postnummer) {
