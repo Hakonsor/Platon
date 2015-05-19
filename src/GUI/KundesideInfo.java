@@ -122,6 +122,9 @@ public class KundesideInfo implements ComboBoxConverter {
         btnUtbetalinger.setText("Utbetalinger");
         btnUtbetalinger.setId("utbetalinger");
         btnUtbetalinger.setMaxWidth(200);
+        btnUtbetalinger.setOnAction(e -> {
+            textArea.setText("Denne knappen er laget for å vise\nutbetalte skademeldinger");
+        });
 
         FadeTransition ftutbetal = new FadeTransition(Duration.millis(150), btnUtbetalinger);
         ftutbetal.setFromValue(0.0F);
@@ -132,6 +135,9 @@ public class KundesideInfo implements ComboBoxConverter {
         btnStatus.setText("Status");
         btnStatus.setId("status");
         btnStatus.setMaxWidth(200);
+        btnStatus.setOnAction(e -> {
+            textArea.setText("Denne knappen er laget for å skrive ut\nstatus på kunden (eks totaltkunde)");
+        });
 
         FadeTransition ftstatus = new FadeTransition(Duration.millis(150), btnStatus);
         ftstatus.setFromValue(0.0F);

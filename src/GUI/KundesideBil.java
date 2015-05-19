@@ -299,7 +299,7 @@ public class KundesideBil implements ComboBoxConverter {
         ttÅrsmodell.setCycleCount(1);
 
         tfMerke = new TextField();
-        tfMerke.setPromptText("eks (BMW)");
+        tfMerke.setPromptText("Merke");
         tfMerke.setId("promtfix");
         tfMerke.setMinWidth(200);
         tfMerke.textProperty().addListener(new ChangeListener<String>() {
@@ -325,7 +325,7 @@ public class KundesideBil implements ComboBoxConverter {
         ttMerke.setCycleCount(1);
 
         tfModell = new TextField();
-        tfModell.setPromptText("eks (5-serie 530xd)");
+        tfModell.setPromptText("Modell");
         tfModell.setId("promtfix");
         tfModell.setMinWidth(200);
         tfModell.textProperty().addListener(new ChangeListener<String>() {

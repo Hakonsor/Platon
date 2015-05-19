@@ -344,7 +344,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         });
 
         tfMerke = new TextField();
-        tfMerke.setPromptText("eks (BMW)");
+        tfMerke.setPromptText("Merke");
         tfMerke.setId("promtfix");
         tfMerke.setMinWidth(200);
         tfMerke.textProperty().addListener(new ChangeListener<String>() {
@@ -365,7 +365,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
         });
 
         tfModell = new TextField();
-        tfModell.setPromptText("eks (5-serie 530xd)");
+        tfModell.setPromptText("Modell");
         tfModell.setId("promtfix");
         tfModell.setMinWidth(200);
         tfModell.textProperty().addListener(new ChangeListener<String>() {
@@ -587,7 +587,7 @@ public class KonsulentsideKunde implements ComboBoxConverter {
 
 
         btnBeregn = new Button();
-        btnBeregn.setText("Beregn pris");
+        btnBeregn.setText("Sjekk Pris");
         btnBeregn.setMinWidth(200);
         btnBeregn.setId("beregn");
         btnBeregn.setOnAction(e -> {

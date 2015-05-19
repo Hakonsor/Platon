@@ -99,7 +99,7 @@ public class KundesideReise {
         ftNorden.setCycleCount(1);
 
         Button btnBeregn = new Button();
-        btnBeregn.setText("Beregn pris");
+        btnBeregn.setText("Sjekk Pris");
         btnBeregn.setMinWidth(200);
         btnBeregn.setId("beregn");
 
