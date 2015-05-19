@@ -59,7 +59,7 @@ public class SkadeMeldingRegister implements Serializable {
         if (behandling.isEmpty()) {
             return 0;
         } else {
-            int visIndex = index + 1;
+            int visIndex = index +1;
             return visIndex;
         }
     }

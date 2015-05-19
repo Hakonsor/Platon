@@ -208,8 +208,7 @@ public class KonsulentsideSkade {
                     BilForsikring bil = (BilForsikring) skade.getForsikring();
                     bil.bonusGodkjent();
                 }
-                skade = kontroll.visNesteIKø();
-                tfAntall.setText("" + kontroll.visAntalliKø());
+
                 if (skade != null) {
                     skade = kontroll.visNesteIKø();
                     if (skade instanceof BilSkadeMelding) {
@@ -230,9 +229,11 @@ public class KonsulentsideSkade {
                     }
 
                 }
-
+                tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
+                tfAntall.setText("" + kontroll.visAntalliKø());
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
+                tfNummer.setText(Integer.toString(0));
             }
 
         });
@@ -243,9 +244,9 @@ public class KonsulentsideSkade {
                 kontroll.ferdigBehandlet(skade);
                 skade.avvis();
                 skade = kontroll.visNesteIKø();
-                tfAntall.setText("" + kontroll.visAntalliKø());
+                
                 if (skade != null) {
-                    skade = kontroll.visNesteIKø();
+                    
                     if (skade instanceof BilSkadeMelding) {
                         BilSkadeMelding s = (BilSkadeMelding) skade;
                         taLes.setText(s.melding());
@@ -264,9 +265,11 @@ public class KonsulentsideSkade {
                     }
 
                 }
-
+                tfAntall.setText("" + kontroll.visAntalliKø());
+                tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");
+                tfNummer.setText(Integer.toString(0));
             }
 
         });
