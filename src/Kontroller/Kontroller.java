@@ -58,9 +58,12 @@ public class Kontroller implements EventHandler<ActionEvent> {
     private KundeSide nyside;
     private Registrer regVindu;
     private infoMelding infoSkjerm;
+    private Mapdata m;
 
     public Kontroller(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("http://www.tryg.no/media/icon-login_148x120_78-5042.png"));
+        Postregister p = new Postregister();
+        m = new Mapdata();
     }
 
     //GUI
