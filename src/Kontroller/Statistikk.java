@@ -48,7 +48,7 @@ public class Statistikk {
         series.setName(datanavn);
         //populating the series with data
 
-        Scene scene = new Scene(lineChart, 800, 600);
+        //Scene scene = new Scene(lineChart, 800, 600);
         lineChart.getData().add(series);
 
     }
