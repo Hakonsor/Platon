@@ -32,8 +32,15 @@ public class BilSkadeMelding extends KjoretoySkade implements Serializable {
         NumberFormat prosent = NumberFormat.getPercentInstance();
         prosent.setMinimumFractionDigits(0);
         String s;
-        s = "Bilskademelding \nInnmeldt av: " + getForsikring().getKunde().getFornavn() + " " + super.getForsikring().getKunde().getEtternavn() + "\n"
-                + "RegNO: " + f.getRegNr() + "\n" + super.toString()
+        s = "Bilskademelding \nInnmeldt av: " + f.getKunde().getFornavn() + " " + f.getKunde().getEtternavn() + "\n"
+                +"Bilen eies av : \n"; 
+        if(f.getperson()!=null){
+                  s+=  f.getperson().getFornavn() + " "  +f.getperson().getEtternavn() ;
+                }
+        else{
+           s+= f.getKunde().getFornavn() + " " + f.getKunde().getEtternavn() ;
+        }
+                s+= "RegNO: " + f.getRegNr() + "\n" + super.toString()
                 + "\nPremie før skade: " + tall.format(f.getPremie()) + " kr"
                 + "\nPremie etter skade: " + tall.format(f.getPremieTilGodkjenning()) + " kr"
                 + "\nBonus før skade : " + prosent.format(f.getBonus()/100)
