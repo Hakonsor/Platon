@@ -126,11 +126,10 @@ abstract class Bygg extends Forsikringer implements Serializable {
     public int utbetaling(double skadeBelop, double verdi, int skadeÅr, int egenandel) {
         double sum;
         double byggVerdi;
-        int a = 2015;
-        int b = 2010;
+       
         int alder;
-        alder = a - b;
-        System.out.println("" + alder);
+        alder = skadeÅr - byggeår;
+ 
         if (alder >= FEMÅR) {
             byggVerdi = verdi - alder * verdi * DELTA10;
         } else if (alder >= TIÅR) {
