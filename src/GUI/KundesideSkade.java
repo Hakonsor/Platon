@@ -40,11 +40,11 @@ import javafx.util.Duration;
  *
  * @author Therese, Håkon
  *
- * 
+ *
  */
 public class KundesideSkade {
 
-    Kontroller  kontroll;
+    Kontroller kontroll;
     private Calendar dato;
     private String skade = "BrannSkade";
     private ObservableList<String> data = FXCollections.observableArrayList();
@@ -57,12 +57,12 @@ public class KundesideSkade {
     private ComboBox<String> forsikringComboBox;
     private Label lbInfo;
     private TextArea skriveOmråde;
-    
+
     private ToggleGroup skadeType;
     private RadioButton rbtVann;
     private RadioButton rbtRør;
     private RadioButton rbtBrann;
-    
+
     private GridPane radioGrid;
     private Label lbSkadebeløp;
     private Label lbDato;
@@ -72,7 +72,6 @@ public class KundesideSkade {
     private Label lbSkade;
     private Button btnRapSkade;
     private Label lbFeilFormat;
-    
 
     public Pane skadeFane(Kontroller kontroll) {
         this.kontroll = kontroll;
@@ -114,7 +113,6 @@ public class KundesideSkade {
         ftcombo.setToValue(1.0F);
         ftcombo.setCycleCount(1);
 
-
         lbInfo = new Label();
         lbInfo.setText("Info om skaden:");
         lbInfo.setId("lbInfo");
@@ -135,7 +133,7 @@ public class KundesideSkade {
         ftskrive.setFromValue(0.0F);
         ftskrive.setToValue(1.0F);
         ftskrive.setCycleCount(1);
-        
+
         listView.setPrefSize(250, 300);
         listView.setId("felt");
         listView.setEditable(false);
@@ -288,169 +286,167 @@ public class KundesideSkade {
         gridFelt.setGridLinesVisible(false);
         grid.setGridLinesVisible(false);
         borderPane.setCenter(vb); // CENTER
-        
 
         // finner ut hvilken forsikring det er og legger skademeldingen i køen,
         // her beregnes også skadesummen samt nye premier, men premien settes endelig,
         // først når konsulenten har godkjent beløpet/ skademeldingen.
-
         borderPane.getStylesheets().add("CSS/kundeskade.css");
         return borderPane;
     }
 
-
-
-
-      // henter datoen og konverterer den til Calendar
-    private void sjekkDate(){
-                LocalDate date = dpDato.getValue();
+    // henter datoen og konverterer den til Calendar
+    private void sjekkDate() {
+        LocalDate date = dpDato.getValue();
         if (date != null) {
             Date dat = Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
             dato = Calendar.getInstance();
             dato.setTime(dat);
         }
     }
-    private void SkrivListe(){
-            ArrayList<String> forsikringliste = kontroll.
-                    getInfoForsikringListe(forsikringComboBox.getItems().
-                            indexOf(forsikringComboBox.getValue()));
-            if (forsikringliste == null) {
-                data.clear();
-                data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
-            } else {
-                data.setAll(forsikringliste);
+
+    private void SkrivListe() {
+        ArrayList<String> forsikringliste = kontroll.
+                getInfoForsikringListe(forsikringComboBox.getItems().
+                        indexOf(forsikringComboBox.getValue()));
+        if (forsikringliste == null) {
+            data.clear();
+            data.add("Ingen " + forsikringComboBox.getValue() + "er registrert");
+        } else {
+            data.setAll(forsikringliste);
         }
     }
-    private void settKnapper(){
-            String polisNr = listView.getSelectionModel().getSelectedItem();
-            if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
-                polisNr = polisNr.substring(0, 6);
-            }else{
-                lbInfo.setText("Vennligst velg en forsikring");
-                return;
-            }
-            //heter inn en string brukeren har stykketpå og kutter av alt etter 6 tegn og fjerner alle bokstaver og leter etter en forsikring med det som er igjen
-            Forsikringer fors = kontroll.getForsikring(
-                    Integer.parseInt(polisNr));
-            if (fors != null) {
-                skriveOmråde.setEditable(true);
-                if (fors instanceof BoligForsikring || fors instanceof FritidsBolig) {
-                    rbtVann.setVisible(true);
-                    rbtBrann.setVisible(true);
-                    rbtRør.setVisible(true);
-                } else {
-                    rbtVann.setVisible(false);
-                    rbtBrann.setVisible(false);
-                    rbtRør.setVisible(false);
-                }
-            } else {
-                skriveOmråde.setEditable(false);
-            }
+
+    private void settKnapper() {
+        String polisNr = listView.getSelectionModel().getSelectedItem();
+        if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+            polisNr = polisNr.substring(0, 6);
+        } else {
+            lbInfo.setText("Vennligst velg en forsikring");
+            return;
         }
+        //heter inn en string brukeren har stykketpå og kutter av alt etter 6 tegn og fjerner alle bokstaver og leter etter en forsikring med det som er igjen
+        Forsikringer fors = kontroll.getForsikring(
+                Integer.parseInt(polisNr));
+        if (fors != null) {
+            skriveOmråde.setEditable(true);
+            if (fors instanceof BoligForsikring || fors instanceof FritidsBolig) {
+                rbtVann.setVisible(true);
+                rbtBrann.setVisible(true);
+                rbtRør.setVisible(true);
+            } else {
+                rbtVann.setVisible(false);
+                rbtBrann.setVisible(false);
+                rbtRør.setVisible(false);
+            }
+        } else {
+            skriveOmråde.setEditable(false);
+        }
+    }
 
         // finner ut hvilken forsikring det er og legger skademeldingen i køen,
-        // her beregnes også skadesummen samt nye premier, men premien settes endelig,
-        // først når konsulenten har godkjent beløpet/ skademeldingen.
-        public void repSkade(){
-            String polisNr = listView.getSelectionModel().getSelectedItem();
-            if (forsikringComboBox.getValue().equals("Velg Forsikring:")) {
-                lbInfo.setVisible(true);
-                lbInfo.setText("Vennligst velg forsikringstype");
-                return;
+    // her beregnes også skadesummen samt nye premier, men premien settes endelig,
+    // først når konsulenten har godkjent beløpet/ skademeldingen.
+    public void repSkade() {
+        String polisNr = listView.getSelectionModel().getSelectedItem();
+        if (forsikringComboBox.getValue().equals("Velg Forsikring:")) {
+            lbInfo.setVisible(true);
+            lbInfo.setText("Vennligst velg forsikringstype");
+            return;
+        }
+        if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
+            polisNr = polisNr.substring(0, 6);
+        } else {
+            lbInfo.setVisible(true);
+            lbInfo.setText("Vennligst velg en forsikring");
+            return;
+        }
+        if (skriveOmråde.getText() == null || skriveOmråde.getText().isEmpty()) {
+            lbInfo.setVisible(true);
+            lbInfo.setText("Vennligst beskriv skaden");
+            return;
+        }
+        if (tfBeløp.getText() == null || tfBeløp.getText().isEmpty()) {
+            lbInfo.setVisible(true);
+            lbInfo.setText("Mangler skadebeløp!");
+            return;
+        }
+        if (dato == null || dato.after(Calendar.getInstance())) {
+            lbInfo.setVisible(true);
+            lbInfo.setText("Vennligst sett en gyldig dato");
+            dpDato.setId("error");
+            return;
+        }
+
+        Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
+        try {
+            //skriveOmråde.clear();
+            if (fors instanceof BilForsikring) {
+
+                BilForsikring f = (BilForsikring) fors;
+                BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                bil.setForsikring(f);
+                bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
+
+                f.premieTilGodkjenning(f.premieEtterSkade(f.getBonus()));
+                f.nyBonusTilGodkjenning(f.bonusEtterSkade(f.getBonus()));
+
+                kontroll.addSkade(bil);
+                skriveOmråde.setText(bil.melding());
+
+            } else if (fors instanceof BatForsikring) {
+
+                BatForsikring f = (BatForsikring) fors;
+                BatSkadeMelding bat = new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                bat.setForsikring(f);
+                bat.setUtbetaling(Double.parseDouble(tfBeløp.getText()) - f.getEgenAndel());
+                f.premieEtterSkade(f.getPremie());
+                kontroll.addSkade(bat);
+                skriveOmråde.setText(bat.melding());
+
+            } else if (fors instanceof BoligForsikring) {
+
+                BoligForsikring f = (BoligForsikring) fors;
+                BoligSkadeMelding bolig = new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                bolig.setForsikring(f);
+                int egenandel = f.egenandel(skade, f.getUtleie());
+                bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), dato.get(Calendar.YEAR), egenandel));
+                f.premieTilGodkjenning(f.nyPremie());
+                kontroll.addSkade(bolig);
+                skriveOmråde.setText(bolig.melding());
+
+            } else if (fors instanceof FritidsBolig) {
+
+                FritidsBolig f = (FritidsBolig) fors;
+                FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                fri.setForsikring(f);
+                int egenandel = f.egenandel(skade, false);
+                fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), dato.get(Calendar.YEAR), egenandel));
+                f.premieTilGodkjenning(f.nyPremie());
+                kontroll.addSkade(fri);
+                skriveOmråde.setText(fri.melding());
+
+            } else if (fors instanceof ReiseForsikring) {
+
+                ReiseForsikring f = (ReiseForsikring) fors;
+                ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
+                reise.setForsikring(f);
+                reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
+                f.premieTilGodkjenning();
+                kontroll.addSkade(reise);
+                skriveOmråde.setText(reise.melding());
             }
-            if (polisNr != null && polisNr.matches("[0-9]{6}.*")) {
-                polisNr = polisNr.substring(0, 6);
-            }else{
-                lbInfo.setVisible(true);
-                lbInfo.setText("Vennligst velg en forsikring");
-                return;
-            }
-            if(skriveOmråde.getText() == null || skriveOmråde.getText().isEmpty()){
-                lbInfo.setVisible(true);
-                lbInfo.setText("Vennligst beskriv skaden");
-                return;
-            }
-            if (tfBeløp.getText() == null || tfBeløp.getText().isEmpty()){
-                lbInfo.setVisible(true);
-                lbInfo.setText("Mangler skadebeløp!");
-                return;
-            }
-            if(dato == null || dato.after(Calendar.getInstance())){
-                lbInfo.setVisible(true);
-                lbInfo.setText("Vennligst sett en gyldig dato");
-                dpDato.setId("error");
-                return;
-            }
 
-            Forsikringer fors = kontroll.getForsikring(Integer.parseInt(polisNr));
-            try {
-                //skriveOmråde.clear();
-                if (fors instanceof BilForsikring) {
-            
-                    BilForsikring f = (BilForsikring) fors;
-                    BilSkadeMelding bil = new BilSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
-                    bil.setForsikring(f);
-                    bil.setUtbetaling(f.utbetal(200000, Integer.parseInt(tfBeløp.getText())));
-                    f.premieTilGodkjenning(f.premieEtterSkade(f.getBonus()));
-                    f.nyBonusTilGodkjenning(f.bonusEtterSkade(f.getBonus()));
-                    kontroll.addSkade(bil);
-                    skriveOmråde.setText(bil.melding());
+        } catch (NumberFormatException nfe) {
+            lbInfo.setVisible(true);
+            lbInfo.setText("Ugyldig skadebeløp");
+            return;
+        }
+        tfBeløp.clear();
+        dato.clear();
+        dpDato.getEditor().clear();
+        dpDato.setId("promtfix");
+        data.clear();
+        lbInfo.setText("Skademelding er sendt inn");
 
-                } else if (fors instanceof BatForsikring) {
-
-                    BatForsikring f = (BatForsikring) fors;
-                    BatSkadeMelding bat = new BatSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
-                    bat.setForsikring(f);
-                    bat.setUtbetaling(Double.parseDouble(tfBeløp.getText()) - f.getEgenAndel());
-                    f.premieEtterSkade(f.getPremie());
-                    kontroll.addSkade(bat);
-                    skriveOmråde.setText(bat.melding());
-
-                } else if (fors instanceof BoligForsikring) {
-
-                    BoligForsikring f = (BoligForsikring) fors;
-                    BoligSkadeMelding bolig = new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
-                    bolig.setForsikring(f);
-                    int egenandel = f.egenandel(skade, false);
-                    bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), dato.get(Calendar.YEAR ), egenandel));
-                    f.premieTilGodkjenning(f.nyPremie());
-                    kontroll.addSkade(bolig);
-                    skriveOmråde.setText(bolig.melding());
-
-                } else if (fors instanceof FritidsBolig) {
-
-                    FritidsBolig f = (FritidsBolig) fors;
-                    FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
-                    fri.setForsikring(f);
-                    int egenandel = f.egenandel(skade, false);
-                    fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(),dato.get(Calendar.YEAR ) , egenandel));
-                    f.premieTilGodkjenning(f.nyPremie());
-                    kontroll.addSkade(fri);
-                    skriveOmråde.setText(fri.melding());
-
-                } else if (fors instanceof ReiseForsikring) {
-
-                    ReiseForsikring f = (ReiseForsikring) fors;
-                    ReiseSkadeMelding reise = new ReiseSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
-                    reise.setForsikring(f);
-                    reise.setUtbetaling(Integer.parseInt(tfBeløp.getText()));
-                    f.premieTilGodkjenning();
-                    kontroll.addSkade(reise);
-                    skriveOmråde.setText(reise.melding());
-                }
-
-            } catch (NumberFormatException nfe) {
-                lbInfo.setVisible(true);
-                lbInfo.setText("Ugyldig skadebeløp");
-                return;
-            }
-            tfBeløp.clear();
-            dato.clear();
-            dpDato.getEditor().clear();
-            dpDato.setId("promtfix");
-            data.clear();
-            lbInfo.setText("Skademelding er sendt inn");
-    
-    
     }
 }
