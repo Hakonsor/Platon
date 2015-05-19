@@ -238,7 +238,7 @@ public class Kontroller implements EventHandler<ActionEvent> {
     //Filskriving
     public void lesFil() {
         try (ObjectInputStream innfil = new ObjectInputStream(
-                new FileInputStream("src/forsikring.data"))) {
+                new FileInputStream("forsikring.data"))) {
             brukerRegister = (BrukerRegister) innfil.readObject();
             skademeldingregister = (SkadeMeldingRegister) innfil.readObject();
             forsikringsregister = (ForsikringsRegister) innfil.readObject();
