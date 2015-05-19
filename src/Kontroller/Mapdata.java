@@ -26,7 +26,7 @@ public class Mapdata {
 
     public void lesFil() {
         try (ObjectInputStream innfil = new ObjectInputStream(
-                new FileInputStream("src/Fil/postregister.data"))) {
+                new FileInputStream("postregister.data"))) {
             postregister = (HashMap<String, String>) innfil.readObject();
 
         } catch (ClassNotFoundException cnfe) {
