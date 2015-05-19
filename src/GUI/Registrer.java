@@ -19,7 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
- * Created by Magnus on 20.04.15.
+ * Created by Magnus, Håkon on 20.04.15.
  */
 public class Registrer {
 

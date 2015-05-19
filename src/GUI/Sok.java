@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import static javafx.geometry.Pos.TOP_CENTER;
 
 /**
- * Created by Magnus on 28.04.15.
+ * Created by Magnus, Håkon on 28.04.15.
  */
 public class Sok {
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  *
- * @author Therese
+ * @author Therese, Håkon
  */
 public class Kunde extends Bruker implements Serializable {
 
