@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 /**
  *
- * @author Vegard
+ * @author Håkon
  */
 public class Postregister {
 

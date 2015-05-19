@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * Created by Magnus on 18.04.15.
+ * Created by Magnus, Håkon on 18.04.15.
  */
 public class Login {
 

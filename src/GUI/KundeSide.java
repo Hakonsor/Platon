@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 
 /**
- * Created by Magnus on 21.04.15.
+ * Created by Magnus, Håkon on 21.04.15.
  */
 
 

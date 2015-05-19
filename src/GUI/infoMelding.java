@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * Created by Magnus on 12.05.15.
+ * Created by Magnus, Håkon on 12.05.15.
  */
 public class infoMelding {
 

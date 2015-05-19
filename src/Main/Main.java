@@ -1,7 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Created by Håkon
  */
 package Main;
 
@@ -60,29 +58,8 @@ public class Main extends Application {
             "rimmen",
             "Fleksnes"};
 
-        String dag[] = new String[28];
-        String mnd[] = new String[12];
-        String år[] = new String[50];
-
-        for (int i = 0;
-                i < dag.length;
-                i++) {
-            dag[i] = String.valueOf(i + 1);
-        }
-        for (int i = 0; i < mnd.length; i++) {
-            mnd[i] = String.valueOf(i + 1);
-        }
-        for (int i = 0;
-                i < år.length;
-                i++) {
-            år[i] = String.valueOf(i + 45);
-        }
-        //String fornavn, String etternavn, String personNr, String telefon, String epost, String adr, String postNr, String passord
-
-        LinkedList<String> forlist = new LinkedList<>();
-        LinkedList<String> etterlist = new LinkedList<>();
-        LinkedList<String> list = new LinkedList<>();
-        forlist.addAll(list);
+        // System.out.println(fornavn.length*etternavn.length+" Mulige kombinasjoner av generete brukere, er det flere en dett går genereign metoden i evig løkke");
+        // 1674674
         Random randomGenerator = new Random();
 
         GregorianCalendar gc = new GregorianCalendar();
