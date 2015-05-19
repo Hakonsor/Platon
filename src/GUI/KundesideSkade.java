@@ -412,7 +412,7 @@ public class KundesideSkade {
                     BoligSkadeMelding bolig = new BoligSkadeMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     bolig.setForsikring(f);
                     int egenandel = f.egenandel(skade, false);
-                    bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
+                    bolig.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), dato.get(Calendar.YEAR ), egenandel));
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(bolig);
                     skriveOmråde.setText(bolig.melding());
@@ -423,7 +423,7 @@ public class KundesideSkade {
                     FritidsBoligMelding fri = new FritidsBoligMelding(skriveOmråde.getText(), Integer.parseInt(tfBeløp.getText()), dato);
                     fri.setForsikring(f);
                     int egenandel = f.egenandel(skade, false);
-                    fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(), 2015, egenandel));
+                    fri.setUtbetaling(f.utbetaling(Integer.parseInt(tfBeløp.getText()), f.getForsikringsSum(),dato.get(Calendar.YEAR ) , egenandel));
                     f.premieTilGodkjenning(f.nyPremie());
                     kontroll.addSkade(fri);
                     skriveOmråde.setText(fri.melding());
