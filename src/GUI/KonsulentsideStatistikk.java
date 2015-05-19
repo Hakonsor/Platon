@@ -8,14 +8,8 @@ import java.util.GregorianCalendar;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 /**
  * Created by Magnus, Therese, Håkon
@@ -28,6 +22,18 @@ public class KonsulentsideStatistikk {
     private GregorianCalendar gc;
     private int aar = 2015;
     private ComboBox<String> cb;
+    private HBox hBox;
+    private VBox vbTabell;
+    private VBox vbGraf;
+    private VBox vbKake;
+    private VBox vbMain;
+    private VBox btnvBox;
+    private BorderPane borderPane;
+    private GridPane gridKake;
+    private GridPane gridTabell;
+    private Button btninnUt;
+    private Button btnkake;
+    private Button btngraf;
     private Label lbBoligVerdiInn;
     private Label lbFritidsboligInn;
     private Label lbFritidsboligVerdiInn;
@@ -54,118 +60,57 @@ public class KonsulentsideStatistikk {
     private Label lbTotalVerdiUt;
     private Label lbDifferanse;
     private Label lbDifferanseVerdi;
+    private Label lbInntekter;
+    private Label lbBoligInn;
+    private GridPane senen;
+    private Kakediagram innkake;
+    private Kakediagram utkake;
+    private Kakediagram kake;
+    private Statistikk graf;
             
     public Pane statFane(Kontroller kontroll) {
 
         this.kontroll = kontroll;
-        oppdater();
-        BorderPane borderPane = new BorderPane();
+        //oppdater();
+        borderPane = new BorderPane();
         borderPane.setId("borderpane");
 
-        TabPane tabPane = new TabPane();
+        vbMain = new VBox();
+        vbMain.setAlignment(Pos.CENTER);
+        vbMain.setSpacing(40);
+        vbMain.setPadding(new Insets(140, 10, 10, 10));//top/right/bottom/left
 
-        //Inntekter
-        Tab tabInnUt = new Tab();
-        tabInnUt.setText("Inntekter & Utgifter");
-        tabInnUt.setClosable(false);
-        tabInnUt.setOnSelectionChanged(e -> {
-            tabInnUt.setContent(innUt()); 
-        });
-        
-        Tab kakeDiagram = new Tab();
-        kakeDiagram.setText("Kakediagram");
-        kakeDiagram.setClosable(false);
-        kakeDiagram.setOnSelectionChanged(e -> {
-            kakeDiagram.setContent(kakeDiagram());
-        });
-        
-        Tab graf = new Tab();
-        graf.setText("Kakediagram");
-        graf.setClosable(false);
-        graf.setOnSelectionChanged(e -> {
-            graf.setContent(graf());
-        });
+        vbKake = new VBox();
+        gridKake = new GridPane();
+        vbKake.getChildren().addAll(gridKake);
 
-        tabPane.getTabs().addAll(tabInnUt, kakeDiagram, graf);
-        borderPane.setTop(tabPane);
+        vbGraf = new VBox();
+        graf = new Statistikk(Integer.toString(aar),"Fortjeneste");
+        vbGraf.getChildren().add(graf.getGraf());
 
-        borderPane.getStylesheets().add("CSS/konsulentstat.css");
-        return borderPane;
-    }
-    private Pane graf(){
-        VBox vb = new VBox();
-        vb.setAlignment(Pos.CENTER);
-        vb.setSpacing(40);
-        vb.setPadding(new Insets(100));
-        
-        gc = new GregorianCalendar();
-        gc.set(gc.YEAR, aar);
-        oppdater();
-        
-        Statistikk graf = new Statistikk(Integer.toString(aar),"Fortjeneste");
-        graf.måndeData(kontroll.gotGodkjentListe(aar));
-        graf.måndeData(kontroll.getInntektList(gc));
-        graf.opptatterGraf();
-        
-         vb.getChildren().add(graf.getGraf());
-         return vb;
-    
-    }
+        vbTabell = new VBox();
+        gridTabell = new GridPane();
+        vbTabell.getChildren().addAll(gridTabell);
 
-    private Pane kakeDiagram() {
-        VBox vb = new VBox();
-        vb.setAlignment(Pos.CENTER);
-        vb.setSpacing(40);
-        vb.setPadding(new Insets(100));
-        
-        oppdater();
-        Kakediagram innkake = new Kakediagram("Inntekter");
-        innkake.setBil(bilInn);
-        innkake.setBolig(boligInn);
-        innkake.setBåt(båtInn);
-        innkake.setFritids(fritidInn);
-        innkake.setReise(reiseInn);
-        
-        Kakediagram utkake = new Kakediagram("Utgifter");
-        utkake.setBil(bilUt);
-        utkake.setBolig(boligUt);
-        utkake.setBåt(båtUt);
-        utkake.setFritids(fritidUt);
-        utkake.setReise(reiseUt);
-        
-        
-        Kakediagram kake = new Kakediagram("Differanse");
-        kake.setBil(bilInn-bilUt);
-        kake.setBolig(boligInn-boligUt);
-        kake.setBåt(båtInn-båtUt);
-        kake.setFritids(fritidInn-fritidUt);
-        kake.setReise(reiseInn-reiseUt);
-        
-        GridPane grid = new GridPane();
-        grid.add(innkake.hentKake(), 0, 0);
-        grid.add(utkake.hentKake(), 1, 0);
-        
-        vb.getChildren().addAll(grid);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        return vb;
-    }
+        senen = new GridPane();
+        senen.add(vbGraf,0,0);
+        senen.add(vbKake,0,0);
+        senen.add(vbTabell,0,0);
+        senen.setAlignment(Pos.TOP_CENTER);
+        tabell();
 
-    private Pane innUt() {
-        VBox vb = new VBox();
-        vb.setAlignment(Pos.CENTER);
-        vb.setSpacing(40);
-        vb.setPadding(new Insets(100));
+        btnvBox= new VBox();
+        btnvBox.setAlignment(Pos.CENTER);
+        btnvBox.setSpacing(30);
+
+        hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(40);
+        hBox.setPadding(new Insets(0, 20, 10, 20));//top/right/bottom/left
 
         cb = new ComboBox<>();
         cb.setValue("Velg År:");
+        cb.setId("cb");
         cb.setEditable(false);
         cb.setMinWidth(200);
         cb.getItems().addAll(
@@ -174,21 +119,162 @@ public class KonsulentsideStatistikk {
                 "2015"
         );
 
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10));
-        grid.setVgap(20);
-        grid.setHgap(20);
-        grid.setAlignment(Pos.CENTER);
-        grid.setId("statgrid");
-        grid.setMaxWidth(680);
-        grid.setMaxHeight(400);
+        btninnUt = new Button();
+        btninnUt.setText("Tabell");
+        btninnUt.setId("knapp");
+        btninnUt.setMinWidth(150);
+        btninnUt.setOnAction(e -> {
+            if (!vbTabell.isVisible()) {
+                tabell();
+            }
+        });
+
+        btnkake = new Button();
+        btnkake.setText("Kakediagram");
+        btnkake.setId("knapp");
+        btnkake.setMinWidth(150);
+        btnkake.setOnAction(e -> {
+            if (!vbKake.isVisible() ) {
+                kake();
+            }
+        });
+
+        btngraf = new Button();
+        btngraf.setText("Graf");
+        btngraf.setId("knapp");
+        btngraf.setMinWidth(150);
+        btngraf.setOnAction(e -> {
+            if (!vbGraf.isVisible()) {
+                graf();
+            }
+        });
+
+        btnvBox.getChildren().addAll(btninnUt, btnkake, btngraf);
+
+        hBox.getChildren().addAll(btnvBox, senen);
+
+        vbMain.getChildren().addAll(cb, hBox);
+        oppdaterTabell();
+
+        cb.setOnAction((ActionEvent e) -> {
+            velgÅr();
+            oppdaterTabell();
+            oppdater();
+            oppdaterGraf();
+            oppdaterKake();
+        });
+
+        borderPane.setTop(vbMain);
+
+        borderPane.getStylesheets().add("CSS/konsulentstat.css");
+        return borderPane;
+    }
+
+    private void kake() {
+        //KAKE ------------------------------------------------------------------>
+        vbKake.setAlignment(Pos.CENTER);
+        vbKake.setSpacing(40);
+        //vbKake.setPadding(new Insets(10, 10, 10, 10));//top/right/bottom/left
+        vbGraf.setVisible(false);
+        vbKake.setVisible(true);
+        vbTabell.setVisible(false);
+
+        vbKake.getChildren().clear();
+        gridKake = new GridPane();
+        vbKake.getChildren().addAll(gridKake);
+        oppdater();
+
+        //oppdater();
+        oppdaterKake();
+
+
+    }
+
+    private void oppdaterKake() {
+        gridKake.getChildren().clear();
+        oppdater();
+        innkake = new Kakediagram("Inntekter");
+        innkake.setBil(bilInn);
+        innkake.setBolig(boligInn);
+        innkake.setBåt(båtInn);
+        innkake.setFritids(fritidInn);
+        innkake.setReise(reiseInn);
+
+        utkake = new Kakediagram("Utgifter");
+        utkake.setBil(bilUt);
+        utkake.setBolig(boligUt);
+        utkake.setBåt(båtUt);
+        utkake.setFritids(fritidUt);
+        utkake.setReise(reiseUt);
+
+
+        kake = new Kakediagram("Differanse");
+        kake.setBil(bilInn-bilUt);
+        kake.setBolig(boligInn - boligUt);
+        kake.setBåt(båtInn - båtUt);
+        kake.setFritids(fritidInn - fritidUt);
+        kake.setReise(reiseInn - reiseUt);
+
+        gridKake.add(innkake.hentKake(), 0, 0);
+        gridKake.add(utkake.hentKake(), 1, 0);
+    }
+
+    private void graf(){
+        //GRAF ------------------------------------------------------------------>
+        vbGraf.setAlignment(Pos.CENTER);
+        //vbGraf.setSpacing(20);
+        //vbGraf.setPadding(new Insets(10, 10, 10, 10));//top/right/bottom/left
+        vbGraf.setVisible(true);
+        vbKake.setVisible(false);
+        vbTabell.setVisible(false);
+
+        oppdaterGraf();
+
+    }
+
+    private void oppdaterGraf() {
+        vbGraf.getChildren().clear();
+        System.out.println(aar);
+        graf = new Statistikk(Integer.toString(aar),"Fortjeneste");
+        vbGraf.getChildren().add(graf.getGraf());
+        oppdater();
+        gc = new GregorianCalendar();
+        gc.set(gc.YEAR, aar);
+        graf.måndeData(kontroll.gotGodkjentListe(aar));
+        graf.måndeData(kontroll.getInntektList(gc));
+        graf.opptatterGraf();
+    }
+
+    private void tabell() {
+        //TABELL ------------------------------------------------------------------>
+        vbTabell.setAlignment(Pos.CENTER);
+        //vbTabell.setSpacing(40);
+        //vbTabell.setPadding(new Insets(10, 10, 10, 10));//top/right/bottom/left
+        vbGraf.setVisible(false);
+        vbKake.setVisible(false);
+        vbTabell.setVisible(true);
+
+        vbTabell.getChildren().clear();
+        gridTabell = new GridPane();
+        vbTabell.getChildren().addAll(gridTabell);
+        oppdater();
+
+        gridTabell.setPadding(new Insets(10));
+        gridTabell.setVgap(20);
+        gridTabell.setHgap(20);
+        gridTabell.setAlignment(Pos.CENTER);
+        gridTabell.setId("statgrid");
+        gridTabell.setMaxWidth(680);
+        gridTabell.setMaxHeight(400);
+
+
 
         //Inntekter ----------------------------------------------->
-        Label lbInntekter = new Label();
+        lbInntekter = new Label();
         lbInntekter.setText("Inntekter fordelt på forsikringstype");
         lbInntekter.setId("h1");
 
-        Label lbBoligInn = new Label();
+        lbBoligInn = new Label();
         lbBoligInn.setText("Bolig:");
         lbBoligInn.setId("lbbolig");
 
@@ -304,60 +390,52 @@ public class KonsulentsideStatistikk {
 
         //Rad 0
         //Rad 1
-        grid.add(lbInntekter, 0, 1, 2, 1);
-        grid.add(lbUtgifter, 2, 1, 2, 1);
+        gridTabell.add(lbInntekter, 0, 1, 2, 1);
+        gridTabell.add(lbUtgifter, 2, 1, 2, 1);
 
         //Rad 2
-        grid.add(lbBoligInn, 0, 2);
-        grid.add(lbBoligVerdiInn, 1, 2);
-        grid.add(lbBoligUt, 2, 2);
-        grid.add(lbBoligVerdiUt, 3, 2);
+        gridTabell.add(lbBoligInn, 0, 2);
+        gridTabell.add(lbBoligVerdiInn, 1, 2);
+        gridTabell.add(lbBoligUt, 2, 2);
+        gridTabell.add(lbBoligVerdiUt, 3, 2);
 
         //Rad 3
-        grid.add(lbFritidsboligInn, 0, 3);
-        grid.add(lbFritidsboligVerdiInn, 1, 3);
-        grid.add(lbFritidsboligUt, 2, 3);
-        grid.add(lbFritidsboligVerdiUt, 3, 3);
+        gridTabell.add(lbFritidsboligInn, 0, 3);
+        gridTabell.add(lbFritidsboligVerdiInn, 1, 3);
+        gridTabell.add(lbFritidsboligUt, 2, 3);
+        gridTabell.add(lbFritidsboligVerdiUt, 3, 3);
 
         //Rad 4
-        grid.add(lbBilforsikringInn, 0, 4);
-        grid.add(lbBilforsikringVerdiInn, 1, 4);
-        grid.add(lbBilforsikringUt, 2, 4);
-        grid.add(lbBilforsikringVerdiUt, 3, 4);
+        gridTabell.add(lbBilforsikringInn, 0, 4);
+        gridTabell.add(lbBilforsikringVerdiInn, 1, 4);
+        gridTabell.add(lbBilforsikringUt, 2, 4);
+        gridTabell.add(lbBilforsikringVerdiUt, 3, 4);
 
         //Rad 5
-        grid.add(lbReiseforsikringInn, 0, 5);
-        grid.add(lbReiseForsikringVerdiInn, 1, 5);
-        grid.add(lbReiseforsikringUt, 2, 5);
-        grid.add(lbReiseForsikringVerdiUt, 3, 5);
+        gridTabell.add(lbReiseforsikringInn, 0, 5);
+        gridTabell.add(lbReiseForsikringVerdiInn, 1, 5);
+        gridTabell.add(lbReiseforsikringUt, 2, 5);
+        gridTabell.add(lbReiseForsikringVerdiUt, 3, 5);
 
         //Rad 6
-        grid.add(lbBåtForsikringInn, 0, 6);
-        grid.add(lbBåtForsikringVerdiInn, 1, 6);
-        grid.add(lbBåtForsikringUt, 2, 6);
-        grid.add(lbBåtForsikringVerdiUt, 3, 6);
+        gridTabell.add(lbBåtForsikringInn, 0, 6);
+        gridTabell.add(lbBåtForsikringVerdiInn, 1, 6);
+        gridTabell.add(lbBåtForsikringUt, 2, 6);
+        gridTabell.add(lbBåtForsikringVerdiUt, 3, 6);
 
         //Rad 7
-        grid.add(lbTotalInn, 0, 7);
-        grid.add(lbTotalVerdiInn, 1, 7);
-        grid.add(lbTotalUt, 2, 7);
-        grid.add(lbTotalVerdiUt, 3, 7);
+        gridTabell.add(lbTotalInn, 0, 7);
+        gridTabell.add(lbTotalVerdiInn, 1, 7);
+        gridTabell.add(lbTotalUt, 2, 7);
+        gridTabell.add(lbTotalVerdiUt, 3, 7);
 
         //Rad 8
-        grid.add(lbDifferanse, 1, 8);
-        grid.add(lbDifferanseVerdi, 2, 8);
+        gridTabell.add(lbDifferanse, 1, 8);
+        gridTabell.add(lbDifferanseVerdi, 2, 8);
 
-        grid.setGridLinesVisible(false);
+        gridTabell.setGridLinesVisible(false);
 
-        vb.getChildren().addAll(cb, grid);
-        oppdaterTabell();
 
-        cb.setOnAction((ActionEvent e) -> {
-            velgÅr();
-            oppdaterTabell();
-        });
-
-        return vb;
     }
     
     private void velgÅr(){
