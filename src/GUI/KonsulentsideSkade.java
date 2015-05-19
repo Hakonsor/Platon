@@ -200,9 +200,11 @@ public class KonsulentsideSkade {
                 tfNummer.setText(Integer.toString(kontroll.visSkadeIndex()));
                 tfAntall.setText("" + kontroll.visAntalliKø());
                 kontroll.ferdigBehandlet(skade);
-                skade.okUtbetal();
-                skade.getForsikring().nyPremieOk();
-                if (skade instanceof BilSkadeMelding) {
+                if (skade.getUtbetaling() != 0) {
+                    skade.okUtbetal();
+                    skade.getForsikring().nyPremieOk();
+                }
+                if (skade instanceof BilSkadeMelding && skade.getUtbetaling() != 0) {
                     BilForsikring bil = (BilForsikring) skade.getForsikring();
                     bil.bonusGodkjent();
                 }
@@ -262,7 +264,6 @@ public class KonsulentsideSkade {
                     }
 
                 }
-
 
             } else {
                 taLes.setText("Det er ingen skademeldinger registert.");

@@ -63,6 +63,7 @@ public abstract class Forsikringer implements Serializable{
         premieTilGodkjenning = nyPremie;  
     }
     
+    
     // Når skademeldingen bekreftet ok, så settes premien på nytt.(Økning) 
     public void nyPremieOk(){
         premie = premieTilGodkjenning;
