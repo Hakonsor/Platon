@@ -17,9 +17,9 @@ public class ReiseForsikring extends Forsikringer implements Serializable {
 
     private String type;
     private double forsikringSum;
-    private final int VERDEN = 1700;
-    private final int EUROPA = 1400;
-    private final int NORDEN = 900;
+    private static final int VERDEN = 1700;
+    private static final int EUROPA = 1400;
+    private static final int NORDEN = 900;
     public ReiseForsikring() {
         super(0, 0);
 

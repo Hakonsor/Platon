@@ -20,9 +20,9 @@ public class BatForsikring extends Forsikringer implements Serializable {
     private int lendgeFot, motorStyrke;
     private String regNo, motorMerke, type, modell, årsmodell;
     private double forsikringSum;
-    private final double SKADETILLEGG = 500;
-    private final double  MOTORTILLEGG = 300;
-    private final double DELTAFORSSUM = 0.02;
+    private static final double SKADETILLEGG = 500;
+    private static final double  MOTORTILLEGG = 300;
+    private static final double DELTAFORSSUM = 0.02;
     
     public BatForsikring(double forSum, int lendgeFot, String regNr, String type, String modell, String arsModell, int motorstyrke, String motormerke) {
         super(0, 0);

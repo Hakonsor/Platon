@@ -15,12 +15,12 @@ import java.io.Serializable;
  * @author Therese, Håkon
  */
 public class BilForsikring extends Kjoretoy implements Serializable {
-    private double GRUNNPREMIE = 20000;
-    private double RABATT15 = 15;
-    private double RABATT10 = 10;
-    private double EGENANDELLAV = 4000;
-    private double EGENANDELHØY = 10000;
-    private double EGENANDELMEDIUM = 6000;
+    private static double GRUNNPREMIE = 20000;
+    private static double RABATT15 = 15;
+    private static double RABATT10 = 10;
+    private static double EGENANDELLAV = 4000;
+    private static double EGENANDELHØY = 10000;
+    private static double EGENANDELMEDIUM = 6000;
     
     private int kjorelengde;
     private int kmStand;
