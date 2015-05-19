@@ -30,6 +30,8 @@ public class BatSkadeMelding extends SkadeMelding implements Serializable{
                 +" "+super.getForsikring().getKunde().getEtternavn()+"\n"+
                 
                 super.toString();
+        s+= "Premie før skade: " + super.getForsikring().getPremie() + " kr" + 
+             "\nPremie etter skade: " + super.getForsikring().getPremieTilGodkjenning() + " kr";
         
         return s;
     }

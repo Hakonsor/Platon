@@ -84,6 +84,9 @@ public class BilForsikring extends Kjoretoy implements Serializable {
     public void nyBonusTilGodkjenning(double bonusEtterSkade) {
         bonusTilGodkjenning = bonusEtterSkade;
     }
+    public double getBonusTilGodkjenning(){
+        return bonusTilGodkjenning;
+    }
 
     //Setter den nye bonusen når konsulenten har behandlet skaden
     public void bonusGodkjent() {
@@ -109,7 +112,7 @@ public class BilForsikring extends Kjoretoy implements Serializable {
 
     // beregner premien basert på bonus etter en skade.
     public double premieEtterSkade(double nyBonus) {
-        double nyPremie = getBonus() + (nyBonus) / 100 * GRUNNPREMIE;
+        double nyPremie = getPremie() + (nyBonus) / 100 * GRUNNPREMIE;
         return nyPremie;
     }// end of method
 
