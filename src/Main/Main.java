@@ -28,6 +28,12 @@ public class Main extends Application {
         Kontroller c = new Kontroller(primaryStage);
         c.lesFil();
         //genererKunder(c); // GENERERER MASSE BRUKERE, GJØR PROGRAMMET TREIGT Å STARTE!
+        primaryStage.setMinWidth(1024);
+        primaryStage.setMaxWidth(1024);
+
+        primaryStage.setMinHeight(780);
+        primaryStage.setMaxHeight(780);
+
         primaryStage.setOnCloseRequest(e -> c.skrivTilFil());
         c.loginVindu(primaryStage);
         
